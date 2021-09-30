@@ -1,28 +1,51 @@
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapi/basic/config/ShadowCategories.dart';
 import 'package:pikapi/screens/components/ComicList.dart';
 import 'package:pikapi/screens/components/FitButton.dart';
 import 'ContentBuilder.dart';
 
-class ComicListBuilder extends StatelessWidget {
+class ComicListBuilder extends StatefulWidget {
   final Future<List<ComicSimple>> future;
   final Future Function() reload;
 
   ComicListBuilder(this.future, this.reload);
 
   @override
+  State<StatefulWidget> createState() => _ComicListBuilderState();
+}
+
+class _ComicListBuilderState extends State<ComicListBuilder> {
+  @override
+  void initState() {
+    shadowCategoriesEvent.subscribe(_onShadowChange);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    shadowCategoriesEvent.unsubscribe(_onShadowChange);
+    super.dispose();
+  }
+
+  void _onShadowChange(EventArgs? args) {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ContentBuilder(
-      future: future,
-      onRefresh: reload,
+      future: widget.future,
+      onRefresh: widget.reload,
       successBuilder:
           (BuildContext context, AsyncSnapshot<List<ComicSimple>> snapshot) {
         return RefreshIndicator(
-          onRefresh: reload,
+          onRefresh: widget.reload,
           child: ComicList(
             snapshot.data!,
             appendWidget: FitButton(
-              onPressed: reload,
+              onPressed: widget.reload,
               text: '刷新',
             ),
           ),

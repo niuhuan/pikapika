@@ -12,10 +12,10 @@ import 'package:pikapi/basic/Cross.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'package:pikapi/basic/config/FullScreenAction.dart';
+import 'package:pikapi/basic/config/GalleryPreloadCount.dart';
 import 'package:pikapi/basic/config/KeyboardController.dart';
 import 'package:pikapi/basic/config/ReaderDirection.dart';
 import 'package:pikapi/basic/config/ReaderType.dart';
-import 'package:pikapi/basic/config/VolumeController.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
@@ -685,6 +685,27 @@ class _GalleryReaderState extends State<_GalleryReader> {
           _current = value + 1;
           _slider = value + 1;
           widget.struct.onPositionChange(value);
+          if (galleryPrePreloadCount > 0) {
+            for (var count = 1;
+                count <= galleryPrePreloadCount && value - count >= 0;
+                count++) {
+              var target = widget.struct.images[value - count];
+              if (target.downloadLocalPath == null) {
+                method.remoteImagePreload(target.fileServer, target.path);
+              }
+            }
+          }
+          if (galleryPreloadCount > 0) {
+            for (var count = 1;
+                count <= galleryPreloadCount &&
+                    value + count < widget.struct.images.length;
+                count++) {
+              var target = widget.struct.images[value + count];
+              if (target.downloadLocalPath == null) {
+                method.remoteImagePreload(target.fileServer, target.path);
+              }
+            }
+          }
         });
       },
       itemCount: widget.struct.images.length,

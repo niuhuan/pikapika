@@ -169,37 +169,11 @@ func remoteImageData(params string) (string, error) {
 	defer lock.Unlock()
 	cache := comic_center.FindRemoteImage(fileServer, path)
 	if cache == nil {
-		buff, img, format, err := decodeFromUrl(fileServer, path)
-		if err != nil {
-			println(fmt.Sprintf("decode error : %s/static/%s %s", fileServer, path, err.Error()))
-			return "", err
-		}
-		local :=
-			fmt.Sprintf("%x",
-				md5.Sum([]byte(fmt.Sprintf("%s$%s", fileServer, path))),
-			)
-		real := remotePath(local)
-		err = ioutil.WriteFile(
-			real,
-			buff, os.FileMode(0600),
-		)
+		remote, err := decodeAndSaveImage(fileServer, path)
 		if err != nil {
 			return "", err
 		}
-		remote := comic_center.RemoteImage{
-			FileServer: fileServer,
-			Path:       path,
-			FileSize:   int64(len(buff)),
-			Format:     format,
-			Width:      int32(img.Bounds().Dx()),
-			Height:     int32(img.Bounds().Dy()),
-			LocalPath:  local,
-		}
-		err = comic_center.SaveRemoteImage(&remote)
-		if err != nil {
-			return "", err
-		}
-		cache = &remote
+		cache = remote
 	}
 	display := DisplayImageData{
 		FileSize:  cache.FileSize,
@@ -209,6 +183,56 @@ func remoteImageData(params string) (string, error) {
 		FinalPath: remotePath(cache.LocalPath),
 	}
 	return serialize(&display, nil)
+}
+
+func remoteImagePreload(params string) error {
+	var paramsStruct struct {
+		FileServer string `json:"fileServer"`
+		Path       string `json:"path"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	fileServer := paramsStruct.FileServer
+	path := paramsStruct.Path
+	lock := utils.HashLock(fmt.Sprintf("%s$%s", fileServer, path))
+	lock.Lock()
+	defer lock.Unlock()
+	cache := comic_center.FindRemoteImage(fileServer, path)
+	var err error
+	if cache == nil {
+		_, err = decodeAndSaveImage(fileServer, path)
+	}
+	return err
+}
+
+func decodeAndSaveImage(fileServer string, path string) (*comic_center.RemoteImage, error) {
+	buff, img, format, err := decodeFromUrl(fileServer, path)
+	if err != nil {
+		println(fmt.Sprintf("decode error : %s/static/%s %s", fileServer, path, err.Error()))
+		return nil, err
+	}
+	local :=
+		fmt.Sprintf("%x",
+			md5.Sum([]byte(fmt.Sprintf("%s$%s", fileServer, path))),
+		)
+	real := remotePath(local)
+	err = ioutil.WriteFile(
+		real,
+		buff, os.FileMode(0600),
+	)
+	if err != nil {
+		return nil, err
+	}
+	remote := comic_center.RemoteImage{
+		FileServer: fileServer,
+		Path:       path,
+		FileSize:   int64(len(buff)),
+		Format:     format,
+		Width:      int32(img.Bounds().Dx()),
+		Height:     int32(img.Bounds().Dy()),
+		LocalPath:  local,
+	}
+	err = comic_center.SaveRemoteImage(&remote)
+	return &remote, err
 }
 
 func downloadImagePath(path string) (string, error) {
@@ -565,6 +589,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return "", importComicDownloadUsingSocket(params)
 	case "remoteImageData":
 		return remoteImageData(params)
+	case "remoteImagePreload":
+		return "", remoteImagePreload(params)
 	case "clientIpSet":
 		return clientIpSet()
 	case "downloadImagePath":

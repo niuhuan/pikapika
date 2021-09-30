@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'package:pikapi/basic/config/ListLayout.dart';
+import 'package:pikapi/basic/config/ShadowCategories.dart';
 
 import 'components/ComicListBuilder.dart';
 
@@ -25,6 +26,7 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
       appBar: AppBar(
         title: Text('随机本子'),
         actions: [
+          shadowCategoriesActionButton(context),
           chooseLayoutAction(context),
         ],
       ),

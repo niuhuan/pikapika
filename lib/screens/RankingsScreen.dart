@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'package:pikapi/basic/config/ListLayout.dart';
+import 'package:pikapi/basic/config/ShadowCategories.dart';
 
 import 'components/ComicListBuilder.dart';
 
 class RankingsScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -13,6 +15,7 @@ class RankingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('排行榜'),
         actions: [
+          shadowCategoriesActionButton(context),
           chooseLayoutAction(context),
         ],
       ),

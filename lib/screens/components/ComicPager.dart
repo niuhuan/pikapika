@@ -1,7 +1,9 @@
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/config/PagerAction.dart';
+import 'package:pikapi/basic/config/ShadowCategories.dart';
 import 'package:pikapi/basic/enum/Sort.dart';
 import 'package:pikapi/screens/components/ComicList.dart';
 import 'package:pikapi/screens/components/ContentError.dart';
@@ -9,18 +11,41 @@ import 'package:pikapi/screens/components/FitButton.dart';
 import 'ContentLoading.dart';
 
 // 漫画列页
-class ComicPager extends StatelessWidget {
+class ComicPager extends StatefulWidget {
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
   const ComicPager({required this.fetchPage});
 
   @override
+  State<StatefulWidget> createState() => _ComicPagerState();
+}
+
+class _ComicPagerState extends State<ComicPager> {
+
+  @override
+  void initState() {
+    shadowCategoriesEvent.subscribe(_onShadowChange);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    shadowCategoriesEvent.unsubscribe(_onShadowChange);
+    super.dispose();
+  }
+
+  void _onShadowChange(EventArgs? args) {
+    setState(() {
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     switch (currentPagerAction) {
       case PagerAction.CONTROLLER:
-        return ControllerComicPager(fetchPage: fetchPage);
+        return ControllerComicPager(fetchPage: widget.fetchPage);
       case PagerAction.STREAM:
-        return StreamComicPager(fetchPage: fetchPage);
+        return StreamComicPager(fetchPage: widget.fetchPage);
       default:
         return Container();
     }

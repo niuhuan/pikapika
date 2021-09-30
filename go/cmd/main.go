@@ -35,10 +35,11 @@ func main() {
 	if height <= 0 {
 		height = 900
 	}
-	sizeOption := flutter.WindowInitialDimensions(width, height)
-	options = append(options, sizeOption)
-	//
-	err := flutter.Run(append(options, mainOptions...)...)
+	var runOptions []flutter.Option
+	runOptions = append(runOptions, flutter.WindowInitialDimensions(width, height))
+	runOptions = append(runOptions, options...)
+	// ------
+	err := flutter.Run(append(runOptions, mainOptions...)...)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

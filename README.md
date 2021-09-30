@@ -17,7 +17,7 @@ PIKAPI - 漫画客户端
 ### 分流
 
 VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN上访问代理, 使用代理请求分流服务器。
- 
+
 ### 漫画分类/搜索
 
 ![分类](images/categories_screen.png) ![列表](images/comic_list.png)
@@ -109,16 +109,17 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
   sudo apt install xorg-dev
   ```
 - 字体不显示
-    1. 将字体文件复制到项目目录下
     ```shell
-      cp /usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf fonts/
+    # 将字体文件复制到项目目录下
+    mkdir -p fonts
+    cp -f /usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf fonts/
     ```
-    2. 设置flutter打包的字体
     ```yaml
-      fonts:
-      - family: Roboto
-        fonts:
-          - asset: fonts/DroidSansFallbackFull.ttf
+   # 编辑 pubspec.yaml
+     fonts:
+       - family: Roboto
+         fonts:
+           - asset: fonts/DroidSansFallbackFull.ttf
     ```
 
 ### 移动端 (gomobile)

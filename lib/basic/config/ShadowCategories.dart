@@ -50,6 +50,6 @@ Widget shadowCategoriesActionButton(BuildContext context) {
     onPressed: () {
       chooseShadowCategories(context);
     },
-    icon: Icon(Icons.dnd_forwardslash),
+    icon: Icon(Icons.hide_source),
   );
 }

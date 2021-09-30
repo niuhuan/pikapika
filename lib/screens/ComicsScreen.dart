@@ -60,23 +60,6 @@ class _ComicsScreenState extends State<ComicsScreen> {
     },
   );
 
-  @override
-  void initState() {
-    shadowCategoriesEvent.subscribe(_onShadowChange);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    shadowCategoriesEvent.unsubscribe(_onShadowChange);
-    super.dispose();
-  }
-
-  void _onShadowChange(EventArgs? args) {
-    setState(() {
-    });
-  }
-
   Widget _chooseCategoryAction() => IconButton(
         onPressed: () async {
           String? category = await chooseListDialog(context, '请选择分类', [
@@ -142,6 +125,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
       appBar = AppBar(
         title: Text(title),
         actions: [
+          shadowCategoriesActionButton(context),
           chooseLayoutAction(context),
           _chooseCategoryAction(),
         ],

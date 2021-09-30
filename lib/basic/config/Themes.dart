@@ -165,7 +165,8 @@ Future<dynamic> initTheme() async {
     _androidVersion = await method.androidGetVersion();
     if (_androidVersion >= 29) {
       _androidNightMode =
-          (await method.loadProperty(_nightModePropertyName, "false")) == "true";
+          (await method.loadProperty(_nightModePropertyName, "false")) ==
+              "true";
       _systemNight = (await method.androidGetUiMode()) == "NIGHT";
       EventChannel("ui_mode").receiveBroadcastStream().listen((event) {
         _systemNight = "$event" == "NIGHT";
@@ -185,23 +186,49 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
           builder: (BuildContext context, StateSetter setState) {
             var list = <SimpleDialogOption>[];
             if (_androidVersion >= 29) {
+              var onChange = (bool? v) async {
+                if (v != null) {
+                  await method.saveProperty(
+                      _nightModePropertyName, "$v");
+                  _androidNightMode = v;
+                }
+                setState(() {});
+                themeEvent.broadcast();
+              };
               list.add(
                 SimpleDialogOption(
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: _androidNightMode,
-                          onChanged: (bool? v) async {
-                            if (v != null) {
-                              await method.saveProperty(
-                                  _nightModePropertyName, "$v");
-                              _androidNightMode = v;
-                            }
-                            setState(() {});
-                            themeEvent.broadcast();
-                          }),
-                      Text("随手机进入夜间模式"),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      onChange(!_androidNightMode);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(top: 3, bottom: 3),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                              color: Theme
+                                  .of(context)
+                                  .dividerColor,
+                              width: 0.5,
+                          ),
+                          bottom: BorderSide(
+                              color: Theme
+                                  .of(context)
+                                  .dividerColor,
+                              width: 0.5
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _androidNightMode,
+                            onChanged: onChange,
+                          ),
+                          Text("随手机进入夜间模式"),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               );

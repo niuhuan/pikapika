@@ -150,6 +150,13 @@ class Method {
     return RemoteImageData.fromJson(json.decode(data));
   }
 
+  Future<dynamic> remoteImagePreload(String fileServer, String path) async {
+    return _flatInvoke("remoteImagePreload", {
+      "fileServer": fileServer,
+      "path": path,
+    });
+  }
+
   Future<String> downloadImagePath(String path) async {
     return await _flatInvoke("downloadImagePath", path);
   }

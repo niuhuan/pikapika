@@ -97,23 +97,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   @override
-  void initState() {
-    shadowCategoriesEvent.subscribe(_onShadowChange);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    shadowCategoriesEvent.unsubscribe(_onShadowChange);
-    super.dispose();
-  }
-
-  void _onShadowChange(EventArgs? args) {
-    setState(() {
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _searchBar.build(context),
