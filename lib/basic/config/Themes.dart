@@ -225,7 +225,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                             value: _androidNightMode,
                             onChanged: onChange,
                           ),
-                          Text("随手机进入夜间模式"),
+                          Text("随手机进入黑暗模式"),
                         ],
                       ),
                     ),
