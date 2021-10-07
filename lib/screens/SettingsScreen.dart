@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapi/basic/config/AndroidDisplayMode.dart';
 import 'package:pikapi/basic/config/AutoClean.dart';
 import 'package:pikapi/basic/config/AutoFullScreen.dart';
+import 'package:pikapi/basic/config/ChooserRoot.dart';
 import 'package:pikapi/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapi/basic/config/FullScreenAction.dart';
 import 'package:pikapi/basic/config/FullScreenUI.dart';
@@ -145,6 +146,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: Text(androidDisplayModeName()),
               onTap: () async {
                 await chooseAndroidDisplayMode(context);
+                setState(() {});
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: Text("文件夹选择器默认路径"),
+              subtitle: Text(currentChooserRoot()),
+              onTap: () async {
+                await inputChooserRoot(context);
                 setState(() {});
               },
             ),

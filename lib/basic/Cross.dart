@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Method.dart';
+import 'config/ChooserRoot.dart';
 
 /// 复制内容到剪切板
 void copyToClipBoard(BuildContext context, String string) {
@@ -66,28 +67,18 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
 
 /// 选择一个文件夹用于保存文件
 Future<String?> chooseFolder(BuildContext context) async {
-  late String root;
-  if (Platform.isWindows) {
-    root = '/';
-  } else if (Platform.isMacOS) {
-    root = '/Users';
-  } else if (Platform.isLinux) {
-    root = '/';
-  } else if (Platform.isAndroid) {
+  if (Platform.isAndroid) {
     var p = await Permission.storage.request();
     if (!p.isGranted) {
       return null;
     }
-    root = '/storage/emulated/0';
-  } else {
-    throw 'error';
   }
   return FilesystemPicker.open(
     title: '选择一个文件夹',
     pickText: '将文件保存到这里',
     context: context,
     fsType: FilesystemType.folder,
-    rootDirectory: Directory(root),
+    rootDirectory: Directory(currentChooserRoot()),
   );
 }
 

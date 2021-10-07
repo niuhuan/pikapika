@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapi/basic/Channels.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Method.dart';
+import 'package:pikapi/basic/config/ChooserRoot.dart';
 
 import 'components/ContentLoading.dart';
 
@@ -79,24 +80,10 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
     return MaterialButton(
       height: 80,
       onPressed: () async {
-        late String root;
-        if (Platform.isMacOS) {
-          root = '/Users';
-        } else if (Platform.isWindows) {
-          root = '/';
-        } else if (Platform.isAndroid) {
-          var p = await Permission.storage.request();
-          if (!p.isGranted) {
-            return;
-          }
-          root = '/storage/emulated/0';
-        } else {
-          throw 'error';
-        }
         String? path = await FilesystemPicker.open(
-          title: 'Open file',
+          title: '选择要导入的文件',
           context: context,
-          rootDirectory: Directory(root),
+          rootDirectory: Directory(currentChooserRoot()),
           fsType: FilesystemType.file,
           folderIconColor: Colors.teal,
           allowedExtensions: ['.zip'],

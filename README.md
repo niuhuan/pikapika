@@ -6,9 +6,8 @@ PIKAPI - 漫画客户端
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 本仓库仅作为学习交流使用, 请您遵守当地法律法规以及开源协议。
-- 您的star和issue是对开发者的莫大鼓励, 可以源仓库下载最新的源码/安装包, 表示支持/提出建议。
+- 您的star和issue是对开发者的莫大鼓励, 可以源仓库下载最新的源码/安装包, 表示支持/提出建议。以及提出您在构建或运行时遇到的困难。
 - 源仓库地址 [https://github.com/niuhuan/pikapi-flutter](https://github.com/niuhuan/pikapi-flutter)
-- 此项目仅接受简体中文的issues。
 
 ## 界面 / 功能
 
