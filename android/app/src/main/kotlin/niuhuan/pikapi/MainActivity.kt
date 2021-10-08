@@ -1,6 +1,7 @@
 package niuhuan.pikapi
 
 import android.content.ContentValues
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -272,6 +273,13 @@ class MainActivity : FlutterActivity() {
             Configuration.UI_MODE_NIGHT_YES -> "NIGHT"
             else -> "NORMAL"
         }
+    }
+
+
+    fun main(){
+        startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).also {
+                                                                      it.addCategory(Intent.CATEGORY_OPENABLE)
+        },1)
     }
 
 
