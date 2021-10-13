@@ -1,8 +1,8 @@
 PIKAPI - 漫画客户端
 ========
 [![license](https://img.shields.io/github/license/niuhuan/pikapi-flutter)](https://raw.githubusercontent.com/niuhuan/pikapi-flutter/master/LICENSE)
+[![releases](https://img.shields.io/badge/donwloads--v1.0-3.7k-green)](https://github.com/niuhuan/pikapi-flutter/releases)
 [![releases](https://img.shields.io/github/v/release/niuhuan/pikapi-flutter)](https://github.com/niuhuan/pikapi-flutter/releases)
-[![](https://img.shields.io/badge/donwloads--previously-3.7k-green)](https://github.com/niuhuan/pikapi-flutter/releases)
 [![downloads](https://img.shields.io/github/downloads/niuhuan/pikapi-flutter/total)](https://github.com/niuhuan/pikapi-flutter/releases)
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
@@ -77,11 +77,11 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 ### 开发环境准备
 
 - [golang](https://golang.org/) (1.16以上版本)
-- [flutter](https://flutter.dev/) (桌面端 Tag 2.2.3 以兼容hover)
+- [flutter](https://flutter.dev/)
 
 ### 环境配置
 
-- 将~/go/bin (GoPath/bin) 设置到PATH环境变量内
+- 将~/go/bin ($GoPath/bin) 设置到PATH环境变量内
 - golang开启模块化
 - 设置GoProxy (可选,在中国大陆网络建议设置)
 - 参考地址 [https://goproxy.cn/](https://goproxy.cn/)
@@ -91,6 +91,12 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 - [安装hover(go-flutter编译脚手架)](https://github.com/go-flutter-desktop/hover)
   ```shell
   GO111MODULE=on go get -u -a github.com/go-flutter-desktop/hover
+  ```
+- 安装gcc
+  ```shell
+  # Windows需要安装MSYS(mingw-w64-x86_64-gcc), 并将gcc路径设置到PATH环境变量内
+  # MacOS需要安装XCode
+  # Linux使用命令行安装gcc
   ```
 - 执行编译命令 ($system替换为windows/darwin等)
   ```shell
