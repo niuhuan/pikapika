@@ -23,7 +23,7 @@ String currentChooserRoot() {
     } else if (Platform.isLinux) {
       return '/';
     } else if (Platform.isAndroid) {
-      return '/storage/emulated/0';
+      return '/storage/emulated/0/Download';
     } else {
       throw 'error';
     }

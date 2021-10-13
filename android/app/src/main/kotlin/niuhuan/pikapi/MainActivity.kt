@@ -194,6 +194,14 @@ class MainActivity : FlutterActivity() {
     private fun setMode(string: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mixDisplay()?.let { display ->
+                if (string == ""){
+                    uiThreadHandler.post {
+                        window.attributes = window.attributes.also { attr ->
+                            attr.preferredDisplayModeId = 0
+                        }
+                    }
+                    return
+                }
                 return display.supportedModes.forEach { mode ->
                     if (mode.toString() == string) {
                         uiThreadHandler.post {

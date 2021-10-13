@@ -6,7 +6,6 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:pikapi/basic/Channels.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Cross.dart';
 import 'package:pikapi/basic/Entities.dart';

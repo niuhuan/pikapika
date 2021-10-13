@@ -1,5 +1,7 @@
 /// 上下键翻页
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -26,4 +28,22 @@ Future<void> chooseKeyboardController(BuildContext context) async {
     await method.saveProperty(propertyName, "$target");
     keyboardController = target;
   }
+}
+
+Widget keyboardControllerSetting() {
+  if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    return StatefulBuilder(
+      builder: (BuildContext context, void Function(void Function()) setState) {
+        return ListTile(
+          title: Text("阅读器键盘翻页(仅PC)"),
+          subtitle: Text(keyboardControllerName()),
+          onTap: () async {
+            await chooseKeyboardController(context);
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+  return Container();
 }

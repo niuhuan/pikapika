@@ -1,12 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pikapi/basic/Cross.dart';
 
 class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     var size = MediaQuery.of(context).size;
     var min = size.width < size.height ? size.width : size.height;
 

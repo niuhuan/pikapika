@@ -197,8 +197,7 @@ class _RemoteImageState extends State<RemoteImage> {
 
   @override
   void initState() {
-    _mock =
-        widget.fileServer == "" || widget.fileServer.contains(".xyz/");
+    _mock = widget.fileServer == "" || widget.fileServer.contains(".xyz/");
     if (!_mock) {
       _future = method
           .remoteImageData(widget.fileServer, widget.path)
@@ -261,13 +260,17 @@ Widget buildError(double? width, double? height) {
 }
 
 Widget buildLoading(double? width, double? height) {
+  double? size;
+  if (width != null && height != null) {
+    size = width < height ? width : height;
+  }
   return Container(
     width: width,
     height: height,
     child: Center(
       child: Icon(
         Icons.downloading,
-        size: width,
+        size: size,
         color: Colors.black12,
       ),
     ),

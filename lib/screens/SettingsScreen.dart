@@ -73,22 +73,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
-            ListTile(
-              title: Text("阅读器音量键翻页(仅安卓)"),
-              subtitle: Text(volumeControllerName()),
-              onTap: () async {
-                await chooseVolumeController(context);
-                setState(() {});
-              },
-            ),
-            ListTile(
-              title: Text("阅读器键盘翻页(仅PC)"),
-              subtitle: Text(keyboardControllerName()),
-              onTap: () async {
-                await chooseKeyboardController(context);
-                setState(() {});
-              },
-            ),
+            volumeControllerSetting(),
+            keyboardControllerSetting(),
             Divider(),
             ListTile(
               title: Text("封印"),
@@ -141,14 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: Text('清除缓存'),
             ),
             Divider(),
-            ListTile(
-              title: Text("屏幕刷新率(安卓)"),
-              subtitle: Text(androidDisplayModeName()),
-              onTap: () async {
-                await chooseAndroidDisplayMode(context);
-                setState(() {});
-              },
-            ),
+            androidDisplayModeSetting(),
             Divider(),
             ListTile(
               title: Text("文件夹选择器默认路径"),

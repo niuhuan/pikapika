@@ -1,4 +1,5 @@
-import 'dart:convert';
+// 显示模式, 仅安卓有效
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -31,11 +32,29 @@ Future<void> chooseAndroidDisplayMode(BuildContext context) async {
   if (Platform.isAndroid) {
     List<String> list = [""];
     list.addAll(modes);
-    String? result = await chooseListDialog<String>(context, "安卓屏幕刷新率 \n(若为置空操作重启应用生效)", list);
+    String? result = await chooseListDialog<String>(context, "安卓屏幕刷新率", list);
     if (result != null) {
       await method.saveProperty(_propertyName, "$result");
       _androidDisplayMode = result;
       await _changeMode();
     }
   }
+}
+
+Widget androidDisplayModeSetting() {
+  if (Platform.isAndroid) {
+    return StatefulBuilder(
+      builder: (BuildContext context, void Function(void Function()) setState) {
+        return ListTile(
+          title: Text("屏幕刷新率(安卓)"),
+          subtitle: Text(androidDisplayModeName()),
+          onTap: () async {
+            await chooseAndroidDisplayMode(context);
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+  return Container();
 }

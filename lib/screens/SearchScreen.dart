@@ -1,4 +1,3 @@
-import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapi/basic/Common.dart';
