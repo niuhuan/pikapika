@@ -6,6 +6,7 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../Method.dart';
+import 'Platform.dart';
 
 // 主题包
 abstract class _ThemePackage {
@@ -124,7 +125,6 @@ final _themePackages = <_ThemePackage>[
 // 主题更换事件
 var themeEvent = Event<EventArgs>();
 
-int _androidVersion = 1;
 String? _themeCode;
 ThemeData? _themeData;
 bool _androidNightMode = false;
@@ -161,18 +161,15 @@ void _changeThemeByCode(String themeCode) {
 const _nightModePropertyName = "androidNightMode";
 
 Future<dynamic> initTheme() async {
-  if (Platform.isAndroid) {
-    _androidVersion = await method.androidGetVersion();
-    if (_androidVersion >= 29) {
-      _androidNightMode =
-          (await method.loadProperty(_nightModePropertyName, "false")) ==
-              "true";
-      _systemNight = (await method.androidGetUiMode()) == "NIGHT";
-      EventChannel("ui_mode").receiveBroadcastStream().listen((event) {
-        _systemNight = "$event" == "NIGHT";
-        themeEvent.broadcast();
-      });
-    }
+  if (androidVersion >= 29) {
+    _androidNightMode =
+        (await method.loadProperty(_nightModePropertyName, "false")) ==
+            "true";
+    _systemNight = (await method.androidGetUiMode()) == "NIGHT";
+    EventChannel("ui_mode").receiveBroadcastStream().listen((event) {
+      _systemNight = "$event" == "NIGHT";
+      themeEvent.broadcast();
+    });
   }
   _changeThemeByCode(await method.loadTheme());
 }
@@ -185,7 +182,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             var list = <SimpleDialogOption>[];
-            if (_androidVersion >= 29) {
+            if (androidVersion >= 29) {
               var onChange = (bool? v) async {
                 if (v != null) {
                   await method.saveProperty(
@@ -206,10 +203,10 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(
-                              color: Theme
-                                  .of(context)
-                                  .dividerColor,
-                              width: 0.5,
+                            color: Theme
+                                .of(context)
+                                .dividerColor,
+                            width: 0.5,
                           ),
                           bottom: BorderSide(
                               color: Theme

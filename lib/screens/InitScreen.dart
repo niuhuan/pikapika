@@ -9,6 +9,7 @@ import 'package:pikapi/basic/config/FullScreenAction.dart';
 import 'package:pikapi/basic/config/FullScreenUI.dart';
 import 'package:pikapi/basic/config/KeyboardController.dart';
 import 'package:pikapi/basic/config/PagerAction.dart';
+import 'package:pikapi/basic/config/Platform.dart';
 import 'package:pikapi/basic/config/Proxy.dart';
 import 'package:pikapi/basic/config/Quality.dart';
 import 'package:pikapi/basic/config/ReaderDirection.dart';
@@ -37,6 +38,7 @@ class _InitScreenState extends State<InitScreen> {
 
   Future<dynamic> _init() async {
     // 初始化配置文件
+    await initPlatform();  // 必须第一个初始化, 加载设备信息
     await autoClean();
     await initAddress();
     await initProxy();

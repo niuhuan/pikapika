@@ -575,7 +575,7 @@ func FlatInvoke(method string, params string) (string, error) {
 	case "resetAllDownloads":
 		return "", comic_center.ResetAll()
 	case "exportComicDownload":
-		return "", exportComicDownload(params)
+		return exportComicDownload(params)
 	case "exportComicDownloadToJPG":
 		return "", exportComicDownloadToJPG(params)
 	case "exportComicUsingSocket":
@@ -599,6 +599,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return downloadGame(params)
 	case "convertImageToJPEG100":
 		return "", convertImageToJPEG100(params)
+	case "specialDownloadTitle":
+		return specialDownloadTitle(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

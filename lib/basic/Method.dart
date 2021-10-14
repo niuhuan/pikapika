@@ -429,6 +429,12 @@ class Method {
     });
   }
 
+  Future<dynamic> exportComicDownloadAndroidQ(String comicId) {
+    return _channel.invokeMethod("exportComicDownloadAndroidQ", {
+      "comicId": comicId,
+    });
+  }
+
   Future<dynamic> exportComicDownloadToJPG(String comicId, String dir) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,

@@ -14,6 +14,7 @@ import (
 	"path"
 	"pgo/pikapi/const_value"
 	"pgo/pikapi/database/comic_center"
+	"strings"
 	"time"
 )
 
@@ -67,7 +68,7 @@ func exportComicUsingSocketExit() error {
 	return nil
 }
 
-func exportComicDownload(params string) error {
+func exportComicDownload(params string) (filePath string, err error) {
 	var paramsStruct struct {
 		ComicId string `json:"comicId"`
 		Dir     string `json:"dir"`
@@ -78,29 +79,43 @@ func exportComicDownload(params string) error {
 	println(fmt.Sprintf("导出 %s 到 %s", comicId, dir))
 	comic, err := comic_center.FindComicDownloadById(comicId)
 	if err != nil {
-		return err
+		return
 	}
 	if comic == nil {
-		return errors.New("not found")
+		err = errors.New("not found")
+		return
 	}
 	if !comic.DownloadFinished {
-		return errors.New("not download finish")
+		err = errors.New("not download finish")
+		return
 	}
-	filePath := path.Join(dir, fmt.Sprintf("%s-%s.zip", comic.Title, time.Now().Format("2006_01_02_15_04_05.999")))
+	filePath = path.Join(dir, fmt.Sprintf("%s-%s.zip", reasonablePath(comic.Title), time.Now().Format("2006_01_02_15_04_05.999")))
 	println(fmt.Sprintf("ZIP : %s", filePath))
 	fileStream, err := os.Create(filePath)
 	if err != nil {
-		return err
+		return
 	}
 	defer fileStream.Close()
 	zipWriter := zip.NewWriter(fileStream)
 	defer zipWriter.Close()
-	return exportComicDownloadFetch(comicId, func(path string, size int64) (io.Writer, error) {
+	err = exportComicDownloadFetch(comicId, func(path string, size int64) (io.Writer, error) {
 		header := tar.Header{}
 		header.Name = path
 		header.Size = size
 		return zipWriter.Create(path)
 	})
+	return
+}
+
+func reasonablePath(title string) string {
+	title = strings.ReplaceAll(title, "\\", "_")
+	title = strings.ReplaceAll(title, "/", "_")
+	title = strings.ReplaceAll(title, "*", "_")
+	title = strings.ReplaceAll(title, "?", "_")
+	title = strings.ReplaceAll(title, "<", "_")
+	title = strings.ReplaceAll(title, ">", "_")
+	title = strings.ReplaceAll(title, "|", "_")
+	return title
 }
 
 func exportComicDownloadFetch(comicId string, onWriteFile func(path string, size int64) (io.Writer, error)) error {
@@ -367,7 +382,7 @@ func exportComicDownloadToJPG(params string) error {
 	if !comic.DownloadFinished {
 		return errors.New("not download finish")
 	}
-	dirPath := path.Join(dir, fmt.Sprintf("%s-%s", comic.Title, time.Now().Format("2006_01_02_15_04_05.999")))
+	dirPath := path.Join(dir, fmt.Sprintf("%s-%s", reasonablePath(comic.Title), time.Now().Format("2006_01_02_15_04_05.999")))
 	println(fmt.Sprintf("DIR : %s", dirPath))
 	err = os.Mkdir(dirPath, const_value.CreateDirMode)
 	if err != nil {

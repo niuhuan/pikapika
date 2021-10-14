@@ -6,6 +6,7 @@ import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapi/basic/Common.dart';
+import 'package:pikapi/basic/config/Platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Method.dart';
 import 'config/ChooserRoot.dart';
@@ -57,6 +58,16 @@ Future<dynamic> saveImage(String path, BuildContext context) async {
   }
 }
 
+Future<dynamic> saveImageQuiet(String path, BuildContext context) async {
+  if (Platform.isIOS) {
+    return method.iosSaveFileToImage(path);
+  } else if (Platform.isAndroid) {
+    return _saveImageAndroid(path, context);
+  } else {
+    throw Exception("only mobile");
+  }
+}
+
 Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
   var p = await Permission.storage.request();
   if (!p.isGranted) {
@@ -68,9 +79,14 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
 /// 选择一个文件夹用于保存文件
 Future<String?> chooseFolder(BuildContext context) async {
   if (Platform.isAndroid) {
-    var p = await Permission.storage.request();
-    if (!p.isGranted) {
-      return null;
+    if (androidVersion >= 30) {
+      if (!(await Permission.manageExternalStorage.request()).isGranted) {
+        return null;
+      }
+    } else {
+      if (!(await Permission.storage.request()).isGranted) {
+        return null;
+      }
     }
   }
   return FilesystemPicker.open(

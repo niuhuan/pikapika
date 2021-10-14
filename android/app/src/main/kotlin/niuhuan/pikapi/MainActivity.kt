@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.view.Display
 import android.view.KeyEvent
 import androidx.annotation.NonNull
+import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -22,7 +23,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.sync.Mutex
 import mobile.Mobile
+import java.io.File
+import java.io.FileInputStream
 import java.util.concurrent.Executors
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.locks.Condition
+import java.util.concurrent.locks.ReentrantLock
 
 class MainActivity : FlutterActivity() {
 
@@ -60,8 +66,12 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private val resourceQueue: LinkedBlockingQueue<Any?> = LinkedBlockingQueue()
+    private var cacheDir: String? = null
+
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        cacheDir = context!!.cacheDir.absolutePath
         Mobile.initApplication(context!!.filesDir.absolutePath)
         // Method Channel
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "method").setMethodCallHandler { call, result ->
@@ -86,6 +96,9 @@ class MainActivity : FlutterActivity() {
                         uiMode()
                     }
                     "androidGetVersion" -> Build.VERSION.SDK_INT
+//                    "exportComicDownloadAndroidQ" -> {
+//                        exportComicDownloadAndroidQ(call.argument("comicId")!!)
+//                    }
                     else -> {
                         notImplementedToken
                     }
@@ -194,7 +207,7 @@ class MainActivity : FlutterActivity() {
     private fun setMode(string: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mixDisplay()?.let { display ->
-                if (string == ""){
+                if (string == "") {
                     uiThreadHandler.post {
                         window.attributes = window.attributes.also { attr ->
                             attr.preferredDisplayModeId = 0
@@ -283,12 +296,63 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    // 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）
 
-    fun main(){
-        startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).also {
-                                                                      it.addCategory(Intent.CATEGORY_OPENABLE)
-        },1)
-    }
-
+//    private var tmpComicId: String? = null
+//    private val exportComicDownloadAndroidQRequestCode = 2
+//
+//    private fun exportComicDownloadAndroidQ(comicId: String) {
+//        val title = Mobile.flatInvoke("specialDownloadTitle", comicId)
+//        var fileName = title
+//        fileName = fileName.replace('/', '_')
+//        fileName = fileName.replace('\\', '_')
+//        fileName = fileName.replace('*', '_')
+//        fileName = fileName.replace('?', '_')
+//        fileName = fileName.replace('<', '_')
+//        fileName = fileName.replace('>', '_')
+//        fileName = fileName.replace('|', '_')
+//        fileName = fileName + "_" + System.currentTimeMillis() + ".zip"
+//        tmpComicId = comicId
+//        startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).also {
+//            it.addCategory(Intent.CATEGORY_OPENABLE)
+//            it.type = "application/octet-stream"
+//            it.putExtra(Intent.EXTRA_TITLE, fileName)
+//        }, exportComicDownloadAndroidQRequestCode)
+//        val result = resourceQueue.take()
+//        if (result is Throwable) {
+//            throw result
+//        }
+//        return
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        pool.submit {
+//            try {
+//                if (resultCode === RESULT_OK && data != null) {
+//                    when (requestCode) {
+//                        exportComicDownloadAndroidQRequestCode -> {
+//                            contentResolver.openOutputStream(data.data!!)?.use { os ->
+//                                val path = Mobile.flatInvoke("exportComicDownload", Gson().toJson(HashMap<Any, Any?>().also { map ->
+//                                    map["comicId"] = tmpComicId
+//                                    map["dir"] = cacheDir
+//                                }))
+//                                try {
+//                                    FileInputStream(path).copyTo(os)
+//                                } finally {
+//                                    File(path).delete()
+//                                }
+//                            }
+//                            resourceQueue.put("OK")
+//                        }
+//                        else -> resourceQueue.put(Exception("WTF"))
+//                    }
+//                } else {
+//                    resourceQueue.put(Exception("NOT OK"))
+//                }
+//            } catch (e: Throwable) {
+//                resourceQueue.put(Exception(e))
+//            }
+//        }
+//    }
 
 }

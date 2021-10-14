@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapi/basic/Channels.dart';
+import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Cross.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
+import 'package:pikapi/basic/config/Platform.dart';
 import 'package:pikapi/screens/DownloadExportToSocketScreen.dart';
 
 import 'components/ContentError.dart';
@@ -117,74 +120,118 @@ class _DownloadExportToFileScreenState
   }
 
   List<Widget> _buildExportToFileButtons() {
+    List<Widget> widgets = [];
     if (Platform.isWindows ||
         Platform.isMacOS ||
         Platform.isLinux ||
         Platform.isAndroid) {
-      return [
-        MaterialButton(
-          onPressed: () async {
-            String? path = await chooseFolder(context);
-            print("path $path");
-            if (path != null) {
-              try {
-                setState(() {
-                  exporting = true;
-                });
-                await method.exportComicDownloadToJPG(
-                  widget.comicId,
-                  path,
-                );
-                setState(() {
-                  exportResult = "导出成功";
-                });
-              } catch (e) {
-                setState(() {
-                  exportResult = "导出失败 $e";
-                });
-              } finally {
-                setState(() {
-                  exporting = false;
-                });
-              }
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          String? path = await chooseFolder(context);
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownloadToJPG(
+                widget.comicId,
+                path,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
             }
-          },
-          child: _buildButtonInner('导出到HTML+JPG\n(可直接在相册中打开观看)'),
-        ),
-        Container(height: 10),
-        MaterialButton(
-          onPressed: () async {
-            String? path = await chooseFolder(context);
-            print("path $path");
-            if (path != null) {
-              try {
-                setState(() {
-                  exporting = true;
-                });
-                await method.exportComicDownload(
-                  widget.comicId,
-                  path,
-                );
-                setState(() {
-                  exportResult = "导出成功";
-                });
-              } catch (e) {
-                setState(() {
-                  exportResult = "导出失败 $e";
-                });
-              } finally {
-                setState(() {
-                  exporting = false;
-                });
-              }
+          }
+        },
+        child: _buildButtonInner('导出到HTML+JPG\n(可直接在相册中打开观看)'),
+      ));
+      widgets.add(Container(height: 10));
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          String? path = await chooseFolder(context);
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownload(
+                widget.comicId,
+                path,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
             }
-          },
-          child: _buildButtonInner('导出到HTML.zip\n(可从其他设备导入 / 解压后可阅读)'),
-        ),
-        Container(height: 10),
-      ];
+          }
+        },
+        child: _buildButtonInner('导出到HTML.zip\n(可从其他设备导入 / 解压后可阅读)'),
+      ));
+      widgets.add(Container(height: 10));
     }
-    return [];
+    if (Platform.isIOS || Platform.isAndroid) {
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          if (!(await confirmDialog(context, "导出确认", "将本漫画所有图片到相册？"))) {
+            return;
+          }
+          if (!(await Permission.storage.request()).isGranted) {
+            return null;
+          }
+          try {
+            setState(() {
+              exporting = true;
+            });
+            // 导出所有图片数据
+            var count = 0;
+            List<DownloadEp> eps = await method.downloadEpList(widget.comicId);
+            for (var i = 0; i < eps.length; i++) {
+              var pics = await method.downloadPicturesByEpId(eps[i].id);
+              for (var j = 0; j < pics.length; j++) {
+                setState(() {
+                  exportMessage = "导出图片 ${count++} 张";
+                });
+                await saveImageQuiet(
+                  await method.downloadImagePath(pics[j].localPath),
+                  context,
+                );
+              }
+            }
+            setState(() {
+              exportResult = "导出成功";
+            });
+          } catch (e) {
+            setState(() {
+              exportResult = "导出失败 $e";
+            });
+          } finally {
+            setState(() {
+              exporting = false;
+            });
+          }
+        },
+        child: _buildButtonInner('将所有图片到处到手机相机'),
+      ));
+      widgets.add(Container(height: 10));
+    }
+    return widgets;
   }
 
   Widget _buildButtonInner(String text) {

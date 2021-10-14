@@ -586,6 +586,20 @@ func DeleteRemoteImages(images []RemoteImage) error {
 	return db.Unscoped().Model(&RemoteImage{}).Delete("id in ?", ids).Error
 }
 
+func DownloadInfo(comicId string) (*ComicDownload, error) {
+	mutex.Lock()
+	defer mutex.Unlock()
+	var download ComicDownload
+	err := db.First(&download, "id = ?", comicId).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &download, nil
+}
+
 func VACUUM() error {
 	mutex.Lock()
 	defer mutex.Unlock()
