@@ -13,7 +13,6 @@ import android.provider.MediaStore
 import android.view.Display
 import android.view.KeyEvent
 import androidx.annotation.NonNull
-import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -23,12 +22,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.sync.Mutex
 import mobile.Mobile
-import java.io.File
-import java.io.FileInputStream
 import java.util.concurrent.Executors
 import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.locks.Condition
-import java.util.concurrent.locks.ReentrantLock
 
 class MainActivity : FlutterActivity() {
 
