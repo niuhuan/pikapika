@@ -130,6 +130,12 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 ### 移动端 (gomobile)
 
+- 编译环境
+  ```shell
+  # 安卓环境需要安装AndroidSDK, 并且安装platforms以及ndk, 配置 ANDROID_HOME
+  # IOS需要安装xcode以及CocoaPods 
+  gem install cocoapods
+  ```
 - [安装gomobile](https://github.com/golang/mobile)
   ```shell
   go install golang.org/x/mobile/cmd/gomobile@latest

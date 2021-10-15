@@ -1,8 +1,6 @@
 package niuhuan.pikapi
 
 import android.content.ContentValues
-import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -87,9 +85,6 @@ class MainActivity : FlutterActivity() {
                     "androidSetMode" -> {
                         setMode(call.argument("mode")!!)
                     }
-                    "androidGetUiMode" -> {
-                        uiMode()
-                    }
                     "androidGetVersion" -> Build.VERSION.SDK_INT
 //                    "exportComicDownloadAndroidQ" -> {
 //                        exportComicDownloadAndroidQ(call.argument("comicId")!!)
@@ -143,9 +138,6 @@ class MainActivity : FlutterActivity() {
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, "volume_button")
                 .setStreamHandler(volumeStreamHandler)
 
-        //
-        EventChannel(flutterEngine.dartExecutor.binaryMessenger, "ui_mode")
-                .setStreamHandler(uiModeStreamHandler)
     }
 
     // save_image
@@ -255,40 +247,6 @@ class MainActivity : FlutterActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    // ui_mode
-
-    private var uiModeEvents: EventChannel.EventSink? = null
-
-    private val uiModeStreamHandler = object : EventChannel.StreamHandler {
-
-        override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-            uiModeEvents = events
-        }
-
-        override fun onCancel(arguments: Any?) {
-            uiModeEvents = null
-        }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        when (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                uiModeEvents?.let { it.success("NIGHT") }
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                uiModeEvents?.let { it.success("NORMAL") }
-            }
-        }
-        super.onConfigurationChanged(newConfig)
-    }
-
-    private fun uiMode(): String {
-        return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> "NIGHT"
-            else -> "NORMAL"
-        }
     }
 
     // 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）

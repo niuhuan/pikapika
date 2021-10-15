@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		DDEFBAAB26AAE3AA00159A13 /* Pikapi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDEFBAAA26AAE3AA00159A13 /* Pikapi.framework */; };
+		DDE03DA827193C22000ABF7B /* Pikapi.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE03DA727193C22000ABF7B /* Pikapi.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +48,7 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA7EB5DA1FDE22BAC5B01D77 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
-		DDEFBAAA26AAE3AA00159A13 /* Pikapi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pikapi.framework; path = ../go/mobile/lib/Pikapi.framework; sourceTree = "<group>"; };
+		DDE03DA727193C22000ABF7B /* Pikapi.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Pikapi.xcframework; path = ../go/mobile/lib/Pikapi.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDEFBAAB26AAE3AA00159A13 /* Pikapi.framework in Frameworks */,
+				DDE03DA827193C22000ABF7B /* Pikapi.xcframework in Frameworks */,
 				0E44DEFD92B805627806403C /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,7 +88,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				DDEFBAAA26AAE3AA00159A13 /* Pikapi.framework */,
+				DDE03DA727193C22000ABF7B /* Pikapi.xcframework */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,

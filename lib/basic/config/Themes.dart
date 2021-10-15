@@ -5,8 +5,52 @@ import 'dart:io';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pikapi/basic/Common.dart';
 import '../Method.dart';
 import 'Platform.dart';
+
+const _fontFamilyProperty = "fontFamily";
+
+String? _fontFamily;
+
+Future initFont() async {
+  var defaultFont = "";
+  _fontFamily = await method.loadProperty(_fontFamilyProperty, defaultFont);
+}
+
+ThemeData _fontThemeData(bool dark) {
+  return ThemeData(
+    brightness: dark ? Brightness.dark : Brightness.light,
+    fontFamily: _fontFamily,
+  );
+}
+
+Future<void> inputFont(BuildContext context) async {
+  var font = await displayTextInputDialog(
+    context, "字体", "请输入字体", "$_fontFamily",
+    "请输入字体的名称, 例如宋体/黑体, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
+  );
+  if (font != null) {
+    await method.saveProperty(_fontFamilyProperty, font);
+    _fontFamily = font;
+    _changeThemeByCode(_themeCode);
+  }
+}
+
+Widget fontSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("字体"),
+        subtitle: Text("$_fontFamily"),
+        onTap: () async {
+          await inputFont(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}
 
 // 主题包
 abstract class _ThemePackage {
@@ -14,7 +58,7 @@ abstract class _ThemePackage {
 
   String name();
 
-  ThemeData themeData();
+  ThemeData themeData(ThemeData rawData);
 }
 
 class _OriginTheme extends _ThemePackage {
@@ -25,7 +69,7 @@ class _OriginTheme extends _ThemePackage {
   String name() => "原生";
 
   @override
-  ThemeData themeData() => ThemeData();
+  ThemeData themeData(ThemeData rawData) => rawData;
 }
 
 class _PinkTheme extends _ThemePackage {
@@ -36,8 +80,8 @@ class _PinkTheme extends _ThemePackage {
   String name() => "粉色";
 
   @override
-  ThemeData themeData() =>
-      ThemeData().copyWith(
+  ThemeData themeData(ThemeData rawData) =>
+      rawData.copyWith(
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
@@ -65,8 +109,8 @@ class _BlackTheme extends _ThemePackage {
   String name() => "酷黑";
 
   @override
-  ThemeData themeData() =>
-      ThemeData().copyWith(
+  ThemeData themeData(ThemeData rawData) =>
+      rawData.copyWith(
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
@@ -95,8 +139,9 @@ class _DarkTheme extends _ThemePackage {
   String name() => "暗黑";
 
   @override
-  ThemeData themeData() =>
-      ThemeData.dark().copyWith(
+  ThemeData themeData(ThemeData rawData) =>
+      rawData.copyWith(
+        brightness: Brightness.dark,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
         ),
@@ -127,8 +172,8 @@ var themeEvent = Event<EventArgs>();
 
 String? _themeCode;
 ThemeData? _themeData;
+ThemeData? _currentDarkTheme;
 bool _androidNightMode = false;
-bool _systemNight = false;
 
 String currentThemeName() {
   for (var package in _themePackages) {
@@ -140,20 +185,31 @@ String currentThemeName() {
 }
 
 ThemeData? currentThemeData() {
-  return (_androidNightMode && _systemNight)
-      ? _themePackages[3].themeData()
-      : _themeData;
+  return _themeData;
+}
+
+ThemeData? currentDarkTheme() {
+  return _currentDarkTheme;
 }
 
 // 根据Code选择主题, 并发送主题更换事件
-void _changeThemeByCode(String themeCode) {
+void _changeThemeByCode(String? themeCode) {
+  _ThemePackage? _themePackage;
   for (var package in _themePackages) {
     if (themeCode == package.code()) {
       _themeCode = themeCode;
-      _themeData = package.themeData();
+      _themePackage = package;
       break;
     }
   }
+  if (_themePackage != null) {
+    _themeData = _themePackage.themeData(
+      _fontThemeData(_themePackage == _themePackages[3]),
+    );
+  }
+  _currentDarkTheme = _androidNightMode
+      ? _themePackages[3].themeData(_fontThemeData(true))
+      : _themeData;
   themeEvent.broadcast();
 }
 
@@ -161,16 +217,8 @@ void _changeThemeByCode(String themeCode) {
 const _nightModePropertyName = "androidNightMode";
 
 Future<dynamic> initTheme() async {
-  if (androidVersion >= 29) {
-    _androidNightMode =
-        (await method.loadProperty(_nightModePropertyName, "false")) ==
-            "true";
-    _systemNight = (await method.androidGetUiMode()) == "NIGHT";
-    EventChannel("ui_mode").receiveBroadcastStream().listen((event) {
-      _systemNight = "$event" == "NIGHT";
-      themeEvent.broadcast();
-    });
-  }
+  _androidNightMode =
+      await method.loadProperty(_nightModePropertyName, "true") == "true";
   _changeThemeByCode(await method.loadTheme());
 }
 
@@ -189,8 +237,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                       _nightModePropertyName, "$v");
                   _androidNightMode = v;
                 }
-                setState(() {});
-                themeEvent.broadcast();
+                _changeThemeByCode(_themeCode);
               };
               list.add(
                 SimpleDialogOption(

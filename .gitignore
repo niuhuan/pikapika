@@ -49,4 +49,7 @@ app.*.map.json
 /go/mobile/lib/*.aar
 /go/mobile/lib/*.jar
 /go/mobile/lib/*.framework/
+/go/mobile/lib/*.xcframework/
 /go/vendor/
+
+ios/build/

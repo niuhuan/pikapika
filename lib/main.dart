@@ -37,6 +37,7 @@ class _PikapiAppState extends State<PikapiApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: currentThemeData(),
+      darkTheme: currentDarkTheme(),
       navigatorObservers: [navigatorObserver, routeObserver],
       home: InitScreen(),
     );
