@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.view.Display
 import android.view.KeyEvent
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -20,8 +21,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.sync.Mutex
 import mobile.Mobile
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.concurrent.Executors
-import java.util.concurrent.LinkedBlockingQueue
 
 class MainActivity : FlutterActivity() {
 
@@ -59,13 +62,10 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private val resourceQueue: LinkedBlockingQueue<Any?> = LinkedBlockingQueue()
-    private var cacheDir: String? = null
-
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        cacheDir = context!!.cacheDir.absolutePath
-        Mobile.initApplication(context!!.filesDir.absolutePath)
+        Mobile.initApplication(androidDataLocal())
         // Method Channel
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "method").setMethodCallHandler { call, result ->
             result.withCoroutine {
@@ -89,6 +89,12 @@ class MainActivity : FlutterActivity() {
 //                    "exportComicDownloadAndroidQ" -> {
 //                        exportComicDownloadAndroidQ(call.argument("comicId")!!)
 //                    }
+                    // 现在的文件储存路径, 默认路径返回空字符串 ""
+                    "androidDataLocal" -> androidDataLocal()
+                    // 获取可以迁移数据地址
+                    "androidGetExtendDirs" -> androidGetExtendDirs()
+                    // 迁移到那个地方, 如果是空字符串则迁移会默认位置
+                    "androidMigrate" -> androidMigrate(call.argument("path")!!)
                     else -> {
                         notImplementedToken
                     }
@@ -138,6 +144,45 @@ class MainActivity : FlutterActivity() {
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, "volume_button")
                 .setStreamHandler(volumeStreamHandler)
 
+    }
+
+    private fun androidDataLocal(): String {
+        val localFile = File(context!!.filesDir.absolutePath, "data.local")
+        if (localFile.exists()) {
+            val path = String(FileInputStream(localFile).use { it.readBytes() })
+            if (File(path).isDirectory) {
+                return path
+            }
+        }
+        return context!!.filesDir.absolutePath
+    }
+
+    private fun androidGetExtendDirs(): String {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return context!!.getExternalFilesDirs("")?.joinToString(",") { it.toString() }
+                    ?: ""
+        }
+        throw Exception("System version too low")
+    }
+
+    private fun androidMigrate(path: String) {
+        val current = androidDataLocal()
+        if (current == path) {
+            return
+        }
+        Runtime.getRuntime().exec(
+                arrayOf(
+                        "mv",
+                        "$current/*",
+                        "$path/"
+                )
+        ).exitValue()
+        val localFile = File(context!!.filesDir.absolutePath, "data.local")
+        if (path == context!!.filesDir.absolutePath) {
+            localFile.delete()
+        } else {
+            FileOutputStream(localFile).use { it.write(path.toByteArray()) }
+        }
     }
 
     // save_image
@@ -250,7 +295,7 @@ class MainActivity : FlutterActivity() {
     }
 
     // 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）
-
+//    private val resourceQueue: LinkedBlockingQueue<Any?> = LinkedBlockingQueue()
 //    private var tmpComicId: String? = null
 //    private val exportComicDownloadAndroidQRequestCode = 2
 //

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/config/AndroidDisplayMode.dart';
 import 'package:pikapi/basic/config/AutoClean.dart';
 import 'package:pikapi/basic/config/AutoFullScreen.dart';
@@ -140,7 +142,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             fontSetting(),
             Divider(),
+            migrate(),
           ],
         ),
       );
+
+  Widget migrate() {
+    if (Platform.isAndroid) {
+      return ListTile(
+        title: Text("文件迁移"),
+        subtitle: Text("更换您的数据文件夹"),
+        onTap: () async {
+          var f = confirmDialog(
+            context,
+            "文件迁移",
+            "为了手机数据存储空间不足, 且具有内存卡的手机设计, 可将数据迁移到内存卡上。"
+                " 您在迁移之前, 请确保您的下载处于暂停状态, 或下载均已完成, 已保证您的数据完整性。"
+                " 如果迁移中断或其他原因导致程序无法启动, 图片失效等问题, 您可在程序管理中清除本应用程序的数据, 以回复正常使用。",
+          );
+        },
+      );
+    }
+    return Container();
+  }
 }

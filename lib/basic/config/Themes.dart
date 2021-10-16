@@ -1,7 +1,5 @@
 /// 主题
 
-import 'dart:io';
-
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
