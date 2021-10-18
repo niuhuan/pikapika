@@ -555,9 +555,10 @@ func FlatInvoke(method string, params string) (string, error) {
 	case "setDownloadRunning":
 		b, e := strconv.ParseBool(params)
 		if e != nil {
-			setDownloadRunning(b)
+			return "", e
 		}
-		return "", e
+		setDownloadRunning(b)
+		return "", nil
 	case "createDownload":
 		return "", createDownload(params)
 	case "addDownload":

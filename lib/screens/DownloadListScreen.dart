@@ -117,7 +117,6 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                           onPressed: () async {
                             Navigator.pop(context);
                             var to = !_downloadRunning;
-                            // properties.saveDownloading(to);
                             await method.setDownloadRunning(to);
                             setState(() {
                               _downloadRunning = to;

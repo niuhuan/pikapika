@@ -8,6 +8,7 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Display
 import android.view.KeyEvent
 import androidx.annotation.NonNull
@@ -24,6 +25,10 @@ import mobile.Mobile
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.lang.IllegalStateException
+import java.nio.file.CopyOption
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
@@ -54,6 +59,7 @@ class MainActivity : FlutterActivity() {
                     }
                 }
             } catch (e: Exception) {
+                Log.e("Method", "Exception", e)
                 uiThreadHandler.post {
                     error("", e.message, "")
                 }
@@ -90,11 +96,11 @@ class MainActivity : FlutterActivity() {
 //                        exportComicDownloadAndroidQ(call.argument("comicId")!!)
 //                    }
                     // 现在的文件储存路径, 默认路径返回空字符串 ""
-                    "androidDataLocal" -> androidDataLocal()
+                    "dataLocal" -> androidDataLocal()
+                    // 迁移到那个地方, 如果是空字符串则迁移会默认位置
+                    "migrate" -> androidMigrate(call.argument("path")!!)
                     // 获取可以迁移数据地址
                     "androidGetExtendDirs" -> androidGetExtendDirs()
-                    // 迁移到那个地方, 如果是空字符串则迁移会默认位置
-                    "androidMigrate" -> androidMigrate(call.argument("path")!!)
                     else -> {
                         notImplementedToken
                     }
@@ -159,8 +165,12 @@ class MainActivity : FlutterActivity() {
 
     private fun androidGetExtendDirs(): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return context!!.getExternalFilesDirs("")?.joinToString(",") { it.toString() }
-                    ?: ""
+            val result = context!!.getExternalFilesDirs("")?.toMutableList()?.also {
+                it.add(context!!.filesDir.absoluteFile)
+            }?.joinToString("|")
+            if (result != null) {
+                return result
+            }
         }
         throw Exception("System version too low")
     }
@@ -170,18 +180,55 @@ class MainActivity : FlutterActivity() {
         if (current == path) {
             return
         }
-        Runtime.getRuntime().exec(
-                arrayOf(
-                        "mv",
-                        "$current/*",
-                        "$path/"
-                )
-        ).exitValue()
+        // 删除位置配置文件
+        if (File(current, "data.local").exists()) {
+            File(current, "data.local").delete()
+        }
+        // 目标位置文件夹不存在就创建，存在则清理
+        val target = File(path)
+        if (!target.exists()) {
+            target.mkdirs()
+        }
+        target.listFiles().forEach { delete(it) }
+        // 移动所有文件夹
+
+        File(current).listFiles().forEach {
+            move(it, File(target, it.name))
+        }
         val localFile = File(context!!.filesDir.absolutePath, "data.local")
         if (path == context!!.filesDir.absolutePath) {
             localFile.delete()
         } else {
             FileOutputStream(localFile).use { it.write(path.toByteArray()) }
+        }
+    }
+
+    private fun delete(f: File) {
+        f.delete()
+    }
+
+    private fun move(f: File, t: File) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (f.isDirectory) {
+                Files.createDirectories(t.toPath())
+                f.listFiles().forEach { move(it, File(t, it.name)) }
+                Files.delete(f.toPath())
+            } else {
+                Files.move(f.toPath(), t.toPath())
+            }
+        } else {
+            if (f.isDirectory) {
+                t.mkdirs()
+                f.listFiles().forEach { move(it, File(t, it.name)) }
+                f.delete()
+            } else {
+                FileOutputStream(t).use { o ->
+                    FileInputStream(f).use { i ->
+                        o.write(i.readBytes())
+                    }
+                }
+                f.delete()
+            }
         }
     }
 
@@ -261,7 +308,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    // volume_buttons
+// volume_buttons
 
     private var volumeEvents: EventChannel.EventSink? = null
 
@@ -294,7 +341,7 @@ class MainActivity : FlutterActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    // 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）
+// 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）
 //    private val resourceQueue: LinkedBlockingQueue<Any?> = LinkedBlockingQueue()
 //    private var tmpComicId: String? = null
 //    private val exportComicDownloadAndroidQRequestCode = 2

@@ -537,4 +537,20 @@ class Method {
   Future<int> androidGetVersion() async {
     return await _channel.invokeMethod("androidGetVersion", {});
   }
+
+  Future<String> dataLocal() async {
+    return await _channel.invokeMethod("dataLocal", {});
+  }
+
+  Future<List<String>> androidGetExtendDirs() async {
+    String? tmp = await _channel.invokeMethod("androidGetExtendDirs", {});
+    if (tmp != null && tmp.isNotEmpty) {
+      return tmp.split("|");
+    }
+    return [];
+  }
+
+  Future migrate(String path) async {
+    return _channel.invokeMethod("migrate", {"path": path});
+  }
 }
