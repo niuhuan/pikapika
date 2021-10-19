@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
+import 'config/TimeOffsetHour.dart';
+
 double coverWidth = 210;
 double coverHeight = 315;
 
@@ -208,7 +210,7 @@ String add0(int num, int len) {
 /// 格式化时间 2012-34-56
 String formatTimeToDate(String str) {
   try {
-    var c = DateTime.parse(str);
+    var c = DateTime.parse(str).add(Duration(hours: currentTimeOffsetHour()));
     return "${add0(c.year, 4)}-${add0(c.month, 2)}-${add0(c.day, 2)}";
   } catch (e) {
     return "-";
@@ -218,7 +220,7 @@ String formatTimeToDate(String str) {
 /// 格式化时间 2012-34-56 12:34:56
 String formatTimeToDateTime(String str) {
   try {
-    var c = DateTime.parse(str);
+    var c = DateTime.parse(str).add(Duration(hours: currentTimeOffsetHour()));
     return "${add0(c.year, 4)}-${add0(c.month, 2)}-${add0(c.day, 2)} ${add0(c.hour, 2)}:${add0(c.minute, 2)}";
   } catch (e) {
     return "-";

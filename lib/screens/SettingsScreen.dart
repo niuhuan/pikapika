@@ -17,6 +17,7 @@ import 'package:pikapi/basic/config/ReaderType.dart';
 import 'package:pikapi/basic/config/Quality.dart';
 import 'package:pikapi/basic/config/ShadowCategories.dart';
 import 'package:pikapi/basic/config/Themes.dart';
+import 'package:pikapi/basic/config/TimeOffsetHour.dart';
 import 'package:pikapi/basic/config/VolumeController.dart';
 import 'package:pikapi/screens/components/NetworkSetting.dart';
 
@@ -112,6 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
+            timeZoneSetting(),
             Divider(),
             ListTile(
               title: Text("自动清理缓存"),

@@ -18,6 +18,7 @@ import 'package:pikapi/basic/config/ShadowCategories.dart';
 import 'package:pikapi/basic/config/Themes.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'package:pikapi/basic/config/ListLayout.dart';
+import 'package:pikapi/basic/config/TimeOffsetHour.dart';
 import 'package:pikapi/basic/config/VolumeController.dart';
 
 import 'AccountScreen.dart';
@@ -59,6 +60,7 @@ class _InitScreenState extends State<InitScreen> {
     await initKeyboardController();
     await initAndroidDisplayMode();
     await initChooserRoot();
+    await initTimeZone();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面
