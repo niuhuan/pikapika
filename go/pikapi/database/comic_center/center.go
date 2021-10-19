@@ -113,6 +113,8 @@ func ViewComicUpdateInfo(view *ComicView) error {
 }
 
 func ViewComic(comicId string) error {
+	mutex.Lock()
+	defer mutex.Unlock()
 	return db.Model(&ComicView{}).Where(
 		"id = ?", comicId,
 	).Update(

@@ -36,6 +36,7 @@ func notifyExport(str string) {
 	onEvent("EXPORT", str)
 }
 
+// 将interface序列化成字符串, 方便与flutter通信
 func serialize(point interface{}, err error) (string, error) {
 	if err != nil {
 		return "", err

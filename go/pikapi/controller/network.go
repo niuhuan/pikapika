@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// 获取IP的集合
 func clientIpSet() (string, error) {
 	address, err := net.InterfaceAddrs()
 	if err != nil {

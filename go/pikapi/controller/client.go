@@ -1,7 +1,8 @@
+// 透传Client的功能并增加缓存
+
 package controller
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	source "github.com/niuhuan/pica-go"
@@ -12,9 +13,13 @@ import (
 	"pgo/pikapi/database/network_cache"
 	"pgo/pikapi/database/properties"
 	"regexp"
+	"time"
+)
+
+import (
+	"context"
 	"strconv"
 	"strings"
-	"time"
 )
 
 func InitClient() {
@@ -405,7 +410,7 @@ func postComment(params string) (string, error) {
 
 func postChildComment(params string) (string, error) {
 	var paramsStruct struct {
-		ComicId string `json:"comicId"`
+		ComicId   string `json:"comicId"`
 		CommentId string `json:"commentId"`
 		Content   string `json:"content"`
 	}
