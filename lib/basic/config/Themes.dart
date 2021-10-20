@@ -19,7 +19,7 @@ Future initFont() async {
 ThemeData _fontThemeData(bool dark) {
   return ThemeData(
     brightness: dark ? Brightness.dark : Brightness.light,
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily == "" ? null : _fontFamily,
   );
 }
 
