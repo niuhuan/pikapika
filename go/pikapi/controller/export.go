@@ -18,6 +18,8 @@ import (
 	"time"
 )
 
+// 通过局域网导出
+
 var exportingListener net.Listener
 var exportingConn net.Conn
 

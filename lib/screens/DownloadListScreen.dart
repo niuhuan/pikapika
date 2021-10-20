@@ -23,7 +23,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   late bool _downloadRunning = false;
   late Future<List<DownloadComic>> _f = method.allDownloads();
 
-  void _onMessageChange(String event){
+  void _onMessageChange(String event) {
     print("EVENT");
     print(event);
     if (event is String) {
@@ -59,117 +59,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
       appBar: AppBar(
         title: Text('下载列表'),
         actions: [
-          ...(Platform.isWindows ||
-                  Platform.isMacOS ||
-                  Platform.isLinux ||
-                  Platform.isAndroid ||
-                  Platform.isIOS)
-              ? [
-                  MaterialButton(
-                      minWidth: 0,
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DownloadImportScreen(),
-                          ),
-                        );
-                        setState(() {
-                          _f = method.allDownloads();
-                        });
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(child: Container()),
-                          Icon(
-                            Icons.label_important,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '导入',
-                            style: TextStyle(fontSize: 14, color: Colors.white),
-                          ),
-                          Expanded(child: Container()),
-                        ],
-                      )),
-                ]
-              : [],
-          MaterialButton(
-              minWidth: 0,
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('下载任务'),
-                      content: Text(
-                        _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
-                      ),
-                      actions: [
-                        MaterialButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                          },
-                          child: Text('取消'),
-                        ),
-                        MaterialButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            var to = !_downloadRunning;
-                            await method.setDownloadRunning(to);
-                            setState(() {
-                              _downloadRunning = to;
-                            });
-                          },
-                          child: Text('确认'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Column(
-                children: [
-                  Expanded(child: Container()),
-                  Icon(
-                    _downloadRunning
-                        ? Icons.compare_arrows_sharp
-                        : Icons.schedule_send,
-                    size: 18,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    _downloadRunning ? '下载中' : '暂停中',
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                  Expanded(child: Container()),
-                ],
-              )),
-          MaterialButton(
-              minWidth: 0,
-              onPressed: () async {
-                await method.resetFailed();
-                setState(() {
-                  _f = method.allDownloads();
-                });
-                defaultToast(context, "所有失败的下载已经恢复");
-              },
-              child: Column(
-                children: [
-                  Expanded(child: Container()),
-                  Icon(
-                    Icons.sync_problem,
-                    size: 18,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '恢复',
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                  Expanded(child: Container()),
-                ],
-              )),
+          importButton(),
+          pauseButton(),
+          resetFailedButton(),
         ],
       ),
       body: FutureBuilder(
@@ -240,5 +132,117 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         },
       ),
     );
+  }
+
+  Widget importButton() {
+    return MaterialButton(
+        minWidth: 0,
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DownloadImportScreen(),
+            ),
+          );
+          setState(() {
+            _f = method.allDownloads();
+          });
+        },
+        child: Column(
+          children: [
+            Expanded(child: Container()),
+            Icon(
+              Icons.label_important,
+              size: 18,
+              color: Colors.white,
+            ),
+            Text(
+              '导入',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            Expanded(child: Container()),
+          ],
+        ));
+  }
+
+  Widget pauseButton() {
+    return MaterialButton(
+        minWidth: 0,
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('下载任务'),
+                content: Text(
+                  _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
+                ),
+                actions: [
+                  MaterialButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    child: Text('取消'),
+                  ),
+                  MaterialButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      var to = !_downloadRunning;
+                      await method.setDownloadRunning(to);
+                      setState(() {
+                        _downloadRunning = to;
+                      });
+                    },
+                    child: Text('确认'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Column(
+          children: [
+            Expanded(child: Container()),
+            Icon(
+              _downloadRunning
+                  ? Icons.compare_arrows_sharp
+                  : Icons.schedule_send,
+              size: 18,
+              color: Colors.white,
+            ),
+            Text(
+              _downloadRunning ? '下载中' : '暂停中',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            Expanded(child: Container()),
+          ],
+        ));
+  }
+
+  Widget resetFailedButton() {
+    return MaterialButton(
+        minWidth: 0,
+        onPressed: () async {
+          await method.resetFailed();
+          setState(() {
+            _f = method.allDownloads();
+          });
+          defaultToast(context, "所有失败的下载已经恢复");
+        },
+        child: Column(
+          children: [
+            Expanded(child: Container()),
+            Icon(
+              Icons.sync_problem,
+              size: 18,
+              color: Colors.white,
+            ),
+            Text(
+              '恢复',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            Expanded(child: Container()),
+          ],
+        ));
   }
 }
