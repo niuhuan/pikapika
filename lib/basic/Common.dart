@@ -3,6 +3,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'config/TimeOffsetHour.dart';
 
+/// 默认的图片尺寸
 double coverWidth = 210;
 double coverHeight = 315;
 

@@ -1,31 +1,46 @@
 /// 图片质量
 
 import 'package:flutter/material.dart';
-
 import '../Method.dart';
 
-late String currentQualityCode;
-
-Future<void> initQuality() async {
-  currentQualityCode = await method.loadQuality();
-}
-
-const ImageQualityOriginal = "original";
-const ImageQualityLow = "low";
-const ImageQualityMedium = "medium";
+const _ImageQualityOriginal = "original";
+const _ImageQualityLow = "low";
+const _ImageQualityMedium = "medium";
 const ImageQualityHigh = "high";
 
-const LabelOriginal = "原图";
-const LabelLow = "低";
-const LabelMedium = "中";
-const LabelHigh = "高";
+const _LabelOriginal = "原图";
+const _LabelLow = "低";
+const _LabelMedium = "中";
+const _LabelHigh = "高";
 
 var _qualities = {
-  LabelOriginal: ImageQualityOriginal,
-  LabelLow: ImageQualityLow,
-  LabelMedium: ImageQualityMedium,
-  LabelHigh: ImageQualityHigh,
+  _LabelOriginal: _ImageQualityOriginal,
+  _LabelLow: _ImageQualityLow,
+  _LabelMedium: _ImageQualityMedium,
+  _LabelHigh: ImageQualityHigh,
 };
+
+late String _currentQualityCode;
+
+String currentQualityCode() {
+  return _currentQualityCode;
+}
+
+String _currentQualityName() {
+  for (var e in _qualities.entries) {
+    if (e.value == _currentQualityCode) {
+      return e.key;
+    }
+  }
+  return '';
+}
+
+const _propertyName = "quality";
+const _defaultValue = _ImageQualityOriginal;
+
+Future<void> initQuality() async {
+  _currentQualityCode = await method.loadProperty(_propertyName, _defaultValue);
+}
 
 Future<void> chooseQuality(BuildContext context) async {
   String? code = await showDialog<String>(
@@ -47,16 +62,22 @@ Future<void> chooseQuality(BuildContext context) async {
     },
   );
   if (code != null) {
-    method.saveQuality(code);
-    currentQualityCode = code;
+    method.saveProperty(_propertyName, code);
+    _currentQualityCode = code;
   }
 }
 
-String currentQualityName() {
-  for (var e in _qualities.entries) {
-    if (e.value == currentQualityCode) {
-      return e.key;
-    }
-  }
-  return '';
+Widget qualitySetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("浏览时的图片质量"),
+        subtitle: Text(_currentQualityName()),
+        onTap: () async {
+          await chooseQuality(context);
+          setState(() {});
+        },
+      );
+    },
+  );
 }

@@ -3,6 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
+// EventChannel
+// 由于Flutter的EventChannel只能订阅一次, 且为了和golang的的通信, 这里实现了多次订阅的分发和平铺
+// 根据eventName订阅和取消订阅
+
 var _eventChannel = EventChannel("flatEvent");
 StreamSubscription? _eventChannelListen;
 

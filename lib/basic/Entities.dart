@@ -1,3 +1,4 @@
+/// 图片
 class PicaImage {
   late String originalName;
   late String path;
@@ -10,6 +11,7 @@ class PicaImage {
   }
 }
 
+/// 用户基本信息
 class BasicUser {
   late String id;
   late String gender;
@@ -34,6 +36,7 @@ class BasicUser {
   }
 }
 
+/// 用户自己的信息
 class UserProfile extends BasicUser {
   late String birthday;
   late String email;
@@ -48,6 +51,7 @@ class UserProfile extends BasicUser {
   }
 }
 
+/// 分页
 class Page {
   late int total;
   late int limit;
@@ -62,6 +66,7 @@ class Page {
   }
 }
 
+/// 分类
 class Category {
   late String id;
   late String title;
@@ -82,6 +87,7 @@ class Category {
   }
 }
 
+/// 漫画分页
 class ComicsPage extends Page {
   late List<ComicSimple> docs;
 
@@ -93,6 +99,7 @@ class ComicsPage extends Page {
   }
 }
 
+/// 漫画基本信息
 class ComicSimple {
   late String id;
   late String title;
@@ -117,6 +124,7 @@ class ComicSimple {
   }
 }
 
+/// 漫画详情
 class ComicInfo extends ComicSimple {
   late String description;
   late String chineseTeam;
@@ -145,6 +153,7 @@ class ComicInfo extends ComicSimple {
   }
 }
 
+/// 漫画创建人信息
 class Creator extends BasicUser {
   late String slogan;
   late String role;
@@ -157,6 +166,7 @@ class Creator extends BasicUser {
   }
 }
 
+/// 漫画章节
 class Ep {
   late String id;
   late String title;
@@ -171,6 +181,7 @@ class Ep {
   }
 }
 
+/// 漫画章节分页
 class EpPage extends Page {
   late List<Ep> docs;
 
@@ -182,6 +193,7 @@ class EpPage extends Page {
   }
 }
 
+/// 漫画图片分页
 class PicturePage extends Page {
   late List<Picture> docs;
 
@@ -193,6 +205,7 @@ class PicturePage extends Page {
   }
 }
 
+/// 漫画图片信息
 class Picture {
   late String id;
   late PicaImage media;
@@ -203,6 +216,7 @@ class Picture {
   }
 }
 
+/// 显示图片数据
 class RemoteImageData {
   late int fileSize;
   late String format;
@@ -227,6 +241,7 @@ class RemoteImageData {
   }
 }
 
+/// 漫画评论分页
 class CommentPage extends Page {
   late List<Comment> docs;
 
@@ -238,6 +253,7 @@ class CommentPage extends Page {
   }
 }
 
+/// 漫画评论详情
 class Comment {
   late String id;
   late String content;
@@ -264,6 +280,7 @@ class Comment {
   }
 }
 
+/// 评论的用户信息
 class CommentUser extends BasicUser {
   late String role;
 
@@ -272,6 +289,7 @@ class CommentUser extends BasicUser {
   }
 }
 
+/// 已下载图片的信息
 class DownloadPicture {
   late int rankInEp;
   late String fileServer;
@@ -294,6 +312,7 @@ class DownloadPicture {
   }
 }
 
+/// 浏览历史记录
 class ViewLog {
   late String id;
   late String title;
@@ -334,6 +353,7 @@ class ViewLog {
   }
 }
 
+/// 已下载漫画的信息
 class DownloadComic {
   late String id;
   late String createdAt;
@@ -417,6 +437,7 @@ class DownloadComic {
   }
 }
 
+/// 已下载的章节信息
 class DownloadEp {
   late String comicId;
   late String id;
@@ -447,6 +468,7 @@ class DownloadEp {
   }
 }
 
+/// 游戏的分页
 class GamePage extends Page {
   late List<GameSimple> docs;
 
@@ -458,6 +480,7 @@ class GamePage extends Page {
   }
 }
 
+/// 游戏的简要信息
 class GameSimple {
   late String id;
   late String title;
@@ -484,6 +507,7 @@ class GameSimple {
   }
 }
 
+/// 游戏详情
 class GameInfo extends GameSimple {
   late String description;
   late String updateContent;
@@ -519,6 +543,7 @@ class GameInfo extends GameSimple {
   }
 }
 
+/// 我的评论页面分页
 class MyCommentsPage extends Page {
   late List<MyComment> docs;
 
@@ -528,6 +553,7 @@ class MyCommentsPage extends Page {
   }
 }
 
+/// 我的评论
 class MyComment {
   late String id;
   late String content;
@@ -550,6 +576,7 @@ class MyComment {
   }
 }
 
+/// 我的评论漫画简要信息
 class MyCommentComic {
   late String id;
   late String title;
@@ -560,6 +587,7 @@ class MyCommentComic {
   }
 }
 
+/// 子评论分页
 class CommentChildrenPage extends Page {
   late List<CommentChild> docs;
 
@@ -573,6 +601,7 @@ class CommentChildrenPage extends Page {
   }
 }
 
+/// 子评论
 class CommentChild extends Comment {
   late String parent;
 

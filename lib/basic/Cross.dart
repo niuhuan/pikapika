@@ -58,6 +58,7 @@ Future<dynamic> saveImage(String path, BuildContext context) async {
   }
 }
 
+/// 保存图片且保持静默, 用于批量导出到相册
 Future<dynamic> saveImageQuiet(String path, BuildContext context) async {
   if (Platform.isIOS) {
     return method.iosSaveFileToImage(path);
@@ -98,6 +99,7 @@ Future<String?> chooseFolder(BuildContext context) async {
   );
 }
 
+/// 复制对话框
 void confirmCopy(BuildContext context, String content) async {
   if (await confirmDialog(context, "复制", content)) {
     copyToClipBoard(context, content);

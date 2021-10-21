@@ -29,7 +29,7 @@ class DownloadReaderScreen extends StatefulWidget {
     this.initPictureRank,
     bool? autoFullScreen,
   }) : super(key: key) {
-    this.autoFullScreen = autoFullScreen ?? gAutoFullScreen;
+    this.autoFullScreen = autoFullScreen ?? currentAutoFullScreen();
   }
 
   @override

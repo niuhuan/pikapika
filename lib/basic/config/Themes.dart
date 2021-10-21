@@ -7,6 +7,9 @@ import 'package:pikapi/basic/Common.dart';
 import '../Method.dart';
 import 'Platform.dart';
 
+
+// 字体相关
+
 const _fontFamilyProperty = "fontFamily";
 
 String? _fontFamily;
@@ -49,6 +52,8 @@ Widget fontSetting() {
     },
   );
 }
+
+// 主题相关
 
 // 主题包
 abstract class _ThemePackage {
@@ -168,6 +173,9 @@ final _themePackages = <_ThemePackage>[
 // 主题更换事件
 var themeEvent = Event<EventArgs>();
 
+const _themePropertyName = "theme";
+const _defaultThemeCode = "pink";
+
 String? _themeCode;
 ThemeData? _themeData;
 ThemeData? _currentDarkTheme;
@@ -217,7 +225,9 @@ const _nightModePropertyName = "androidNightMode";
 Future<dynamic> initTheme() async {
   _androidNightMode =
       await method.loadProperty(_nightModePropertyName, "true") == "true";
-  _changeThemeByCode(await method.loadTheme());
+  _changeThemeByCode(
+    await method.loadProperty(_themePropertyName, _defaultThemeCode),
+  );
 }
 
 // 选择主题的对话框
@@ -292,7 +302,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
     },
   );
   if (theme != null) {
-    method.saveTheme(theme);
+    method.saveProperty(_themePropertyName, theme);
     _changeThemeByCode(theme);
   }
 }

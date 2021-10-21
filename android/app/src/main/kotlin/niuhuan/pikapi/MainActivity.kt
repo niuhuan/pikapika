@@ -92,9 +92,6 @@ class MainActivity : FlutterActivity() {
                         setMode(call.argument("mode")!!)
                     }
                     "androidGetVersion" -> Build.VERSION.SDK_INT
-//                    "exportComicDownloadAndroidQ" -> {
-//                        exportComicDownloadAndroidQ(call.argument("comicId")!!)
-//                    }
                     // 现在的文件储存路径, 默认路径返回空字符串 ""
                     "dataLocal" -> androidDataLocal()
                     // 迁移到那个地方, 如果是空字符串则迁移会默认位置
@@ -340,64 +337,5 @@ class MainActivity : FlutterActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
-
-// 安卓11以上使用了 MANAGE_EXTERNAL_STORAGE 权限来管理整个外置存储 （危险权限）
-//    private val resourceQueue: LinkedBlockingQueue<Any?> = LinkedBlockingQueue()
-//    private var tmpComicId: String? = null
-//    private val exportComicDownloadAndroidQRequestCode = 2
-//
-//    private fun exportComicDownloadAndroidQ(comicId: String) {
-//        val title = Mobile.flatInvoke("specialDownloadTitle", comicId)
-//        var fileName = title
-//        fileName = fileName.replace('/', '_')
-//        fileName = fileName.replace('\\', '_')
-//        fileName = fileName.replace('*', '_')
-//        fileName = fileName.replace('?', '_')
-//        fileName = fileName.replace('<', '_')
-//        fileName = fileName.replace('>', '_')
-//        fileName = fileName.replace('|', '_')
-//        fileName = fileName + "_" + System.currentTimeMillis() + ".zip"
-//        tmpComicId = comicId
-//        startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).also {
-//            it.addCategory(Intent.CATEGORY_OPENABLE)
-//            it.type = "application/octet-stream"
-//            it.putExtra(Intent.EXTRA_TITLE, fileName)
-//        }, exportComicDownloadAndroidQRequestCode)
-//        val result = resourceQueue.take()
-//        if (result is Throwable) {
-//            throw result
-//        }
-//        return
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        pool.submit {
-//            try {
-//                if (resultCode === RESULT_OK && data != null) {
-//                    when (requestCode) {
-//                        exportComicDownloadAndroidQRequestCode -> {
-//                            contentResolver.openOutputStream(data.data!!)?.use { os ->
-//                                val path = Mobile.flatInvoke("exportComicDownload", Gson().toJson(HashMap<Any, Any?>().also { map ->
-//                                    map["comicId"] = tmpComicId
-//                                    map["dir"] = cacheDir
-//                                }))
-//                                try {
-//                                    FileInputStream(path).copyTo(os)
-//                                } finally {
-//                                    File(path).delete()
-//                                }
-//                            }
-//                            resourceQueue.put("OK")
-//                        }
-//                        else -> resourceQueue.put(Exception("WTF"))
-//                    }
-//                } else {
-//                    resourceQueue.put(Exception("NOT OK"))
-//                }
-//            } catch (e: Throwable) {
-//                resourceQueue.put(Exception(e))
-//            }
-//        }
-//    }
 
 }

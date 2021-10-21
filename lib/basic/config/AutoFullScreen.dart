@@ -5,14 +5,21 @@ import 'package:flutter/material.dart';
 import '../Common.dart';
 import '../Method.dart';
 
-late bool gAutoFullScreen;
+late bool _autoFullScreen;
+
+bool currentAutoFullScreen() {
+  return _autoFullScreen;
+}
+
+const _propertyName = "autoFullScreen";
 
 Future<void> initAutoFullScreen() async {
-  gAutoFullScreen = await method.getAutoFullScreen();
+  _autoFullScreen =
+      (await method.loadProperty(_propertyName, "false")) == "true";
 }
 
 String autoFullScreenName() {
-  return gAutoFullScreen ? "是" : "否";
+  return _autoFullScreen ? "是" : "否";
 }
 
 Future<void> chooseAutoFullScreen(BuildContext context) async {
@@ -20,7 +27,7 @@ Future<void> chooseAutoFullScreen(BuildContext context) async {
       await chooseListDialog<String>(context, "进入阅读器自动全屏", ["是", "否"]);
   if (result != null) {
     var target = result == "是";
-    await method.setAutoFullScreen(target);
-    gAutoFullScreen = target;
+    await method.saveProperty(_propertyName, "$target");
+    _autoFullScreen = target;
   }
 }

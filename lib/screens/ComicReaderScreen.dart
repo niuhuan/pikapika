@@ -30,7 +30,7 @@ class ComicReaderScreen extends StatefulWidget {
     this.initPictureRank,
     bool? autoFullScreen,
   }) : super(key: key) {
-    this.autoFullScreen = autoFullScreen ?? gAutoFullScreen;
+    this.autoFullScreen = autoFullScreen ?? currentAutoFullScreen();
   }
 
   @override
@@ -56,7 +56,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
         widget.comicInfo.id,
         widget.currentEpOrder,
         ++_needLoadPage,
-        currentQualityCode,
+        currentQualityCode(),
       );
       list.addAll(page.docs.map((element) => element.media));
     } while (page.pages > page.page);

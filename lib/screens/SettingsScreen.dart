@@ -38,14 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Divider(),
             NetworkSetting(),
             Divider(),
-            ListTile(
-              title: Text("浏览时的图片质量"),
-              subtitle: Text(currentQualityName()),
-              onTap: () async {
-                await chooseQuality(context);
-                setState(() {});
-              },
-            ),
+            qualitySetting(),
             ListTile(
               title: Text("阅读器模式"),
               subtitle: Text(currentReaderTypeName()),
@@ -81,14 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             volumeControllerSetting(),
             keyboardControllerSetting(),
             Divider(),
-            ListTile(
-              title: Text("封印"),
-              subtitle: Text(jsonEncode(shadowCategories)),
-              onTap: () async {
-                await chooseShadowCategories(context);
-                setState(() {});
-              },
-            ),
+            shadowCategoriesSetting(),
             ListTile(
               title: Text("列表页加载方式"),
               subtitle: Text(currentPagerActionName()),
