@@ -11,9 +11,8 @@ import (
 	"net"
 	"os"
 	path2 "path"
-	"pgo/pikapi/const_value"
-	"pgo/pikapi/database/comic_center"
-	"pgo/pikapi/utils"
+	"pikapi/main/database/comic_center"
+	"pikapi/main/utils"
 	"strconv"
 	"strings"
 )
@@ -168,7 +167,7 @@ func importComicDownload(zipPath string) error {
 			if err != nil {
 				return err
 			}
-			ioutil.WriteFile(path2.Join(comicDirPath, "logo"), logoBuff, const_value.CreateFileMode)
+			ioutil.WriteFile(path2.Join(comicDirPath, "logo"), logoBuff, utils.CreateFileMode)
 		}
 		for _, ep := range jsonComicDownload.EpList {
 			utils.Mkdir(path2.Join(comicDirPath, strconv.Itoa(int(ep.EpOrder))))
@@ -184,7 +183,7 @@ func importComicDownload(zipPath string) error {
 					if err != nil {
 						return err
 					}
-					return ioutil.WriteFile(downloadPath(picture.LocalPath), entryBuff, const_value.CreateFileMode)
+					return ioutil.WriteFile(downloadPath(picture.LocalPath), entryBuff, utils.CreateFileMode)
 				}()
 				if err != nil {
 					return err

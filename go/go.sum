@@ -35,8 +35,6 @@ github.com/mattn/go-sqlite3 v1.14.5 h1:1IdxlwTNazvbKJQSxoJ5/9ECbEeaTTyeU7sEAZ5KK
 github.com/mattn/go-sqlite3 v1.14.5/go.mod h1:WVKg1VTActs4Qso6iwGbiFih2UIHo0ENGwNd0Lj+XmI=
 github.com/miguelpruivo/flutter_file_picker/go v0.0.0-20210622152105-9f0a811028a0 h1:hXl9AMW20Php3xWlWZr2Acw50tqeblLgtLfLoRCACmA=
 github.com/miguelpruivo/flutter_file_picker/go v0.0.0-20210622152105-9f0a811028a0/go.mod h1:csuW+TFyYKtiUwNvcvhcpyX4quPI7Pvv0SUogdqCW4I=
-github.com/niuhuan/pica-go v0.0.0-20210923020558-090104e7b1a7 h1:E0WsH0UeFvuGiaEb1/tyy35ot76YDJKZ2q0/QjRQMWA=
-github.com/niuhuan/pica-go v0.0.0-20210923020558-090104e7b1a7/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
 github.com/niuhuan/pica-go v0.0.0-20211008032829-544a58c56bee h1:SewxTGOkoJ3JUmLLQ1RXUcqLdifT5502QZQl09eCGL8=
 github.com/niuhuan/pica-go v0.0.0-20211008032829-544a58c56bee/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

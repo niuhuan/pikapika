@@ -2,11 +2,11 @@ package config
 
 import (
 	"path"
-	"pgo/pikapi/controller"
-	"pgo/pikapi/database/comic_center"
-	"pgo/pikapi/database/network_cache"
-	"pgo/pikapi/database/properties"
-	"pgo/pikapi/utils"
+	"pikapi/main/controller"
+	"pikapi/main/database/comic_center"
+	"pikapi/main/database/network_cache"
+	"pikapi/main/database/properties"
+	"pikapi/main/utils"
 )
 
 // InitApplication 由不同的平台直接调用, 根据提供的路径初始化数据库, 资料文件夹

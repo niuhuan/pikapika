@@ -157,10 +157,19 @@ class _AccountScreenState extends State<AccountScreen> {
       setState(() {
         _logging = false;
       });
+      var message = "请检查账号密码";
+      switch (errorType("$e")) {
+        case ERROR_TYPE_NETWORK:
+          message = "网络不通";
+          break;
+        case ERROR_TYPE_TIME:
+          message = "请检查设备时间";
+          break;
+      }
       alertDialog(
         context,
         '登录失败',
-        errorType("$e") == ERROR_TYPE_NETWORK ? '网络不通' : '请检查账号密码',
+        "$message\n$e",
       );
     }
   }

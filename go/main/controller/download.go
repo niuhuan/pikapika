@@ -5,9 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"pgo/pikapi/const_value"
-	"pgo/pikapi/database/comic_center"
-	utils2 "pgo/pikapi/utils"
+	"pikapi/main/database/comic_center"
+	utils2 "pikapi/main/utils"
 	"time"
 )
 
@@ -316,9 +315,9 @@ func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
 	// 将图片保存到文件
 	dir := filepath.Dir(realPath)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		os.Mkdir(dir, const_value.CreateDirMode)
+		os.Mkdir(dir, utils2.CreateDirMode)
 	}
-	err = ioutil.WriteFile(downloadPath(picturePath), buff, const_value.CreateFileMode)
+	err = ioutil.WriteFile(downloadPath(picturePath), buff, utils2.CreateFileMode)
 	if err != nil {
 		return err
 	}

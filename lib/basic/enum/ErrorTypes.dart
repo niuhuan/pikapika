@@ -1,5 +1,6 @@
 const ERROR_TYPE_NETWORK = "NETWORK_ERROR";
 const ERROR_TYPE_PERMISSION = "PERMISSION_ERROR";
+const ERROR_TYPE_TIME = "TIME_ERROR";
 
 // 错误的类型, 方便照展示和谐的提示
 String errorType(String error) {
@@ -14,6 +15,9 @@ String errorType(String error) {
   }
   if (error.contains("permission denied")) {
     return ERROR_TYPE_PERMISSION;
+  }
+  if (error.contains("time is not synchronize")) {
+    return ERROR_TYPE_TIME;
   }
   return "";
 }

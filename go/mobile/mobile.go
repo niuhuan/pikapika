@@ -1,8 +1,8 @@
 package mobile
 
 import (
-	"pgo/pikapi/config"
-	"pgo/pikapi/controller"
+	"pikapi/main/config"
+	"pikapi/main/controller"
 )
 
 func InitApplication(application string) {

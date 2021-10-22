@@ -12,8 +12,8 @@ import (
 	"net"
 	"os"
 	"path"
-	"pgo/pikapi/const_value"
-	"pgo/pikapi/database/comic_center"
+	"pikapi/main/database/comic_center"
+	"pikapi/main/utils"
 	"strings"
 	"time"
 )
@@ -386,11 +386,11 @@ func exportComicDownloadToJPG(params string) error {
 	}
 	dirPath := path.Join(dir, fmt.Sprintf("%s-%s", reasonablePath(comic.Title), time.Now().Format("2006_01_02_15_04_05.999")))
 	println(fmt.Sprintf("DIR : %s", dirPath))
-	err = os.Mkdir(dirPath, const_value.CreateDirMode)
+	err = os.Mkdir(dirPath, utils.CreateDirMode)
 	if err != nil {
 		return err
 	}
-	err = os.Mkdir(path.Join(dirPath, "pictures"), const_value.CreateDirMode)
+	err = os.Mkdir(path.Join(dirPath, "pictures"), utils.CreateDirMode)
 	if err != nil {
 		return err
 	}

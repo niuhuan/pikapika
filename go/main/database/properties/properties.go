@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"path"
-	"pgo/pikapi/const_value"
+	"pikapi/main/utils"
 	"strconv"
 	"sync"
 )
@@ -18,7 +18,7 @@ func InitDBConnect(databaseDir string) {
 	mutex.Lock()
 	defer mutex.Unlock()
 	var err error
-	db, err = gorm.Open(sqlite.Open(path.Join(databaseDir, "properties.db")), const_value.GormConfig)
+	db, err = gorm.Open(sqlite.Open(path.Join(databaseDir, "properties.db")), utils.GormConfig)
 	if err != nil {
 		panic("failed to connect database")
 	}

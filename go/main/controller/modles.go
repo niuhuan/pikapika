@@ -1,6 +1,6 @@
 package controller
 
-import "pgo/pikapi/database/comic_center"
+import "pikapi/main/database/comic_center"
 
 type DisplayImageData struct {
 	FileSize  int64  `json:"fileSize"`

@@ -10,7 +10,7 @@ import (
 	_ "image/png"
 	"os"
 	"path/filepath"
-	"pgo/pikapi/database/properties"
+	"pikapi/main/database/properties"
 	"strconv"
 	"strings"
 )

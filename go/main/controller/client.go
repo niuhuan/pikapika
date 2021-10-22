@@ -9,9 +9,9 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"pgo/pikapi/database/comic_center"
-	"pgo/pikapi/database/network_cache"
-	"pgo/pikapi/database/properties"
+	"pikapi/main/database/comic_center"
+	"pikapi/main/database/network_cache"
+	"pikapi/main/database/properties"
 	"regexp"
 	"time"
 )

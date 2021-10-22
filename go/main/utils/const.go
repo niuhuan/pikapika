@@ -1,4 +1,4 @@
-package const_value
+package utils
 
 import (
 	"gorm.io/gorm"

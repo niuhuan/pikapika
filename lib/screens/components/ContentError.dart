@@ -27,6 +27,9 @@ class ContentError extends StatelessWidget {
       case ERROR_TYPE_PERMISSION:
         message = "没有权限或路径不可用";
         break;
+      case ERROR_TYPE_TIME:
+        message = "请检查设备时间";
+        break;
       default:
         message = "啊哦, 被玩坏了";
         break;

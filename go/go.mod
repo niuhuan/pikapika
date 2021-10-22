@@ -1,4 +1,4 @@
-module pgo
+module pikapi
 
 go 1.16
 

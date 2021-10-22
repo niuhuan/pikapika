@@ -2,7 +2,7 @@ package controller
 
 import (
 	"encoding/json"
-	"pgo/pikapi/database/comic_center"
+	"pikapi/main/database/comic_center"
 )
 
 // EventNotify EventChannel 总线

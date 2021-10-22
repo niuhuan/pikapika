@@ -7,7 +7,7 @@ import (
 	"path"
 	path2 "path"
 	"path/filepath"
-	"pgo/pikapi/config"
+	"pikapi/main/config"
 	"runtime"
 	"strings"
 )

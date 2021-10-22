@@ -10,11 +10,10 @@ import (
 	"io/ioutil"
 	"os"
 	path2 "path"
-	"pgo/pikapi/const_value"
-	"pgo/pikapi/database/comic_center"
-	"pgo/pikapi/database/network_cache"
-	"pgo/pikapi/database/properties"
-	"pgo/pikapi/utils"
+	"pikapi/main/database/comic_center"
+	"pikapi/main/database/network_cache"
+	"pikapi/main/database/properties"
+	"pikapi/main/utils"
 	"strconv"
 	"time"
 )
@@ -271,7 +270,7 @@ func downloadComicLogo(comic *comic_center.ComicDownload) {
 	}
 	if err == nil {
 		comicLogoPath := path2.Join(comic.ID, "logo")
-		ioutil.WriteFile(downloadPath(comicLogoPath), buff, const_value.CreateFileMode)
+		ioutil.WriteFile(downloadPath(comicLogoPath), buff, utils.CreateFileMode)
 		comic_center.UpdateDownloadLogo(
 			comic.ID,
 			int64(len(buff)),
