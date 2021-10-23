@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Method.dart';
@@ -51,13 +50,8 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
       setState(() {
         for (var i = 0; i < _comicList.length; i++) {
           if (_comicList[i].id == id) {
-            _comicList[i] = ViewLogWrapEntity(
-              _comicList[i].id,
-              _comicList[i].title,
-              _comicList[i].fileServer,
-              _comicList[i].path,
-              deleted: true,
-            );
+            _comicList.removeAt(i);
+            _offset--;
             break;
           }
         }
@@ -153,7 +147,6 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   }
 }
 
-
 class ViewLogWrap extends StatelessWidget {
   final Function(String) onTapComic;
   final List<ViewLogWrapEntity> comics;
@@ -174,8 +167,15 @@ class ViewLogWrap extends StatelessWidget {
     return Wrap(
       alignment: WrapAlignment.spaceAround,
       children: comics.map((e) {
-        if (e.deleted) {
-          return Card(
+        return InkWell(
+          key: e.key,
+          onTap: () {
+            onTapComic(e.id);
+          },
+          onLongPress: () {
+            onDelete(e.id);
+          },
+          child: Card(
             child: Container(
               width: width,
               child: Column(
@@ -188,7 +188,7 @@ class ViewLogWrap extends StatelessWidget {
                         path: e.path);
                   }),
                   Text(
-                    '已删除\n',
+                    e.title + '\n',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(height: 1.4),
@@ -197,52 +197,19 @@ class ViewLogWrap extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        } else {
-          return InkWell(
-            onTap: () {
-              onTapComic(e.id);
-            },
-            onLongPress: () {
-              onDelete(e.id);
-            },
-            child: Card(
-              child: Container(
-                width: width,
-                child: Column(
-                  children: [
-                    LayoutBuilder(builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return RemoteImage(
-                          width: constraints.maxWidth,
-                          fileServer: e.fileServer,
-                          path: e.path);
-                    }),
-                    Text(
-                      e.title + '\n',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(height: 1.4),
-                      strutStyle: StrutStyle(height: 1.4),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }
+          ),
+        );
       }).toList(),
     );
   }
 }
 
 class ViewLogWrapEntity {
+  final Key key = UniqueKey();
   final String id;
   final String title;
   final String fileServer;
   final String path;
-  final bool deleted;
 
-  ViewLogWrapEntity(this.id, this.title, this.fileServer, this.path,
-      {this.deleted = false});
+  ViewLogWrapEntity(this.id, this.title, this.fileServer, this.path);
 }
