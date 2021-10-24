@@ -68,20 +68,18 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         future: _f,
         builder: (BuildContext context,
             AsyncSnapshot<List<DownloadComic>> snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return ContentLoading(label: '加载中');
+          }
+
           if (snapshot.hasError) {
             print("${snapshot.error}");
             print("${snapshot.stackTrace}");
             return Center(child: Text('加载失败'));
           }
 
-          if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
-          }
-
           var data = snapshot.data!;
-
           if (_downloading != null) {
-            print(_downloading);
             try {
               for (var i = 0; i < data.length; i++) {
                 if (_downloading!.id == data[i].id) {
@@ -94,42 +92,49 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             }
           }
 
-          return ListView(
-            children: [
-              ...data.map(
-                (e) => InkWell(
-                  onTap: () {
-                    if (e.deleting) {
-                      return;
-                    }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DownloadInfoScreen(
-                          comicId: e.id,
-                          comicTitle: e.title,
-                        ),
-                      ),
-                    );
-                  },
-                  onLongPress: () async {
-                    String? action =
-                        await chooseListDialog(context, e.title, ['删除']);
-                    if (action == '删除') {
-                      await method.deleteDownloadComic(e.id);
-                      setState(() => e.deleting = true);
-                    }
-                  },
-                  child: DownloadInfoCard(
-                    task: e,
-                    downloading:
-                        _downloading != null && _downloading!.id == e.id,
-                  ),
-                ),
-              ),
-            ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              setState(() {
+                _f = method.allDownloads();
+              });
+            },
+            child: ListView(
+              children: [
+                ...data.map(downloadWidget),
+              ],
+            ),
           );
         },
+      ),
+    );
+  }
+
+  Widget downloadWidget(DownloadComic e) {
+    return InkWell(
+      onTap: () {
+        if (e.deleting) {
+          return;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DownloadInfoScreen(
+              comicId: e.id,
+              comicTitle: e.title,
+            ),
+          ),
+        );
+      },
+      onLongPress: () async {
+        String? action = await chooseListDialog(context, e.title, ['删除']);
+        if (action == '删除') {
+          await method.deleteDownloadComic(e.id);
+          setState(() => e.deleting = true);
+        }
+      },
+      child: DownloadInfoCard(
+        task: e,
+        downloading: _downloading != null && _downloading!.id == e.id,
       ),
     );
   }

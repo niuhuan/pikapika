@@ -91,6 +91,8 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 - [安装hover(go-flutter编译脚手架)](https://github.com/go-flutter-desktop/hover)
   ```shell
   GO111MODULE=on go get -u -a github.com/go-flutter-desktop/hover
+  # 或
+  go install github.com/go-flutter-desktop/hover@latest
   ```
 - 安装gcc
   ```shell
@@ -139,11 +141,11 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 - [安装gomobile](https://github.com/golang/mobile)
   ```shell
   go install golang.org/x/mobile/cmd/gomobile@latest
-  go get golang.org/x/mobile/cmd/gobind
   ```
 - 执行编译命令 (bind-android.sh/bind-ios.sh根据平台选择, $system替换为apk/ipa等)
   ```shell
   cd go/mobile
+  go get golang.org/x/mobile/cmd/gobind
   sh bind-ios.sh
   sh bind-android.sh
   cd ../../

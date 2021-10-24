@@ -74,8 +74,10 @@ func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 
 func (p *Plugin) InitPluginGLFW(window *glfw.Window) error {
 	window.SetSizeCallback(func(w *glfw.Window, width int, height int) {
-		properties.SaveProperty("window_width", strconv.Itoa(width))
-		properties.SaveProperty("window_height", strconv.Itoa(height))
+		go func() {
+			properties.SaveProperty("window_width", strconv.Itoa(width))
+			properties.SaveProperty("window_height", strconv.Itoa(height))
+		}()
 	})
 	return nil
 }
