@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"strings"
 )
 
 func Mkdir(dir string) {
@@ -15,4 +16,15 @@ func Mkdir(dir string) {
 			panic(err)
 		}
 	}
+}
+
+func ReasonableFileName(title string) string {
+	title = strings.ReplaceAll(title, "\\", "_")
+	title = strings.ReplaceAll(title, "/", "_")
+	title = strings.ReplaceAll(title, "*", "_")
+	title = strings.ReplaceAll(title, "?", "_")
+	title = strings.ReplaceAll(title, "<", "_")
+	title = strings.ReplaceAll(title, ">", "_")
+	title = strings.ReplaceAll(title, "|", "_")
+	return title
 }

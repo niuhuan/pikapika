@@ -29,6 +29,7 @@ func InitPlugin(_remoteDir string, _downloadDir string, _tmpDir string) {
 	downloadDir = _downloadDir
 	tmpDir = _tmpDir
 	comic_center.ResetAll()
+	downloadAndExportPath = loadDownloadAndExportPath()
 	go downloadBackground()
 	downloadRunning = true
 }
@@ -57,6 +58,19 @@ func loadProperty(params string) (string, error) {
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
 	return properties.LoadProperty(paramsStruct.Name, paramsStruct.DefaultValue)
+}
+
+func saveDownloadAndExportPath(value string) error {
+	err := properties.SaveProperty("downloadAndExportPath", value)
+	if err == nil {
+		downloadAndExportPath = value
+	}
+	return err
+}
+
+func loadDownloadAndExportPath() string {
+	p, _ := properties.LoadProperty("downloadAndExportPath", "")
+	return p
 }
 
 func setSwitchAddress(nSwitchAddress string) error {
@@ -601,6 +615,10 @@ func FlatInvoke(method string, params string) (string, error) {
 		return "", convertImageToJPEG100(params)
 	case "specialDownloadTitle":
 		return specialDownloadTitle(params)
+	case "loadDownloadAndExportPath":
+		return loadDownloadAndExportPath(), nil
+	case "saveDownloadAndExportPath":
+		return "", saveDownloadAndExportPath(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

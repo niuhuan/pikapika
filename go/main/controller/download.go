@@ -1,12 +1,15 @@
 package controller
 
 import (
+	"bytes"
 	"fmt"
+	"image"
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"pikapi/main/database/comic_center"
-	utils2 "pikapi/main/utils"
+	"pikapi/main/utils"
 	"time"
 )
 
@@ -225,6 +228,7 @@ func downloadSummaryDownload() {
 	}
 	if over {
 		// 如果所有章节下载完成则下载成功
+		downloadAndExportLogo(downloadingComic)
 		err = comic_center.DownloadSuccess(downloadingComic.ID)
 		if err != nil {
 			panic(err)
@@ -297,7 +301,7 @@ func downloadInitPicture() {
 // 下载指定图片
 func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
 	// 为了不和页面前端浏览的数据冲突, 使用url做hash锁
-	lock := utils2.HashLock(fmt.Sprintf("%s$%s", picturePoint.FileServer, picturePoint.Path))
+	lock := utils.HashLock(fmt.Sprintf("%s$%s", picturePoint.FileServer, picturePoint.Path))
 	lock.Lock()
 	defer lock.Unlock()
 	// 图片保存位置使用相对路径储存, 使用绝对路径操作
@@ -315,12 +319,14 @@ func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
 	// 将图片保存到文件
 	dir := filepath.Dir(realPath)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		os.Mkdir(dir, utils2.CreateDirMode)
+		os.Mkdir(dir, utils.CreateDirMode)
 	}
-	err = ioutil.WriteFile(downloadPath(picturePath), buff, utils2.CreateFileMode)
+	err = ioutil.WriteFile(downloadPath(picturePath), buff, utils.CreateFileMode)
 	if err != nil {
 		return err
 	}
+	// 下载时同时导出
+	downloadAndExport(downloadingComic, downloadingEp, picturePoint, buff, format)
 	// 存入数据库
 	return comic_center.PictureSuccess(
 		picturePoint.ComicId,
@@ -363,4 +369,93 @@ func downloadSummaryEp() {
 	}
 	// 去加载下一个EP
 	go downloadLoadEp()
+}
+
+var downloadAndExportPath = ""
+
+func downloadAndExport(
+	downloadingComic *comic_center.ComicDownload,
+	downloadingEp *comic_center.ComicDownloadEp,
+	downloadingPicture *comic_center.ComicDownloadPicture,
+	buff []byte,
+	format string,
+) {
+	if downloadAndExportPath == "" {
+		return
+	}
+	if i, e := os.Stat(downloadAndExportPath); e == nil {
+		if i.IsDir() {
+			// 进入漫画目录
+			comicDir := path.Join(downloadAndExportPath, utils.ReasonableFileName(downloadingComic.Title))
+			i, e = os.Stat(comicDir)
+			if e != nil {
+				if os.IsNotExist(e) {
+					e = os.Mkdir(comicDir, utils.CreateDirMode)
+				} else {
+					return
+				}
+			}
+			if e != nil {
+				return
+			}
+			// 进入章节目录
+			epDir := path.Join(comicDir, utils.ReasonableFileName(fmt.Sprintf("%02d - ", downloadingEp.EpOrder)+downloadingEp.Title))
+			i, e = os.Stat(epDir)
+			if e != nil {
+				if os.IsNotExist(e) {
+					e = os.Mkdir(epDir, utils.CreateDirMode)
+				} else {
+					return
+				}
+			}
+			if e != nil {
+				return
+			}
+			// 写入文件
+			filePath := path.Join(epDir, fmt.Sprintf("%03d.%s", downloadingPicture.RankInEp, jFormat(format)))
+			ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
+		}
+	}
+}
+
+func downloadAndExportLogo(
+	downloadingComic *comic_center.ComicDownload,
+) {
+	if downloadAndExportPath == "" {
+		return
+	}
+	comicLogoPath := downloadPath(path.Join(downloadingComic.ID, "logo"))
+	if _, e := os.Stat(comicLogoPath); e == nil {
+		buff, e := ioutil.ReadFile(comicLogoPath)
+		if e == nil {
+			_, f, e := image.Decode(bytes.NewBuffer(buff))
+			if e == nil {
+				if i, e := os.Stat(downloadAndExportPath); e == nil {
+					if i.IsDir() {
+						// 进入漫画目录
+						comicDir := path.Join(downloadAndExportPath, utils.ReasonableFileName(downloadingComic.Title))
+						i, e = os.Stat(comicDir)
+						if e != nil {
+							if os.IsNotExist(e) {
+								e = os.Mkdir(comicDir, utils.CreateDirMode)
+							}
+						}
+						if e != nil {
+							return
+						}
+						// 写入文件
+						filePath := path.Join(comicDir, fmt.Sprintf("%s.%s", "logo", jFormat(f)))
+						ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
+					}
+				}
+			}
+		}
+	}
+}
+
+func jFormat(format string) string {
+	if format == "jpeg" {
+		return "jpg"
+	}
+	return format
 }

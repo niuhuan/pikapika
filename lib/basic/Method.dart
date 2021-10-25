@@ -572,4 +572,13 @@ class Method {
     return _channel.invokeMethod("migrate", {"path": path});
   }
 
+  /// 下载的同时导出-配置获取
+  Future loadDownloadAndExportPath() {
+    return _flatInvoke("loadDownloadAndExportPath", "");
+  }
+
+  /// 下载的同时导出-设置
+  Future saveDownloadAndExportPath(String folder) {
+    return _flatInvoke("saveDownloadAndExportPath", folder);
+  }
 }

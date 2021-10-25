@@ -5,6 +5,7 @@ import 'package:pikapi/basic/config/AutoClean.dart';
 import 'package:pikapi/basic/config/AutoFullScreen.dart';
 import 'package:pikapi/basic/config/ChooserRoot.dart';
 import 'package:pikapi/basic/config/ContentFailedReloadAction.dart';
+import 'package:pikapi/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapi/basic/config/FullScreenAction.dart';
 import 'package:pikapi/basic/config/FullScreenUI.dart';
 import 'package:pikapi/basic/config/KeyboardController.dart';
@@ -61,6 +62,7 @@ class _InitScreenState extends State<InitScreen> {
     await initAndroidDisplayMode();
     await initChooserRoot();
     await initTimeZone();
+    await initDownloadAndExportPath();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面
