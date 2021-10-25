@@ -31,7 +31,9 @@ class BasicUser {
     this.verified = json["verified"];
     this.exp = json["exp"];
     this.level = json["level"];
-    this.characters = List.of(json["characters"]).map((e) => "$e").toList();
+    this.characters = json["characters"] == null
+        ? []
+        : List.of(json["characters"]).map((e) => "$e").toList();
     this.avatar = PicaImage.fromJson(Map<String, dynamic>.of(json["avatar"]));
   }
 }
