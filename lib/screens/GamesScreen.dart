@@ -7,6 +7,7 @@ import 'package:pikapi/screens/components/ContentBuilder.dart';
 import 'GameInfoScreen.dart';
 import 'components/Images.dart';
 
+// 游戏列表
 class GamesScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _GamesScreenState();

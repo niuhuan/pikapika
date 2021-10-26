@@ -6,6 +6,7 @@ import 'package:pikapi/screens/components/NetworkSetting.dart';
 
 import 'components/ContentLoading.dart';
 
+/// 注册页面
 class RegisterScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _RegisterScreenState();

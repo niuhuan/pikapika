@@ -6,6 +6,7 @@ import 'package:pikapi/basic/config/ShadowCategories.dart';
 
 import 'components/ComicListBuilder.dart';
 
+// 随机漫画页面
 class RandomComicsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _RandomComicsScreenState();

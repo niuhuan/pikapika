@@ -1,3 +1,5 @@
+/// 相册模式下预加载图片数量
+
 import 'dart:convert';
 import 'dart:io';
 

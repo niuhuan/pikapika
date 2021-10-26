@@ -6,6 +6,7 @@ import 'package:pikapi/screens/components/ItemBuilder.dart';
 
 import 'components/GameTitleCard.dart';
 
+// 游戏下载地址列表页
 class GameDownloadScreen extends StatefulWidget {
   final GameInfo info;
 

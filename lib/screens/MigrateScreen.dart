@@ -6,6 +6,7 @@ import 'package:pikapi/basic/Method.dart';
 import 'package:pikapi/screens/components/ContentBuilder.dart';
 import 'package:pikapi/screens/components/ContentLoading.dart';
 
+// 数据迁移页面
 class MigrateScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MigrateScreenState();

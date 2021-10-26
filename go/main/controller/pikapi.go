@@ -613,8 +613,6 @@ func FlatInvoke(method string, params string) (string, error) {
 		return downloadGame(params)
 	case "convertImageToJPEG100":
 		return "", convertImageToJPEG100(params)
-	case "specialDownloadTitle":
-		return specialDownloadTitle(params)
 	case "loadDownloadAndExportPath":
 		return loadDownloadAndExportPath(), nil
 	case "saveDownloadAndExportPath":

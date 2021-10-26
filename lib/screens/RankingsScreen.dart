@@ -6,6 +6,7 @@ import 'package:pikapi/basic/config/ShadowCategories.dart';
 
 import 'components/ComicListBuilder.dart';
 
+// 排行榜
 class RankingsScreen extends StatelessWidget {
 
   @override

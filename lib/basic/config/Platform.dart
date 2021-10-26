@@ -1,3 +1,4 @@
+/// 平台信息
 
 import 'dart:io';
 

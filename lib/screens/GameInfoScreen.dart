@@ -9,6 +9,7 @@ import 'package:pikapi/screens/components/Images.dart';
 import 'GameDownloadScreen.dart';
 import 'components/GameTitleCard.dart';
 
+// 游戏详情
 class GameInfoScreen extends StatefulWidget {
   final String gameId;
 

@@ -8,7 +8,6 @@ import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Cross.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/basic/config/Platform.dart';
 import 'package:pikapi/screens/DownloadExportToSocketScreen.dart';
 
 import 'components/ContentError.dart';

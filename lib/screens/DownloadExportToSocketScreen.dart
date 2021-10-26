@@ -9,6 +9,7 @@ import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
 
+// 传输到其他设备
 class DownloadExportToSocketScreen extends StatefulWidget {
   final DownloadComic task;
   final String comicId;

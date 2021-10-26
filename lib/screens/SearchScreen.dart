@@ -8,6 +8,7 @@ import 'package:pikapi/basic/Method.dart';
 import '../basic/Entities.dart';
 import 'components/ComicPager.dart';
 
+// 搜索页面
 class SearchScreen extends StatefulWidget {
   final String keyword;
   final String? category;
