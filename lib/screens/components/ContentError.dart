@@ -30,7 +30,7 @@ class ContentError extends StatelessWidget {
       case ERROR_TYPE_TIME:
         message = "请检查设备时间";
         break;
-      case ERROR_TYPE_UNDER_VIEW:
+      case ERROR_TYPE_UNDER_REVIEW:
         message = "资源未审核或不可用";
         break;
       default:
