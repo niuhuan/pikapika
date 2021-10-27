@@ -11,7 +11,8 @@ String errorType(String error) {
   // Get "https://picaapi.picacomic.com/comics?c=%E5%85%A8%E5%BD%A9&s=ua&page=1": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
   if (error.contains("timeout") ||
       error.contains("connection refused") ||
-      error.contains("deadline")) {
+      error.contains("deadline") ||
+      error.contains("connection abort")) {
     return ERROR_TYPE_NETWORK;
   }
   if (error.contains("permission denied")) {

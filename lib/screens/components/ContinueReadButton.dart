@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Entities.dart';
 
+// 继续阅读按钮
 class ContinueReadButton extends StatefulWidget {
   final Future<ViewLog?> viewFuture;
   final Function(int? epOrder, int? pictureRank) onChoose;

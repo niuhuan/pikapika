@@ -3,6 +3,7 @@ import 'package:pikapi/basic/Entities.dart';
 
 import 'Images.dart';
 
+// 游戏信息卡
 class GameTitleCard extends StatelessWidget {
   final GameInfo info;
 

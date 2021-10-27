@@ -7,6 +7,7 @@ import 'package:pikapi/screens/components/Images.dart';
 
 import 'ComicInfoCard.dart';
 
+// 下载项
 class DownloadInfoCard extends StatelessWidget {
   final DownloadComic task;
   final bool downloading;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 非全屏FutureBuilder封装
 class ItemBuilder<T> extends StatelessWidget {
   final Future<T> future;
   final AsyncWidgetBuilder<T> successBuilder;
