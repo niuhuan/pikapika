@@ -10,7 +10,12 @@ import '../Method.dart';
 late String _downloadAndExportPath;
 
 Future initDownloadAndExportPath() async {
-  _downloadAndExportPath = await method.loadDownloadAndExportPath();
+  if (Platform.isWindows ||
+      Platform.isMacOS ||
+      Platform.isAndroid ||
+      Platform.isLinux) {
+    _downloadAndExportPath = await method.loadDownloadAndExportPath();
+  }
 }
 
 Widget downloadAndExportPathSetting() {

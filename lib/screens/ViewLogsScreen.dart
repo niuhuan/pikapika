@@ -164,42 +164,59 @@ class ViewLogWrap extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var min = size.width < size.height ? size.width : size.height;
     var width = (min - 45) / 4;
-    return Wrap(
-      alignment: WrapAlignment.spaceAround,
-      children: comics.map((e) {
-        return InkWell(
-          key: e.key,
-          onTap: () {
-            onTapComic(e.id);
-          },
-          onLongPress: () {
-            onDelete(e.id);
-          },
-          child: Card(
-            child: Container(
-              width: width,
-              child: Column(
-                children: [
-                  LayoutBuilder(builder:
-                      (BuildContext context, BoxConstraints constraints) {
-                    return RemoteImage(
-                        width: constraints.maxWidth,
-                        fileServer: e.fileServer,
-                        path: e.path);
-                  }),
-                  Text(
-                    e.title + '\n',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(height: 1.4),
-                    strutStyle: StrutStyle(height: 1.4),
-                  ),
-                ],
-              ),
+
+    var entries = comics.map((e) {
+      return InkWell(
+        key: e.key,
+        onTap: () {
+          onTapComic(e.id);
+        },
+        onLongPress: () {
+          onDelete(e.id);
+        },
+        child: Card(
+          child: Container(
+            width: width,
+            child: Column(
+              children: [
+                LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  return RemoteImage(
+                      width: constraints.maxWidth,
+                      fileServer: e.fileServer,
+                      path: e.path);
+                }),
+                Text(
+                  e.title + '\n',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(height: 1.4),
+                  strutStyle: StrutStyle(height: 1.4),
+                ),
+              ],
             ),
           ),
-        );
-      }).toList(),
+        ),
+      );
+    });
+
+    Map<int, List<Widget>> map = Map();
+    for (var i = 0; i < entries.length; i++) {
+      late List<Widget> list;
+      if (i % 4 == 0) {
+        list = [];
+        map[i ~/ 4] = list;
+      } else {
+        list = map[i ~/ 4]!;
+      }
+      list.add(entries.elementAt(i));
+    }
+
+    return Column(
+      children: map.values.map((e) => Wrap(
+            alignment: WrapAlignment.spaceAround,
+            children: e,
+          )).toList(),
     );
   }
 }
