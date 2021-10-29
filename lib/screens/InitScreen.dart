@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/config/Address.dart';
 import 'package:pikapi/basic/config/AndroidDisplayMode.dart';
+import 'package:pikapi/basic/config/AndroidSecureFlag.dart';
 import 'package:pikapi/basic/config/AutoClean.dart';
 import 'package:pikapi/basic/config/AutoFullScreen.dart';
 import 'package:pikapi/basic/config/ChooserRoot.dart';
@@ -40,7 +41,7 @@ class _InitScreenState extends State<InitScreen> {
 
   Future<dynamic> _init() async {
     // 初始化配置文件
-    await initPlatform();  // 必须第一个初始化, 加载设备信息
+    await initPlatform(); // 必须第一个初始化, 加载设备信息
     await autoClean();
     await initAddress();
     await initProxy();
@@ -63,6 +64,7 @@ class _InitScreenState extends State<InitScreen> {
     await initChooserRoot();
     await initTimeZone();
     await initDownloadAndExportPath();
+    await initAndroidSecureFlag();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面

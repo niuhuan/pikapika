@@ -581,4 +581,11 @@ class Method {
   Future saveDownloadAndExportPath(String folder) {
     return _flatInvoke("saveDownloadAndExportPath", folder);
   }
+
+  /// 切换安全策略 (安卓禁止截图, 录屏, 不显示在任务视图)
+  Future androidSecureFlag(bool flag) {
+    return _channel.invokeMethod("androidSecureFlag", {
+      "flag": flag,
+    });
+  }
 }

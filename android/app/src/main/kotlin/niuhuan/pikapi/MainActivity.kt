@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Display
 import android.view.KeyEvent
+import android.view.WindowManager
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import io.flutter.embedding.android.FlutterActivity
@@ -98,6 +99,7 @@ class MainActivity : FlutterActivity() {
                     "migrate" -> androidMigrate(call.argument("path")!!)
                     // 获取可以迁移数据地址
                     "androidGetExtendDirs" -> androidGetExtendDirs()
+                    "androidSecureFlag" -> androidSecureFlag(call.argument("flag")!!)
                     else -> {
                         notImplementedToken
                     }
@@ -336,6 +338,16 @@ class MainActivity : FlutterActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun androidSecureFlag(flag: Boolean) {
+        uiThreadHandler.post {
+            if (flag) {
+                window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+            } else {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+            }
+        }
     }
 
 }

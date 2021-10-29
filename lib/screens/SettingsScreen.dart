@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/config/AndroidDisplayMode.dart';
+import 'package:pikapi/basic/config/AndroidSecureFlag.dart';
 import 'package:pikapi/basic/config/AutoClean.dart';
 import 'package:pikapi/basic/config/AutoFullScreen.dart';
 import 'package:pikapi/basic/config/ChooserRoot.dart';
@@ -121,6 +122,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Divider(),
             androidDisplayModeSetting(),
+            androidSecureFlagSetting(),
             Divider(),
             ListTile(
               title: Text("文件夹选择器默认路径"),
