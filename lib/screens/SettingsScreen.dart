@@ -10,6 +10,7 @@ import 'package:pikapi/basic/config/AutoFullScreen.dart';
 import 'package:pikapi/basic/config/ChooserRoot.dart';
 import 'package:pikapi/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapi/basic/config/DownloadAndExportPath.dart';
+import 'package:pikapi/basic/config/DownloadThreadCount.dart';
 import 'package:pikapi/basic/config/FullScreenAction.dart';
 import 'package:pikapi/basic/config/FullScreenUI.dart';
 import 'package:pikapi/basic/config/KeyboardController.dart';
@@ -132,6 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
+            downloadThreadCountSetting(),
             downloadAndExportPathSetting(),
             fontSetting(),
             Divider(),

@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"pikapi/main/database/comic_center"
 	"pikapi/main/utils"
+	"sync"
 	"time"
 )
 
@@ -17,12 +18,14 @@ import (
 // downloadRunning 如果为false则停止下载
 // downloadRestart 为true则取消从新启动下载功能
 
+var downloadThreadCount = 1
+var downloadThreadFetch = 100
+
 var downloadRunning = false
 var downloadRestart = false
 
 var downloadingComic *comic_center.ComicDownload
 var downloadingEp *comic_center.ComicDownloadEp
-var downloadingPicture *comic_center.ComicDownloadPicture
 
 var dlFlag = true
 
@@ -255,24 +258,46 @@ func downloadLoadPicture() {
 	if downloadHasStop() {
 		return
 	}
-	var err error
-	downloadingPicture, err = comic_center.LoadFirstNeedDownloadPicture(downloadingEp.ID)
+	// 获取到这个章节需要下载的图片
+	downloadingPictures, err := comic_center.LoadNeedDownloadPictures(downloadingEp.ID, downloadThreadFetch)
 	if err != nil {
 		panic(err)
 	}
-	go downloadInitPicture()
-}
-
-func downloadInitPicture() {
-	// 暂停检测
-	if downloadHasStop() {
-		return
-	}
-	if downloadingPicture == nil {
+	// 如果不需要下载
+	if len(*downloadingPictures) == 0 {
 		// 所有图片都下完了, 汇总EP下载情况
 		go downloadSummaryEp()
 		return
 	}
+	// 线程池
+	channel := make(chan int, downloadThreadCount)
+	defer close(channel)
+	wg := sync.WaitGroup{}
+	for i := 0; i < len(*downloadingPictures); i++ {
+		// 暂停检测
+		if downloadHasStop() {
+			wg.Wait()
+			return
+		}
+		channel <- 0
+		wg.Add(1)
+		// 不放入携程, 防止i已经变化
+		picPoint := &((*downloadingPictures)[i])
+		go func() {
+			downloadPicture(picPoint)
+			<-channel
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+	// 再次新一轮的下载, 直至 len(*downloadingPictures) == 0
+	go downloadLoadPicture()
+}
+
+var downloadEventChannelMutex = sync.Mutex{}
+
+// 这里不能使用暂停检测, 多次检测会导致问题
+func downloadPicture(downloadingPicture *comic_center.ComicDownloadPicture) {
 	// 下载图片, 最多重试5次
 	println("正在下载图片 " + fmt.Sprintf("%d", downloadingPicture.RankInEp))
 	for i := 0; i < 5; i++ {
@@ -280,22 +305,25 @@ func downloadInitPicture() {
 		if err != nil {
 			continue
 		}
-		// 对下载的漫画临时变量热更新并通知前端
-		downloadingPicture.DownloadFinished = true
-		downloadingEp.DownloadPictureCount = downloadingEp.DownloadPictureCount + 1
-		downloadingComic.DownloadPictureCount = downloadingComic.DownloadPictureCount + 1
-		downloadComicEventSend(downloadingComic)
+		func() {
+			downloadEventChannelMutex.Lock()
+			defer downloadEventChannelMutex.Unlock()
+			// 对下载的漫画临时变量热更新并通知前端
+			downloadingPicture.DownloadFinished = true
+			downloadingEp.DownloadPictureCount = downloadingEp.DownloadPictureCount + 1
+			downloadingComic.DownloadPictureCount = downloadingComic.DownloadPictureCount + 1
+			downloadComicEventSend(downloadingComic)
+		}()
 		break
 	}
 	// 没能下载成功, 图片置为下载失败
 	if !downloadingPicture.DownloadFinished {
 		err := comic_center.PictureFailed(downloadingPicture.ID)
 		if err != nil {
-			panic(err)
+			// ??? panic X channel ???
+			// panic(err)
 		}
 	}
-	// 加载下一张需要下载的图片
-	go downloadLoadPicture()
 }
 
 // 下载指定图片
@@ -371,8 +399,10 @@ func downloadSummaryEp() {
 	go downloadLoadEp()
 }
 
+// 边下载边导出(导出路径)
 var downloadAndExportPath = ""
 
+// 边下载边导出(导出图片)
 func downloadAndExport(
 	downloadingComic *comic_center.ComicDownload,
 	downloadingEp *comic_center.ComicDownloadEp,
@@ -412,12 +442,13 @@ func downloadAndExport(
 				return
 			}
 			// 写入文件
-			filePath := path.Join(epDir, fmt.Sprintf("%03d.%s", downloadingPicture.RankInEp, jFormat(format)))
+			filePath := path.Join(epDir, fmt.Sprintf("%03d.%s", downloadingPicture.RankInEp, aliasFormat(format)))
 			ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
 		}
 	}
 }
 
+// 边下载边导出(导出logo)
 func downloadAndExportLogo(
 	downloadingComic *comic_center.ComicDownload,
 ) {
@@ -444,7 +475,7 @@ func downloadAndExportLogo(
 							return
 						}
 						// 写入文件
-						filePath := path.Join(comicDir, fmt.Sprintf("%s.%s", "logo", jFormat(f)))
+						filePath := path.Join(comicDir, fmt.Sprintf("%s.%s", "logo", aliasFormat(f)))
 						ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
 					}
 				}
@@ -453,7 +484,8 @@ func downloadAndExportLogo(
 	}
 }
 
-func jFormat(format string) string {
+// jpeg的拓展名
+func aliasFormat(format string) string {
 	if format == "jpeg" {
 		return "jpg"
 	}

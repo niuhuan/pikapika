@@ -350,22 +350,17 @@ func LoadFirstNeedDownloadEp(comicId string) (*ComicDownloadEp, error) {
 	return &ep, nil
 }
 
-func LoadFirstNeedDownloadPicture(epId string) (*ComicDownloadPicture, error) {
+// LoadNeedDownloadPictures 根据EP.ID获取需要下载的图片
+func LoadNeedDownloadPictures(epId string, limit int) (*[]ComicDownloadPicture, error) {
 	mutex.Lock()
 	defer mutex.Unlock()
-	var picture ComicDownloadPicture
-	err := db.First(
-		&picture,
-		"ep_id = ? AND download_failed = 0 AND download_finished = 0",
-		epId,
+	var pictures []ComicDownloadPicture
+	err := db.Find(
+		&pictures,
+		"ep_id = ? AND download_failed = 0 AND download_finished = 0 LIMIT ?",
+		epId, limit,
 	).Error
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, nil
-		}
-		return nil, err
-	}
-	return &picture, nil
+	return &pictures, err
 }
 
 func FetchPictures(comicId string, epId string, list *[]ComicDownloadPicture) error {

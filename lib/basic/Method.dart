@@ -588,4 +588,16 @@ class Method {
       "flag": flag,
     });
   }
+
+  /// 获取下载线程数量
+  Future<int> loadDownloadThreadCount() async {
+    var strValue = await _flatInvoke("loadDownloadThreadCount", {});
+    return int.parse(strValue);
+  }
+
+  /// 设置下载线程数
+  Future saveDownloadThreadCount(int value) {
+    return _flatInvoke("saveDownloadThreadCount", "$value");
+  }
+
 }

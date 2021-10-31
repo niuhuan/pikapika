@@ -30,6 +30,7 @@ func InitPlugin(_remoteDir string, _downloadDir string, _tmpDir string) {
 	tmpDir = _tmpDir
 	comic_center.ResetAll()
 	downloadAndExportPath = loadDownloadAndExportPath()
+	downloadThreadCount = loadDownloadThreadCount()
 	go downloadBackground()
 	downloadRunning = true
 }
@@ -71,6 +72,25 @@ func saveDownloadAndExportPath(value string) error {
 func loadDownloadAndExportPath() string {
 	p, _ := properties.LoadProperty("downloadAndExportPath", "")
 	return p
+}
+
+func saveDownloadThreadCount(value int) {
+	strValue := strconv.Itoa(value)
+	properties.SaveProperty("downloadThreadCount", strValue)
+	downloadThreadCount = value
+	downloadRestart = true
+}
+
+func loadDownloadThreadCount() int {
+	count, err := properties.LoadProperty("downloadThreadCount", "2")
+	if err != nil {
+		return 1
+	}
+	i, err := strconv.Atoi(count)
+	if err != nil {
+		return 1
+	}
+	return i
 }
 
 func setSwitchAddress(nSwitchAddress string) error {
@@ -617,6 +637,15 @@ func FlatInvoke(method string, params string) (string, error) {
 		return loadDownloadAndExportPath(), nil
 	case "saveDownloadAndExportPath":
 		return "", saveDownloadAndExportPath(params)
+	case "saveDownloadThreadCount":
+		i, e := strconv.Atoi(params)
+		if e != nil {
+			return "", e
+		}
+		saveDownloadThreadCount(i)
+		return "", nil
+	case "loadDownloadThreadCount":
+		return strconv.Itoa(loadDownloadThreadCount()), nil
 	}
 	return "", errors.New("method not found : " + method)
 }
