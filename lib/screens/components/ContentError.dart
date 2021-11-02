@@ -20,20 +20,26 @@ class ContentError extends StatelessWidget {
   Widget build(BuildContext context) {
     var type = errorType("$error");
     late String message;
+    late IconData iconData;
     switch (type) {
       case ERROR_TYPE_NETWORK:
+        iconData = Icons.wifi_off_rounded;
         message = "连接不上啦, 请检查网络";
         break;
       case ERROR_TYPE_PERMISSION:
+        iconData = Icons.highlight_off;
         message = "没有权限或路径不可用";
         break;
       case ERROR_TYPE_TIME:
+        iconData = Icons.timer_off;
         message = "请检查设备时间";
         break;
       case ERROR_TYPE_UNDER_REVIEW:
+        iconData = Icons.highlight_off;
         message = "资源未审核或不可用";
         break;
       default:
+        iconData = Icons.highlight_off;
         message = "啊哦, 被玩坏了";
         break;
     }
@@ -61,7 +67,7 @@ class ContentError extends StatelessWidget {
                       Expanded(child: Container()),
                       Container(
                         child: Icon(
-                          Icons.wifi_off_rounded,
+                          iconData,
                           size: iconSize,
                           color: Colors.grey.shade600,
                         ),
@@ -100,7 +106,7 @@ class ContentError extends StatelessWidget {
                     Expanded(child: Container()),
                     Container(
                       child: Icon(
-                        Icons.wifi_off_rounded,
+                        iconData,
                         size: iconSize,
                         color: Colors.grey.shade600,
                       ),
