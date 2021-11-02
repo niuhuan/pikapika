@@ -600,4 +600,11 @@ class Method {
     return _flatInvoke("saveDownloadThreadCount", "$value");
   }
 
+  /// 喜欢/取消喜欢 一条评论
+  Future switchLikeComment(String commentId, String comicId) {
+    return _flatInvoke("switchLikeComment", {
+      "commentId": commentId,
+      "comicId": comicId,
+    });
+  }
 }

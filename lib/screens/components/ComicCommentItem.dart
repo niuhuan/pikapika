@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapi/basic/Method.dart';
 
 import 'PicaAvatar.dart';
 
-class ComicCommentItem extends StatelessWidget {
+class ComicCommentItem extends StatefulWidget {
+  final String comicId;
   final Comment comment;
 
-  const ComicCommentItem(this.comment);
+  const ComicCommentItem(this.comment, this.comicId);
+
+  @override
+  State<StatefulWidget> createState() => _ComicCommentItem();
+}
+
+class _ComicCommentItem extends State<ComicCommentItem> {
+  var likeLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    var comment = widget.comment;
+    var comicId = widget.comicId;
     var theme = Theme.of(context);
     var nameStyle = TextStyle(fontWeight: FontWeight.bold);
     var levelStyle = TextStyle(
@@ -93,22 +104,55 @@ class ComicCommentItem extends StatelessWidget {
                                     ])
                                   : TextSpan(),
                               WidgetSpan(child: Container(width: 12)),
-                              TextSpan(children: [
-                                WidgetSpan(
-                                  alignment: PlaceholderAlignment.middle,
-                                  child: Icon(
-                                      comment.isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      size: 13,
-                                      color: theme.colorScheme.secondary
-                                          .withOpacity(.7)),
+                              WidgetSpan(
+                                  child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    likeLoading = true;
+                                  });
+                                  try {
+                                    await method.switchLikeComment(
+                                      comment.id,
+                                      comicId,
+                                    );
+                                    setState(() {
+                                      if (comment.isLiked) {
+                                        comment.isLiked = false;
+                                        comment.likesCount--;
+                                      } else {
+                                        comment.isLiked = true;
+                                        comment.likesCount++;
+                                      }
+                                    });
+                                  } catch (e, s) {
+                                    defaultToast(context, "点赞失败");
+                                  } finally {
+                                    setState(() {
+                                      likeLoading = false;
+                                    });
+                                  }
+                                },
+                                child: Text.rich(
+                                  TextSpan(style: levelStyle, children: [
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.middle,
+                                      child: Icon(
+                                          likeLoading
+                                              ? Icons.refresh
+                                              : comment.isLiked
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                          size: 13,
+                                          color: theme.colorScheme.secondary
+                                              .withOpacity(.7)),
+                                    ),
+                                    WidgetSpan(child: Container(width: 5)),
+                                    TextSpan(
+                                      text: '${comment.likesCount}',
+                                    ),
+                                  ]),
                                 ),
-                                WidgetSpan(child: Container(width: 5)),
-                                TextSpan(
-                                  text: '${comment.likesCount}',
-                                ),
-                              ]),
+                              )),
                             ],
                           )),
                         ],

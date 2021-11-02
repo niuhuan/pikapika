@@ -37,6 +37,8 @@ github.com/miguelpruivo/flutter_file_picker/go v0.0.0-20210622152105-9f0a811028a
 github.com/miguelpruivo/flutter_file_picker/go v0.0.0-20210622152105-9f0a811028a0/go.mod h1:csuW+TFyYKtiUwNvcvhcpyX4quPI7Pvv0SUogdqCW4I=
 github.com/niuhuan/pica-go v0.0.0-20211008032829-544a58c56bee h1:SewxTGOkoJ3JUmLLQ1RXUcqLdifT5502QZQl09eCGL8=
 github.com/niuhuan/pica-go v0.0.0-20211008032829-544a58c56bee/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
+github.com/niuhuan/pica-go v0.0.0-20211102035530-65029bd4ee97 h1:wlsmZVsLrZ/dB1KzyRl3TR6vRa6eefVE/16LnSHrQs8=
+github.com/niuhuan/pica-go v0.0.0-20211102035530-65029bd4ee97/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

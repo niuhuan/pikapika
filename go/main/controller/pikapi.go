@@ -646,6 +646,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return "", nil
 	case "loadDownloadThreadCount":
 		return strconv.Itoa(loadDownloadThreadCount()), nil
+	case "switchLikeComment":
+		return switchLikeComment(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

@@ -425,6 +425,22 @@ func postChildComment(params string) (string, error) {
 	return "", nil
 }
 
+func switchLikeComment(params string) (string, error) {
+	var paramsStruct struct {
+		CommentId string `json:"commentId"`
+		ComicId   string `json:"comicId"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	rsp, err := client.SwitchLikeComment(paramsStruct.CommentId)
+	if err != nil {
+		return "", err
+	}
+	network_cache.RemoveCaches(fmt.Sprintf("COMMENT_CHILDREN$%s$%%", paramsStruct.CommentId))
+	network_cache.RemoveCaches("MY_COMMENTS$%")
+	network_cache.RemoveCaches(fmt.Sprintf("COMMENTS$%s$%%", paramsStruct.ComicId))
+	return *rsp, nil
+}
+
 func myComments(pageStr string) (string, error) {
 	page, err := strconv.Atoi(pageStr)
 	if err != nil {

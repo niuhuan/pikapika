@@ -8,7 +8,7 @@ require (
 	github.com/go-flutter-desktop/plugins/url_launcher v0.1.2
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20201108214237-06ea97f0c265
 	github.com/miguelpruivo/flutter_file_picker/go v0.0.0-20210622152105-9f0a811028a0
-	github.com/niuhuan/pica-go v0.0.0-20211008032829-544a58c56bee
+	github.com/niuhuan/pica-go v0.0.0-20211102035530-65029bd4ee97
 	github.com/pkg/errors v0.9.1
 	golang.org/x/image v0.0.0-20190802002840-cff245a6509b
 	golang.org/x/mobile v0.0.0-20210924032853-1c027f395ef7 // indirect

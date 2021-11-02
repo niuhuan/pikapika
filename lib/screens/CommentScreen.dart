@@ -54,7 +54,7 @@ class _CommentScreenState extends State<CommentScreen> {
       ),
       body: Column(
         children: [
-          ComicCommentItem(widget.comment),
+          ComicCommentItem(widget.comment, widget.comicId),
           Container(
             height: 3,
             color:
@@ -68,7 +68,7 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   Widget _buildComment(CommentChild e) {
-    return ComicCommentItem(e);
+    return ComicCommentItem(e, widget.comicId);
   }
 
   Widget _buildPostComment() {

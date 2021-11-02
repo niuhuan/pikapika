@@ -59,7 +59,7 @@ class _ComicCommentListState extends State<ComicCommentList> {
           ),
         );
       },
-      child: ComicCommentItem(comment),
+      child: ComicCommentItem(comment, widget.comicId),
     );
   }
 
