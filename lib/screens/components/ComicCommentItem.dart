@@ -74,21 +74,43 @@ class ComicCommentItem extends StatelessWidget {
                           Text(
                               "Lv. ${comment.user.level} (${comment.user.title})",
                               style: levelStyle),
-                          comment.commentsCount > 0
-                              ? Text.rich(TextSpan(children: [
-                                  WidgetSpan(
-                                    alignment: PlaceholderAlignment.middle,
-                                    child: Icon(Icons.message,
-                                        size: 13,
-                                        color: theme.colorScheme.secondary
-                                            .withOpacity(.7)),
-                                  ),
-                                  WidgetSpan(child: Container(width: 5)),
-                                  TextSpan(
-                                      text: '${comment.commentsCount}',
-                                      style: levelStyle),
-                                ]))
-                              : Container(),
+                          Text.rich(TextSpan(
+                            style: levelStyle,
+                            children: [
+                              comment.commentsCount > 0
+                                  ? TextSpan(children: [
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Icon(Icons.message,
+                                            size: 13,
+                                            color: theme.colorScheme.secondary
+                                                .withOpacity(.7)),
+                                      ),
+                                      WidgetSpan(child: Container(width: 5)),
+                                      TextSpan(
+                                        text: '${comment.commentsCount}',
+                                      ),
+                                    ])
+                                  : TextSpan(),
+                              WidgetSpan(child: Container(width: 12)),
+                              TextSpan(children: [
+                                WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: Icon(
+                                      comment.isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: 13,
+                                      color: theme.colorScheme.secondary
+                                          .withOpacity(.7)),
+                                ),
+                                WidgetSpan(child: Container(width: 5)),
+                                TextSpan(
+                                  text: '${comment.likesCount}',
+                                ),
+                              ]),
+                            ],
+                          )),
                         ],
                       ),
                     );
