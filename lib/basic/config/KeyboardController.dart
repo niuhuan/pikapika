@@ -16,11 +16,7 @@ Future<void> initKeyboardController() async {
       (await method.loadProperty(_propertyName, "false")) == "true";
 }
 
-String keyboardControllerName() {
-  return keyboardController ? "是" : "否";
-}
-
-Future<void> chooseKeyboardController(BuildContext context) async {
+Future<void> _chooseKeyboardController(BuildContext context) async {
   String? result =
       await chooseListDialog<String>(context, "键盘控制翻页", ["是", "否"]);
   if (result != null) {
@@ -36,9 +32,9 @@ Widget keyboardControllerSetting() {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
           title: Text("阅读器键盘翻页(仅PC)"),
-          subtitle: Text(keyboardControllerName()),
+          subtitle: Text(keyboardController ? "是" : "否"),
           onTap: () async {
-            await chooseKeyboardController(context);
+            await _chooseKeyboardController(context);
             setState(() {});
           },
         );

@@ -10,12 +10,10 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import '../Method.dart';
 import '../store/Categories.dart';
 
-late List<String> shadowCategories;
-var shadowCategoriesEvent = Event<EventArgs>();
-
-// mapper
-
 const _propertyName = "shadowCategories";
+late List<String> shadowCategories;
+
+var shadowCategoriesEvent = Event<EventArgs>();
 
 /// 获取封印的类型
 Future<List<String>> _loadShadowCategories() async {

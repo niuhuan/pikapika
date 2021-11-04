@@ -10,7 +10,7 @@ import '../Method.dart';
 const _propertyName = "chooserRoot";
 late String _chooserRoot;
 
-Future<String?> initChooserRoot() async {
+Future<dynamic> initChooserRoot() async {
   _chooserRoot = await method.loadProperty(_propertyName, "");
 }
 
@@ -34,7 +34,7 @@ String currentChooserRoot() {
   return _chooserRoot;
 }
 
-Future<dynamic> inputChooserRoot(BuildContext context) async {
+Future<dynamic> _inputChooserRoot(BuildContext context) async {
   String? input = await displayTextInputDialog(
     context,
     '文件夹选择器根路径',
@@ -55,7 +55,7 @@ Widget chooserRootSetting() {
         title: Text("文件夹选择器默认路径"),
         subtitle: Text(currentChooserRoot()),
         onTap: () async {
-          await inputChooserRoot(context);
+          await _inputChooserRoot(context);
           setState(() {});
         },
       );

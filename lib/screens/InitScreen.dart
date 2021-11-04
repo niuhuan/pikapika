@@ -43,7 +43,7 @@ class _InitScreenState extends State<InitScreen> {
   Future<dynamic> _init() async {
     // 初始化配置文件
     await initPlatform(); // 必须第一个初始化, 加载设备信息
-    await autoClean();
+    await initAutoClean();
     await initAddress();
     await initProxy();
     await initQuality();

@@ -8,14 +8,13 @@ import 'package:pikapi/basic/Method.dart';
 import '../Common.dart';
 
 const _propertyName = "androidDisplayMode";
-
-List<String> modes = [];
+List<String> _modes = [];
 String _androidDisplayMode = "";
 
 Future initAndroidDisplayMode() async {
   if (Platform.isAndroid) {
     _androidDisplayMode = await method.loadProperty(_propertyName, "");
-    modes = await method.loadAndroidModes();
+    _modes = await method.loadAndroidModes();
     await _changeMode();
   }
 }
@@ -24,14 +23,10 @@ Future _changeMode() async {
   await method.setAndroidMode(_androidDisplayMode);
 }
 
-String androidDisplayModeName() {
-  return _androidDisplayMode;
-}
-
-Future<void> chooseAndroidDisplayMode(BuildContext context) async {
+Future<void> _chooseAndroidDisplayMode(BuildContext context) async {
   if (Platform.isAndroid) {
     List<String> list = [""];
-    list.addAll(modes);
+    list.addAll(_modes);
     String? result = await chooseListDialog<String>(context, "安卓屏幕刷新率", list);
     if (result != null) {
       await method.saveProperty(_propertyName, "$result");
@@ -47,9 +42,9 @@ Widget androidDisplayModeSetting() {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
           title: Text("屏幕刷新率(安卓)"),
-          subtitle: Text(androidDisplayModeName()),
+          subtitle: Text(_androidDisplayMode),
           onTap: () async {
-            await chooseAndroidDisplayMode(context);
+            await _chooseAndroidDisplayMode(context);
             setState(() {});
           },
         );

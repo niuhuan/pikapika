@@ -49,7 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
         title: Text("${categoryTitle(widget.category)} ${widget.keyword}"),
         actions: [
           shadowCategoriesActionButton(context),
-          chooseLayoutAction(context),
+          chooseLayoutActionButton(context),
           _chooseCategoryAction(),
           _searchBar.getSearchAction(context),
         ],

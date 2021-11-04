@@ -17,7 +17,7 @@ class RankingsScreen extends StatelessWidget {
         title: Text('排行榜'),
         actions: [
           shadowCategoriesActionButton(context),
-          chooseLayoutAction(context),
+          chooseLayoutActionButton(context),
         ],
       ),
       body: DefaultTabController(

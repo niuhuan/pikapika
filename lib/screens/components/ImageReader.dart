@@ -148,7 +148,7 @@ class ImageReader extends StatelessWidget {
         reader = Container();
         break;
     }
-    switch (fullScreenAction) {
+    switch (currentFullScreenAction()) {
       case FullScreenAction.CONTROLLER:
         reader = Stack(
           children: [

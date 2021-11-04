@@ -11,7 +11,16 @@ enum ListLayout {
   COVER_AND_TITLE,
 }
 
+const Map<String, ListLayout> _listLayoutMap = {
+  '详情': ListLayout.INFO_CARD,
+  '封面': ListLayout.ONLY_IMAGE,
+  '封面+标题': ListLayout.COVER_AND_TITLE,
+};
+
+const _propertyName = "listLayout";
 late ListLayout currentLayout;
+
+var listLayoutEvent = Event<EventArgs>();
 
 Future<void> initListLayout() async {
   currentLayout = _listLayoutFromString(await method.loadProperty(
@@ -19,16 +28,6 @@ Future<void> initListLayout() async {
     ListLayout.INFO_CARD.toString(),
   ));
 }
-
-const _propertyName = "listLayout";
-
-var listLayoutEvent = Event<EventArgs>();
-
-const Map<String, ListLayout> _listLayoutMap = {
-  '详情': ListLayout.INFO_CARD,
-  '封面': ListLayout.ONLY_IMAGE,
-  '封面+标题': ListLayout.COVER_AND_TITLE,
-};
 
 ListLayout _listLayoutFromString(String layoutString) {
   for (var value in ListLayout.values) {
@@ -39,7 +38,7 @@ ListLayout _listLayoutFromString(String layoutString) {
   return ListLayout.INFO_CARD;
 }
 
-void chooseListLayout(BuildContext context) async {
+void _chooseListLayout(BuildContext context) async {
   ListLayout? layout = await chooseMapDialog(context, _listLayoutMap, '请选择布局');
   if (layout != null) {
     await method.saveProperty(_propertyName, layout.toString());
@@ -48,10 +47,9 @@ void chooseListLayout(BuildContext context) async {
   }
 }
 
-IconButton chooseLayoutAction(BuildContext context) => IconButton(
+IconButton chooseLayoutActionButton(BuildContext context) => IconButton(
       onPressed: () {
-        chooseListLayout(context);
+        _chooseListLayout(context);
       },
       icon: Icon(Icons.view_quilt),
     );
-

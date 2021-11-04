@@ -51,7 +51,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
         title: new Text(categoryTitle(widget.category)),
         actions: [
           shadowCategoriesActionButton(context),
-          chooseLayoutAction(context),
+          chooseLayoutActionButton(context),
           _chooseCategoryAction(),
           _categorySearchBar.getSearchAction(context),
         ],
@@ -125,7 +125,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
         title: Text(title),
         actions: [
           shadowCategoriesActionButton(context),
-          chooseLayoutAction(context),
+          chooseLayoutActionButton(context),
           _chooseCategoryAction(),
         ],
       );

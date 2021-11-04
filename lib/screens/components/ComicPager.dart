@@ -41,7 +41,7 @@ class _ComicPagerState extends State<ComicPager> {
 
   @override
   Widget build(BuildContext context) {
-    switch (currentPagerAction) {
+    switch (currentPagerAction()) {
       case PagerAction.CONTROLLER:
         return ControllerComicPager(fetchPage: widget.fetchPage);
       case PagerAction.STREAM:

@@ -12,9 +12,9 @@ enum FullScreenUI {
   ALL,
 }
 
+const _propertyName = "fullScreenUI";
 late FullScreenUI fullScreenUI;
 
-const _propertyName = "fullScreenUI";
 
 Future<void> initFullScreenUI() async {
   fullScreenUI = _fullScreenUIFromString(await method.loadProperty(

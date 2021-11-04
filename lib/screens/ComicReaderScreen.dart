@@ -18,7 +18,7 @@ class ComicReaderScreen extends StatefulWidget {
   final List<Ep> epList;
   final currentEpOrder;
   final int? initPictureRank;
-  final ReaderType pagerType = gReaderType;
+  final ReaderType pagerType = currentReaderType();
   final ReaderDirection pagerDirection = gReaderDirection;
   late final bool autoFullScreen;
 
@@ -149,7 +149,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
                 IconButton(
                   onPressed: () async {
                     await choosePagerType(context);
-                    if (widget.pagerType != gReaderType) {
+                    if (widget.pagerType != currentReaderType()) {
                       _reloadReader();
                     }
                   },

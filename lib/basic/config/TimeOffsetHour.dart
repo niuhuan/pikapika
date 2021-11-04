@@ -5,19 +5,18 @@ import 'package:flutter/material.dart';
 import '../Common.dart';
 import '../Method.dart';
 
-int _timeOffsetHour = 8;
-
-int currentTimeOffsetHour() {
-  return _timeOffsetHour;
-}
-
 const _propertyName = "timeOffsetHour";
+int _timeOffsetHour = 8;
 
 Future<void> initTimeZone() async {
   _timeOffsetHour = int.parse(await method.loadProperty(_propertyName, "8"));
 }
 
-Future<void> chooseTimeZone(BuildContext context) async {
+int currentTimeOffsetHour() {
+  return _timeOffsetHour;
+}
+
+Future<void> _chooseTimeZone(BuildContext context) async {
   List<String> timeZones = [];
   for (var i = -12; i <= 12; i++) {
     var str = i.toString();
@@ -47,7 +46,7 @@ Widget timeZoneSetting() {
         title: Text("时区"),
         subtitle: Text(c),
         onTap: () async {
-          await chooseTimeZone(context);
+          await _chooseTimeZone(context);
           setState(() {});
         },
       );

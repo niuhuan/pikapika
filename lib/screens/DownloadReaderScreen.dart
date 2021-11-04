@@ -17,7 +17,7 @@ class DownloadReaderScreen extends StatefulWidget {
   final List<DownloadEp> epList;
   final int currentEpOrder;
   final int? initPictureRank;
-  final ReaderType pagerType = gReaderType;
+  final ReaderType pagerType = currentReaderType();
   final ReaderDirection pagerDirection = gReaderDirection;
   late final bool autoFullScreen;
 
@@ -118,7 +118,6 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return readerKeyboardHolder(_build(context));
@@ -143,7 +142,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
                 IconButton(
                   onPressed: () async {
                     await choosePagerType(context);
-                    if (widget.pagerType != gReaderType) {
+                    if (widget.pagerType != currentReaderType()) {
                       _reloadReader();
                     }
                   },

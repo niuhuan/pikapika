@@ -10,15 +10,23 @@ enum FullScreenAction {
   TOUCH_ONCE,
 }
 
-late FullScreenAction fullScreenAction;
+Map<String, FullScreenAction> _fullScreenActionMap = {
+  "使用控制器": FullScreenAction.CONTROLLER,
+  "点击屏幕一次": FullScreenAction.TOUCH_ONCE,
+};
 
 const _propertyName = "fullScreenAction";
+late FullScreenAction _fullScreenAction;
 
 Future<void> initFullScreenAction() async {
-  fullScreenAction = _fullScreenActionFromString(await method.loadProperty(
+  _fullScreenAction = _fullScreenActionFromString(await method.loadProperty(
     _propertyName,
     FullScreenAction.CONTROLLER.toString(),
   ));
+}
+
+FullScreenAction currentFullScreenAction() {
+  return _fullScreenAction;
 }
 
 FullScreenAction _fullScreenActionFromString(String string) {
@@ -30,26 +38,21 @@ FullScreenAction _fullScreenActionFromString(String string) {
   return FullScreenAction.CONTROLLER;
 }
 
-Map<String, FullScreenAction> fullScreenActionMap = {
-  "使用控制器": FullScreenAction.CONTROLLER,
-  "点击屏幕一次": FullScreenAction.TOUCH_ONCE,
-};
-
-String currentFullScreenActionName() {
-  for (var e in fullScreenActionMap.entries) {
-    if (e.value == fullScreenAction) {
+String _currentFullScreenActionName() {
+  for (var e in _fullScreenActionMap.entries) {
+    if (e.value == _fullScreenAction) {
       return e.key;
     }
   }
   return '';
 }
 
-Future<void> chooseFullScreenAction(BuildContext context) async {
+Future<void> _chooseFullScreenAction(BuildContext context) async {
   FullScreenAction? result = await chooseMapDialog<FullScreenAction>(
-      context, fullScreenActionMap, "选择进入全屏的方式");
+      context, _fullScreenActionMap, "选择进入全屏的方式");
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
-    fullScreenAction = result;
+    _fullScreenAction = result;
   }
 }
 
@@ -58,9 +61,9 @@ Widget fullScreenActionSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("进入全屏的方式"),
-        subtitle: Text(currentFullScreenActionName()),
+        subtitle: Text(_currentFullScreenActionName()),
         onTap: () async {
-          await chooseFullScreenAction(context);
+          await _chooseFullScreenAction(context);
           setState(() {});
         },
       );

@@ -5,24 +5,19 @@ import 'package:flutter/material.dart';
 import '../Common.dart';
 import '../Method.dart';
 
-late bool _autoFullScreen;
-
-bool currentAutoFullScreen() {
-  return _autoFullScreen;
-}
-
 const _propertyName = "autoFullScreen";
+late bool _autoFullScreen;
 
 Future<void> initAutoFullScreen() async {
   _autoFullScreen =
       (await method.loadProperty(_propertyName, "false")) == "true";
 }
 
-String autoFullScreenName() {
-  return _autoFullScreen ? "是" : "否";
+bool currentAutoFullScreen() {
+  return _autoFullScreen;
 }
 
-Future<void> chooseAutoFullScreen(BuildContext context) async {
+Future<void> _chooseAutoFullScreen(BuildContext context) async {
   String? result =
       await chooseListDialog<String>(context, "进入阅读器自动全屏", ["是", "否"]);
   if (result != null) {
@@ -37,9 +32,9 @@ Widget autoFullScreenSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("进入阅读器自动全屏"),
-        subtitle: Text(autoFullScreenName()),
+        subtitle: Text(_autoFullScreen ? "是" : "否"),
         onTap: () async {
-          await chooseAutoFullScreen(context);
+          await _chooseAutoFullScreen(context);
           setState(() {});
         },
       );

@@ -9,20 +9,19 @@ enum ReaderDirection {
   RIGHT_TO_LEFT,
 }
 
-late ReaderDirection gReaderDirection;
+const _types = {
+  '从上到下': ReaderDirection.TOP_TO_BOTTOM,
+  '从左到右': ReaderDirection.LEFT_TO_RIGHT,
+  '从右到左': ReaderDirection.RIGHT_TO_LEFT,
+};
 
 const _propertyName = "readerDirection";
+late ReaderDirection gReaderDirection;
 
 Future<void> initReaderDirection() async {
   gReaderDirection = _pagerDirectionFromString(await method.loadProperty(
       _propertyName, ReaderDirection.TOP_TO_BOTTOM.toString()));
 }
-
-var _types = {
-  '从上到下': ReaderDirection.TOP_TO_BOTTOM,
-  '从左到右': ReaderDirection.LEFT_TO_RIGHT,
-  '从右到左': ReaderDirection.RIGHT_TO_LEFT,
-};
 
 ReaderDirection _pagerDirectionFromString(String pagerDirectionString) {
   for (var value in ReaderDirection.values) {
@@ -33,7 +32,7 @@ ReaderDirection _pagerDirectionFromString(String pagerDirectionString) {
   return ReaderDirection.TOP_TO_BOTTOM;
 }
 
-String currentReaderDirectionName() {
+String _currentReaderDirectionName() {
   for (var e in _types.entries) {
     if (e.value == gReaderDirection) {
       return e.key;
@@ -42,6 +41,7 @@ String currentReaderDirectionName() {
   return '';
 }
 
+/// ?? to ActionButton And Event ??
 Future<void> choosePagerDirection(BuildContext buildContext) async {
   ReaderDirection? choose = await showDialog<ReaderDirection>(
     context: buildContext,
@@ -70,7 +70,7 @@ Widget readerDirectionSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("阅读器方向"),
-        subtitle: Text(currentReaderDirectionName()),
+        subtitle: Text(_currentReaderDirectionName()),
         onTap: () async {
           await choosePagerDirection(context);
           setState(() {});

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Method.dart';
 
+
+const _autoCleanMap = {
+  "一个月前": "${3600 * 24 * 30}",
+  "一周前": "${3600 * 24 * 7}",
+  "一天前": "${3600 * 24 * 1}",
+  "不自动清理": "${0}",
+};
 late String _autoCleanSec;
 
-Future<dynamic> autoClean() async {
+Future<dynamic> initAutoClean() async {
   _autoCleanSec =
       await method.loadProperty("autoCleanSec", "${3600 * 24 * 30}");
   if ("0" != _autoCleanSec) {
@@ -11,14 +18,7 @@ Future<dynamic> autoClean() async {
   }
 }
 
-var _autoCleanMap = {
-  "一个月前": "${3600 * 24 * 30}",
-  "一周前": "${3600 * 24 * 7}",
-  "一天前": "${3600 * 24 * 1}",
-  "不自动清理": "${0}",
-};
-
-String currentAutoCleanSec() {
+String _currentAutoCleanSec() {
   for (var value in _autoCleanMap.entries) {
     if (value.value == _autoCleanSec) {
       return value.key;
@@ -27,7 +27,7 @@ String currentAutoCleanSec() {
   return "";
 }
 
-Future<void> chooseAutoCleanSec(BuildContext context) async {
+Future<void> _chooseAutoCleanSec(BuildContext context) async {
   String? choose = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -58,9 +58,9 @@ Widget autoCleanSecSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("自动清理缓存"),
-        subtitle: Text(currentAutoCleanSec()),
+        subtitle: Text(_currentAutoCleanSec()),
         onTap: () async {
-          await chooseAutoCleanSec(context);
+          await _chooseAutoCleanSec(context);
           setState(() {});
         },
       );

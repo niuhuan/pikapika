@@ -20,7 +20,13 @@ var _qualities = {
   _LabelHigh: ImageQualityHigh,
 };
 
+const _propertyName = "quality";
 late String _currentQualityCode;
+const _defaultValue = _ImageQualityOriginal;
+
+Future<void> initQuality() async {
+  _currentQualityCode = await method.loadProperty(_propertyName, _defaultValue);
+}
 
 String currentQualityCode() {
   return _currentQualityCode;
@@ -35,14 +41,7 @@ String _currentQualityName() {
   return '';
 }
 
-const _propertyName = "quality";
-const _defaultValue = _ImageQualityOriginal;
-
-Future<void> initQuality() async {
-  _currentQualityCode = await method.loadProperty(_propertyName, _defaultValue);
-}
-
-Future<void> chooseQuality(BuildContext context) async {
+Future<void> _chooseQuality(BuildContext context) async {
   String? code = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -74,7 +73,7 @@ Widget qualitySetting() {
         title: Text("浏览时的图片质量"),
         subtitle: Text(_currentQualityName()),
         onTap: () async {
-          await chooseQuality(context);
+          await _chooseQuality(context);
           setState(() {});
         },
       );

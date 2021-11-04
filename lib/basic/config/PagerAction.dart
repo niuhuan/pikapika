@@ -10,13 +10,21 @@ enum PagerAction {
   STREAM,
 }
 
-late PagerAction currentPagerAction;
+Map<String, PagerAction> _pagerActionMap = {
+  "使用按钮": PagerAction.CONTROLLER,
+  "瀑布流": PagerAction.STREAM,
+};
 
 const _propertyName = "pagerAction";
+late PagerAction _pagerAction;
 
 Future<void> initPagerAction() async {
-  currentPagerAction = _pagerActionFromString(await method.loadProperty(
+  _pagerAction = _pagerActionFromString(await method.loadProperty(
       _propertyName, PagerAction.CONTROLLER.toString()));
+}
+
+PagerAction currentPagerAction() {
+  return _pagerAction;
 }
 
 PagerAction _pagerActionFromString(String string) {
@@ -28,26 +36,21 @@ PagerAction _pagerActionFromString(String string) {
   return PagerAction.CONTROLLER;
 }
 
-Map<String, PagerAction> _pagerActionMap = {
-  "使用按钮": PagerAction.CONTROLLER,
-  "瀑布流": PagerAction.STREAM,
-};
-
-String currentPagerActionName() {
+String _currentPagerActionName() {
   for (var e in _pagerActionMap.entries) {
-    if (e.value == currentPagerAction) {
+    if (e.value == _pagerAction) {
       return e.key;
     }
   }
   return '';
 }
 
-Future<void> choosePagerAction(BuildContext context) async {
+Future<void> _choosePagerAction(BuildContext context) async {
   PagerAction? result =
       await chooseMapDialog<PagerAction>(context, _pagerActionMap, "选择列表页加载方式");
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
-    currentPagerAction = result;
+    _pagerAction = result;
   }
 }
 
@@ -56,9 +59,9 @@ Widget pagerActionSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("列表页加载方式"),
-        subtitle: Text(currentPagerActionName()),
+        subtitle: Text(_currentPagerActionName()),
         onTap: () async {
-          await choosePagerAction(context);
+          await _choosePagerAction(context);
           setState(() {});
         },
       );

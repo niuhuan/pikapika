@@ -1,17 +1,7 @@
 /// 阅读器的类型
 
 import 'package:flutter/material.dart';
-
 import '../Method.dart';
-
-late ReaderType gReaderType;
-
-const _propertyName = "readerType";
-
-Future<dynamic> initReaderType() async {
-  gReaderType = _readerTypeFromString(
-      await method.loadProperty(_propertyName, ReaderType.WEB_TOON.toString()));
-}
 
 enum ReaderType {
   WEB_TOON,
@@ -19,11 +9,23 @@ enum ReaderType {
   GALLERY,
 }
 
-var _types = {
+const _types = {
   'WebToon (默认)': ReaderType.WEB_TOON,
   'WebToon + 双击放大': ReaderType.WEB_TOON_ZOOM,
   '相册': ReaderType.GALLERY,
 };
+
+const _propertyName = "readerType";
+late ReaderType _readerType;
+
+Future<dynamic> initReaderType() async {
+  _readerType = _readerTypeFromString(
+      await method.loadProperty(_propertyName, ReaderType.WEB_TOON.toString()));
+}
+
+ReaderType currentReaderType() {
+  return _readerType;
+}
 
 ReaderType _readerTypeFromString(String pagerTypeString) {
   for (var value in ReaderType.values) {
@@ -36,7 +38,7 @@ ReaderType _readerTypeFromString(String pagerTypeString) {
 
 String currentReaderTypeName() {
   for (var e in _types.entries) {
-    if (e.value == gReaderType) {
+    if (e.value == _readerType) {
       return e.key;
     }
   }
@@ -62,7 +64,7 @@ Future<void> choosePagerType(BuildContext buildContext) async {
   );
   if (t != null) {
     await method.saveProperty(_propertyName, t.toString());
-    gReaderType = t;
+    _readerType = t;
   }
 }
 

@@ -28,7 +28,7 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
         title: Text('随机本子'),
         actions: [
           shadowCategoriesActionButton(context),
-          chooseLayoutAction(context),
+          chooseLayoutActionButton(context),
         ],
       ),
       body: ComicListBuilder(_future, _reload),
