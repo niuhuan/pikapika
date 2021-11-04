@@ -48,8 +48,8 @@ String currentFullScreenUIName() {
 }
 
 Future<void> chooseFullScreenUI(BuildContext context) async {
-  FullScreenUI? result = await chooseMapDialog<FullScreenUI>(
-      context, fullScreenUIMap, "选择全屏UI");
+  FullScreenUI? result =
+      await chooseMapDialog<FullScreenUI>(context, fullScreenUIMap, "选择全屏UI");
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     fullScreenUI = result;
@@ -69,4 +69,19 @@ void switchFullScreenUI() {
   }
   print(fullScreenUI);
   SystemChrome.setEnabledSystemUIOverlays(list);
+}
+
+Widget fullScreenUISetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("全屏UI"),
+        subtitle: Text(currentFullScreenUIName()),
+        onTap: () async {
+          await chooseFullScreenUI(context);
+          setState(() {});
+        },
+      );
+    },
+  );
 }

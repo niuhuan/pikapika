@@ -64,3 +64,18 @@ Future<void> choosePagerDirection(BuildContext buildContext) async {
     gReaderDirection = choose;
   }
 }
+
+Widget readerDirectionSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("阅读器方向"),
+        subtitle: Text(currentReaderDirectionName()),
+        onTap: () async {
+          await choosePagerDirection(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}

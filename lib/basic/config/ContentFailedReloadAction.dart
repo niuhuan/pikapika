@@ -54,3 +54,16 @@ Future<void> chooseContentFailedReloadAction(BuildContext context) async {
     contentFailedReloadAction = result;
   }
 }
+
+Widget contentFailedReloadActionSetting(){
+  return StatefulBuilder(builder: (BuildContext context, void Function(void Function()) setState) {
+    return ListTile(
+      title: Text("加载失败时"),
+      subtitle: Text(currentContentFailedReloadActionName()),
+      onTap: () async {
+        await chooseContentFailedReloadAction(context);
+        setState(() {});
+      },
+    );
+  },);
+}

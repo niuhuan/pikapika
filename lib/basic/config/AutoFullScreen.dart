@@ -31,3 +31,18 @@ Future<void> chooseAutoFullScreen(BuildContext context) async {
     _autoFullScreen = target;
   }
 }
+
+Widget autoFullScreenSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("进入阅读器自动全屏"),
+        subtitle: Text(autoFullScreenName()),
+        onTap: () async {
+          await chooseAutoFullScreen(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}

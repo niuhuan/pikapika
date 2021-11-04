@@ -50,3 +50,18 @@ Future<void> choosePagerAction(BuildContext context) async {
     currentPagerAction = result;
   }
 }
+
+Widget pagerActionSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("列表页加载方式"),
+        subtitle: Text(currentPagerActionName()),
+        onTap: () async {
+          await choosePagerAction(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}

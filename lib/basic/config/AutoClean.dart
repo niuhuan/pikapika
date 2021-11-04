@@ -51,3 +51,19 @@ Future<void> chooseAutoCleanSec(BuildContext context) async {
     _autoCleanSec = choose;
   }
 }
+
+
+Widget autoCleanSecSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("自动清理缓存"),
+        subtitle: Text(currentAutoCleanSec()),
+        onTap: () async {
+          await chooseAutoCleanSec(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}

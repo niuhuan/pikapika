@@ -65,3 +65,18 @@ Future<void> choosePagerType(BuildContext buildContext) async {
     gReaderType = t;
   }
 }
+
+Widget readerTypeSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("阅读器模式"),
+        subtitle: Text(currentReaderTypeName()),
+        onTap: () async {
+          await choosePagerType(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}

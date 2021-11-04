@@ -52,3 +52,18 @@ Future<void> chooseFullScreenAction(BuildContext context) async {
     fullScreenAction = result;
   }
 }
+
+Widget fullScreenActionSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: Text("进入全屏的方式"),
+        subtitle: Text(currentFullScreenActionName()),
+        onTap: () async {
+          await chooseFullScreenAction(context);
+          setState(() {});
+        },
+      );
+    },
+  );
+}
