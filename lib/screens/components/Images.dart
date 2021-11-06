@@ -7,14 +7,14 @@ import 'dart:io';
 import 'dart:ui' as ui show Codec;
 
 // 从本地加载图片
-class PicaFileImageProvider extends ImageProvider<PicaFileImageProvider> {
+class ResourceFileImageProvider extends ImageProvider<ResourceFileImageProvider> {
   final String path;
   final double scale;
 
-  PicaFileImageProvider(this.path, {this.scale = 1.0});
+  ResourceFileImageProvider(this.path, {this.scale = 1.0});
 
   @override
-  ImageStreamCompleter load(PicaFileImageProvider key, DecoderCallback decode) {
+  ImageStreamCompleter load(ResourceFileImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -22,11 +22,11 @@ class PicaFileImageProvider extends ImageProvider<PicaFileImageProvider> {
   }
 
   @override
-  Future<PicaFileImageProvider> obtainKey(ImageConfiguration configuration) {
-    return SynchronousFuture<PicaFileImageProvider>(this);
+  Future<ResourceFileImageProvider> obtainKey(ImageConfiguration configuration) {
+    return SynchronousFuture<ResourceFileImageProvider>(this);
   }
 
-  Future<ui.Codec> _loadAsync(PicaFileImageProvider key) async {
+  Future<ui.Codec> _loadAsync(ResourceFileImageProvider key) async {
     assert(key == this);
     return PaintingBinding.instance!
         .instantiateImageCodec(await File(path).readAsBytes());
@@ -35,7 +35,7 @@ class PicaFileImageProvider extends ImageProvider<PicaFileImageProvider> {
   @override
   bool operator ==(dynamic other) {
     if (other.runtimeType != runtimeType) return false;
-    final PicaFileImageProvider typedOther = other;
+    final ResourceFileImageProvider typedOther = other;
     return path == typedOther.path && scale == typedOther.scale;
   }
 
@@ -50,16 +50,16 @@ class PicaFileImageProvider extends ImageProvider<PicaFileImageProvider> {
 }
 
 // 从本地加载图片
-class PicaDownloadFileImageProvider
-    extends ImageProvider<PicaDownloadFileImageProvider> {
+class ResourceDownloadFileImageProvider
+    extends ImageProvider<ResourceDownloadFileImageProvider> {
   final String path;
   final double scale;
 
-  PicaDownloadFileImageProvider(this.path, {this.scale = 1.0});
+  ResourceDownloadFileImageProvider(this.path, {this.scale = 1.0});
 
   @override
   ImageStreamCompleter load(
-      PicaDownloadFileImageProvider key, DecoderCallback decode) {
+      ResourceDownloadFileImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -67,12 +67,12 @@ class PicaDownloadFileImageProvider
   }
 
   @override
-  Future<PicaDownloadFileImageProvider> obtainKey(
+  Future<ResourceDownloadFileImageProvider> obtainKey(
       ImageConfiguration configuration) {
-    return SynchronousFuture<PicaDownloadFileImageProvider>(this);
+    return SynchronousFuture<ResourceDownloadFileImageProvider>(this);
   }
 
-  Future<ui.Codec> _loadAsync(PicaDownloadFileImageProvider key) async {
+  Future<ui.Codec> _loadAsync(ResourceDownloadFileImageProvider key) async {
     assert(key == this);
     return PaintingBinding.instance!.instantiateImageCodec(
         await File(await method.downloadImagePath(path)).readAsBytes());
@@ -81,7 +81,7 @@ class PicaDownloadFileImageProvider
   @override
   bool operator ==(dynamic other) {
     if (other.runtimeType != runtimeType) return false;
-    final PicaDownloadFileImageProvider typedOther = other;
+    final ResourceDownloadFileImageProvider typedOther = other;
     return path == typedOther.path && scale == typedOther.scale;
   }
 
@@ -96,16 +96,16 @@ class PicaDownloadFileImageProvider
 }
 
 // 从远端加载图片 暂时未使用 (现在都是先获取路径然后再通过file显示)
-class PicaRemoteImageProvider extends ImageProvider<PicaRemoteImageProvider> {
+class ResourceRemoteImageProvider extends ImageProvider<ResourceRemoteImageProvider> {
   final String fileServer;
   final String path;
   final double scale;
 
-  PicaRemoteImageProvider(this.fileServer, this.path, {this.scale = 1.0});
+  ResourceRemoteImageProvider(this.fileServer, this.path, {this.scale = 1.0});
 
   @override
   ImageStreamCompleter load(
-      PicaRemoteImageProvider key, DecoderCallback decode) {
+      ResourceRemoteImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -113,11 +113,11 @@ class PicaRemoteImageProvider extends ImageProvider<PicaRemoteImageProvider> {
   }
 
   @override
-  Future<PicaRemoteImageProvider> obtainKey(ImageConfiguration configuration) {
-    return SynchronousFuture<PicaRemoteImageProvider>(this);
+  Future<ResourceRemoteImageProvider> obtainKey(ImageConfiguration configuration) {
+    return SynchronousFuture<ResourceRemoteImageProvider>(this);
   }
 
-  Future<ui.Codec> _loadAsync(PicaRemoteImageProvider key) async {
+  Future<ui.Codec> _loadAsync(ResourceRemoteImageProvider key) async {
     assert(key == this);
     var downloadTo = await method.remoteImageData(fileServer, path);
     return PaintingBinding.instance!
@@ -127,7 +127,7 @@ class PicaRemoteImageProvider extends ImageProvider<PicaRemoteImageProvider> {
   @override
   bool operator ==(dynamic other) {
     if (other.runtimeType != runtimeType) return false;
-    final PicaRemoteImageProvider typedOther = other;
+    final ResourceRemoteImageProvider typedOther = other;
     return fileServer == typedOther.fileServer &&
         path == typedOther.path &&
         scale == typedOther.scale;
@@ -280,7 +280,7 @@ Widget buildLoading(double? width, double? height) {
 Widget buildFile(String file, double? width, double? height,
     {BoxFit fit = BoxFit.cover}) {
   return Image(
-    image: PicaFileImageProvider(file),
+    image: ResourceFileImageProvider(file),
     width: width,
     height: height,
     errorBuilder: (a, b, c) {

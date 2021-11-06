@@ -713,7 +713,7 @@ class _GalleryReaderState extends State<_GalleryReader> {
         if (item.downloadLocalPath != null) {
           return PhotoViewGalleryPageOptions(
             imageProvider:
-                PicaDownloadFileImageProvider(item.downloadLocalPath!),
+                ResourceDownloadFileImageProvider(item.downloadLocalPath!),
             errorBuilder: (b, e, s) {
               print("$e,$s");
               return LayoutBuilder(
@@ -726,7 +726,7 @@ class _GalleryReaderState extends State<_GalleryReader> {
           );
         }
         return PhotoViewGalleryPageOptions(
-          imageProvider: PicaRemoteImageProvider(item.fileServer, item.path),
+          imageProvider: ResourceRemoteImageProvider(item.fileServer, item.path),
           errorBuilder: (b, e, s) {
             print("$e,$s");
             return LayoutBuilder(

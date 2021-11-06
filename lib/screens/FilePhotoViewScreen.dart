@@ -14,7 +14,7 @@ class FilePhotoViewScreen extends StatelessWidget {
         body: Stack(
           children: [
             PhotoView(
-              imageProvider: PicaFileImageProvider(filePath),
+              imageProvider: ResourceFileImageProvider(filePath),
             ),
             InkWell(
               onTap: () => Navigator.of(context).pop(),
