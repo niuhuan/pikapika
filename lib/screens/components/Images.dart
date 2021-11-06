@@ -1,20 +1,31 @@
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pikapi/basic/config/ConvertToPNG.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 
+Future<Uint8List> _loadImageFile(String path) {
+  if (convertToPNG()) {
+    return method.convertToPNG(path);
+  }
+  return File(path).readAsBytes();
+}
+
 // 从本地加载图片
-class ResourceFileImageProvider extends ImageProvider<ResourceFileImageProvider> {
+class ResourceFileImageProvider
+    extends ImageProvider<ResourceFileImageProvider> {
   final String path;
   final double scale;
 
   ResourceFileImageProvider(this.path, {this.scale = 1.0});
 
   @override
-  ImageStreamCompleter load(ResourceFileImageProvider key, DecoderCallback decode) {
+  ImageStreamCompleter load(
+      ResourceFileImageProvider key, DecoderCallback decode) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -22,14 +33,15 @@ class ResourceFileImageProvider extends ImageProvider<ResourceFileImageProvider>
   }
 
   @override
-  Future<ResourceFileImageProvider> obtainKey(ImageConfiguration configuration) {
+  Future<ResourceFileImageProvider> obtainKey(
+      ImageConfiguration configuration) {
     return SynchronousFuture<ResourceFileImageProvider>(this);
   }
 
   Future<ui.Codec> _loadAsync(ResourceFileImageProvider key) async {
     assert(key == this);
     return PaintingBinding.instance!
-        .instantiateImageCodec(await File(path).readAsBytes());
+        .instantiateImageCodec(await _loadImageFile(path));
   }
 
   @override
@@ -96,7 +108,8 @@ class ResourceDownloadFileImageProvider
 }
 
 // 从远端加载图片 暂时未使用 (现在都是先获取路径然后再通过file显示)
-class ResourceRemoteImageProvider extends ImageProvider<ResourceRemoteImageProvider> {
+class ResourceRemoteImageProvider
+    extends ImageProvider<ResourceRemoteImageProvider> {
   final String fileServer;
   final String path;
   final double scale;
@@ -113,7 +126,8 @@ class ResourceRemoteImageProvider extends ImageProvider<ResourceRemoteImageProvi
   }
 
   @override
-  Future<ResourceRemoteImageProvider> obtainKey(ImageConfiguration configuration) {
+  Future<ResourceRemoteImageProvider> obtainKey(
+      ImageConfiguration configuration) {
     return SynchronousFuture<ResourceRemoteImageProvider>(this);
   }
 

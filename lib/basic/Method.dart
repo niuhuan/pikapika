@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:pikapi/basic/Entities.dart';
@@ -606,5 +607,10 @@ class Method {
       "commentId": commentId,
       "comicId": comicId,
     });
+  }
+
+  /// 转化为PNG
+  Future<Uint8List> convertToPNG(String path) async {
+    return await _channel.invokeMethod("convertToPNG", {"path": path});
   }
 }
