@@ -171,7 +171,7 @@ func downloadFetchPictures(downloadEp *comic_center.ComicDownloadEp) error {
 			})
 		}
 		// 如果不是最后一页, 页码加1, 获取下一页
-		if rsp.Page.Page < rsp.Page.Pages {
+		if rsp.Page < rsp.Pages {
 			page++
 			continue
 		}
