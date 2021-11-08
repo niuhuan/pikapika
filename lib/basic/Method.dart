@@ -360,6 +360,16 @@ class Method {
     return GameInfo.fromJson(json.decode(data));
   }
 
+  /// 清理网络缓存
+  Future cleanNetworkCache() {
+    return _flatInvoke("cleanNetworkCache", "");
+  }
+
+  /// 清理图片缓存
+  Future cleanImageCache() {
+    return _flatInvoke("cleanImageCache", "");
+  }
+
   /// 清理缓存
   Future clean() {
     return _flatInvoke("clean", "");

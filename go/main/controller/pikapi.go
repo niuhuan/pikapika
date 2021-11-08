@@ -388,6 +388,28 @@ func setDownloadRunning(status bool) {
 	downloadRunning = status
 }
 
+func cleanNetworkCache() error {
+	err := network_cache.RemoveAll()
+	if err != nil {
+		return err
+	}
+	notifyExport("清理结束")
+	return nil
+}
+
+func cleanImageCache() error {
+	notifyExport("清理图片缓存")
+	err := comic_center.RemoveAllRemoteImage()
+	if err != nil {
+		return err
+	}
+	notifyExport("清理图片文件")
+	os.RemoveAll(remoteDir)
+	utils.Mkdir(remoteDir)
+	notifyExport("清理结束")
+	return nil
+}
+
 func clean() error {
 	var err error
 	notifyExport("清理网络缓存")
@@ -571,6 +593,10 @@ func FlatInvoke(method string, params string) (string, error) {
 	case "deleteViewLog":
 		comic_center.DeleteViewLog(params)
 		return "", nil
+	case "cleanNetworkCache":
+		return "", cleanNetworkCache()
+	case "cleanImageCache":
+		return "", cleanImageCache()
 	case "clean":
 		return "", clean()
 	case "autoClean":

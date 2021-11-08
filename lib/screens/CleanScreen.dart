@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Channels.dart';
 import 'package:pikapi/basic/Method.dart';
+import 'package:pikapi/screens/components/FitButton.dart';
 import 'components/ContentLoading.dart';
 
 // 清理
@@ -47,37 +48,59 @@ class _CleanScreenState extends State<CleanScreen> {
       ),
       body: ListView(
         children: [
-          MaterialButton(
-            onPressed: () async {
-              try {
-                setState(() {
-                  _cleaning = true;
-                });
-                await method.clean();
-                setState(() {
-                  _cleanResult = "清理成功";
-                });
-              } catch (e) {
-                setState(() {
-                  _cleanResult = "清理失败 $e";
-                });
-              } finally {
-                setState(() {
-                  _cleaning = false;
-                });
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Text('清理'),
-            ),
-          ),
           Container(
             padding: EdgeInsets.all(8),
             child: _cleanResult != "" ? Text(_cleanResult) : Container(),
-          )
+          ),
+          Container(
+            height: 50,
+            child: FitButton(
+              text: '清理网络缓存',
+              onPressed: () {
+                processCleanAction(method.cleanNetworkCache);
+              },
+            ),
+          ),
+          Container(
+            height: 50,
+            child: FitButton(
+              text: '清理图片缓存',
+              onPressed: () {
+                processCleanAction(method.cleanImageCache);
+              },
+            ),
+          ),
+          Container(
+            height: 50,
+            child: FitButton(
+              text: '清理全部缓存',
+              onPressed: () {
+                processCleanAction(method.clean);
+              },
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  Future processCleanAction(Future Function() action) async {
+    try {
+      setState(() {
+        _cleaning = true;
+      });
+      await action();
+      setState(() {
+        _cleanResult = "清理成功";
+      });
+    } catch (e) {
+      setState(() {
+        _cleanResult = "清理失败 $e";
+      });
+    } finally {
+      setState(() {
+        _cleaning = false;
+      });
+    }
   }
 }
