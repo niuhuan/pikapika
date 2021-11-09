@@ -66,6 +66,8 @@ class Page {
     this.page = json["page"];
     this.pages = json["pages"];
   }
+
+  Page.of(this.total, this.limit, this.page, this.pages);
 }
 
 /// 分类
@@ -255,12 +257,10 @@ class CommentPage extends Page {
   }
 }
 
-/// 漫画评论详情
-class Comment {
+class CommentBase {
   late String id;
   late String content;
   late CommentUser user;
-  late String comic;
   late bool isTop;
   late bool hide;
   late String createdAt;
@@ -268,17 +268,34 @@ class Comment {
   late int commentsCount;
   late bool isLiked;
 
-  Comment.fromJson(Map<String, dynamic> json) {
+  CommentBase.fromJson(Map<String, dynamic> json) {
     this.id = json["_id"];
     this.content = json["content"];
     this.user = CommentUser.fromJson(Map<String, dynamic>.of(json["_user"]));
-    this.comic = json["_comic"];
     this.isTop = json["isTop"];
     this.hide = json["hide"];
     this.createdAt = json["created_at"];
     this.likesCount = json["likesCount"];
     this.commentsCount = json["commentsCount"];
     this.isLiked = json["isLiked"];
+  }
+}
+
+/// 子评论
+class ChildOfComment extends Comment {
+  late String parent;
+
+  ChildOfComment.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.parent = json["_parent"];
+  }
+}
+
+/// 漫画评论详情
+class Comment extends CommentBase {
+  late String comic;
+
+  Comment.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.comic = json["_comic"];
   }
 }
 
@@ -604,10 +621,54 @@ class CommentChildrenPage extends Page {
 }
 
 /// 子评论
-class CommentChild extends Comment {
-  late String parent;
+class CommentChild extends ChildOfComment {
+  late String comic;
 
   CommentChild.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    this.parent = json["_parent"];
+    this.comic = json["_comic"];
+  }
+}
+
+/// 漫画评论分页
+class GameCommentPage extends Page {
+  late List<GameComment> docs;
+
+  GameCommentPage.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.docs = List.from(json["docs"])
+        .map((e) => Map<String, dynamic>.from(e))
+        .map((e) => GameComment.fromJson(e))
+        .toList();
+  }
+}
+
+/// 游戏评论
+class GameComment extends CommentBase {
+  late String game;
+
+  GameComment.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.game = json["_game"];
+  }
+}
+
+/// 子评论分页
+class GameCommentChildrenPage extends Page {
+  late List<GameCommentChild> docs;
+
+  GameCommentChildrenPage.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
+    this.docs = [];
+    if (json["docs"] != null) {
+      docs.addAll(
+          List.of(json["docs"]).map((e) => GameCommentChild.fromJson(e)).toList());
+    }
+  }
+}
+
+/// 子评论
+class GameCommentChild extends ChildOfComment {
+  late String game;
+
+  GameCommentChild.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    this.game = json["_game"];
   }
 }

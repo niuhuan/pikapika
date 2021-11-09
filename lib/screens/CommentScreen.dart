@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapi/basic/Entities.dart' as e;
 import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/components/ComicCommentItem.dart';
+import 'package:pikapi/screens/components/CommentItem.dart';
+import 'package:pikapi/screens/components/CommentMainType.dart';
 import 'package:pikapi/screens/components/ContentBuilder.dart';
 
-class CommentScreen extends StatefulWidget {
-  final String comicId;
-  final Comment comment;
+class _CommentChildPage extends e.Page {
+  late List<ChildOfComment> docs;
 
-  const CommentScreen(this.comicId, this.comment);
+  _CommentChildPage.ofComic(CommentChildrenPage commentPage)
+      : super.of(commentPage.total, commentPage.limit, commentPage.page,
+            commentPage.pages) {
+    this.docs = commentPage.docs;
+  }
+
+  _CommentChildPage.ofGame(GameCommentChildrenPage commentPage)
+      : super.of(commentPage.total, commentPage.limit, commentPage.page,
+            commentPage.pages) {
+    this.docs = commentPage.docs;
+  }
+}
+
+class CommentScreen extends StatefulWidget {
+  final CommentMainType mainType;
+  final String mainId;
+  final CommentBase comment;
+
+  const CommentScreen(this.mainType, this.mainId, this.comment);
 
   @override
   State<StatefulWidget> createState() => _CommentScreenState();
@@ -17,14 +36,23 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   late int _currentPage = 1;
-  late Future<CommentChildrenPage> _future = _loadPage();
+  late Future<_CommentChildPage> _future = _loadPage();
 
-  Future<CommentChildrenPage> _loadPage() {
-    return method.commentChildren(
-      widget.comicId,
-      widget.comment.id,
-      _currentPage,
-    );
+  Future<_CommentChildPage> _loadPage() async {
+    switch (widget.mainType) {
+      case CommentMainType.COMIC:
+        return _CommentChildPage.ofComic(await method.commentChildren(
+          widget.mainId,
+          widget.comment.id,
+          _currentPage,
+        ));
+      case CommentMainType.GAME:
+        return _CommentChildPage.ofGame(await method.gameCommentChildren(
+          widget.mainId,
+          widget.comment.id,
+          _currentPage,
+        ));
+    }
   }
 
   Widget _buildChildrenPager() {
@@ -32,7 +60,7 @@ class _CommentScreenState extends State<CommentScreen> {
       future: _future,
       onRefresh: _loadPage,
       successBuilder:
-          (BuildContext context, AsyncSnapshot<CommentChildrenPage> snapshot) {
+          (BuildContext context, AsyncSnapshot<_CommentChildPage> snapshot) {
         var page = snapshot.data!;
         return ListView(
           children: [
@@ -54,7 +82,7 @@ class _CommentScreenState extends State<CommentScreen> {
       ),
       body: Column(
         children: [
-          ComicCommentItem(widget.comment, widget.comicId),
+          ComicCommentItem(widget.mainType, widget.mainId, widget.comment),
           Container(
             height: 3,
             color:
@@ -67,8 +95,8 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  Widget _buildComment(CommentChild e) {
-    return ComicCommentItem(e, widget.comicId);
+  Widget _buildComment(CommentBase e) {
+    return ComicCommentItem(widget.mainType, widget.mainId, e);
   }
 
   Widget _buildPostComment() {
@@ -77,7 +105,14 @@ class _CommentScreenState extends State<CommentScreen> {
         String? text = await inputString(context, '请输入评论内容');
         if (text != null && text.isNotEmpty) {
           try {
-            await method.postChildComment(widget.comment.id, text);
+            switch (widget.mainType) {
+              case CommentMainType.COMIC:
+                await method.postChildComment(widget.comment.id, text);
+                break;
+              case CommentMainType.GAME:
+                await method.postGameChildComment(widget.comment.id, text);
+                break;
+            }
             setState(() {
               _future = _loadPage();
               widget.comment.commentsCount++;
@@ -110,7 +145,7 @@ class _CommentScreenState extends State<CommentScreen> {
     );
   }
 
-  Widget _buildPrePage(CommentChildrenPage page) {
+  Widget _buildPrePage(_CommentChildPage page) {
     if (page.page > 1) {
       return InkWell(
         onTap: () {
@@ -130,7 +165,7 @@ class _CommentScreenState extends State<CommentScreen> {
     return Container();
   }
 
-  Widget _buildNextPage(CommentChildrenPage page) {
+  Widget _buildNextPage(_CommentChildPage page) {
     if (page.page < page.pages) {
       return InkWell(
         onTap: () {

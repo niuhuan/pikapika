@@ -425,6 +425,23 @@ func postChildComment(params string) (string, error) {
 	return "", nil
 }
 
+func postGameChildComment(params string) (string, error) {
+	var paramsStruct struct {
+		GameId    string `json:"gameId"`
+		CommentId string `json:"commentId"`
+		Content   string `json:"content"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	err := client.PostChildComment(paramsStruct.CommentId, paramsStruct.Content)
+	if err != nil {
+		return "", err
+	}
+	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENT_CHILDREN$%s$%%", paramsStruct.CommentId))
+	network_cache.RemoveCaches("MY_COMMENTS$%")
+	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENTS$%s$%%", paramsStruct.GameId))
+	return "", nil
+}
+
 func switchLikeComment(params string) (string, error) {
 	var paramsStruct struct {
 		CommentId string `json:"commentId"`
@@ -477,4 +494,69 @@ func game(gameId string) (string, error) {
 			return client.GameInfo(gameId)
 		},
 	)
+}
+
+func gameComments(params string) (string, error) {
+	var paramsStruct struct {
+		GameId string `json:"gameId"`
+		Page   int    `json:"page"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	gameId := paramsStruct.GameId
+	page := paramsStruct.Page
+	return cacheable(
+		fmt.Sprintf("GAME_COMMENTS$%s$%d", gameId, page),
+		time.Hour*2,
+		func() (interface{}, error) {
+			return client.GameCommentsPage(gameId, page)
+		},
+	)
+}
+
+func postGameComment(params string) (string, error) {
+	var paramsStruct struct {
+		GameId  string `json:"gameId"`
+		Content string `json:"content"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	err := client.PostGameComment(paramsStruct.GameId, paramsStruct.Content)
+	if err != nil {
+		return "", err
+	}
+	network_cache.RemoveCaches("MY_COMMENTS$%")
+	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENTS$%s$%%", paramsStruct.GameId))
+	return "", nil
+}
+
+func gameCommentChildren(params string) (string, error) {
+	var paramsStruct struct {
+		CommentId string `json:"commentId"`
+		Page      int    `json:"page"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	commentId := paramsStruct.CommentId
+	page := paramsStruct.Page
+	return cacheable(
+		fmt.Sprintf("GAME_COMMENT_CHILDREN$%s$%d", commentId, page),
+		time.Hour*2,
+		func() (interface{}, error) {
+			return client.GameCommentChildren(commentId, page)
+		},
+	)
+}
+
+func switchLikeGameComment(params string) (string, error) {
+	var paramsStruct struct {
+		CommentId string `json:"commentId"`
+		GameId    string `json:"gameId"`
+	}
+	json.Unmarshal([]byte(params), &paramsStruct)
+	rsp, err := client.SwitchLikeComment(paramsStruct.CommentId)
+	if err != nil {
+		return "", err
+	}
+	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENT_CHILDREN$%s$%%", paramsStruct.CommentId))
+	network_cache.RemoveCaches("MY_COMMENTS$%")
+	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENTS$%s$%%", paramsStruct.GameId))
+	return *rsp, nil
 }

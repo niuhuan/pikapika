@@ -41,6 +41,12 @@ github.com/niuhuan/pica-go v0.0.0-20211102035530-65029bd4ee97 h1:wlsmZVsLrZ/dB1K
 github.com/niuhuan/pica-go v0.0.0-20211102035530-65029bd4ee97/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
 github.com/niuhuan/pica-go v0.0.0-20211105060849-4f6ae99a942e h1:NR/RCPlbx7cMjk7p8GqfkhOqWTH6vyfgYq7Vubjn9mY=
 github.com/niuhuan/pica-go v0.0.0-20211105060849-4f6ae99a942e/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
+github.com/niuhuan/pica-go v0.0.0-20211109012708-2cef9976dbaa h1:PnIE6Ltz/dy9K1jZCGfTvPDHGitSwXVvQfzwgVIJSWE=
+github.com/niuhuan/pica-go v0.0.0-20211109012708-2cef9976dbaa/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
+github.com/niuhuan/pica-go v0.0.0-20211109043215-974462cb2b0d h1:jwZdWp1PkEbWAi/w3cI+4kBvIyxHtZgVmFFOu7XnABw=
+github.com/niuhuan/pica-go v0.0.0-20211109043215-974462cb2b0d/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
+github.com/niuhuan/pica-go v0.0.0-20211109050119-cf22461c638f h1:SQ6vAF7nyIDjhUj/SsEHRlxae4XLtygSuxWrJJazN1g=
+github.com/niuhuan/pica-go v0.0.0-20211109050119-cf22461c638f/go.mod h1:fx2m+OgMeEZf6/TrfblV9i85SjPsOGbnjIL2gohxP4M=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

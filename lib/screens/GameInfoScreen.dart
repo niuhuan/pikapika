@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
+import 'package:pikapi/screens/components/CommentMainType.dart';
 import 'package:pikapi/screens/components/ContentError.dart';
 import 'package:pikapi/screens/components/ContentLoading.dart';
 import 'package:pikapi/screens/components/Images.dart';
 
 import 'GameDownloadScreen.dart';
+import 'components/CommentList.dart';
 import 'components/GameTitleCard.dart';
 
 // 游戏详情
@@ -59,71 +61,110 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
         return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             var info = snapshot.data!;
-            return Scaffold(
-              appBar: AppBar(
-                title: Text(info.title),
-              ),
-              body: ListView(
-                children: [
-                  GameTitleCard(info),
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 5, bottom: 10,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      child: MaterialButton(
-                        color: Theme.of(context).colorScheme.secondary,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GameDownloadScreen(info)),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text('下载'),
+            return DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(info.title),
+                ),
+                body: ListView(
+                  children: [
+                    GameTitleCard(info),
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 5,
+                        bottom: 10,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: MaterialButton(
+                          color: Theme.of(context).colorScheme.secondary,
+                          textColor: Colors.white,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      GameDownloadScreen(info)),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            child: Text('下载'),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: screenShootMargin,
-                      bottom: screenShootMargin,
-                    ),
-                    height: screenShootHeight,
-                    child: ListView(
-                      padding: EdgeInsets.only(
-                        left: screenShootMargin,
-                        right: screenShootMargin,
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: screenShootMargin,
+                        bottom: screenShootMargin,
                       ),
-                      scrollDirection: Axis.horizontal,
-                      children: info.screenshots
-                          .map((e) => Container(
-                                margin: EdgeInsets.only(
-                                  left: screenShootMargin,
-                                  right: screenShootMargin,
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: iconRadius,
-                                  child: RemoteImage(
-                                    height: screenShootHeight,
-                                    fileServer: e.fileServer,
-                                    path: e.path,
+                      height: screenShootHeight,
+                      child: ListView(
+                        padding: EdgeInsets.only(
+                          left: screenShootMargin,
+                          right: screenShootMargin,
+                        ),
+                        scrollDirection: Axis.horizontal,
+                        children: info.screenshots
+                            .map((e) => Container(
+                                  margin: EdgeInsets.only(
+                                    left: screenShootMargin,
+                                    right: screenShootMargin,
                                   ),
-                                ),
-                              ))
-                          .toList(),
+                                  child: ClipRRect(
+                                    borderRadius: iconRadius,
+                                    child: RemoteImage(
+                                      height: screenShootHeight,
+                                      fileServer: e.fileServer,
+                                      path: e.path,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    child: Text(info.description, style: descriptionStyle),
-                  ),
-                ],
+                    Container(height: 20),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 40,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withOpacity(.025),
+                            child: TabBar(
+                              tabs: <Widget>[
+                                Tab(text: '详情 '),
+                                Tab(text: '评论 (${info.commentsCount})'),
+                              ],
+                              indicatorColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              labelColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              onTap: (val) async {
+                                setState(() {
+                                  _tabIndex = val;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _tabIndex == 0
+                        ? Container(
+                            padding: EdgeInsets.all(20),
+                            child:
+                                Text(info.description, style: descriptionStyle),
+                          )
+                        : CommentList(CommentMainType.GAME, info.id),
+                  ],
+                ),
               ),
             );
           },
@@ -131,4 +172,6 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
       },
     );
   }
+
+  var _tabIndex = 0;
 }

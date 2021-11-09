@@ -585,6 +585,16 @@ func FlatInvoke(method string, params string) (string, error) {
 		return game(params)
 	case "games":
 		return games(params)
+	case "gameComments":
+		return gameComments(params)
+	case "postGameComment":
+		return postGameComment(params)
+	case "gameCommentChildren":
+		return gameCommentChildren(params)
+	case "switchLikeGameComment":
+		return switchLikeGameComment(params)
+	case "postGameChildComment":
+		return postGameChildComment(params)
 	case "viewLogPage":
 		return viewLogPage(params)
 	case "clearAllViewLog":

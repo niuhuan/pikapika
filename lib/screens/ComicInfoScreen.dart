@@ -5,11 +5,12 @@ import 'package:pikapi/basic/Cross.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/screens/ComicsScreen.dart';
 import 'package:pikapi/basic/Navigatior.dart';
+import 'package:pikapi/screens/components/CommentMainType.dart';
 import 'package:pikapi/screens/components/ItemBuilder.dart';
 import 'package:pikapi/basic/Method.dart';
 import 'ComicReaderScreen.dart';
 import 'DownloadConfirmScreen.dart';
-import 'components/ComicCommentList.dart';
+import 'components/CommentList.dart';
 import 'components/ComicDescriptionCard.dart';
 import 'components/ComicInfoCard.dart';
 import 'components/ComicTagsCard.dart';
@@ -104,7 +105,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
         ];
         var _views = <Widget>[
           _buildEpWrap(_epListFuture, _comicInfo),
-          ComicCommentList(_comicInfo.id),
+          CommentList(CommentMainType.COMIC, _comicInfo.id),
         ];
         return DefaultTabController(
           length: _tabs.length,

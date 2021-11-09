@@ -1,0 +1,4 @@
+enum CommentMainType {
+  COMIC,
+  GAME,
+}

@@ -322,6 +322,14 @@ class Method {
     return CommentChildrenPage.fromJson(json.decode(rsp));
   }
 
+  /// 喜欢/取消喜欢 一条评论
+  Future switchLikeComment(String commentId, String comicId) {
+    return _flatInvoke("switchLikeComment", {
+      "commentId": commentId,
+      "comicId": comicId,
+    });
+  }
+
   /// 我的评论列表
   Future<MyCommentsPage> myComments(int page) async {
     String response = await _flatInvoke("myComments", "$page");
@@ -358,6 +366,53 @@ class Method {
   Future<GameInfo> game(String gameId) async {
     var data = await _flatInvoke("game", gameId);
     return GameInfo.fromJson(json.decode(data));
+  }
+
+  /// 游戏的评论列表
+  Future<GameCommentPage> gameComments(String gameId, int page) async {
+    var rsp = await _flatInvoke("gameComments", {
+      "gameId": gameId,
+      "page": page,
+    });
+    return GameCommentPage.fromJson(json.decode(rsp));
+  }
+
+  /// 对游戏发送评论
+  Future<dynamic> postGameComment(String gameId, String content) {
+    return _flatInvoke("postGameComment", {
+      "gameId": gameId,
+      "content": content,
+    });
+  }
+
+  /// 拉取游戏子评论
+  Future<GameCommentChildrenPage> gameCommentChildren(
+    String gameId,
+    String commentId,
+    int page,
+  ) async {
+    var rsp = await _flatInvoke("gameCommentChildren", {
+      "gameId": gameId,
+      "commentId": commentId,
+      "page": page,
+    });
+    return GameCommentChildrenPage.fromJson(json.decode(rsp));
+  }
+
+  /// 喜欢/取消喜欢 一条游戏评论
+  Future switchLikeGameComment(String commentId, String gameId) {
+    return _flatInvoke("switchLikeGameComment", {
+      "commentId": commentId,
+      "gameId": gameId,
+    });
+  }
+
+  /// 发送游戏子评论
+  Future<dynamic> postGameChildComment(String commentId, String content) {
+    return _flatInvoke("postGameChildComment", {
+      "commentId": commentId,
+      "content": content,
+    });
   }
 
   /// 清理网络缓存
@@ -609,14 +664,6 @@ class Method {
   /// 设置下载线程数
   Future saveDownloadThreadCount(int value) {
     return _flatInvoke("saveDownloadThreadCount", "$value");
-  }
-
-  /// 喜欢/取消喜欢 一条评论
-  Future switchLikeComment(String commentId, String comicId) {
-    return _flatInvoke("switchLikeComment", {
-      "commentId": commentId,
-      "comicId": comicId,
-    });
   }
 
   /// 转化为PNG

@@ -4,12 +4,14 @@ import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
 
 import 'Avatar.dart';
+import 'CommentMainType.dart';
 
 class ComicCommentItem extends StatefulWidget {
-  final String comicId;
-  final Comment comment;
+  final CommentMainType mainType;
+  final String mainId;
+  final CommentBase comment;
 
-  const ComicCommentItem(this.comment, this.comicId);
+  const ComicCommentItem(this.mainType, this.mainId, this.comment);
 
   @override
   State<StatefulWidget> createState() => _ComicCommentItem();
@@ -21,7 +23,6 @@ class _ComicCommentItem extends State<ComicCommentItem> {
   @override
   Widget build(BuildContext context) {
     var comment = widget.comment;
-    var comicId = widget.comicId;
     var theme = Theme.of(context);
     var nameStyle = TextStyle(fontWeight: FontWeight.bold);
     var levelStyle = TextStyle(
@@ -111,10 +112,20 @@ class _ComicCommentItem extends State<ComicCommentItem> {
                                     likeLoading = true;
                                   });
                                   try {
-                                    await method.switchLikeComment(
-                                      comment.id,
-                                      comicId,
-                                    );
+                                    switch (widget.mainType) {
+                                      case CommentMainType.COMIC:
+                                        await method.switchLikeComment(
+                                          comment.id,
+                                          widget.mainId,
+                                        );
+                                        break;
+                                      case CommentMainType.GAME:
+                                        await method.switchLikeGameComment(
+                                          comment.id,
+                                          widget.mainId,
+                                        );
+                                        break;
+                                    }
                                     setState(() {
                                       if (comment.isLiked) {
                                         comment.isLiked = false;

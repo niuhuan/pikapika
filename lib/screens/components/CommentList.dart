@@ -1,27 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapi/basic/Entities.dart' as e;
 import 'package:pikapi/screens/CommentScreen.dart';
 import 'package:pikapi/screens/components/ItemBuilder.dart';
 import 'package:pikapi/basic/Method.dart';
-import 'ComicCommentItem.dart';
+import 'CommentItem.dart';
+import 'CommentMainType.dart';
 
-// 漫画的评论列表
-class ComicCommentList extends StatefulWidget {
-  final String comicId;
+class _CommentBasePage extends e.Page {
+  late List<CommentBase> docs;
 
-  ComicCommentList(this.comicId);
+  _CommentBasePage.ofComic(CommentPage commentPage)
+      : super.of(commentPage.total, commentPage.limit, commentPage.page,
+            commentPage.pages) {
+    this.docs = commentPage.docs;
+  }
 
-  @override
-  State<StatefulWidget> createState() => _ComicCommentListState();
+  _CommentBasePage.ofGame(GameCommentPage commentPage)
+      : super.of(commentPage.total, commentPage.limit, commentPage.page,
+            commentPage.pages) {
+    this.docs = commentPage.docs;
+  }
 }
 
-class _ComicCommentListState extends State<ComicCommentList> {
-  late int _currentPage = 1;
-  late Future<CommentPage> _future = _loadPage();
+// 漫画的评论列表
+class CommentList extends StatefulWidget {
+  final CommentMainType mainType;
+  final String mainId;
 
-  Future<CommentPage> _loadPage() {
-    return method.comments(widget.comicId, _currentPage);
+  CommentList(this.mainType, this.mainId);
+
+  @override
+  State<StatefulWidget> createState() => _CommentListState();
+}
+
+class _CommentListState extends State<CommentList> {
+  late int _currentPage = 1;
+  late Future<_CommentBasePage> _future = _loadPage();
+
+  Future<_CommentBasePage> _loadPage() async {
+    switch (widget.mainType) {
+      case CommentMainType.COMIC:
+        return _CommentBasePage.ofComic(
+          await method.comments(widget.mainId, _currentPage),
+        );
+      case CommentMainType.GAME:
+        return _CommentBasePage.ofGame(
+          await method.gameComments(widget.mainId, _currentPage),
+        );
+    }
   }
 
   @override
@@ -29,7 +57,7 @@ class _ComicCommentListState extends State<ComicCommentList> {
     return ItemBuilder(
       future: _future,
       successBuilder:
-          (BuildContext context, AsyncSnapshot<CommentPage> snapshot) {
+          (BuildContext context, AsyncSnapshot<_CommentBasePage> snapshot) {
         var page = snapshot.data!;
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -50,16 +78,17 @@ class _ComicCommentListState extends State<ComicCommentList> {
     );
   }
 
-  Widget _buildComment(Comment comment) {
+  Widget _buildComment(CommentBase comment) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => CommentScreen(widget.comicId, comment),
+            builder: (context) =>
+                CommentScreen(widget.mainType, widget.mainId, comment),
           ),
         );
       },
-      child: ComicCommentItem(comment, widget.comicId),
+      child: ComicCommentItem(widget.mainType, widget.mainId, comment),
     );
   }
 
@@ -69,7 +98,14 @@ class _ComicCommentListState extends State<ComicCommentList> {
         String? text = await inputString(context, '请输入评论内容');
         if (text != null && text.isNotEmpty) {
           try {
-            await method.postComment(widget.comicId, text);
+            switch (widget.mainType) {
+              case CommentMainType.COMIC:
+                await method.postComment(widget.mainId, text);
+                break;
+              case CommentMainType.GAME:
+                await method.postGameComment(widget.mainId, text);
+                break;
+            }
             setState(() {
               _future = _loadPage();
             });
@@ -101,7 +137,7 @@ class _ComicCommentListState extends State<ComicCommentList> {
     );
   }
 
-  Widget _buildPrePage(CommentPage page) {
+  Widget _buildPrePage(_CommentBasePage page) {
     if (page.page > 1) {
       return InkWell(
         onTap: () {
@@ -121,7 +157,7 @@ class _ComicCommentListState extends State<ComicCommentList> {
     return Container();
   }
 
-  Widget _buildNextPage(CommentPage page) {
+  Widget _buildNextPage(_CommentBasePage page) {
     if (page.page < page.pages) {
       return InkWell(
         onTap: () {
