@@ -1,10 +1,10 @@
 /// 图片
-class PicaImage {
+class OssImage {
   late String originalName;
   late String path;
   late String fileServer;
 
-  PicaImage.fromJson(Map<String, dynamic> json) {
+  OssImage.fromJson(Map<String, dynamic> json) {
     this.originalName = json["originalName"];
     this.path = json["path"];
     this.fileServer = json["fileServer"];
@@ -21,7 +21,7 @@ class BasicUser {
   late int exp;
   late int level;
   late List<String> characters;
-  late PicaImage avatar;
+  late OssImage avatar;
 
   BasicUser.fromJson(Map<String, dynamic> json) {
     this.id = json["_id"];
@@ -34,7 +34,7 @@ class BasicUser {
     this.characters = json["characters"] == null
         ? []
         : List.of(json["characters"]).map((e) => "$e").toList();
-    this.avatar = PicaImage.fromJson(Map<String, dynamic>.of(json["avatar"]));
+    this.avatar = OssImage.fromJson(Map<String, dynamic>.of(json["avatar"]));
   }
 }
 
@@ -73,7 +73,7 @@ class Category {
   late String id;
   late String title;
   late String description;
-  late PicaImage thumb;
+  late OssImage thumb;
   late bool isWeb;
   late bool active;
   late String link;
@@ -82,7 +82,7 @@ class Category {
     this.id = json["_id"];
     this.title = json["title"];
     this.description = json["description"];
-    this.thumb = PicaImage.fromJson(json["thumb"]);
+    this.thumb = OssImage.fromJson(json["thumb"]);
     this.isWeb = json["isWeb"];
     this.active = json["active"];
     this.link = json["link"];
@@ -110,7 +110,7 @@ class ComicSimple {
   late int epsCount;
   late bool finished;
   late List<String> categories;
-  late PicaImage thumb;
+  late OssImage thumb;
   late int likesCount;
 
   ComicSimple.fromJson(Map<String, dynamic> json) {
@@ -121,7 +121,7 @@ class ComicSimple {
     this.epsCount = json["epsCount"];
     this.finished = json["finished"];
     this.categories = List<String>.from(json["categories"]);
-    this.thumb = PicaImage.fromJson(json["thumb"]);
+    this.thumb = OssImage.fromJson(json["thumb"]);
     this.likesCount = json["likesCount"];
   }
 }
@@ -210,11 +210,11 @@ class PicturePage extends Page {
 /// 漫画图片信息
 class Picture {
   late String id;
-  late PicaImage media;
+  late OssImage media;
 
   Picture.fromJson(Map<String, dynamic> json) {
     this.id = json["_id"];
-    this.media = PicaImage.fromJson(json["media"]);
+    this.media = OssImage.fromJson(json["media"]);
   }
 }
 
@@ -487,7 +487,7 @@ class GameSimple {
   late String id;
   late String title;
   late String version;
-  late PicaImage icon;
+  late OssImage icon;
   late String publisher;
   late bool adult;
   late bool suggest;
@@ -499,7 +499,7 @@ class GameSimple {
     this.id = json["_id"];
     this.title = json["title"];
     this.version = json["version"];
-    this.icon = PicaImage.fromJson(json["icon"]);
+    this.icon = OssImage.fromJson(json["icon"]);
     this.publisher = json["publisher"];
     this.adult = json["adult"];
     this.suggest = json["suggest"];
@@ -514,7 +514,7 @@ class GameInfo extends GameSimple {
   late String description;
   late String updateContent;
   late String videoLink;
-  late List<PicaImage> screenshots;
+  late List<OssImage> screenshots;
   late int commentsCount;
   late int downloadsCount;
   late bool isLiked;
@@ -531,7 +531,7 @@ class GameInfo extends GameSimple {
     this.videoLink = json["videoLink"];
     this.screenshots = List.of(json["screenshots"])
         .map((e) => Map<String, dynamic>.of(e))
-        .map((e) => PicaImage.fromJson(e))
+        .map((e) => OssImage.fromJson(e))
         .toList();
     this.commentsCount = json["commentsCount"];
     this.downloadsCount = json["downloadsCount"];

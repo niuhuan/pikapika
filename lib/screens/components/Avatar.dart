@@ -8,17 +8,17 @@ const double _avatarMargin = 5;
 const double _avatarBorderSize = 1.5;
 
 // 头像
-class PicaAvatar extends StatefulWidget {
-  final PicaImage avatarImage;
+class Avatar extends StatefulWidget {
+  final OssImage avatarImage;
   final double size;
 
-  const PicaAvatar(this.avatarImage, {this.size = 50});
+  const Avatar(this.avatarImage, {this.size = 50});
 
   @override
-  State<StatefulWidget> createState() => _PicaAvatarState();
+  State<StatefulWidget> createState() => _AvatarState();
 }
 
-class _PicaAvatarState extends State<PicaAvatar> {
+class _AvatarState extends State<Avatar> {
   late Future<String> _future = _load();
 
   Future<String> _load() async {

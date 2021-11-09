@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pikapi/basic/Entities.dart';
 
 import 'Images.dart';
@@ -22,6 +23,8 @@ class GameTitleCard extends StatelessWidget {
     TextStyle versionStyle = TextStyle(
       fontSize: 12.5,
     );
+    double platformMargin = 10;
+    double platformSize = 25;
     return Row(
       children: [
         Container(
@@ -45,6 +48,42 @@ class GameTitleCard extends StatelessWidget {
               Text(info.title, style: titleStyle),
               Text(info.publisher, style: publisherStyle),
               Text(info.version, style: versionStyle),
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: iconMargin),
+          // padding: EdgeInsets.only(
+          //   left: platformMargin,
+          //   right: platformMargin,
+          // ),
+          child: Column(
+            children: [
+              ...info.android
+                  ? [
+                      SvgPicture.asset(
+                        'lib/assets/android.svg',
+                        fit: BoxFit.contain,
+                        width: platformSize,
+                        height: platformSize,
+                        color: Colors.green.shade500,
+                      ),
+                    ]
+                  : [],
+              Container(
+                height: platformMargin,
+              ),
+              ...info.ios
+                  ? [
+                      SvgPicture.asset(
+                        'lib/assets/apple.svg',
+                        fit: BoxFit.contain,
+                        width: platformSize,
+                        height: platformSize,
+                        color: Colors.grey.shade500,
+                      ),
+                    ]
+                  : [],
             ],
           ),
         ),

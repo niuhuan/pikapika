@@ -54,8 +54,6 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
         BorderRadius iconRadius = BorderRadius.all(Radius.circular(6));
         double screenShootMargin = 10;
         double screenShootHeight = 200;
-        double platformMargin = 10;
-        double platformSize = 25;
         TextStyle descriptionStyle = TextStyle();
 
         return LayoutBuilder(
@@ -69,44 +67,26 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                 children: [
                   GameTitleCard(info),
                   Container(
-                    height: platformSize,
-                    margin: EdgeInsets.only(bottom: platformMargin),
-                    child: ListView(
-                      padding: EdgeInsets.only(
-                        left: platformMargin,
-                        right: platformMargin,
+                    padding: EdgeInsets.only(
+                      left: 20, right: 20, top: 5, bottom: 10,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: MaterialButton(
+                        color: Theme.of(context).colorScheme.secondary,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GameDownloadScreen(info)),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          child: Text('下载'),
+                        ),
                       ),
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        ...info.android
-                            ? [
-                                Container(
-                                  width: platformMargin,
-                                ),
-                                SvgPicture.asset(
-                                  'lib/assets/android.svg',
-                                  fit: BoxFit.contain,
-                                  width: platformSize,
-                                  height: platformSize,
-                                  color: Colors.green.shade500,
-                                ),
-                              ]
-                            : [],
-                        ...info.ios
-                            ? [
-                                Container(
-                                  width: platformMargin,
-                                ),
-                                SvgPicture.asset(
-                                  'lib/assets/apple.svg',
-                                  fit: BoxFit.contain,
-                                  width: platformSize,
-                                  height: platformSize,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ]
-                            : [],
-                      ],
                     ),
                   ),
                   Container(
@@ -142,22 +122,6 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                   Container(
                     padding: EdgeInsets.all(20),
                     child: Text(info.description, style: descriptionStyle),
-                  ),
-                  Container(
-                    color: Colors.grey.shade500.withOpacity(.1),
-                    child: MaterialButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GameDownloadScreen(info)),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(30),
-                        child: Text('下载'),
-                      ),
-                    ),
                   ),
                 ],
               ),

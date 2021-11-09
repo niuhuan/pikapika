@@ -40,15 +40,15 @@ class ComicReaderScreen extends StatefulWidget {
 class _ComicReaderScreenState extends State<ComicReaderScreen> {
   late Ep _ep;
   late bool _fullScreen = false;
-  late Future<List<PicaImage>> _future;
+  late Future<List<OssImage>> _future;
   int? _lastChangeRank;
   bool _replacement = false;
 
-  Future<List<PicaImage>> _load() async {
+  Future<List<OssImage>> _load() async {
     if (widget.initPictureRank == null) {
       await method.storeViewEp(widget.comicInfo.id, _ep.order, _ep.title, 1);
     }
-    List<PicaImage> list = [];
+    List<OssImage> list = [];
     var _needLoadPage = 0;
     late PicturePage page;
     do {
@@ -165,7 +165,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
           });
         },
         successBuilder:
-            (BuildContext context, AsyncSnapshot<List<PicaImage>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<OssImage>> snapshot) {
           return ImageReader(
             ImageReaderStruct(
               images: snapshot.data!

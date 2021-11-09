@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/screens/components/ItemBuilder.dart';
-import 'package:pikapi/screens/components/PicaAvatar.dart';
+import 'package:pikapi/screens/components/Avatar.dart';
 import 'package:pikapi/screens/components/Images.dart';
 import 'package:pikapi/basic/Method.dart';
 
@@ -86,7 +86,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
               child: Column(
                 children: [
                   Expanded(child: Container()),
-                  PicaAvatar(profile.avatar),
+                  Avatar(profile.avatar),
                   Container(width: 18),
                   Text(
                     profile.name,

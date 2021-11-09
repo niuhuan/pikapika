@@ -3,7 +3,7 @@ import 'package:pikapi/basic/Common.dart';
 import 'package:pikapi/basic/Entities.dart';
 import 'package:pikapi/basic/Method.dart';
 
-import 'PicaAvatar.dart';
+import 'Avatar.dart';
 
 class ComicCommentItem extends StatefulWidget {
   final String comicId;
@@ -49,7 +49,7 @@ class _ComicCommentItem extends State<ComicCommentItem> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PicaAvatar(comment.user.avatar),
+          Avatar(comment.user.avatar),
           Container(width: 5),
           Expanded(
             child: Column(
