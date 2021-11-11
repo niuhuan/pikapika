@@ -1,13 +1,13 @@
 PIKAPI - 漫画客户端
 ========
-[![license](https://img.shields.io/github/license/niuhuan/pikapi-flutter)](https://raw.githubusercontent.com/niuhuan/pikapi-flutter/master/LICENSE)
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapi-flutter)](https://github.com/niuhuan/pikapi-flutter/releases)
-[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapi-flutter/total)](https://github.com/niuhuan/pikapi-flutter/releases)
+[![license](https://img.shields.io/github/license/niuhuan/pikapi)](https://raw.githubusercontent.com/niuhuan/pikapi/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/niuhuan/pikapi)](https://github.com/niuhuan/pikapi/releases)
+[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapi/total)](https://github.com/niuhuan/pikapi/releases)
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 本仓库仅作为学习交流使用, 请您遵守当地法律法规以及开源协议。
 - 您的star和issue是对开发者的莫大鼓励, 可以源仓库下载最新的源码/安装包, 表示支持/提出建议。
-- 源仓库地址 [https://github.com/niuhuan/pikapi-flutter](https://github.com/niuhuan/pikapi-flutter)
+- 源仓库地址 [https://github.com/niuhuan/pikapi](https://github.com/niuhuan/pikapi)
 
 ## 界面 / 功能
 

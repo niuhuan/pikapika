@@ -29,7 +29,7 @@ class AboutScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(20),
             child: Text(
-              '请从软件取得渠道获取更新\n本软件开源, 若您想提出改进建议或者获取源码, 请在开源社区搜索 pikapi-flutter',
+              '请从软件取得渠道获取更新\n本软件开源, 若您想提出改进建议或者获取源码, 请在开源社区搜索 pikapi',
               style: TextStyle(
                 height: 1.3,
               ),
