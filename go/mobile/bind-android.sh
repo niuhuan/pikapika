@@ -1,1 +1,1 @@
-gomobile bind -target=android/arm -o lib/Pikapi.aar ./
+gomobile bind -target=android/arm -o lib/Mobile.aar ./

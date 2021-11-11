@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/Themes.dart';
+import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/AccountScreen.dart';
 import 'package:pikapika/screens/DownloadListScreen.dart';
@@ -9,6 +10,7 @@ import 'package:pikapika/screens/ViewLogsScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
 import 'SettingsScreen.dart';
+import 'components/Badge.dart';
 import 'components/UserProfileCard.dart';
 
 // 个人空间页面
@@ -20,9 +22,21 @@ class SpaceScreen extends StatefulWidget {
 }
 
 class _SpaceScreenState extends State<SpaceScreen> {
+
   @override
   void initState() {
+    versionEvent.subscribe(_onVersion);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    versionEvent.unsubscribe(_onVersion);
+    super.dispose();
+  }
+
+  void _onVersion(dynamic a) {
+    setState(() {});
   }
 
   @override
@@ -53,7 +67,10 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 MaterialPageRoute(builder: (context) => AboutScreen()),
               );
             },
-            icon: Icon(Icons.info_outline),
+            icon: Badged(
+              child: Icon(Icons.info_outline),
+              badge: latestVersion() == null ? null : "1",
+            ),
           ),
           IconButton(
             onPressed: () {

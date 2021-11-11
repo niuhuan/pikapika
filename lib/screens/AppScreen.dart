@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/config/Version.dart';
+import 'package:pikapika/screens/components/Badge.dart';
 
 import 'CategoriesScreen.dart';
 import 'SpaceScreen.dart';
@@ -12,19 +14,25 @@ class AppScreen extends StatefulWidget {
 }
 
 class _AppScreenState extends State<AppScreen> {
+  @override
+  void initState() {
+    versionEvent.subscribe(_onVersion);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    versionEvent.unsubscribe(_onVersion);
+    super.dispose();
+  }
+
+  void _onVersion(dynamic a) {
+    setState(() {});
+  }
+
   static const List<Widget> _widgetOptions = <Widget>[
     const CategoriesScreen(),
     const SpaceScreen(),
-  ];
-  static const _navigationItems = <BottomNavigationBarItem>[
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.public),
-      label: '浏览',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.face),
-      label: '我的',
-    ),
   ];
 
   late int _selectedIndex = 0;
@@ -43,7 +51,19 @@ class _AppScreenState extends State<AppScreen> {
         children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: _navigationItems,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.public),
+            label: '浏览',
+          ),
+          BottomNavigationBarItem(
+            icon: Badged(
+              child: Icon(Icons.face),
+              badge: latestVersion() == null ? null : "1",
+            ),
+            label: '我的',
+          ),
+        ],
         currentIndex: _selectedIndex,
         iconSize: 20,
         selectedFontSize: 12,

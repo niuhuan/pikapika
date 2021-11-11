@@ -1,13 +1,42 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pikapika/basic/Cross.dart';
+import 'package:pikapika/basic/config/Version.dart';
+import 'package:pikapika/screens/components/Badge.dart';
+
+const _releasesUrl = "https://github.com/niuhuan/pikapika/releases";
 
 // 关于
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  @override
+  void initState() {
+    versionEvent.subscribe(_onVersion);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    versionEvent.unsubscribe(_onVersion);
+    super.dispose();
+  }
+
+  void _onVersion(dynamic a) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var min = size.width < size.height ? size.width : size.height;
-
+    var _currentVersion = currentVersion();
+    var _latestVersion = latestVersion();
+    var _dirty = dirtyVersion();
     return Scaffold(
       appBar: AppBar(
         title: Text('关于'),
@@ -26,15 +55,37 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
+          Container(height: 20),
+          Divider(),
           Container(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              '请从软件取得渠道获取更新\n本软件开源, 若您想提出改进建议或者获取源码, 请在开源社区搜索 pikapi',
-              style: TextStyle(
-                height: 1.3,
-              ),
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '软件版本 : $_currentVersion',
+                  style: TextStyle(
+                    height: 1.3,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "检查更新 : ",
+                      style: TextStyle(
+                        height: 1.3,
+                      ),
+                    ),
+                    _dirty ? _buildDirty() : _buildNewVersion(_latestVersion),
+                    Expanded(child: Container()),
+                  ],
+                ),
+              ],
             ),
           ),
+          Divider(),
+          autoUpdateCheckSetting(),
+          Divider(),
           Container(
             padding: EdgeInsets.all(20),
             child: SelectableText(
@@ -49,7 +100,80 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
+          Divider(),
         ],
+      ),
+    );
+  }
+
+  _buildNewVersion(String? latestVersion) {
+    if (latestVersion != null) {
+      return Text.rich(
+        TextSpan(
+          children: [
+            WidgetSpan(
+              child: Badged(
+                child: Container(
+                  padding: EdgeInsets.only(right: 12),
+                  child: Text(
+                    latestVersion,
+                    style: TextStyle(height: 1.3),
+                  ),
+                ),
+                badge: "1",
+              ),
+            ),
+            TextSpan(text: "  "),
+            TextSpan(
+              text: "去下载",
+              style: TextStyle(
+                height: 1.3,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => openUrl(_releasesUrl),
+            ),
+          ],
+        ),
+      );
+    }
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(text: "未检测到新版本", style: TextStyle(height: 1.3)),
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: Container(
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.only(left: 3, right: 3),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+            ),
+          ),
+          TextSpan(
+            text: "检查更新",
+            style: TextStyle(
+              height: 1.3,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () => manualCheckNewVersion(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDirty() {
+    return Text.rich(
+      TextSpan(
+        text: "下载RELEASE版",
+        style: TextStyle(
+          height: 1.3,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        recognizer: TapGestureRecognizer()..onTap = () => openUrl(_releasesUrl),
       ),
     );
   }

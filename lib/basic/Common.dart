@@ -99,12 +99,10 @@ Future<T?> chooseListDialog<T>(
     {String? tips}) async {
   List<Widget> widgets = [];
   if (tips != null) {
-    widgets.add(
-      Container(
-        padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
-        child: Text(tips),
-      )
-    );
+    widgets.add(Container(
+      padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
+      child: Text(tips),
+    ));
   }
   widgets.addAll(items.map((e) => SimpleDialogOption(
         onPressed: () {

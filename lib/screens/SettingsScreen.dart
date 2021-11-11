@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -22,6 +21,7 @@ import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
+import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
@@ -72,6 +72,9 @@ class SettingsScreen extends StatelessWidget {
             fontSetting(),
             Divider(),
             migrate(context),
+            Divider(),
+            autoUpdateCheckSetting(),
+            Divider(),
           ],
         ),
       );
