@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/config/Address.dart';
-import 'package:pikapi/basic/config/Proxy.dart';
+import 'package:pikapika/basic/config/Address.dart';
+import 'package:pikapika/basic/config/Proxy.dart';
 
 // 网络设置
 class NetworkSetting extends StatefulWidget {

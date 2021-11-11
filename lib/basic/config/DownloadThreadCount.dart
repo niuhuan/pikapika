@@ -2,8 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Method.dart';
 
 late int _downloadThreadCount;
 const _values = [1, 2, 3, 4, 5];

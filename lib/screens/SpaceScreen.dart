@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/config/Themes.dart';
-import 'package:pikapi/screens/AboutScreen.dart';
-import 'package:pikapi/screens/AccountScreen.dart';
-import 'package:pikapi/screens/DownloadListScreen.dart';
-import 'package:pikapi/screens/FavouritePaperScreen.dart';
-import 'package:pikapi/screens/ViewLogsScreen.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/Themes.dart';
+import 'package:pikapika/screens/AboutScreen.dart';
+import 'package:pikapika/screens/AccountScreen.dart';
+import 'package:pikapika/screens/DownloadListScreen.dart';
+import 'package:pikapika/screens/FavouritePaperScreen.dart';
+import 'package:pikapika/screens/ViewLogsScreen.dart';
+import 'package:pikapika/basic/Method.dart';
 
 import 'SettingsScreen.dart';
 import 'components/UserProfileCard.dart';

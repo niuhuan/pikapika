@@ -1,13 +1,13 @@
-PIKAPI - 漫画客户端
+PIKAPIKA - 漫画客户端
 ========
-[![license](https://img.shields.io/github/license/niuhuan/pikapi)](https://raw.githubusercontent.com/niuhuan/pikapi/master/LICENSE)
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapi)](https://github.com/niuhuan/pikapi/releases)
-[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapi/total)](https://github.com/niuhuan/pikapi/releases)
+[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases)
+[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases)
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 本仓库仅作为学习交流使用, 请您遵守当地法律法规以及开源协议。
 - 您的star和issue是对开发者的莫大鼓励, 可以源仓库下载最新的源码/安装包, 表示支持/提出建议。
-- 源仓库地址 [https://github.com/niuhuan/pikapi](https://github.com/niuhuan/pikapi)
+- 源仓库地址 [https://github.com/niuhuan/pikapika](https://github.com/niuhuan/pikapika)
 
 ## 界面 / 功能
 
@@ -59,8 +59,8 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 - 在ios/android环境 数据文件将会保存在程序自身数据目录中, 删除就会清理
 - 在 windows 数据文件将会保存在程序同一目录
-- 在 macos 数据文件将会"~/Library/Application Support/pikapi"
-- 在 linux 数据文件将会"~/.pikapi"
+- 在 macos 数据文件将会"~/Library/Application Support/pikapika"
+- 在 linux 数据文件将会"~/.pikapika"
 
 ## 运行 / 构建
 

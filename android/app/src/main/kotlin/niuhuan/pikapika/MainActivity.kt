@@ -1,9 +1,8 @@
-package niuhuan.pikapi
+package niuhuan.pikapika
 
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.os.Build
 import android.os.Environment
 import android.os.Handler
@@ -29,10 +28,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.lang.IllegalStateException
-import java.nio.file.CopyOption
 import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/config/ContentFailedReloadAction.dart';
+import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 import 'dart:ui';
 
-import 'package:pikapi/basic/enum/ErrorTypes.dart';
+import 'package:pikapika/basic/enum/ErrorTypes.dart';
 
 class ContentError extends StatelessWidget {
   final Object? error;

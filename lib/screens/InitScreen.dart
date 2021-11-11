@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/config/Address.dart';
-import 'package:pikapi/basic/config/AndroidDisplayMode.dart';
-import 'package:pikapi/basic/config/AndroidSecureFlag.dart';
-import 'package:pikapi/basic/config/AutoClean.dart';
-import 'package:pikapi/basic/config/AutoFullScreen.dart';
-import 'package:pikapi/basic/config/ChooserRoot.dart';
-import 'package:pikapi/basic/config/ContentFailedReloadAction.dart';
-import 'package:pikapi/basic/config/ConvertToPNG.dart';
-import 'package:pikapi/basic/config/DownloadAndExportPath.dart';
-import 'package:pikapi/basic/config/DownloadThreadCount.dart';
-import 'package:pikapi/basic/config/FullScreenAction.dart';
-import 'package:pikapi/basic/config/FullScreenUI.dart';
-import 'package:pikapi/basic/config/KeyboardController.dart';
-import 'package:pikapi/basic/config/PagerAction.dart';
-import 'package:pikapi/basic/config/Platform.dart';
-import 'package:pikapi/basic/config/Proxy.dart';
-import 'package:pikapi/basic/config/Quality.dart';
-import 'package:pikapi/basic/config/ReaderDirection.dart';
-import 'package:pikapi/basic/config/ReaderType.dart';
-import 'package:pikapi/basic/config/ShadowCategories.dart';
-import 'package:pikapi/basic/config/Themes.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/basic/config/ListLayout.dart';
-import 'package:pikapi/basic/config/TimeOffsetHour.dart';
-import 'package:pikapi/basic/config/Version.dart';
-import 'package:pikapi/basic/config/VolumeController.dart';
+import 'package:pikapika/basic/config/Address.dart';
+import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
+import 'package:pikapika/basic/config/AndroidSecureFlag.dart';
+import 'package:pikapika/basic/config/AutoClean.dart';
+import 'package:pikapika/basic/config/AutoFullScreen.dart';
+import 'package:pikapika/basic/config/ChooserRoot.dart';
+import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
+import 'package:pikapika/basic/config/ConvertToPNG.dart';
+import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
+import 'package:pikapika/basic/config/DownloadThreadCount.dart';
+import 'package:pikapika/basic/config/FullScreenAction.dart';
+import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/KeyboardController.dart';
+import 'package:pikapika/basic/config/PagerAction.dart';
+import 'package:pikapika/basic/config/Platform.dart';
+import 'package:pikapika/basic/config/Proxy.dart';
+import 'package:pikapika/basic/config/Quality.dart';
+import 'package:pikapika/basic/config/ReaderDirection.dart';
+import 'package:pikapika/basic/config/ReaderType.dart';
+import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/Themes.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/ListLayout.dart';
+import 'package:pikapika/basic/config/TimeOffsetHour.dart';
+import 'package:pikapika/basic/config/Version.dart';
+import 'package:pikapika/basic/config/VolumeController.dart';
 
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
@@ -71,6 +71,7 @@ class _InitScreenState extends State<InitScreen> {
     await initDownloadThreadCount();
     await initConvertToPNG();
     await initVersion();
+    await autoCheckNewVersion();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面

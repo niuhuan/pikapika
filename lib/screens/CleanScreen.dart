@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Channels.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/components/FitButton.dart';
+import 'package:pikapika/basic/Channels.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/FitButton.dart';
 import 'components/ContentLoading.dart';
 
 // 清理

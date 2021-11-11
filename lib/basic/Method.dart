@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/config/Quality.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/config/Quality.dart';
 
 /// 使用MethodChannel与平台通信
 
@@ -670,4 +670,10 @@ class Method {
   Future<Uint8List> convertToPNG(String path) async {
     return await _channel.invokeMethod("convertToPNG", {"path": path});
   }
+
+  /// HTTP-GET-STRING
+  Future<String> httpGet(String url) async {
+    return await _flatInvoke("httpGet", url);
+  }
+
 }

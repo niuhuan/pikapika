@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(pikapi LANGUAGES CXX)
 
-set(BINARY_NAME "pikapi")
+set(BINARY_NAME "pikapika")
 
 cmake_policy(SET CMP0063 NEW)
 

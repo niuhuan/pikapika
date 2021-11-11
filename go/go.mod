@@ -1,4 +1,4 @@
-module pikapi
+module pikapika
 
 go 1.16
 

@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Cross.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Cross.dart';
 
 import '../Method.dart';
 

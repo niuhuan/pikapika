@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/screens/ComicInfoScreen.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/screens/ComicInfoScreen.dart';
+import 'package:pikapika/basic/Method.dart';
 
 import 'ItemBuilder.dart';
 import 'Images.dart';

@@ -1,7 +1,7 @@
 /// 阅读器的方向
 
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Method.dart';
 
 enum ReaderDirection {
   TOP_TO_BOTTOM,

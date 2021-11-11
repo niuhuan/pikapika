@@ -3,7 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Method.dart';
 
 import '../Common.dart';
 

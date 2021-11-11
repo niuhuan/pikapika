@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/components/NetworkSetting.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import 'components/ContentLoading.dart';
 

@@ -2,9 +2,9 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pikapi/basic/config/ConvertToPNG.dart';
+import 'package:pikapika/basic/config/ConvertToPNG.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 

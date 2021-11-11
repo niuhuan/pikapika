@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pikapi/basic/Channels.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/basic/config/ChooserRoot.dart';
+import 'package:pikapika/basic/Channels.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/ChooserRoot.dart';
 
 import 'components/ContentLoading.dart';
 

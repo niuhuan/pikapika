@@ -8,8 +8,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"pikapi/main/database/comic_center"
-	"pikapi/main/utils"
+	"pikapika/main/database/comic_center"
+	"pikapika/main/utils"
 	"sync"
 	"time"
 )

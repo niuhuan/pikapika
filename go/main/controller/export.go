@@ -12,8 +12,8 @@ import (
 	"net"
 	"os"
 	"path"
-	"pikapi/main/database/comic_center"
-	"pikapi/main/utils"
+	"pikapika/main/database/comic_center"
+	"pikapika/main/utils"
 	"time"
 )
 

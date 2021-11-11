@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import Pikapi
+import Mobile
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

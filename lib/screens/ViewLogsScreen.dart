@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Method.dart';
 
 import 'ComicInfoScreen.dart';
 import 'components/Images.dart';

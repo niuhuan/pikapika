@@ -10,7 +10,7 @@ import (
 	_ "image/png"
 	"io/ioutil"
 	"net/http"
-	"pikapi/main/database/comic_center"
+	"pikapika/main/database/comic_center"
 	"sync"
 )
 

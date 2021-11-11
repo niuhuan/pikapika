@@ -10,10 +10,10 @@ import (
 	"io/ioutil"
 	"os"
 	path2 "path"
-	"pikapi/main/database/comic_center"
-	"pikapi/main/database/network_cache"
-	"pikapi/main/database/properties"
-	"pikapi/main/utils"
+	"pikapika/main/database/comic_center"
+	"pikapika/main/database/network_cache"
+	"pikapika/main/database/properties"
+	"pikapika/main/utils"
 	"strconv"
 	"time"
 )
@@ -513,6 +513,19 @@ func convertImageToJPEG100(params string) error {
 	return jpeg.Encode(stream, i, &jpeg.Options{Quality: 100})
 }
 
+func httpGet(url string) (string, error) {
+	rsp, err := client.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer rsp.Body.Close()
+	buff, err := ioutil.ReadAll(rsp.Body)
+	if err != nil {
+		return "", err
+	}
+	return string(buff), nil
+}
+
 func FlatInvoke(method string, params string) (string, error) {
 	switch method {
 	case "saveProperty":
@@ -684,6 +697,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return strconv.Itoa(loadDownloadThreadCount()), nil
 	case "switchLikeComment":
 		return switchLikeComment(params)
+	case "httpGet":
+		return httpGet(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

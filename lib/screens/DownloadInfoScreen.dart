@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Navigatior.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Navigatior.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'ComicInfoScreen.dart';
 import 'DownloadExportToFileScreen.dart';
 import 'DownloadReaderScreen.dart';

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "pikapi")
-set(APPLICATION_ID "com.example.pikapi")
+set(BINARY_NAME "pikapika")
+set(APPLICATION_ID "niuhuan.pikapika")
 
 cmake_policy(SET CMP0063 NEW)
 

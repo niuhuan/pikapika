@@ -11,8 +11,8 @@ import (
 	"net"
 	"os"
 	path2 "path"
-	"pikapi/main/database/comic_center"
-	"pikapi/main/utils"
+	"pikapika/main/database/comic_center"
+	"pikapika/main/utils"
 	"strconv"
 	"strings"
 )

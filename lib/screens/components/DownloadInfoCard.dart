@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Cross.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/screens/components/Images.dart';
+import 'package:pikapika/basic/Cross.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/screens/components/Images.dart';
 
 import 'ComicInfoCard.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/screens/ComicsScreen.dart';
-import 'package:pikapi/basic/Navigatior.dart';
+import 'package:pikapika/screens/ComicsScreen.dart';
+import 'package:pikapika/basic/Navigatior.dart';
 
 // 漫画tag
 class ComicTagsCard extends StatelessWidget {

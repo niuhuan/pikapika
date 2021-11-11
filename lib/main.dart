@@ -1,7 +1,7 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/screens/InitScreen.dart';
-import 'package:pikapi/basic/Navigatior.dart';
+import 'package:pikapika/screens/InitScreen.dart';
+import 'package:pikapika/basic/Navigatior.dart';
 
 import 'basic/config/Themes.dart';
 

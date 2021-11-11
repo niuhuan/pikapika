@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/basic/config/ListLayout.dart';
-import 'package:pikapi/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/ListLayout.dart';
+import 'package:pikapika/basic/config/ShadowCategories.dart';
 
 import 'components/ComicListBuilder.dart';
 

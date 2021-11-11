@@ -1,9 +1,9 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/config/ShadowCategories.dart';
-import 'package:pikapi/screens/components/ComicList.dart';
-import 'package:pikapi/screens/components/FitButton.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/screens/components/ComicList.dart';
+import 'package:pikapika/screens/components/FitButton.dart';
 import 'ContentBuilder.dart';
 
 class ComicListBuilder extends StatefulWidget {

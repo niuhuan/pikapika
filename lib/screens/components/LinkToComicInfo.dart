@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Navigatior.dart';
+import 'package:pikapika/basic/Navigatior.dart';
 
 import '../ComicInfoScreen.dart';
 

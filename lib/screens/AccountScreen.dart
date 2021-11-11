@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/config/Themes.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/basic/enum/ErrorTypes.dart';
-import 'package:pikapi/screens/RegisterScreen.dart';
-import 'package:pikapi/screens/components/NetworkSetting.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/Themes.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/enum/ErrorTypes.dart';
+import 'package:pikapika/screens/RegisterScreen.dart';
+import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';

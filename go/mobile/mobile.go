@@ -1,8 +1,8 @@
 package mobile
 
 import (
-	"pikapi/main/config"
-	"pikapi/main/controller"
+	"pikapika/main/config"
+	"pikapika/main/controller"
 )
 
 func InitApplication(application string) {

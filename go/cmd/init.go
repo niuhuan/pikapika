@@ -7,7 +7,7 @@ import (
 	"path"
 	path2 "path"
 	"path/filepath"
-	"pikapi/main/config"
+	"pikapika/main/config"
 	"runtime"
 	"strings"
 )
@@ -35,11 +35,11 @@ func init() {
 		if i < 0 {
 			panic(errors.New(" can't find \"/\" or \"\\\""))
 		}
-		applicationDir = path2.Join(path[0:i+1], "data", "pikapi")
+		applicationDir = path2.Join(path[0:i+1], "data")
 	case "darwin":
-		applicationDir = path.Join(applicationDir, "Library", "Application Support", "pikapi")
+		applicationDir = path.Join(applicationDir, "Library", "Application Support", "pikapika")
 	case "linux":
-		applicationDir = path.Join(applicationDir, ".pikapi")
+		applicationDir = path.Join(applicationDir, ".pikapika")
 	default:
 		panic(errors.New("not supported system"))
 	}

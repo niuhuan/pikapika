@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/screens/components/NetworkSetting.dart';
+import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 class NetworkSettingsScreen extends StatelessWidget {
   @override

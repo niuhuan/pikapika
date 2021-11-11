@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/config/ShadowCategories.dart';
-import 'package:pikapi/basic/store/Categories.dart';
-import 'package:pikapi/basic/config/ListLayout.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/store/Categories.dart';
+import 'package:pikapika/basic/config/ListLayout.dart';
+import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';

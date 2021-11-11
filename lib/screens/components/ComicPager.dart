@@ -1,13 +1,13 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/config/PagerAction.dart';
-import 'package:pikapi/basic/config/ShadowCategories.dart';
-import 'package:pikapi/basic/enum/Sort.dart';
-import 'package:pikapi/screens/components/ComicList.dart';
-import 'package:pikapi/screens/components/ContentError.dart';
-import 'package:pikapi/screens/components/FitButton.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/config/PagerAction.dart';
+import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/enum/Sort.dart';
+import 'package:pikapika/screens/components/ComicList.dart';
+import 'package:pikapika/screens/components/ContentError.dart';
+import 'package:pikapika/screens/components/FitButton.dart';
 import 'ContentLoading.dart';
 
 // 漫画列页

@@ -3,7 +3,7 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pikapi/basic/Common.dart';
+import 'package:pikapika/basic/Common.dart';
 import '../Method.dart';
 import 'Platform.dart';
 

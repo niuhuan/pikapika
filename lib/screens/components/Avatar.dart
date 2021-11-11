@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
 import '../FilePhotoViewScreen.dart';
 import 'Images.dart';
 

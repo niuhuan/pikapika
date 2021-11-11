@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pikapi/basic/Channels.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Cross.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/DownloadExportToSocketScreen.dart';
+import 'package:pikapika/basic/Channels.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Cross.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/DownloadExportToSocketScreen.dart';
 
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';

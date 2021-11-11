@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Entities.dart' as e;
-import 'package:pikapi/screens/CommentScreen.dart';
-import 'package:pikapi/screens/components/ItemBuilder.dart';
-import 'package:pikapi/basic/Method.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Entities.dart' as e;
+import 'package:pikapika/screens/CommentScreen.dart';
+import 'package:pikapika/screens/components/ItemBuilder.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'CommentItem.dart';
 import 'CommentMainType.dart';
 

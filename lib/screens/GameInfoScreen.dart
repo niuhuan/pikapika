@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/components/CommentMainType.dart';
-import 'package:pikapi/screens/components/ContentError.dart';
-import 'package:pikapi/screens/components/ContentLoading.dart';
-import 'package:pikapi/screens/components/Images.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/CommentMainType.dart';
+import 'package:pikapika/screens/components/ContentError.dart';
+import 'package:pikapika/screens/components/ContentLoading.dart';
+import 'package:pikapika/screens/components/Images.dart';
 
 import 'GameDownloadScreen.dart';
 import 'components/CommentList.dart';

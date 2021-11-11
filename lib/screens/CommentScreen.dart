@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Common.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Entities.dart' as e;
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/components/CommentItem.dart';
-import 'package:pikapi/screens/components/CommentMainType.dart';
-import 'package:pikapi/screens/components/ContentBuilder.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Entities.dart' as e;
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/CommentItem.dart';
+import 'package:pikapika/screens/components/CommentMainType.dart';
+import 'package:pikapika/screens/components/ContentBuilder.dart';
 
 class _CommentChildPage extends e.Page {
   late List<ChildOfComment> docs;

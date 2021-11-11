@@ -1,1 +1,1 @@
-gomobile bind -target=ios -o lib/Pikapi.xcframework ./
+gomobile bind -target=ios -o lib/Mobile.xcframework ./

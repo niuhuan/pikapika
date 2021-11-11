@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Cross.dart';
-import 'package:pikapi/basic/Entities.dart';
-import 'package:pikapi/basic/Method.dart';
-import 'package:pikapi/screens/SearchScreen.dart';
-import 'package:pikapi/basic/Navigatior.dart';
+import 'package:pikapika/basic/Cross.dart';
+import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/SearchScreen.dart';
+import 'package:pikapika/basic/Navigatior.dart';
 import '../ComicsScreen.dart';
 import 'Images.dart';
 

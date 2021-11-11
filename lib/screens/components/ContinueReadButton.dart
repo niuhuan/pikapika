@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapika/basic/Entities.dart';
 
 // 继续阅读按钮
 class ContinueReadButton extends StatefulWidget {

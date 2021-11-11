@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:pikapi/basic/Cross.dart';
-import 'package:pikapi/screens/components/Images.dart';
+import 'package:pikapika/basic/Cross.dart';
+import 'package:pikapika/screens/components/Images.dart';
 
 // 预览图片
 class FilePhotoViewScreen extends StatelessWidget {

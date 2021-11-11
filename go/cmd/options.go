@@ -7,14 +7,14 @@ import (
 	"github.com/go-flutter-desktop/plugins/url_launcher"
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/miguelpruivo/flutter_file_picker/go"
-	"pikapi/main/controller"
-	"pikapi/main/database/properties"
+	"pikapika/main/controller"
+	"pikapika/main/database/properties"
 	"strconv"
 	"sync"
 )
 
 var options = []flutter.Option{
-	flutter.AddPlugin(&Plugin{}),
+	flutter.AddPlugin(&PikapikaPlugin{}),
 	flutter.AddPlugin(&file_picker.FilePickerPlugin{}),
 	flutter.AddPlugin(&url_launcher.UrlLauncherPlugin{}),
 }
@@ -39,10 +39,10 @@ func (s *EventHandler) OnCancel(arguments interface{}) {
 
 const channelName = "method"
 
-type Plugin struct {
+type PikapikaPlugin struct {
 }
 
-func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
+func (p *PikapikaPlugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 
 	channel := plugin.NewMethodChannel(messenger, channelName, plugin.StandardMethodCodec{})
 
@@ -72,7 +72,7 @@ func (p *Plugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 	return nil // no error
 }
 
-func (p *Plugin) InitPluginGLFW(window *glfw.Window) error {
+func (p *PikapikaPlugin) InitPluginGLFW(window *glfw.Window) error {
 	window.SetSizeCallback(func(w *glfw.Window, width int, height int) {
 		go func() {
 			properties.SaveProperty("window_width", strconv.Itoa(width))

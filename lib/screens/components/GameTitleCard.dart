@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pikapi/basic/Entities.dart';
+import 'package:pikapika/basic/Entities.dart';
 
 import 'Images.dart';
 
