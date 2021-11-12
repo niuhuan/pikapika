@@ -44,17 +44,20 @@ Future<dynamic> saveImage(String path, BuildContext context) async {
     if (folder != null) {
       future = method.convertImageToJPEG100(path, folder);
     }
-  }
-  if (future != null) {
-    try {
-      await future;
-      defaultToast(context, '保存成功');
-    } catch (e, s) {
-      print("$e\n$s");
-      defaultToast(context, '保存失败');
-    }
   } else {
     defaultToast(context, '暂不支持该平台');
+    return;
+  }
+  if (future == null) {
+    defaultToast(context, '保存取消');
+    return;
+  }
+  try {
+    await future;
+    defaultToast(context, '保存成功');
+  } catch (e, s) {
+    print("$e\n$s");
+    defaultToast(context, '保存失败');
   }
 }
 

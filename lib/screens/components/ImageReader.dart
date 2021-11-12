@@ -554,26 +554,11 @@ class _WebToonReaderImageState extends State<_WebToonReaderImage> {
               return buildLoading(widget.size.width, widget.size.height);
             }
             var data = snapshot.data!;
-            return GestureDetector(
-              onLongPress: () async {
-                String? choose =
-                    await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
-                switch (choose) {
-                  case '预览图片':
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FilePhotoViewScreen(data.finalPath),
-                    ));
-                    break;
-                  case '保存图片':
-                    saveImage(data.finalPath, context);
-                    break;
-                }
-              },
-              child: buildFile(
-                data.finalPath,
-                widget.size.width,
-                widget.size.height,
-              ),
+            return buildFile(
+              data.finalPath,
+              widget.size.width,
+              widget.size.height,
+              context: context,
             );
           },
         );
@@ -726,7 +711,8 @@ class _GalleryReaderState extends State<_GalleryReader> {
           );
         }
         return PhotoViewGalleryPageOptions(
-          imageProvider: ResourceRemoteImageProvider(item.fileServer, item.path),
+          imageProvider:
+              ResourceRemoteImageProvider(item.fileServer, item.path),
           errorBuilder: (b, e, s) {
             print("$e,$s");
             return LayoutBuilder(

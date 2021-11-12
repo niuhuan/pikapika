@@ -8,27 +8,11 @@ const double _avatarMargin = 5;
 const double _avatarBorderSize = 1.5;
 
 // 头像
-class Avatar extends StatefulWidget {
-  final OssImage avatarImage;
+class Avatar extends StatelessWidget {
+  final RemoteImageInfo avatarImage;
   final double size;
 
   const Avatar(this.avatarImage, {this.size = 50});
-
-  @override
-  State<StatefulWidget> createState() => _AvatarState();
-}
-
-class _AvatarState extends State<Avatar> {
-  late Future<String> _future = _load();
-
-  Future<String> _load() async {
-    if (widget.avatarImage.fileServer == '') {
-      return '';
-    }
-    return method
-        .remoteImageData(widget.avatarImage.fileServer, widget.avatarImage.path)
-        .then((value) => value.finalPath);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,34 +27,14 @@ class _AvatarState extends State<Avatar> {
             width: _avatarBorderSize,
           )),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(widget.size)),
-        child: _image(),
+        borderRadius: BorderRadius.all(Radius.circular(this.size)),
+        child: RemoteImage(
+          fileServer: this.avatarImage.fileServer,
+          path: this.avatarImage.path,
+          width: this.size,
+          height: this.size,
+        ),
       ),
-    );
-  }
-
-  Widget _image() {
-    return FutureBuilder(
-      future: _future,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.hasError) {
-          return buildError(widget.size, widget.size);
-        }
-        if (snapshot.connectionState != ConnectionState.done) {
-          return buildLoading(widget.size, widget.size);
-        }
-        if (snapshot.data == '' || snapshot.data == null) {
-          return buildMock(widget.size, widget.size);
-        }
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => FilePhotoViewScreen(snapshot.data!),
-            ));
-          },
-          child: buildFile(snapshot.data!, widget.size, widget.size),
-        );
-      },
     );
   }
 }

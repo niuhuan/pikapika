@@ -2,11 +2,15 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pikapika/basic/config/ConvertToPNG.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
+
+import '../FilePhotoViewScreen.dart';
 
 Future<Uint8List> _loadImageFile(String path) {
   if (convertToPNG()) {
@@ -180,7 +184,12 @@ class _DownloadImageState extends State<DownloadImage> {
 
   @override
   Widget build(BuildContext context) {
-    return pathFutureImage(_future, widget.width, widget.height);
+    return pathFutureImage(
+      _future,
+      widget.width,
+      widget.height,
+      context: context,
+    );
   }
 }
 
@@ -225,16 +234,44 @@ class _RemoteImageState extends State<RemoteImage> {
     if (_mock) {
       return buildMock(widget.width, widget.height);
     }
-    return pathFutureImage(_future, widget.width, widget.height,
-        fit: widget.fit);
+    return pathFutureImage(
+      _future,
+      widget.width,
+      widget.height,
+      fit: widget.fit,
+      context: context,
+    );
   }
+}
+
+Widget pathFutureImage(Future<String> future, double? width, double? height,
+    {BoxFit fit = BoxFit.cover, BuildContext? context}) {
+  return FutureBuilder(
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.hasError) {
+          print("${snapshot.error}");
+          print("${snapshot.stackTrace}");
+          return buildError(width, height);
+        }
+        if (snapshot.connectionState != ConnectionState.done) {
+          return buildLoading(width, height);
+        }
+        return buildFile(
+          snapshot.data!,
+          width,
+          height,
+          fit: fit,
+          context: context,
+        );
+      });
 }
 
 // 通用方法
 
 Widget buildSvg(String source, double? width, double? height,
     {Color? color, double? margin}) {
-  return Container(
+  var widget = Container(
     width: width,
     height: height,
     padding: margin != null ? EdgeInsets.all(10) : null,
@@ -247,10 +284,11 @@ Widget buildSvg(String source, double? width, double? height,
       ),
     ),
   );
+  return GestureDetector(onLongPress: () {}, child: widget);
 }
 
 Widget buildMock(double? width, double? height) {
-  return Container(
+  var widget = Container(
     width: width,
     height: height,
     padding: EdgeInsets.all(10),
@@ -263,6 +301,7 @@ Widget buildMock(double? width, double? height) {
       ),
     ),
   );
+  return GestureDetector(onLongPress: () {}, child: widget);
 }
 
 Widget buildError(double? width, double? height) {
@@ -292,8 +331,8 @@ Widget buildLoading(double? width, double? height) {
 }
 
 Widget buildFile(String file, double? width, double? height,
-    {BoxFit fit = BoxFit.cover}) {
-  return Image(
+    {BoxFit fit = BoxFit.cover, BuildContext? context}) {
+  var image = Image(
     image: ResourceFileImageProvider(file),
     width: width,
     height: height,
@@ -304,21 +343,21 @@ Widget buildFile(String file, double? width, double? height,
     },
     fit: fit,
   );
-}
-
-Widget pathFutureImage(Future<String> future, double? width, double? height,
-    {BoxFit fit = BoxFit.cover}) {
-  return FutureBuilder(
-      future: future,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.hasError) {
-          print("${snapshot.error}");
-          print("${snapshot.stackTrace}");
-          return buildError(width, height);
-        }
-        if (snapshot.connectionState != ConnectionState.done) {
-          return buildLoading(width, height);
-        }
-        return buildFile(snapshot.data!, width, height, fit: fit);
-      });
+  if (context == null) return image;
+  return GestureDetector(
+    onLongPress: () async {
+      String? choose = await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
+      switch (choose) {
+        case '预览图片':
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => FilePhotoViewScreen(file),
+          ));
+          break;
+        case '保存图片':
+          saveImage(file, context);
+          break;
+      }
+    },
+    child: image,
+  );
 }
