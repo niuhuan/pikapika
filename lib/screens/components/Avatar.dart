@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
-import 'package:pikapika/basic/Method.dart';
-import '../FilePhotoViewScreen.dart';
 import 'Images.dart';
 
 const double _avatarMargin = 5;

@@ -1,6 +1,7 @@
+/// 自动清理
+
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
-
 
 const _autoCleanMap = {
   "一个月前": "${3600 * 24 * 30}",
@@ -51,7 +52,6 @@ Future<void> _chooseAutoCleanSec(BuildContext context) async {
     _autoCleanSec = choose;
   }
 }
-
 
 Widget autoCleanSecSetting() {
   return StatefulBuilder(

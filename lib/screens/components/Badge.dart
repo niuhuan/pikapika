@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// 提示信息, 组件右上角的小红点
 class Badged extends StatelessWidget {
   final String? badge;
   final Widget child;

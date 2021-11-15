@@ -12,6 +12,7 @@ import (
 	"strings"
 )
 
+// 根据不通系统初始化数据的保存路径
 func init() {
 	applicationDir, err := os.UserHomeDir()
 	if err != nil {

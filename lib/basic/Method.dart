@@ -574,7 +574,10 @@ class Method {
   Future<List<String>> downloadGame(String url) async {
     if (url.startsWith("https://game.eroge.xyz/hhh.php")) {
       var data = await _flatInvoke("downloadGame", url);
-      return List.of(jsonDecode(data)).map((e) => e.toString()).toList();
+      return [
+        url,
+        ...List.of(jsonDecode(data)).map((e) => e.toString()),
+      ];
     }
     return [url];
   }
@@ -675,5 +678,4 @@ class Method {
   Future<String> httpGet(String url) async {
     return await _flatInvoke("httpGet", url);
   }
-
 }
