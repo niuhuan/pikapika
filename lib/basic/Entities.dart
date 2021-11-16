@@ -283,7 +283,7 @@ class CommentBase {
 }
 
 /// 子评论
-class ChildOfComment extends Comment {
+class ChildOfComment extends CommentBase {
   late String parent;
 
   ChildOfComment.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
