@@ -651,7 +651,7 @@ class _GalleryReaderState extends State<_GalleryReader> {
   }
 
   Widget _buildViewer() {
-    return PhotoViewGallery.builder(
+    var gallery = PhotoViewGallery.builder(
       scrollDirection:
           widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
               ? Axis.vertical
@@ -722,6 +722,44 @@ class _GalleryReaderState extends State<_GalleryReader> {
             );
           },
         );
+      },
+    );
+    return GestureDetector(
+      child: gallery,
+      onLongPress: () async {
+        var index = _current - 1;
+        if (index >= 0 && _current < widget.struct.images.length) {
+          Future<String> Function() load = () async {
+            var item = widget.struct.images[index];
+            if (item.downloadLocalPath != null) {
+              return method.downloadImagePath(item.downloadLocalPath!);
+            }
+            var data = await method.remoteImageData(item.fileServer, item.path);
+            return data.finalPath;
+          };
+          String? choose =
+              await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
+          switch (choose) {
+            case '预览图片':
+              try {
+                var file = await load();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => FilePhotoViewScreen(file),
+                ));
+              } catch (e) {
+                defaultToast(context, "图片加载失败");
+              }
+              break;
+            case '保存图片':
+              try {
+                var file = await load();
+                saveImage(file, context);
+              } catch (e) {
+                defaultToast(context, "图片加载失败");
+              }
+              break;
+          }
+        }
       },
     );
   }
