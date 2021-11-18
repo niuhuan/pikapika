@@ -36,6 +36,7 @@ class _AboutScreenState extends State<AboutScreen> {
     var min = size.width < size.height ? size.width : size.height;
     var _currentVersion = currentVersion();
     var _latestVersion = latestVersion();
+    var _latestVersionInfo = latestVersionInfo();
     var _dirty = dirtyVersion();
     return Scaffold(
       appBar: AppBar(
@@ -80,6 +81,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     Expanded(child: Container()),
                   ],
                 ),
+                _buildNewVersionInfo(_latestVersionInfo),
               ],
             ),
           ),
@@ -176,5 +178,25 @@ class _AboutScreenState extends State<AboutScreen> {
         recognizer: TapGestureRecognizer()..onTap = () => openUrl(_releasesUrl),
       ),
     );
+  }
+
+  Widget _buildNewVersionInfo(String? latestVersionInfo) {
+    if (latestVersionInfo != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(),
+          Text("更新内容:"),
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Text(
+              latestVersionInfo,
+              style: TextStyle(),
+            ),
+          ),
+        ],
+      );
+    }
+    return Container();
   }
 }

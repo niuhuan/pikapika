@@ -3,9 +3,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../Common.dart';
 import '../Method.dart';
+import 'Platform.dart';
 
 const _propertyName = "chooserRoot";
 late String _chooserRoot;
@@ -14,7 +16,7 @@ Future<dynamic> initChooserRoot() async {
   _chooserRoot = await method.loadProperty(_propertyName, "");
 }
 
-String currentChooserRoot() {
+String _currentChooserRoot() {
   if (_chooserRoot == "") {
     if (Platform.isWindows) {
       return '/';
@@ -23,15 +25,27 @@ String currentChooserRoot() {
     } else if (Platform.isLinux) {
       return '/';
     } else if (Platform.isAndroid) {
-      // if (androidVersion >= 30) {
-      //   return '/storage/emulated/0/Download';
-      // }
       return '/storage/emulated/0';
     } else {
       throw 'error';
     }
   }
   return _chooserRoot;
+}
+
+Future<String> currentChooserRoot() async {
+  if (Platform.isAndroid) {
+    if (androidVersion >= 30) {
+      if (!(await Permission.manageExternalStorage.request()).isGranted) {
+        throw Exception("申请权限被拒绝");
+      }
+    } else {
+      if (!(await Permission.storage.request()).isGranted) {
+        throw Exception("申请权限被拒绝");
+      }
+    }
+  }
+  return _currentChooserRoot();
 }
 
 Future<dynamic> _inputChooserRoot(BuildContext context) async {
@@ -53,7 +67,7 @@ Widget chooserRootSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("文件夹选择器默认路径"),
-        subtitle: Text(currentChooserRoot()),
+        subtitle: Text(_currentChooserRoot()),
         onTap: () async {
           await _inputChooserRoot(context);
           setState(() {});

@@ -38,7 +38,13 @@ Widget downloadAndExportPathSetting() {
                 "您即将选择一个目录, 如果文件系统可写, 下载的同时会为您自动导出一份",
               );
               if (b) {
-                String? folder = await chooseFolder(context);
+                late String? folder;
+                try {
+                  folder = await chooseFolder(context);
+                } catch (e) {
+                  defaultToast(context, "$e");
+                  return;
+                }
                 if (folder != null) {
                   await method.saveDownloadAndExportPath(folder);
                   _downloadAndExportPath = folder;

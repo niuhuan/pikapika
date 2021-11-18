@@ -126,7 +126,13 @@ class _DownloadExportToFileScreenState
         Platform.isAndroid) {
       widgets.add(MaterialButton(
         onPressed: () async {
-          String? path = await chooseFolder(context);
+          late String? path;
+          try {
+            path = await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
           print("path $path");
           if (path != null) {
             try {
@@ -156,7 +162,13 @@ class _DownloadExportToFileScreenState
       widgets.add(Container(height: 10));
       widgets.add(MaterialButton(
         onPressed: () async {
-          String? path = await chooseFolder(context);
+          late String? path;
+          try {
+            path = await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
           print("path $path");
           if (path != null) {
             try {

@@ -82,23 +82,12 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
 
 /// 选择一个文件夹用于保存文件
 Future<String?> chooseFolder(BuildContext context) async {
-  if (Platform.isAndroid) {
-    if (androidVersion >= 30) {
-      if (!(await Permission.manageExternalStorage.request()).isGranted) {
-        return null;
-      }
-    } else {
-      if (!(await Permission.storage.request()).isGranted) {
-        return null;
-      }
-    }
-  }
   return FilesystemPicker.open(
     title: '选择一个文件夹',
     pickText: '将文件保存到这里',
     context: context,
     fsType: FilesystemType.folder,
-    rootDirectory: Directory(currentChooserRoot()),
+    rootDirectory: Directory(await currentChooserRoot()),
   );
 }
 
