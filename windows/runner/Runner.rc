@@ -92,10 +92,10 @@ BEGIN
             VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "pikapi" "\0"
+            VALUE "InternalName", "pikapika" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2021 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "pikapi.exe" "\0"
-            VALUE "ProductName", "pikapi" "\0"
+            VALUE "OriginalFilename", "pikapika.exe" "\0"
+            VALUE "ProductName", "pikapika" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
