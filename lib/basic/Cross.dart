@@ -6,7 +6,6 @@ import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapika/basic/Common.dart';
-import 'package:pikapika/basic/config/Platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Method.dart';
 import 'config/ChooserRoot.dart';
