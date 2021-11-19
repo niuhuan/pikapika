@@ -197,6 +197,25 @@ class _AboutScreenState extends State<AboutScreen> {
         ],
       );
     }
-    return Container();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(),
+        Container(
+          padding: EdgeInsets.all(15),
+          child: Text.rich(
+            TextSpan(
+              text: "去RELEASE仓库",
+              style: TextStyle(
+                height: 1.3,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => openUrl(_releasesUrl),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
