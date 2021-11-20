@@ -72,7 +72,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _registerOver = true;
       });
     } catch (e) {
-      alertDialog(context, "注册失败", "$e");
+      String message = "$e";
+      if (message.contains("email is already exist")) {
+        message = "账号已存在";
+      }
+      alertDialog(context, "注册失败", message);
     } finally {
       setState(() {
         _registering = false;
