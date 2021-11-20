@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -208,6 +210,8 @@ class _ComicListState extends State<ComicList> {
     int rowCap = size.width ~/ widthAndGap;
     var width = widthAndGap - gap * 2;
     var height = width * coverHeight / coverWidth;
+    double titleFontSize = max(width / 11, 10);
+    double shadowFontSize = max(width / 9, 12);
     List<Widget> wraps = [];
     List<Widget> tmp = [];
     widget.comicList.forEach((e) {
@@ -229,7 +233,7 @@ class _ComicListState extends State<ComicList> {
                   '被封印的本子',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: shadowFontSize,
                     color: (Theme.of(context).textTheme.bodyText1?.color ??
                             Colors.black)
                         .withOpacity(.5),
@@ -265,7 +269,7 @@ class _ComicListState extends State<ComicList> {
                             e.title + '\n',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 10,
+                              fontSize: titleFontSize,
                               height: 1.2,
                             ),
                             strutStyle: StrutStyle(height: 1.2),
