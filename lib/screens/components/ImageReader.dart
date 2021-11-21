@@ -13,6 +13,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/GalleryPreloadCount.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
+import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -274,26 +275,36 @@ class _WebToonReaderState extends State<_WebToonReader> {
       switch ("$event") {
         case "UP":
           if (_current > 1) {
-            if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
-              return;
+            if (noAnimation()) {
+              _itemScrollController.jumpTo(
+                index: _current - 2, // 减1 当前position 再减少1 前一个
+              );
+            } else {
+              if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
+                return;
+              }
+              _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+              _itemScrollController.scrollTo(
+                index: _current - 2, // 减1 当前position 再减少1 前一个
+                duration: Duration(milliseconds: 400),
+              );
             }
-            _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
-            _itemScrollController.scrollTo(
-              index: _current - 2, // 减1 当前position 再减少1 前一个
-              duration: Duration(milliseconds: 400),
-            );
           }
           break;
         case "DOWN":
           if (_current < widget.struct.images.length) {
-            if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
-              return;
+            if (noAnimation()) {
+              _itemScrollController.jumpTo(index: _current);
+            } else {
+              if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
+                return;
+              }
+              _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+              _itemScrollController.scrollTo(
+                index: _current,
+                duration: Duration(milliseconds: 400),
+              );
             }
-            _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
-            _itemScrollController.scrollTo(
-              index: _current,
-              duration: Duration(milliseconds: 400),
-            );
           }
           break;
       }
@@ -622,18 +633,32 @@ class _GalleryReaderState extends State<_GalleryReader> {
       switch ("$event") {
         case "UP":
           if (_current > 1) {
-            _pageController.previousPage(
-              duration: Duration(milliseconds: 400),
-              curve: Curves.ease,
-            );
+            if (noAnimation()) {
+              _pageController.previousPage(
+                duration: Duration(milliseconds: 1),
+                curve: Curves.ease,
+              );
+            } else {
+              _pageController.previousPage(
+                duration: Duration(milliseconds: 400),
+                curve: Curves.ease,
+              );
+            }
           }
           break;
         case "DOWN":
           if (_current < widget.struct.images.length) {
-            _pageController.nextPage(
-              duration: Duration(milliseconds: 400),
-              curve: Curves.ease,
-            );
+            if (noAnimation()) {
+              _pageController.nextPage(
+                duration: Duration(milliseconds: 1),
+                curve: Curves.ease,
+              );
+            } else {
+              _pageController.nextPage(
+                duration: Duration(milliseconds: 400),
+                curve: Curves.ease,
+              );
+            }
           }
           break;
       }

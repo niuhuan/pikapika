@@ -12,6 +12,7 @@ import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
+import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/Platform.dart';
 import 'package:pikapika/basic/config/Proxy.dart';
@@ -70,6 +71,7 @@ class _InitScreenState extends State<InitScreen> {
     await initAndroidSecureFlag();
     await initDownloadThreadCount();
     await initConvertToPNG();
+    await initNoAnimation();
     await initVersion();
     autoCheckNewVersion();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
