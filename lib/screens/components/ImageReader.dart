@@ -398,7 +398,8 @@ class _WebToonReaderState extends State<_WebToonReader> {
                   : Axis.horizontal,
           reverse:
               widget.struct.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-          padding: widget.struct.fullScreen
+          padding: widget.struct.fullScreen &&
+                  widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
               ? EdgeInsets.only(
                   top: scaffold.appBarMaxHeight ?? 0,
                   bottom: scaffold.appBarMaxHeight ?? 0,
