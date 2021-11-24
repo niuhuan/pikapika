@@ -2,6 +2,8 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
+import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/screens/RankingsScreen.dart';
@@ -183,7 +185,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     for (var i = 0; i < cList.length; i++) {
       var c = cList[i];
       if (c.isWeb) continue;
-      if (shadowCategories.contains(c.title)) continue;
+      switch (currentShadowCategoriesMode()) {
+        case ShadowCategoriesMode.BLACK_LIST:
+          if (shadowCategories.contains(c.title)) continue;
+          break;
+        case ShadowCategoriesMode.WHITE_LIST:
+          if (!shadowCategories.contains(c.title)) continue;
+          break;
+      }
       append(
         RemoteImage(
           fileServer: c.thumb.fileServer,

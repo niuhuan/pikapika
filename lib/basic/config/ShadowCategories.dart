@@ -2,18 +2,16 @@
 
 import 'dart:convert';
 
-import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../Method.dart';
 import '../store/Categories.dart';
+import 'ShadowCategoriesEvent.dart';
 
 const _propertyName = "shadowCategories";
 late List<String> shadowCategories;
-
-var shadowCategoriesEvent = Event<EventArgs>();
 
 /// 获取封印的类型
 Future<List<String>> _loadShadowCategories() async {

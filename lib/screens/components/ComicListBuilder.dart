@@ -1,7 +1,7 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
-import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
 import 'package:pikapika/screens/components/FitButton.dart';
 import 'ContentBuilder.dart';

@@ -26,6 +26,7 @@ import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
+import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
@@ -58,6 +59,7 @@ class _InitScreenState extends State<InitScreen> {
     await initAutoFullScreen();
     await initFullScreenAction();
     await initPagerAction();
+    await initShadowCategoriesMode();
     await initShadowCategories();
     await initFullScreenUI();
     switchFullScreenUI();

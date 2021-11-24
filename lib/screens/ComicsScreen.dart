@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -65,7 +66,17 @@ class _ComicsScreenState extends State<ComicsScreen> {
             categoryTitle(null),
             ...filteredList(
               storedCategories,
-              (c) => !shadowCategories.contains(c),
+              (c) {
+                switch (currentShadowCategoriesMode()) {
+                  case ShadowCategoriesMode.BLACK_LIST:
+                    if (shadowCategories.contains(c)) return false;
+                    break;
+                  case ShadowCategoriesMode.WHITE_LIST:
+                    if (!shadowCategories.contains(c)) return false;
+                    break;
+                }
+                return true;
+              },
             ),
           ]);
           if (category != null) {

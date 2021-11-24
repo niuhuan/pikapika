@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
-import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
 import 'package:pikapika/basic/enum/Sort.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
 import 'package:pikapika/screens/components/ContentError.dart';

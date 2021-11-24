@@ -6,6 +6,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
+import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 
 import 'ComicInfoCard.dart';
 import 'Images.dart';
@@ -60,9 +61,19 @@ class _ComicListState extends State<ComicList> {
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         ...widget.comicList.map((e) {
-          var shadow = e.categories
-              .map((e) => shadowCategories.contains(e))
-              .reduce((value, element) => value || element);
+          var shadow = e.categories.map(
+            (c) {
+              switch (currentShadowCategoriesMode()) {
+                case ShadowCategoriesMode.BLACK_LIST:
+                  if (shadowCategories.contains(c)) return true;
+                  break;
+                case ShadowCategoriesMode.WHITE_LIST:
+                  if (!shadowCategories.contains(c)) return true;
+                  break;
+              }
+              return false;
+            },
+          ).reduce((value, element) => value || element);
           if (shadow) {
             return InkWell(
               onTap: () {},
@@ -117,9 +128,19 @@ class _ComicListState extends State<ComicList> {
     List<Widget> wraps = [];
     List<Widget> tmp = [];
     widget.comicList.forEach((e) {
-      var shadow = e.categories
-          .map((e) => shadowCategories.contains(e))
-          .reduce((value, element) => value || element);
+      var shadow = e.categories.map(
+        (c) {
+          switch (currentShadowCategoriesMode()) {
+            case ShadowCategoriesMode.BLACK_LIST:
+              if (shadowCategories.contains(c)) return true;
+              break;
+            case ShadowCategoriesMode.WHITE_LIST:
+              if (!shadowCategories.contains(c)) return true;
+              break;
+          }
+          return false;
+        },
+      ).reduce((value, element) => value || element);
       if (shadow) {
         tmp.add(
           Container(
@@ -215,9 +236,19 @@ class _ComicListState extends State<ComicList> {
     List<Widget> wraps = [];
     List<Widget> tmp = [];
     widget.comicList.forEach((e) {
-      var shadow = e.categories
-          .map((e) => shadowCategories.contains(e))
-          .reduce((value, element) => value || element);
+      var shadow = e.categories.map(
+        (c) {
+          switch (currentShadowCategoriesMode()) {
+            case ShadowCategoriesMode.BLACK_LIST:
+              if (shadowCategories.contains(c)) return true;
+              break;
+            case ShadowCategoriesMode.WHITE_LIST:
+              if (!shadowCategories.contains(c)) return true;
+              break;
+          }
+          return false;
+        },
+      ).reduce((value, element) => value || element);
       if (shadow) {
         tmp.add(
           Container(
