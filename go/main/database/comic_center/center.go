@@ -21,7 +21,6 @@ func InitDBConnect(databaseDir string) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&Category{})
 	db.AutoMigrate(&ComicView{})
 	db.AutoMigrate(&RemoteImage{})
 	db.AutoMigrate(&ComicDownload{})
@@ -33,47 +32,6 @@ func Transaction(t func(tx *gorm.DB) error) error {
 	mutex.Lock()
 	defer mutex.Unlock()
 	return db.Transaction(t)
-}
-
-func UpSetCategories(categories *[]Category) error {
-	mutex.Lock()
-	defer mutex.Unlock()
-	return db.Transaction(func(tx *gorm.DB) error {
-		var in []string
-		for _, c := range *categories {
-			if c.ID == "" {
-				continue
-			}
-			in = append(in, c.ID)
-			err := tx.Clauses(clause.OnConflict{
-				Columns: []clause.Column{{Name: "id"}},
-				DoUpdates: clause.AssignmentColumns([]string{
-					"updated_at",
-					"title",
-					"description",
-					"is_web",
-					"active",
-					"link",
-					"thumb_original_name",
-					"thumb_file_server",
-					"thumb_path",
-				}),
-			}).Create(&c).Error
-			if err != nil {
-				return err
-			}
-		}
-		err := tx.Unscoped().Model(&Category{}).Where(" id in ?", in).Update("deleted_at", gorm.DeletedAt{
-			Valid: false,
-		}).Error
-		if err != nil {
-			return err
-		}
-		return tx.Unscoped().Model(&Category{}).Where(" id not in ?", in).Update("deleted_at", gorm.DeletedAt{
-			Time:  time.Now(),
-			Valid: true,
-		}).Error
-	})
 }
 
 func NoLockActionViewComicUpdateInfoDB(view *ComicView, db *gorm.DB) error {

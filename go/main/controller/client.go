@@ -73,26 +73,12 @@ func changeProxyUrl(urlStr string) bool {
 	return true
 }
 
-func cacheable(key string, expire time.Duration, reload func() (interface{}, error)) (string, error) {
-	// CACHE
-	cache := network_cache.LoadCache(key, expire)
-	if cache != "" {
-		return cache, nil
-	}
-	// obj
-	obj, err := reload()
-	if err != nil {
-		return "", err
-	}
-	buff, err := json.Marshal(obj)
-	// push to cache
-	if err != nil {
-		return "", err
-	}
-	// return
-	cache = string(buff)
-	network_cache.SaveCache(key, cache)
-	return cache, nil
+func userProfile() (string, error) {
+	return serialize(client.UserProfile())
+}
+
+func punchIn() (string, error) {
+	return serialize(client.PunchIn())
 }
 
 func categories() (string, error) {
@@ -103,24 +89,6 @@ func categories() (string, error) {
 		return cache, nil
 	}
 	categories, err := client.Categories()
-	if err != nil {
-		return "", err
-	}
-	var dbCategories []comic_center.Category
-	for _, c := range categories {
-		dbCategories = append(dbCategories, comic_center.Category{
-			ID:                c.Id,
-			Title:             c.Title,
-			Description:       c.Description,
-			IsWeb:             c.IsWeb,
-			Active:            c.Active,
-			Link:              c.Link,
-			ThumbOriginalName: c.Thumb.OriginalName,
-			ThumbFileServer:   c.Thumb.FileServer,
-			ThumbPath:         c.Thumb.Path,
-		})
-	}
-	err = comic_center.UpSetCategories(&dbCategories)
 	if err != nil {
 		return "", err
 	}

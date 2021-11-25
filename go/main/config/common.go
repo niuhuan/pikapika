@@ -16,7 +16,7 @@ func InitApplication(applicationDir string) {
 	databasesDir = path.Join(applicationDir, "databases")
 	remoteDir = path.Join(applicationDir, "pictures", "remote")
 	downloadDir = path.Join(applicationDir, "download")
-	tmpDir = path.Join(applicationDir, "download")
+	tmpDir = path.Join(applicationDir, "tmp")
 	utils.Mkdir(databasesDir)
 	utils.Mkdir(remoteDir)
 	utils.Mkdir(downloadDir)

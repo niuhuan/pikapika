@@ -3,6 +3,8 @@ package controller
 import (
 	"encoding/json"
 	"pikapika/main/database/comic_center"
+	"pikapika/main/database/network_cache"
+	"time"
 )
 
 // EventNotify EventChannel 总线
@@ -39,6 +41,29 @@ func downloadComicEventSend(comicDownload *comic_center.ComicDownload) {
 // 发送导出的事件
 func notifyExport(str string) {
 	onEvent("EXPORT", str)
+}
+
+// 缓存接口
+func cacheable(key string, expire time.Duration, reload func() (interface{}, error)) (string, error) {
+	// CACHE
+	cache := network_cache.LoadCache(key, expire)
+	if cache != "" {
+		return cache, nil
+	}
+	// obj
+	obj, err := reload()
+	if err != nil {
+		return "", err
+	}
+	buff, err := json.Marshal(obj)
+	// push to cache
+	if err != nil {
+		return "", err
+	}
+	// return
+	cache = string(buff)
+	network_cache.SaveCache(key, cache)
+	return cache, nil
 }
 
 // 将interface序列化成字符串, 方便与flutter通信

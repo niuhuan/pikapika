@@ -181,14 +181,6 @@ func clearToken() error {
 	return nil
 }
 
-func userProfile() (string, error) {
-	return serialize(client.UserProfile())
-}
-
-func punchIn() (string, error) {
-	return serialize(client.PunchIn())
-}
-
 func remoteImageData(params string) (string, error) {
 	var paramsStruct struct {
 		FileServer string `json:"fileServer"`

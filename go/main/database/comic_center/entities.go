@@ -5,21 +5,6 @@ import (
 	"time"
 )
 
-type Category struct {
-	ID                string `gorm:"primarykey"`
-	CreatedAt         time.Time
-	UpdatedAt         time.Time
-	DeletedAt         gorm.DeletedAt `gorm:"index"`
-	Title             string         `json:"title"`
-	Description       string         `json:"description"`
-	IsWeb             bool           `json:"isWeb"`
-	Active            bool           `json:"active"`
-	Link              string         `json:"link"`
-	ThumbOriginalName string
-	ThumbFileServer   string
-	ThumbPath         string
-}
-
 type RemoteImage struct {
 	gorm.Model
 	FileServer string `gorm:"index:uk_fp,unique" json:"fileServer"`
