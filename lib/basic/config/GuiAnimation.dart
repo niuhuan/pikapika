@@ -18,7 +18,7 @@ bool currentGuiAnimation() {
 
 Future<void> _chooseGuiAnimation(BuildContext context) async {
   String? result =
-      await chooseListDialog<String>(context, "进入阅读器自动全屏", ["是", "否"]);
+      await chooseListDialog<String>(context, "开启软件界面动画", ["是", "否"]);
   if (result != null) {
     var target = result == "是";
     await method.saveProperty(_propertyName, "$target");
