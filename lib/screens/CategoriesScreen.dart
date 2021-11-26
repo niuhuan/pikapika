@@ -92,6 +92,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var theme = Theme.of(context);
     var themeBackground = theme.scaffoldBackgroundColor;
     var shadeBackground = Color.fromARGB(

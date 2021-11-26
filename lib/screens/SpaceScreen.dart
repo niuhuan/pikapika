@@ -44,6 +44,7 @@ class _SpaceScreenState extends State<SpaceScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('我的'),

@@ -31,9 +31,9 @@ class _AppScreenState extends State<AppScreen> {
     setState(() {});
   }
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    const CategoriesScreen(),
-    const SpaceScreen(),
+  static List<Widget> _widgetOptions = <Widget>[
+    CategoriesScreen(),
+    SpaceScreen(),
   ];
 
   late int _selectedIndex = 0;
