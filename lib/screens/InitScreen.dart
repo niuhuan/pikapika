@@ -11,6 +11,7 @@ import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/GuiAnimation.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
@@ -76,6 +77,7 @@ class _InitScreenState extends State<InitScreen> {
     await initNoAnimation();
     await initVersion();
     autoCheckNewVersion();
+    await initGuiAnimation();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面

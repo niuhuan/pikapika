@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/config/GuiAnimation.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/components/Badge.dart';
 
@@ -36,19 +37,33 @@ class _AppScreenState extends State<AppScreen> {
   ];
 
   late int _selectedIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
 
   void _onItemTapped(int index) {
+    if (currentGuiAnimation()) {
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      );
+    } else {
+      _pageController.jumpToPage(index);
+    }
+  }
+
+  void _onPageChanged(int index) {
     setState(() {
-      _selectedIndex = index;
+      this._selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
+      body: PageView(
+        controller: _pageController,
         children: _widgetOptions,
+        onPageChanged: _onPageChanged,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[

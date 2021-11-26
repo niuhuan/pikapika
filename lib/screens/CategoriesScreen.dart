@@ -24,7 +24,12 @@ class CategoriesScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _CategoriesScreenState extends State<CategoriesScreen>
+    with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   late SearchBar _searchBar = SearchBar(
     hintText: '搜索',
     inBar: false,

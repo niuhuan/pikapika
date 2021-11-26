@@ -21,7 +21,10 @@ class SpaceScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _SpaceScreenState();
 }
 
-class _SpaceScreenState extends State<SpaceScreen> {
+class _SpaceScreenState extends State<SpaceScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
