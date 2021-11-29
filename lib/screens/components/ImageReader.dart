@@ -167,6 +167,74 @@ class ImageReader extends StatelessWidget {
           child: reader,
         );
         break;
+      case FullScreenAction.THREE_AREA:
+        reader = Stack(
+          children: [
+            reader,
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                var up = Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      _readerControllerEvent
+                          .broadcast(_ReaderControllerEventArgs("UP"));
+                    },
+                    child: Container(),
+                  ),
+                );
+                var down = Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      _readerControllerEvent
+                          .broadcast(_ReaderControllerEventArgs("DOWN"));
+                    },
+                    child: Container(
+                    ),
+                  ),
+                );
+                var fullScreen = Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () => struct.onFullScreenChange(!struct.fullScreen),
+                    child: Container(),
+                  ),
+                );
+                late Widget child;
+                switch (struct.pagerDirection) {
+                  case ReaderDirection.TOP_TO_BOTTOM:
+                    child = Column(children: [
+                      up,
+                      fullScreen,
+                      down,
+                    ]);
+                    break;
+                  case ReaderDirection.LEFT_TO_RIGHT:
+                    child = Row(children: [
+                      up,
+                      fullScreen,
+                      down,
+                    ]);
+                    break;
+                  case ReaderDirection.RIGHT_TO_LEFT:
+                    child = Row(children: [
+                      down,
+                      fullScreen,
+                      up,
+                    ]);
+                    break;
+                }
+                return Container(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: child,
+                );
+              },
+            ),
+          ],
+        );
+        break;
     }
     //
     return reader;

@@ -24,12 +24,7 @@ class CategoriesScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen>
-    with AutomaticKeepAliveClientMixin {
-
-  @override
-  bool get wantKeepAlive => true;
-
+class _CategoriesScreenState extends State<CategoriesScreen> {
   late SearchBar _searchBar = SearchBar(
     hintText: '搜索',
     inBar: false,
@@ -92,7 +87,6 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     var theme = Theme.of(context);
     var themeBackground = theme.scaffoldBackgroundColor;
     var shadeBackground = Color.fromARGB(

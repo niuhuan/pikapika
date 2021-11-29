@@ -24,7 +24,13 @@ var (
 	tmpDir      string
 )
 
+var initFlag bool
+
 func InitPlugin(_remoteDir string, _downloadDir string, _tmpDir string) {
+	if initFlag {
+		return
+	}
+	initFlag = true
 	remoteDir = _remoteDir
 	downloadDir = _downloadDir
 	tmpDir = _tmpDir

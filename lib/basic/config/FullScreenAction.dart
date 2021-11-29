@@ -8,11 +8,13 @@ import '../Method.dart';
 enum FullScreenAction {
   CONTROLLER,
   TOUCH_ONCE,
+  THREE_AREA,
 }
 
 Map<String, FullScreenAction> _fullScreenActionMap = {
   "使用控制器": FullScreenAction.CONTROLLER,
   "点击屏幕一次": FullScreenAction.TOUCH_ONCE,
+  "将屏幕划分成三个区域": FullScreenAction.THREE_AREA,
 };
 
 const _propertyName = "fullScreenAction";

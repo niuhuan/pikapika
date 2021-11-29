@@ -21,10 +21,7 @@ class SpaceScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _SpaceScreenState();
 }
 
-class _SpaceScreenState extends State<SpaceScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _SpaceScreenState extends State<SpaceScreen> {
 
   @override
   void initState() {
@@ -44,7 +41,6 @@ class _SpaceScreenState extends State<SpaceScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('我的'),
