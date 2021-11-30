@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
@@ -16,7 +17,7 @@ class DownloadReaderScreen extends StatefulWidget {
   final DownloadComic comicInfo;
   final List<DownloadEp> epList;
   final int currentEpOrder;
-  final int? initPictureRank;
+  final int? initPicturePosition;
   final ReaderType pagerType = currentReaderType();
   final ReaderDirection pagerDirection = gReaderDirection;
   late final bool autoFullScreen;
@@ -26,7 +27,7 @@ class DownloadReaderScreen extends StatefulWidget {
     required this.comicInfo,
     required this.epList,
     required this.currentEpOrder,
-    this.initPictureRank,
+    this.initPicturePosition,
     bool? autoFullScreen,
   }) : super(key: key) {
     this.autoFullScreen = autoFullScreen ?? currentAutoFullScreen();
@@ -45,8 +46,8 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   bool _replacement = false;
 
   Future _load() async {
-    if (widget.initPictureRank == null) {
-      await method.storeViewEp(widget.comicInfo.id, _ep.epOrder, _ep.title, 1);
+    if (widget.initPicturePosition == null) {
+      await method.storeViewEp(widget.comicInfo.id, _ep.epOrder, _ep.title, 0);
     }
     pictures.clear();
     for (var ep in widget.epList) {
@@ -63,10 +64,12 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   }
 
   Future _onPositionChange(int position) async {
-    _lastChangeRank = position + 1;
+    _lastChangeRank = position;
     return method.storeViewEp(
-        widget.comicInfo.id, _ep.epOrder, _ep.title, position + 1);
+        widget.comicInfo.id, _ep.epOrder, _ep.title, position);
   }
+
+  FutureOr<dynamic> Function() _previousAction = () => null;
 
   String _nextText = "";
   FutureOr<dynamic> Function() _nextAction = () => null;
@@ -78,6 +81,23 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     widget.epList.forEach((element) {
       orderMap[element.epOrder] = element;
     });
+    if (orderMap.containsKey(widget.currentEpOrder - 1)) {
+      _previousAction = () {
+        _replacement = true;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => DownloadReaderScreen(
+              comicInfo: widget.comicInfo,
+              epList: widget.epList,
+              currentEpOrder: widget.currentEpOrder - 1,
+              autoFullScreen: _fullScreen,
+            ),
+          ),
+        );
+      };
+    } else {
+      _previousAction = () => defaultToast(context, "已经到头了");
+    }
     if (orderMap.containsKey(widget.currentEpOrder + 1)) {
       _nextText = "下一章";
       _nextAction = () {
@@ -168,11 +188,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
               fullScreen: _fullScreen,
               onFullScreenChange: _onFullScreenChange,
               onNextText: _nextText,
+              onPreviousAction: _previousAction,
               onNextAction: _nextAction,
               onPositionChange: _onPositionChange,
-              initPosition: widget.initPictureRank == null
-                  ? null
-                  : widget.initPictureRank! - 1,
+              initPosition: widget.initPicturePosition,
               pagerType: widget.pagerType,
               pagerDirection: widget.pagerDirection,
             ),
@@ -199,7 +218,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
           comicInfo: widget.comicInfo,
           epList: widget.epList,
           currentEpOrder: widget.currentEpOrder,
-          initPictureRank: _lastChangeRank ?? widget.initPictureRank,
+          initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
           // maybe null
           autoFullScreen: _fullScreen,
         ),

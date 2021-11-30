@@ -37,7 +37,7 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
                     snapshot.data?.lastViewPictureRank,
                   );
               text =
-                  '继续阅读 ${snapshot.data?.lastViewEpTitle} P. ${snapshot.data?.lastViewPictureRank}';
+                  '继续阅读 ${snapshot.data?.lastViewEpTitle} P. ${(snapshot.data?.lastViewPictureRank ?? 0) + 1}';
             } else {
               onPressed = () => widget.onChoose(null, null);
               text = '开始阅读';

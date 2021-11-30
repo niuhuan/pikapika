@@ -176,7 +176,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
           comicInfo: _task,
           epList: _epList,
           currentEpOrder: epOrder,
-          initPictureRank: rank,
+          initPicturePosition: rank,
         ),
       ),
     );

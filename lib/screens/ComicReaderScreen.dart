@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
@@ -9,6 +10,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
+import 'package:pikapika/basic/const.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'components/ImageReader.dart';
 
@@ -17,7 +19,7 @@ class ComicReaderScreen extends StatefulWidget {
   final ComicInfo comicInfo;
   final List<Ep> epList;
   final currentEpOrder;
-  final int? initPictureRank;
+  final int? initPicturePosition;
   final ReaderType pagerType = currentReaderType();
   final ReaderDirection pagerDirection = gReaderDirection;
   late final bool autoFullScreen;
@@ -27,7 +29,7 @@ class ComicReaderScreen extends StatefulWidget {
     required this.comicInfo,
     required this.epList,
     required this.currentEpOrder,
-    this.initPictureRank,
+    this.initPicturePosition,
     bool? autoFullScreen,
   }) : super(key: key) {
     this.autoFullScreen = autoFullScreen ?? currentAutoFullScreen();
@@ -45,8 +47,8 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   bool _replacement = false;
 
   Future<List<RemoteImageInfo>> _load() async {
-    if (widget.initPictureRank == null) {
-      await method.storeViewEp(widget.comicInfo.id, _ep.order, _ep.title, 1);
+    if (widget.initPicturePosition == null) {
+      await method.storeViewEp(widget.comicInfo.id, _ep.order, _ep.title, 0);
     }
     List<RemoteImageInfo> list = [];
     var _needLoadPage = 0;
@@ -70,10 +72,12 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   }
 
   Future _onPositionChange(int position) async {
-    _lastChangeRank = position + 1;
+    _lastChangeRank = position;
     return method.storeViewEp(
-        widget.comicInfo.id, _ep.order, _ep.title, position + 1);
+        widget.comicInfo.id, _ep.order, _ep.title, position);
   }
+
+  FutureOr<dynamic> Function() _previousAction = () => null;
 
   String _nextText = "";
   FutureOr<dynamic> Function() _nextAction = () => null;
@@ -85,6 +89,23 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     widget.epList.forEach((element) {
       orderMap[element.order] = element;
     });
+    if (orderMap.containsKey(widget.currentEpOrder - 1)) {
+      _previousAction = () {
+        _replacement = true;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => ComicReaderScreen(
+              comicInfo: widget.comicInfo,
+              epList: widget.epList,
+              currentEpOrder: widget.currentEpOrder - 1,
+              autoFullScreen: _fullScreen,
+            ),
+          ),
+        );
+      };
+    } else {
+      _previousAction = () => defaultToast(context, "已经到头了");
+    }
     if (orderMap.containsKey(widget.currentEpOrder + 1)) {
       _nextText = "下一章";
       _nextAction = () {
@@ -135,6 +156,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
       appBar: _fullScreen
           ? null
           : AppBar(
+              backgroundColor: readerAppbarColor,
               title: Text("${_ep.title} - ${widget.comicInfo.title}"),
               actions: [
                 IconButton(
@@ -164,8 +186,8 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
             _future = _load();
           });
         },
-        successBuilder:
-            (BuildContext context, AsyncSnapshot<List<RemoteImageInfo>> snapshot) {
+        successBuilder: (BuildContext context,
+            AsyncSnapshot<List<RemoteImageInfo>> snapshot) {
           return ImageReader(
             ImageReaderStruct(
               images: snapshot.data!
@@ -182,11 +204,10 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
               fullScreen: _fullScreen,
               onFullScreenChange: _onFullScreenChange,
               onNextText: _nextText,
+              onPreviousAction: _previousAction,
               onNextAction: _nextAction,
               onPositionChange: _onPositionChange,
-              initPosition: widget.initPictureRank == null
-                  ? null
-                  : widget.initPictureRank! - 1,
+              initPosition: widget.initPicturePosition,
               pagerType: widget.pagerType,
               pagerDirection: widget.pagerDirection,
             ),
@@ -212,7 +233,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
         comicInfo: widget.comicInfo,
         epList: widget.epList,
         currentEpOrder: widget.currentEpOrder,
-        initPictureRank: _lastChangeRank ?? widget.initPictureRank,
+        initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
         // maybe null
         autoFullScreen: _fullScreen,
       ),

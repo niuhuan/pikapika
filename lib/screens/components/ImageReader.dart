@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:another_xlider/another_xlider.dart';
 import 'package:event/event.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -11,11 +12,11 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
-import 'package:pikapika/basic/config/GalleryPreloadCount.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
+import 'package:pikapika/basic/const.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
@@ -69,7 +70,7 @@ var _volumeListenCount = 0;
 EventChannel volumeButtonChannel = EventChannel("volume_button");
 StreamSubscription? volumeS;
 
-addVolumeListen() {
+void addVolumeListen() {
   _volumeListenCount++;
   if (_volumeListenCount == 1) {
     volumeS =
@@ -77,7 +78,7 @@ addVolumeListen() {
   }
 }
 
-delVolumeListen() {
+void delVolumeListen() {
   _volumeListenCount--;
   if (_volumeListenCount == 0) {
     volumeS?.cancel();
@@ -106,6 +107,7 @@ class ImageReaderStruct {
   final bool fullScreen;
   final FutureOr<dynamic> Function(bool fullScreen) onFullScreenChange;
   final String onNextText;
+  final FutureOr<dynamic> Function() onPreviousAction;
   final FutureOr<dynamic> Function() onNextAction;
   final FutureOr<dynamic> Function(int) onPositionChange;
   final int? initPosition;
@@ -117,6 +119,7 @@ class ImageReaderStruct {
     required this.fullScreen,
     required this.onFullScreenChange,
     required this.onNextText,
+    required this.onPreviousAction,
     required this.onNextAction,
     required this.onPositionChange,
     this.initPosition,
@@ -127,123 +130,216 @@ class ImageReaderStruct {
 
 //
 
-class ImageReader extends StatelessWidget {
+class ImageReader extends StatefulWidget {
   final ImageReaderStruct struct;
 
   const ImageReader(this.struct);
 
   @override
-  Widget build(BuildContext context) {
-    late Widget reader;
+  State<StatefulWidget> createState() {
     switch (struct.pagerType) {
       case ReaderType.WEB_TOON:
-        reader = _WebToonReader(struct);
-        break;
+        return _WebToonReaderState();
       case ReaderType.WEB_TOON_ZOOM:
-        reader = _WebToonZoomReader(struct);
-        break;
+        return _WebToonZoomReaderState();
       case ReaderType.GALLERY:
-        reader = _GalleryReader(struct);
-        break;
+        return _GalleryReaderState();
       default:
-        reader = Container();
-        break;
+        throw Exception("ERROR READER TYPE");
     }
-    switch (currentFullScreenAction()) {
-      case FullScreenAction.CONTROLLER:
-        reader = Stack(
-          children: [
-            reader,
-            _buildFullScreenController(
-              struct.fullScreen,
-              struct.onFullScreenChange,
-            ),
-          ],
-        );
-        break;
-      case FullScreenAction.TOUCH_ONCE:
-        reader = GestureDetector(
-          onTap: () => struct.onFullScreenChange(!struct.fullScreen),
-          child: reader,
-        );
-        break;
-      case FullScreenAction.THREE_AREA:
-        reader = Stack(
-          children: [
-            reader,
-            LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                var up = Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      _readerControllerEvent
-                          .broadcast(_ReaderControllerEventArgs("UP"));
-                    },
-                    child: Container(),
-                  ),
-                );
-                var down = Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      _readerControllerEvent
-                          .broadcast(_ReaderControllerEventArgs("DOWN"));
-                    },
-                    child: Container(
-                    ),
-                  ),
-                );
-                var fullScreen = Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () => struct.onFullScreenChange(!struct.fullScreen),
-                    child: Container(),
-                  ),
-                );
-                late Widget child;
-                switch (struct.pagerDirection) {
-                  case ReaderDirection.TOP_TO_BOTTOM:
-                    child = Column(children: [
-                      up,
-                      fullScreen,
-                      down,
-                    ]);
-                    break;
-                  case ReaderDirection.LEFT_TO_RIGHT:
-                    child = Row(children: [
-                      up,
-                      fullScreen,
-                      down,
-                    ]);
-                    break;
-                  case ReaderDirection.RIGHT_TO_LEFT:
-                    child = Row(children: [
-                      down,
-                      fullScreen,
-                      up,
-                    ]);
-                    break;
-                }
-                return Container(
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                  child: child,
-                );
-              },
-            ),
-          ],
-        );
-        break;
-    }
-    //
-    return reader;
+  }
+}
+
+abstract class _ImageReaderState extends State<ImageReader> {
+  // 阅读器
+  Widget _buildViewer();
+
+  // 键盘, 音量键 等事件
+  void _needJumpTo(int index, bool animation);
+
+  @override
+  void initState() {
+    _initCurrent();
+    _readerControllerEvent.subscribe(_onPageControl);
+    super.initState();
   }
 
-  Widget _buildFullScreenController(
-    bool fullScreen,
-    FutureOr<dynamic> Function(bool fullScreen) onFullScreenChange,
-  ) {
+  @override
+  void dispose() {
+    _readerControllerEvent.unsubscribe(_onPageControl);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _buildViewer(),
+        _buildControllerAndBar(),
+      ],
+    );
+  }
+
+  void _onPageControl(_ReaderControllerEventArgs? args) {
+    if (args != null) {
+      var event = args.key;
+      switch ("$event") {
+        case "UP":
+          if (_current > 0) {
+            _needJumpTo(_current - 1, true);
+          }
+          break;
+        case "DOWN":
+          if (_current < widget.struct.images.length - 1) {
+            _needJumpTo(_current + 1, true);
+          }
+          break;
+      }
+    }
+  }
+
+  late int _startIndex;
+  late int _current;
+  late int _slider;
+
+  void _initCurrent() {
+    if (widget.struct.initPosition != null &&
+        widget.struct.images.length > widget.struct.initPosition!) {
+      _startIndex = widget.struct.initPosition!;
+    } else {
+      _startIndex = 0;
+    }
+    _current = _startIndex;
+    _slider = _startIndex;
+  }
+
+  void _onCurrentChange(int index) {
+    if (index != _current) {
+      setState(() {
+        _current = index;
+        _slider = index;
+        widget.struct.onPositionChange(index);
+      });
+    }
+  }
+
+  Widget _buildControllerAndBar() {
+    if (widget.struct.fullScreen) {
+      return _buildController();
+    }
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: _buildController(hiddenFullScreen: true),
+          ),
+          Container(
+            color: readerAppbarColor2,
+            child: Row(
+              children: [
+                Container(width: 15),
+                IconButton(
+                  icon: Icon(Icons.fullscreen),
+                  color: Colors.white,
+                  onPressed: () {
+                    widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+                  },
+                ),
+                Container(width: 10),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(height: 3),
+                      Container(
+                        height: 25,
+                        child: FlutterSlider(
+                          axis: Axis.horizontal,
+                          values: [_slider.toDouble()],
+                          min: 0,
+                          max: widget.struct.images.length.toDouble(),
+                          onDragging: (handlerIndex, lowerValue, upperValue) {
+                            _slider = (lowerValue.toInt());
+                          },
+                          onDragCompleted:
+                              (handlerIndex, lowerValue, upperValue) {
+                            _slider = (lowerValue.toInt());
+                            if (_slider != _current) {
+                              _needJumpTo(_slider, false);
+                            }
+                          },
+                          trackBar: FlutterSliderTrackBar(
+                            inactiveTrackBar: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.shade300,
+                            ),
+                            activeTrackBar: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                          step: FlutterSliderStep(
+                            step: 1,
+                            isPercentRange: false,
+                          ),
+                          tooltip: FlutterSliderTooltip(custom: (value) {
+                            double a = value + 1;
+                            return Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: ShapeDecoration(
+                                color: Colors.black.withAlpha(0xCC),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadiusDirectional.circular(3)),
+                              ),
+                              child: Text(
+                                '${a.toInt()}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                      Container(height: 3),
+                    ],
+                  ),
+                ),
+                Container(width: 10),
+                IconButton(
+                  icon: Icon(Icons.skip_next_outlined),
+                  color: Colors.white,
+                  onPressed: () {
+                    widget.struct.onNextAction();
+                  },
+                ),
+                Container(width: 15),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildController({bool hiddenFullScreen = false}) {
+    switch (currentFullScreenAction()) {
+      case FullScreenAction.CONTROLLER:
+        if (hiddenFullScreen) {
+          return Container();
+        }
+        return _buildFullScreenController();
+      case FullScreenAction.TOUCH_ONCE:
+        return _buildTouchOnceController();
+      case FullScreenAction.THREE_AREA:
+        return _buildThreeAreaController();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _buildFullScreenController() {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Material(
@@ -260,10 +356,12 @@ class ImageReader extends StatelessWidget {
           ),
           child: GestureDetector(
             onTap: () {
-              onFullScreenChange(!fullScreen);
+              widget.struct.onFullScreenChange(!widget.struct.fullScreen);
             },
             child: Icon(
-              fullScreen ? Icons.fullscreen_exit : Icons.fullscreen_outlined,
+              widget.struct.fullScreen
+                  ? Icons.fullscreen_exit
+                  : Icons.fullscreen_outlined,
               size: 30,
               color: Colors.white,
             ),
@@ -272,40 +370,89 @@ class ImageReader extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTouchOnceController() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+      },
+      child: Container(),
+    );
+  }
+
+  Widget _buildThreeAreaController() {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        var up = Expanded(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              _readerControllerEvent
+                  .broadcast(_ReaderControllerEventArgs("UP"));
+            },
+            child: Container(),
+          ),
+        );
+        var down = Expanded(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              _readerControllerEvent
+                  .broadcast(_ReaderControllerEventArgs("DOWN"));
+            },
+            child: Container(),
+          ),
+        );
+        var fullScreen = Expanded(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () =>
+                widget.struct.onFullScreenChange(!widget.struct.fullScreen),
+            child: Container(),
+          ),
+        );
+        late Widget child;
+        switch (widget.struct.pagerDirection) {
+          case ReaderDirection.TOP_TO_BOTTOM:
+            child = Column(children: [
+              up,
+              fullScreen,
+              down,
+            ]);
+            break;
+          case ReaderDirection.LEFT_TO_RIGHT:
+            child = Row(children: [
+              up,
+              fullScreen,
+              down,
+            ]);
+            break;
+          case ReaderDirection.RIGHT_TO_LEFT:
+            child = Row(children: [
+              down,
+              fullScreen,
+              up,
+            ]);
+            break;
+        }
+        return Container(
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          child: child,
+        );
+      },
+    );
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class _WebToonReader extends StatefulWidget {
-  final ImageReaderStruct struct;
-
-  const _WebToonReader(this.struct);
-
-  @override
-  State<StatefulWidget> createState() => _WebToonReaderState();
-}
-
-class _WebToonReaderState extends State<_WebToonReader> {
+class _WebToonReaderState extends _ImageReaderState {
+  var _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
   late final List<Size?> _trueSizes = [];
   late final ItemScrollController _itemScrollController;
   late final ItemPositionsListener _itemPositionsListener;
-  late final int _initialPosition;
-
-  var _current = 1;
-  var _slider = 1;
-
-  void _onCurrentChange() {
-    var to = _itemPositionsListener.itemPositions.value.first.index + 1;
-    if (_current != to) {
-      setState(() {
-        _current = to;
-        _slider = to;
-        if (to - 1 < widget.struct.images.length) {
-          widget.struct.onPositionChange(to - 1);
-        }
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -318,81 +465,49 @@ class _WebToonReaderState extends State<_WebToonReader> {
     });
     _itemScrollController = ItemScrollController();
     _itemPositionsListener = ItemPositionsListener.create();
-    _itemPositionsListener.itemPositions.addListener(_onCurrentChange);
-    if (widget.struct.initPosition != null &&
-        widget.struct.images.length > widget.struct.initPosition!) {
-      _initialPosition = widget.struct.initPosition!;
-    } else {
-      _initialPosition = 0;
-    }
-    _readerControllerEvent.subscribe(_onPageControllerEvent);
+    _itemPositionsListener.itemPositions.addListener(_onListCurrentChange);
     super.initState();
   }
 
   @override
   void dispose() {
-    _itemPositionsListener.itemPositions.removeListener(_onCurrentChange);
-    _readerControllerEvent.unsubscribe(_onPageControllerEvent);
+    _itemPositionsListener.itemPositions.removeListener(_onListCurrentChange);
     super.dispose();
   }
 
-  void _onPageControllerEvent(_ReaderControllerEventArgs? args) {
-    if (args != null) {
-      var event = args.key;
-      print("EVENT : $event");
-      switch ("$event") {
-        case "UP":
-          if (_current > 1) {
-            if (noAnimation()) {
-              _itemScrollController.jumpTo(
-                index: _current - 2, // 减1 当前position 再减少1 前一个
-              );
-            } else {
-              if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
-                return;
-              }
-              _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
-              _itemScrollController.scrollTo(
-                index: _current - 2, // 减1 当前position 再减少1 前一个
-                duration: Duration(milliseconds: 400),
-              );
-            }
-          }
-          break;
-        case "DOWN":
-          if (_current < widget.struct.images.length) {
-            if (noAnimation()) {
-              _itemScrollController.jumpTo(index: _current);
-            } else {
-              if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
-                return;
-              }
-              _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
-              _itemScrollController.scrollTo(
-                index: _current,
-                duration: Duration(milliseconds: 400),
-              );
-            }
-          }
-          break;
-      }
+  void _onListCurrentChange() {
+    var to = _itemPositionsListener.itemPositions.value.first.index;
+    // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
+    if (to >= 0 && to < widget.struct.images.length) {
+      super._onCurrentChange(to);
     }
   }
 
-  var _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+  @override
+  void _needJumpTo(int index, bool animation) {
+    if (noAnimation() || animation == false) {
+      _itemScrollController.jumpTo(
+        index: index,
+      );
+    } else {
+      if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
+        return;
+      }
+      _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+      _itemScrollController.scrollTo(
+        index: index, // 减1 当前position 再减少1 前一个
+        duration: Duration(milliseconds: 400),
+      );
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget _buildViewer() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.black,
       ),
-      child: Stack(
-        children: [
-          _buildList(),
-          ..._buildControllers(),
-        ],
-      ),
+      child: _buildList(),
     );
   }
 
@@ -459,20 +574,22 @@ class _WebToonReaderState extends State<_WebToonReader> {
           }
         }
         return ScrollablePositionedList.builder(
-          initialScrollIndex: _initialPosition,
+          initialScrollIndex: super._startIndex,
           scrollDirection:
               widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                   ? Axis.vertical
                   : Axis.horizontal,
           reverse:
               widget.struct.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-          padding: widget.struct.fullScreen &&
-                  widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-              ? EdgeInsets.only(
-                  top: scaffold.appBarMaxHeight ?? 0,
-                  bottom: scaffold.appBarMaxHeight ?? 0,
-                )
-              : null,
+          padding: EdgeInsets.only(
+            top: widget.struct.fullScreen ? (scaffold.appBarMaxHeight ?? 0) : 0,
+            bottom:
+                widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                    ? 130
+                    : (widget.struct.fullScreen
+                        ? (scaffold.appBarMaxHeight ?? 0)
+                        : 0),
+          ),
           itemScrollController: _itemScrollController,
           itemPositionsListener: _itemPositionsListener,
           itemCount: widget.struct.images.length + 1,
@@ -485,27 +602,6 @@ class _WebToonReaderState extends State<_WebToonReader> {
         );
       },
     );
-  }
-
-  List<Widget> _buildControllers() {
-    if (widget.struct.fullScreen) {
-      return [];
-    }
-    return [
-      _buildImageCount(context, "$_current / ${widget.struct.images.length}"),
-      _buildScrollController(
-        context,
-        _current,
-        _slider,
-        widget.struct.images.length,
-        (value) => _slider = value,
-        () {
-          if (_slider != _current && _slider > 0) {
-            _itemScrollController.jumpTo(index: _slider - 1);
-          }
-        },
-      ),
-    ];
   }
 
   Widget _buildNextEp() {
@@ -649,15 +745,6 @@ class _WebToonReaderImageState extends State<_WebToonReaderImage> {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class _WebToonZoomReader extends _WebToonReader {
-  const _WebToonZoomReader(
-    ImageReaderStruct struct,
-  ) : super(struct);
-
-  @override
-  State<StatefulWidget> createState() => _WebToonZoomReaderState();
-}
-
 class _WebToonZoomReaderState extends _WebToonReaderState {
   @override
   Widget _buildList() {
@@ -667,81 +754,41 @@ class _WebToonZoomReaderState extends _WebToonReaderState {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class _GalleryReader extends StatefulWidget {
-  final ImageReaderStruct struct;
-
-  _GalleryReader(this.struct);
-
-  @override
-  State<StatefulWidget> createState() => _GalleryReaderState();
-}
-
-class _GalleryReaderState extends State<_GalleryReader> {
-  late int _current = (widget.struct.initPosition ?? 0) + 1;
-  late int _slider = (widget.struct.initPosition ?? 0) + 1;
-  late PageController _pageController =
-      PageController(initialPage: widget.struct.initPosition ?? 0);
+class _GalleryReaderState extends _ImageReaderState {
+  late PageController _pageController;
 
   @override
   void initState() {
-    _readerControllerEvent.subscribe(_onPageControllerEvent);
+    _pageController = PageController(initialPage: super._startIndex);
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-    _readerControllerEvent.unsubscribe(_onPageControllerEvent);
     super.dispose();
   }
 
-  void _onPageControllerEvent(_ReaderControllerEventArgs? args) {
-    if (args != null) {
-      var event = args.key;
-      print("EVENT : $event");
-      switch ("$event") {
-        case "UP":
-          if (_current > 1) {
-            if (noAnimation()) {
-              _pageController.previousPage(
-                duration: Duration(milliseconds: 1),
-                curve: Curves.ease,
-              );
-            } else {
-              _pageController.previousPage(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.ease,
-              );
-            }
-          }
-          break;
-        case "DOWN":
-          if (_current < widget.struct.images.length) {
-            if (noAnimation()) {
-              _pageController.nextPage(
-                duration: Duration(milliseconds: 1),
-                curve: Curves.ease,
-              );
-            } else {
-              _pageController.nextPage(
-                duration: Duration(milliseconds: 400),
-                curve: Curves.ease,
-              );
-            }
-          }
-          break;
-      }
+  @override
+  void _needJumpTo(int index, bool animation) {
+    if (noAnimation() || animation == false) {
+      _pageController.jumpToPage(
+        index,
+      );
+    } else {
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 400),
+        curve: Curves.ease,
+      );
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _buildViewer(),
-        ..._buildControllers(),
-      ],
-    );
+  void _onGalleryPageChange(int to) {
+    // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
+    if (to >= 0 && to < widget.struct.images.length) {
+      super._onCurrentChange(to);
+    }
   }
 
   Widget _buildViewer() {
@@ -758,34 +805,7 @@ class _GalleryReaderState extends State<_GalleryReader> {
         },
       ),
       pageController: _pageController,
-      onPageChanged: (value) {
-        setState(() {
-          _current = value + 1;
-          _slider = value + 1;
-          widget.struct.onPositionChange(value);
-          if (galleryPrePreloadCount > 0) {
-            for (var count = 1;
-                count <= galleryPrePreloadCount && value - count >= 0;
-                count++) {
-              var target = widget.struct.images[value - count];
-              if (target.downloadLocalPath == null) {
-                method.remoteImagePreload(target.fileServer, target.path);
-              }
-            }
-          }
-          if (galleryPreloadCount > 0) {
-            for (var count = 1;
-                count <= galleryPreloadCount &&
-                    value + count < widget.struct.images.length;
-                count++) {
-              var target = widget.struct.images[value + count];
-              if (target.downloadLocalPath == null) {
-                method.remoteImagePreload(target.fileServer, target.path);
-              }
-            }
-          }
-        });
-      },
+      onPageChanged: _onGalleryPageChange,
       itemCount: widget.struct.images.length,
       builder: (BuildContext context, int index) {
         var item = widget.struct.images[index];
@@ -821,10 +841,9 @@ class _GalleryReaderState extends State<_GalleryReader> {
     return GestureDetector(
       child: gallery,
       onLongPress: () async {
-        var index = _current - 1;
-        if (index >= 0 && _current < widget.struct.images.length) {
+        if (_current >= 0 && _current < widget.struct.images.length) {
           Future<String> Function() load = () async {
-            var item = widget.struct.images[index];
+            var item = widget.struct.images[_current];
             if (item.downloadLocalPath != null) {
               return method.downloadImagePath(item.downloadLocalPath!);
             }
@@ -858,155 +877,9 @@ class _GalleryReaderState extends State<_GalleryReader> {
     );
   }
 
-  List<Widget> _buildControllers() {
-    var controllers = <Widget>[];
-    if (!widget.struct.fullScreen) {
-      controllers.addAll([
-        _buildImageCount(context, "$_current / ${widget.struct.images.length}"),
-        _buildScrollController(
-          context,
-          _current,
-          _slider,
-          widget.struct.images.length,
-          (value) => _slider = value,
-          () {
-            if (_slider != _current && _slider > 0) {
-              _pageController.jumpToPage(_slider - 1);
-            }
-          },
-        ),
-      ]);
-    }
-    if (_current == widget.struct.images.length) {
-      controllers.add(_buildNextEpController(
-        widget.struct.onNextAction,
-        widget.struct.onNextText,
-      ));
-    }
-    return controllers;
+  Widget _buildNextEpButton() {
+    return Container();
   }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-
-Widget _buildImageCount(BuildContext context, String info) {
-  return Align(
-    alignment: Alignment.topRight,
-    child: Material(
-      color: Color(0x0),
-      child: Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-          color: Color(0x88000000),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            // TODO 输入跳转页数
-          },
-          child: Text("$info", style: TextStyle(color: Colors.white)),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _buildScrollController(
-  BuildContext context,
-  int current,
-  int slider,
-  int total,
-  Function(int) onSliderChange,
-  Function() onSliderDown,
-) {
-  if (total == 0) {
-    return Container();
-  }
-  var theme = Theme.of(context);
-  return Align(
-    alignment: Alignment.centerRight,
-    child: Material(
-      color: Color(0x0),
-      child: Container(
-        width: 35,
-        height: 300,
-        decoration: BoxDecoration(
-          color: Color(0x66000000),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-        ),
-        padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
-        child: Center(
-          child: FlutterSlider(
-            axis: Axis.vertical,
-            values: [(slider > total ? total : slider).toDouble()],
-            max: total.toDouble(),
-            min: 1,
-            onDragging: (handlerIndex, lowerValue, upperValue) {
-              onSliderChange(lowerValue.toInt());
-            },
-            onDragCompleted: (handlerIndex, lowerValue, upperValue) {
-              onSliderChange(lowerValue.toInt());
-              onSliderDown();
-            },
-            trackBar: FlutterSliderTrackBar(
-              inactiveTrackBar: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.grey.shade300,
-              ),
-              activeTrackBar: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: theme.colorScheme.secondary,
-              ),
-            ),
-            step: FlutterSliderStep(
-              step: 1,
-              isPercentRange: false,
-            ),
-            tooltip: FlutterSliderTooltip(custom: (value) {
-              double a = value;
-              return Container(
-                padding: EdgeInsets.all(5),
-                color: Colors.white,
-                child:
-                    Text('${a.toInt()}', style: TextStyle(color: Colors.black)),
-              );
-            }),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget _buildNextEpController(Function() next, String text) {
-  return Align(
-    alignment: Alignment.bottomRight,
-    child: Material(
-      color: Color(0x0),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-          color: Color(0x88000000),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            next();
-          },
-          child: Text(text, style: TextStyle(color: Colors.white)),
-        ),
-      ),
-    ),
-  );
-}

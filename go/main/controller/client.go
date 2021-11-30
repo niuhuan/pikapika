@@ -44,7 +44,7 @@ var switchAddresses = map[int]string{
 }
 
 var switchAddress = 1
-var switchAddressPattern, _ = regexp.Compile("^.+pica" + "comic\\.com:\\d+$")
+var switchAddressPattern, _ = regexp.Compile("^.+picacomic\\.com:\\d+$")
 
 func switchAddressContext(ctx context.Context, network, addr string) (net.Conn, error) {
 	if sAddr, ok := switchAddresses[switchAddress]; ok {

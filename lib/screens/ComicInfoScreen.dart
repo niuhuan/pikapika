@@ -332,7 +332,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
           comicInfo: comicInfo,
           epList: epList,
           currentEpOrder: order,
-          initPictureRank: rank,
+          initPicturePosition: rank,
         ),
       ),
     );
