@@ -7,6 +7,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pikapika/basic/config/ConvertToPNG.dart';
+import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 
@@ -220,7 +221,8 @@ class _RemoteImageState extends State<RemoteImage> {
 
   @override
   void initState() {
-    _mock = widget.fileServer == "";
+    _mock = widget.fileServer == "" ||
+        (widget.fileServer.contains(".xyz/") && currentImageAddress() < 0);
     if (!_mock) {
       _future = method
           .remoteImageData(widget.fileServer, widget.path)

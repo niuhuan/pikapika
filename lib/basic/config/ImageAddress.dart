@@ -17,6 +17,10 @@ Future<void> initImageAddress() async {
   _currentImageAddress = await method.getImageSwitchAddress();
 }
 
+int currentImageAddress() {
+  return int.parse(_currentImageAddress);
+}
+
 String _currentImageAddressName() {
   return _imageAddresses[_currentImageAddress] ?? "";
 }
@@ -50,7 +54,7 @@ Widget imageSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("图片"),
+        title: Text("图片分流"),
         subtitle: Text(_currentImageAddressName()),
         onTap: () async {
           await _chooseImageAddress(context);
