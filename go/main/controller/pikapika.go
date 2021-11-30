@@ -100,16 +100,37 @@ func loadDownloadThreadCount() int {
 }
 
 func setSwitchAddress(nSwitchAddress string) error {
-	err := properties.SaveSwitchAddress(nSwitchAddress)
+	num, err := strconv.Atoi(nSwitchAddress)
 	if err != nil {
 		return err
 	}
-	switchAddress = nSwitchAddress
+	err = properties.SaveIntProperty("switchAddress", num)
+	if err != nil {
+		return err
+	}
+	switchAddress = num
 	return nil
 }
 
 func getSwitchAddress() (string, error) {
-	return switchAddress, nil
+	return strconv.Itoa(switchAddress), nil
+}
+
+func setImageSwitchAddress(nSwitchAddress string) error {
+	num, err := strconv.Atoi(nSwitchAddress)
+	if err != nil {
+		return err
+	}
+	err = properties.SaveIntProperty("imageSwitchAddress", num)
+	if err != nil {
+		return err
+	}
+	switchAddress = num
+	return nil
+}
+
+func getImageSwitchAddress() (string, error) {
+	return strconv.Itoa(imageSwitchAddress), nil
 }
 
 func setProxy(value string) error {
@@ -534,6 +555,10 @@ func FlatInvoke(method string, params string) (string, error) {
 		return "", setSwitchAddress(params)
 	case "getSwitchAddress":
 		return getSwitchAddress()
+	case "setImageSwitchAddress":
+		return "", setImageSwitchAddress(params)
+	case "getImageSwitchAddress":
+		return getImageSwitchAddress()
 	case "setProxy":
 		return "", setProxy(params)
 	case "getProxy":

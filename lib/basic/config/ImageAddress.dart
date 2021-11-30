@@ -1,38 +1,34 @@
-/// 分流地址
-
-// addr = "172.67.7.24:443"
-// addr = "104.20.180.50:443"
-// addr = "172.67.208.169:443"
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Method.dart';
 
-var _addresses = {
+var _imageAddresses = {
+  "-1": "跟随api分流",
   "0": "不分流",
   "1": "分流1 (推荐)",
   "2": "分流2",
   "3": "分流3",
 };
 
-late String _currentAddress;
+late String _currentImageAddress;
 
-Future<void> initAddress() async {
-  _currentAddress = await method.getSwitchAddress();
+Future<void> initImageAddress() async {
+  _currentImageAddress = await method.getImageSwitchAddress();
 }
 
-String _currentAddressName() {
-  return _addresses[_currentAddress] ?? "";
+String _currentImageAddressName() {
+  return _imageAddresses[_currentImageAddress] ?? "";
 }
 
-Future<void> _chooseAddress(BuildContext context) async {
+Future<void> _chooseImageAddress(BuildContext context) async {
   String? choose = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text('选择分流'),
+        title: Text('选择图片分流'),
         children: <Widget>[
-          ..._addresses.entries.map(
+          ..._imageAddresses.entries.map(
             (e) => SimpleDialogOption(
               child: Text(e.value),
               onPressed: () {
@@ -45,19 +41,19 @@ Future<void> _chooseAddress(BuildContext context) async {
     },
   );
   if (choose != null) {
-    await method.setSwitchAddress(choose);
-    _currentAddress = choose;
+    await method.setImageSwitchAddress(choose);
+    _currentImageAddress = choose;
   }
 }
 
-Widget switchAddressSetting() {
+Widget imageSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("分流"),
-        subtitle: Text(_currentAddressName()),
+        title: Text("图片"),
+        subtitle: Text(_currentImageAddressName()),
         onTap: () async {
-          await _chooseAddress(context);
+          await _chooseImageAddress(context);
           setState(() {});
         },
       );

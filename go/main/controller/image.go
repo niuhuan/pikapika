@@ -2,6 +2,7 @@ package controller
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	_ "golang.org/x/image/webp"
 	"image"
@@ -9,19 +10,45 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"pikapika/main/database/comic_center"
 	"sync"
+	"time"
 )
 
 var mutexCounter = -1
 var busMutex *sync.Mutex
 var subMutexes []*sync.Mutex
+var imageHttpClient *http.Client
+
+// imageSwitchAddress
+// 图片的分流直接使用 switchAddressPattern 可以正常使用
+// 通过ping发现图片的分流地址与ip一致
+// 这里为了域名与官方一致改为域名分流
+var imageSwitchAddresses = map[int]string{
+	1: "https://storage.wika" + "wika.xyz",
+	2: "https://s2.pica" + "comic.com",
+	3: "https://s3.pica" + "comic.com",
+}
+
+var imageSwitchAddress int
 
 func init() {
 	busMutex = &sync.Mutex{}
 	for i := 0; i < 5; i++ {
 		subMutexes = append(subMutexes, &sync.Mutex{})
+	}
+	imageHttpClient = &http.Client{
+		Transport: &http.Transport{
+			TLSHandshakeTimeout:   time.Second * 10,
+			ExpectContinueTimeout: time.Second * 10,
+			ResponseHeaderTimeout: time.Second * 10,
+			IdleConnTimeout:       time.Second * 10,
+			DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+				return dialer.DialContext(ctx, network, addr)
+			},
+		},
 	}
 }
 
@@ -52,6 +79,13 @@ func decodeFromFile(path string) ([]byte, image.Image, string, error) {
 
 // 下载图片并decode
 func decodeFromUrl(fileServer string, path string) ([]byte, image.Image, string, error) {
+	useClient := imageHttpClient
+	if imageSwitchAddress == -1 {
+		useClient = &client.Client
+	}
+	if server, ok := imageSwitchAddresses[imageSwitchAddress]; ok {
+		fileServer = server
+	}
 	m := takeMutex()
 	m.Lock()
 	defer m.Unlock()
@@ -59,7 +93,7 @@ func decodeFromUrl(fileServer string, path string) ([]byte, image.Image, string,
 	if err != nil {
 		return nil, nil, "", err
 	}
-	response, err := client.Do(request)
+	response, err := useClient.Do(request)
 	if err != nil {
 		return nil, nil, "", err
 	}

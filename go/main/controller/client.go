@@ -24,7 +24,8 @@ import (
 
 func InitClient() {
 	client.Timeout = time.Second * 60
-	switchAddress, _ = properties.LoadSwitchAddress()
+	switchAddress, _ = properties.LoadIntProperty("switchAddress", 1)
+	imageSwitchAddress, _ = properties.LoadIntProperty("imageSwitchAddress", 1)
 	proxy, _ := properties.LoadProxy()
 	changeProxyUrl(proxy)
 }
@@ -36,15 +37,18 @@ var dialer = &net.Dialer{
 }
 
 // SwitchAddress
-// addr = "172.67.7.24:443"
-// addr = "104.20.180.50:443"
-// addr = "172.67.208.169:443"
-var switchAddress = ""
-var switchAddressPattern, _ = regexp.Compile("^.+picacomic\\.com:\\d+$")
+var switchAddresses = map[int]string{
+	1: "172.67.7.24:443",
+	2: "104.20.180.50:443",
+	3: "172.67.208.169:443",
+}
+
+var switchAddress = 1
+var switchAddressPattern, _ = regexp.Compile("^.+pica" + "comic\\.com:\\d+$")
 
 func switchAddressContext(ctx context.Context, network, addr string) (net.Conn, error) {
-	if switchAddressPattern.MatchString(addr) && switchAddress != "" {
-		addr = switchAddress
+	if sAddr, ok := switchAddresses[switchAddress]; ok {
+		addr = sAddr
 	}
 	return dialer.DialContext(ctx, network, addr)
 }

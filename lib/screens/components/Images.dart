@@ -220,7 +220,7 @@ class _RemoteImageState extends State<RemoteImage> {
 
   @override
   void initState() {
-    _mock = widget.fileServer == "" || widget.fileServer.contains(".xyz/");
+    _mock = widget.fileServer == "";
     if (!_mock) {
       _future = method
           .remoteImageData(widget.fileServer, widget.path)

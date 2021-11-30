@@ -6,17 +6,17 @@ import 'package:pikapika/basic/Navigatior.dart';
 import 'basic/config/Themes.dart';
 
 void main() {
-  runApp(PikapiApp());
+  runApp(PikapikaApp());
 }
 
-class PikapiApp extends StatefulWidget {
-  const PikapiApp({Key? key}) : super(key: key);
+class PikapikaApp extends StatefulWidget {
+  const PikapikaApp({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _PikapiAppState();
+  State<StatefulWidget> createState() => _PikapikaAppState();
 }
 
-class _PikapiAppState extends State<PikapiApp> {
+class _PikapikaAppState extends State<PikapikaApp> {
   @override
   void initState() {
     themeEvent.subscribe(_onChangeTheme);

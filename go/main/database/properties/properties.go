@@ -2,6 +2,7 @@ package properties
 
 import (
 	"errors"
+	"fmt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -65,16 +66,20 @@ func LoadBoolProperty(name string, defaultValue bool) (bool, error) {
 	return strconv.ParseBool(stringValue)
 }
 
+func LoadIntProperty(name string, defaultValue int) (int, error) {
+	str, err := LoadProperty(name, fmt.Sprintf("%d", defaultValue))
+	if err != nil {
+		return 0, err
+	}
+	return strconv.Atoi(str)
+}
+
+func SaveIntProperty(name string, value int) error {
+	return SaveProperty(name, strconv.Itoa(value))
+}
+
 func SaveBoolProperty(name string, value bool) error {
 	return SaveProperty(name, strconv.FormatBool(value))
-}
-
-func SaveSwitchAddress(value string) error {
-	return SaveProperty("switch_address", value)
-}
-
-func LoadSwitchAddress() (string, error) {
-	return LoadProperty("switch_address", "")
 }
 
 func SaveProxy(value string) error {

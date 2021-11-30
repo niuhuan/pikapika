@@ -11,6 +11,7 @@ import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
@@ -49,6 +50,7 @@ class _InitScreenState extends State<InitScreen> {
     await initPlatform(); // 必须第一个初始化, 加载设备信息
     await initAutoClean();
     await initAddress();
+    await initImageAddress();
     await initProxy();
     await initQuality();
     await initFont();

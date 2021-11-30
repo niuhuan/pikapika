@@ -50,6 +50,16 @@ class Method {
     return await _flatInvoke("setSwitchAddress", switchAddress);
   }
 
+  /// 获取当前的图片分流
+  Future<String> getImageSwitchAddress() async {
+    return await _flatInvoke("getImageSwitchAddress", "");
+  }
+
+  /// 更换图片分流
+  Future<dynamic> setImageSwitchAddress(String switchAddress) async {
+    return await _flatInvoke("setImageSwitchAddress", switchAddress);
+  }
+
   /// 获取代理
   Future<String> getProxy() async {
     return await _flatInvoke("getProxy", "");
