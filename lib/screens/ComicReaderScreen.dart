@@ -11,7 +11,8 @@ import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/const.dart';
-import 'package:pikapika/screens/components/ContentBuilder.dart';
+import 'package:pikapika/screens/components/ContentError.dart';
+import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'components/ImageReader.dart';
 
 // 在线阅读漫画
@@ -151,55 +152,92 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     return readerKeyboardHolder(_build(context));
   }
 
+  Future  _onSelectDirection() async {
+    await choosePagerDirection(context);
+    if (widget.pagerDirection != gReaderDirection) {
+      _reloadReader();
+    }
+  }
+
+  Future _onSelectReaderType() async {
+    await choosePagerType(context);
+    if (widget.pagerType != currentReaderType()) {
+      _reloadReader();
+    }
+  }
+
   Widget _build(BuildContext context) {
-    return Scaffold(
-      appBar: _fullScreen
-          ? null
-          : AppBar(
-              backgroundColor: readerAppbarColor,
-              title: Text("${_ep.title} - ${widget.comicInfo.title}"),
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    await choosePagerDirection(context);
-                    if (widget.pagerDirection != gReaderDirection) {
-                      _reloadReader();
-                    }
-                  },
-                  icon: Icon(Icons.grid_goldenratio),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await choosePagerType(context);
-                    if (widget.pagerType != currentReaderType()) {
-                      _reloadReader();
-                    }
-                  },
-                  icon: Icon(Icons.view_day_outlined),
-                ),
-              ],
+    return FutureBuilder(
+      future: _future,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<RemoteImageInfo>> snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            appBar: _fullScreen
+                ? null
+                : AppBar(
+                    backgroundColor: readerAppbarColor,
+                    title: Text("${_ep.title} - ${widget.comicInfo.title}"),
+                    actions: [
+                      IconButton(
+                        onPressed: _onSelectDirection,
+                        icon: Icon(Icons.grid_goldenratio),
+                      ),
+                      IconButton(
+                        onPressed: _onSelectReaderType,
+                        icon: Icon(Icons.view_day_outlined),
+                      ),
+                    ],
+                  ),
+            body: ContentError(
+              error: snapshot.error,
+              stackTrace: snapshot.stackTrace,
+              onRefresh: () async {
+                setState(() {
+                  _future = _load();
+                });
+              },
             ),
-      body: ContentBuilder(
-        future: _future,
-        onRefresh: () async {
-          setState(() {
-            _future = _load();
-          });
-        },
-        successBuilder: (BuildContext context,
-            AsyncSnapshot<List<RemoteImageInfo>> snapshot) {
-          return ImageReader(
+          );
+        }
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Scaffold(
+            appBar: _fullScreen
+                ? null
+                : AppBar(
+                    backgroundColor: readerAppbarColor,
+                    title: Text("${_ep.title} - ${widget.comicInfo.title}"),
+                    actions: [
+                      IconButton(
+                        onPressed: _onSelectDirection,
+                        icon: Icon(Icons.grid_goldenratio),
+                      ),
+                      IconButton(
+                        onPressed: _onSelectReaderType,
+                        icon: Icon(Icons.view_day_outlined),
+                      ),
+                    ],
+                  ),
+            body: ContentLoading(label: '加载中'),
+          );
+        }
+        var epNameMap = Map<int, String>();
+        widget.epList.forEach((element) {
+          epNameMap[element.order] = element.title;
+        });
+        return Scaffold(
+          body:  ImageReader(
             ImageReaderStruct(
               images: snapshot.data!
                   .map((e) => ReaderImageInfo(
-                        e.fileServer,
-                        e.path,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                      ))
+                e.fileServer,
+                e.path,
+                null,
+                null,
+                null,
+                null,
+                null,
+              ))
                   .toList(),
               fullScreen: _fullScreen,
               onFullScreenChange: _onFullScreenChange,
@@ -210,10 +248,15 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
               initPosition: widget.initPicturePosition,
               pagerType: widget.pagerType,
               pagerDirection: widget.pagerDirection,
+              epNameMap: epNameMap,
+              epOrder: _ep.order,
+              comicTitle: widget.comicInfo.title,
+              onSelectDirection: _onSelectDirection,
+              onSelectReaderType: _onSelectReaderType,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

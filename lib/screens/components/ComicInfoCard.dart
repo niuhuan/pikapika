@@ -146,19 +146,21 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                   iconMargin,
                                 ]
                               : []),
-                          info.epsCount > 0
-                              ? Row(
-                                  children: [
-                                    iconPage,
-                                    iconSpacing,
-                                    Text(
+                          ...(info.epsCount > 0
+                              ? [
+                                  Text.rich(TextSpan(children: [
+                                    WidgetSpan(child: iconPage),
+                                    WidgetSpan(child: iconSpacing),
+                                    WidgetSpan(child: Text(
                                       "${info.epsCount}E / ${info.pagesCount}P",
                                       style: countLabelStyle,
                                       strutStyle: iconLabelStrutStyle,
-                                    ),
-                                  ],
-                                )
-                              : Container(),
+                                      softWrap: false,
+                                    )),
+                                    WidgetSpan(child: iconMargin),
+                                  ])),
+                                ]
+                              : []),
                           iconMargin,
                         ],
                       ),

@@ -10,6 +10,8 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'components/ContentError.dart';
+import 'components/ContentLoading.dart';
 import 'components/ImageReader.dart';
 
 // 阅读下载的内容
@@ -143,43 +145,78 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     return readerKeyboardHolder(_build(context));
   }
 
+  Future _onSelectDirection() async {
+    await choosePagerDirection(context);
+    if (widget.pagerDirection != gReaderDirection) {
+      _reloadReader();
+    }
+  }
+
+  Future _onSelectReaderType() async {
+    await choosePagerType(context);
+    if (widget.pagerType != currentReaderType()) {
+      _reloadReader();
+    }
+  }
+
   Widget _build(BuildContext context) {
-    return Scaffold(
-      appBar: _fullScreen
-          ? null
-          : AppBar(
-              title: Text("${_ep.title} - ${widget.comicInfo.title}"),
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    await choosePagerDirection(context);
-                    if (widget.pagerDirection != gReaderDirection) {
-                      _reloadReader();
-                    }
-                  },
-                  icon: Icon(Icons.grid_goldenratio),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await choosePagerType(context);
-                    if (widget.pagerType != currentReaderType()) {
-                      _reloadReader();
-                    }
-                  },
-                  icon: Icon(Icons.view_day_outlined),
-                ),
-              ],
+    return FutureBuilder(
+      future: _future,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            appBar: _fullScreen
+                ? null
+                : AppBar(
+                    title: Text("${_ep.title} - ${widget.comicInfo.title}"),
+                    actions: [
+                      IconButton(
+                        onPressed: _onSelectDirection,
+                        icon: Icon(Icons.grid_goldenratio),
+                      ),
+                      IconButton(
+                        onPressed: _onSelectReaderType,
+                        icon: Icon(Icons.view_day_outlined),
+                      ),
+                    ],
+                  ),
+            body: ContentError(
+              error: snapshot.error,
+              stackTrace: snapshot.stackTrace,
+              onRefresh: () async {
+                setState(() {
+                  _future = _load();
+                });
+              },
             ),
-      body: ContentBuilder(
-        future: _future,
-        onRefresh: () async {
-          setState(() {
-            _future = _load();
-          });
-        },
-        successBuilder:
-            (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return ImageReader(
+          );
+        }
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Scaffold(
+            appBar: _fullScreen
+                ? null
+                : AppBar(
+                    title: Text("${_ep.title} - ${widget.comicInfo.title}"),
+                    actions: [
+                      IconButton(
+                        onPressed: _onSelectDirection,
+                        icon: Icon(Icons.grid_goldenratio),
+                      ),
+                      IconButton(
+                        onPressed: _onSelectReaderType,
+                        icon: Icon(Icons.view_day_outlined),
+                      ),
+                    ],
+                  ),
+            body: ContentLoading(label: '加载中'),
+          );
+        }
+        var epNameMap = Map<int, String>();
+        widget.epList.forEach((element) {
+          epNameMap[element.epOrder] = element.title;
+        });
+        return Scaffold(
+          body: ImageReader(
             ImageReaderStruct(
               images: pictures
                   .map((e) => ReaderImageInfo(e.fileServer, e.path, e.localPath,
@@ -194,10 +231,15 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
               initPosition: widget.initPicturePosition,
               pagerType: widget.pagerType,
               pagerDirection: widget.pagerDirection,
+              epOrder: _ep.epOrder,
+              epNameMap: epNameMap,
+              comicTitle: widget.comicInfo.title,
+              onSelectDirection: _onSelectDirection,
+              onSelectReaderType: _onSelectReaderType,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
