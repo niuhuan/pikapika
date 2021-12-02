@@ -16,6 +16,7 @@ import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
+import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/const.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../FilePhotoViewScreen.dart';
@@ -167,16 +168,25 @@ abstract class _ImageReaderState extends State<ImageReader> {
   // 键盘, 音量键 等事件
   void _needJumpTo(int index, bool animation);
 
+  late bool _listVolume;
+
   @override
   void initState() {
     _initCurrent();
     _readerControllerEvent.subscribe(_onPageControl);
+    _listVolume = volumeController;
+    if (_listVolume) {
+      addVolumeListen();
+    }
     super.initState();
   }
 
   @override
   void dispose() {
     _readerControllerEvent.unsubscribe(_onPageControl);
+    if (_listVolume) {
+      delVolumeListen();
+    }
     super.dispose();
   }
 
@@ -790,6 +800,7 @@ class _GalleryReaderState extends _ImageReaderState {
   @override
   void initState() {
     super.initState();
+    // 需要先初始化 super._startIndex 才能使用, 所以在上面
     _pageController = PageController(initialPage: super._startIndex);
   }
 
