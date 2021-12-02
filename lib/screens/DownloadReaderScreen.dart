@@ -71,54 +71,44 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
         widget.comicInfo.id, _ep.epOrder, _ep.title, position);
   }
 
-  FutureOr<dynamic> Function() _previousAction = () => null;
-
-  String _nextText = "";
-  FutureOr<dynamic> Function() _nextAction = () => null;
-
-  @override
-  void initState() {
-    // NEXT
+  FutureOr<dynamic> _onChangeEp(int epOrder) {
     var orderMap = Map<int, DownloadEp>();
     widget.epList.forEach((element) {
       orderMap[element.epOrder] = element;
     });
-    if (orderMap.containsKey(widget.currentEpOrder - 1)) {
-      _previousAction = () {
-        _replacement = true;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => DownloadReaderScreen(
-              comicInfo: widget.comicInfo,
-              epList: widget.epList,
-              currentEpOrder: widget.currentEpOrder - 1,
-              autoFullScreen: _fullScreen,
-            ),
+    if (orderMap.containsKey(epOrder)) {
+      _replacement = true;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => DownloadReaderScreen(
+            comicInfo: widget.comicInfo,
+            epList: widget.epList,
+            currentEpOrder: epOrder,
+            autoFullScreen: _fullScreen,
           ),
-        );
-      };
-    } else {
-      _previousAction = () => defaultToast(context, "已经到头了");
+        ),
+      );
     }
-    if (orderMap.containsKey(widget.currentEpOrder + 1)) {
-      _nextText = "下一章";
-      _nextAction = () {
-        _replacement = true;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => DownloadReaderScreen(
-              comicInfo: widget.comicInfo,
-              epList: widget.epList,
-              currentEpOrder: widget.currentEpOrder + 1,
-              autoFullScreen: _fullScreen,
-            ),
-          ),
-        );
-      };
-    } else {
-      _nextText = "阅读结束";
-      _nextAction = () => Navigator.of(context).pop();
-    }
+  }
+
+  FutureOr<dynamic> _onReloadEp() {
+    _replacement = true;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => DownloadReaderScreen(
+          comicInfo: widget.comicInfo,
+          epList: widget.epList,
+          currentEpOrder: widget.currentEpOrder,
+          initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
+          // maybe null
+          autoFullScreen: _fullScreen,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
     // EP
     widget.epList.forEach((element) {
       if (element.epOrder == widget.currentEpOrder) {
@@ -143,20 +133,6 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     return readerKeyboardHolder(_build(context));
   }
 
-  Future _onSelectDirection() async {
-    await choosePagerDirection(context);
-    if (widget.pagerDirection != gReaderDirection) {
-      _reloadReader();
-    }
-  }
-
-  Future _onSelectReaderType() async {
-    await choosePagerType(context);
-    if (widget.pagerType != currentReaderType()) {
-      _reloadReader();
-    }
-  }
-
   Widget _build(BuildContext context) {
     return FutureBuilder(
       future: _future,
@@ -167,16 +143,6 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
                 ? null
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
-                    actions: [
-                      IconButton(
-                        onPressed: _onSelectDirection,
-                        icon: Icon(Icons.grid_goldenratio),
-                      ),
-                      IconButton(
-                        onPressed: _onSelectReaderType,
-                        icon: Icon(Icons.view_day_outlined),
-                      ),
-                    ],
                   ),
             body: ContentError(
               error: snapshot.error,
@@ -195,16 +161,6 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
                 ? null
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
-                    actions: [
-                      IconButton(
-                        onPressed: _onSelectDirection,
-                        icon: Icon(Icons.grid_goldenratio),
-                      ),
-                      IconButton(
-                        onPressed: _onSelectReaderType,
-                        icon: Icon(Icons.view_day_outlined),
-                      ),
-                    ],
                   ),
             body: ContentLoading(label: '加载中'),
           );
@@ -222,18 +178,13 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
                   .toList(),
               fullScreen: _fullScreen,
               onFullScreenChange: _onFullScreenChange,
-              onNextText: _nextText,
-              onPreviousAction: _previousAction,
-              onNextAction: _nextAction,
               onPositionChange: _onPositionChange,
               initPosition: widget.initPicturePosition,
-              pagerType: widget.pagerType,
-              pagerDirection: widget.pagerDirection,
               epOrder: _ep.epOrder,
               epNameMap: epNameMap,
               comicTitle: widget.comicInfo.title,
-              onSelectDirection: _onSelectDirection,
-              onSelectReaderType: _onSelectReaderType,
+              onReloadEp: _onReloadEp,
+              onChangeEp: _onChangeEp,
             ),
           ),
         );
@@ -247,22 +198,5 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
           fullScreen ? [] : SystemUiOverlay.values);
       _fullScreen = fullScreen;
     });
-  }
-
-  // 重新加载本页
-  void _reloadReader() {
-    _replacement = true;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => DownloadReaderScreen(
-          comicInfo: widget.comicInfo,
-          epList: widget.epList,
-          currentEpOrder: widget.currentEpOrder,
-          initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
-          // maybe null
-          autoFullScreen: _fullScreen,
-        ),
-      ),
-    );
   }
 }

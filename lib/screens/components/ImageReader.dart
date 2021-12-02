@@ -107,35 +107,25 @@ class ImageReaderStruct {
   final List<ReaderImageInfo> images;
   final bool fullScreen;
   final FutureOr<dynamic> Function(bool fullScreen) onFullScreenChange;
-  final String onNextText;
-  final FutureOr<dynamic> Function() onPreviousAction;
-  final FutureOr<dynamic> Function() onNextAction;
   final FutureOr<dynamic> Function(int) onPositionChange;
   final int? initPosition;
-  final ReaderType pagerType;
-  final ReaderDirection pagerDirection;
   final Map<int, String> epNameMap;
   final int epOrder;
   final String comicTitle;
-  final FutureOr<dynamic> Function() onSelectDirection;
-  final FutureOr<dynamic> Function() onSelectReaderType;
+  final FutureOr<dynamic> Function(int) onChangeEp;
+  final FutureOr<dynamic> Function() onReloadEp;
 
   const ImageReaderStruct({
     required this.images,
     required this.fullScreen,
     required this.onFullScreenChange,
-    required this.onNextText,
-    required this.onPreviousAction,
-    required this.onNextAction,
     required this.onPositionChange,
     this.initPosition,
-    required this.pagerType,
-    required this.pagerDirection,
     required this.epNameMap,
     required this.epOrder,
     required this.comicTitle,
-    required this.onSelectDirection,
-    required this.onSelectReaderType,
+    required this.onChangeEp,
+    required this.onReloadEp,
   });
 }
 
@@ -147,8 +137,38 @@ class ImageReader extends StatefulWidget {
   const ImageReader(this.struct);
 
   @override
+  State<StatefulWidget> createState() => _ImageReaderState();
+}
+
+class _ImageReaderState extends State<ImageReader> {
+  // 记录初始方向
+  final ReaderDirection pagerDirection = gReaderDirection;
+
+  // 记录初始阅读器类型
+  final ReaderType pagerType = currentReaderType();
+
+  @override
+  Widget build(BuildContext context) {
+    return _ImageReaderContent(widget.struct, pagerDirection, pagerType);
+  }
+}
+
+//
+
+class _ImageReaderContent extends StatefulWidget {
+  // 记录初始方向
+  final ReaderDirection pagerDirection;
+
+  // 记录初始阅读器类型
+  final ReaderType pagerType;
+
+  final ImageReaderStruct struct;
+
+  const _ImageReaderContent(this.struct, this.pagerDirection, this.pagerType);
+
+  @override
   State<StatefulWidget> createState() {
-    switch (struct.pagerType) {
+    switch (pagerType) {
       case ReaderType.WEB_TOON:
         return _WebToonReaderState();
       case ReaderType.WEB_TOON_ZOOM:
@@ -161,13 +181,14 @@ class ImageReader extends StatefulWidget {
   }
 }
 
-abstract class _ImageReaderState extends State<ImageReader> {
+abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   // 阅读器
   Widget _buildViewer();
 
   // 键盘, 音量键 等事件
   void _needJumpTo(int index, bool animation);
 
+  // 记录了是否切换了音量
   late bool _listVolume;
 
   @override
@@ -275,11 +296,11 @@ abstract class _ImageReaderState extends State<ImageReader> {
           backgroundColor: readerAppbarColor2,
           actions: [
             IconButton(
-              onPressed: widget.struct.onSelectDirection,
+              onPressed: _onSelectDirection,
               icon: Icon(Icons.grid_goldenratio),
             ),
             IconButton(
-              onPressed: widget.struct.onSelectReaderType,
+              onPressed: _onSelectReaderType,
               icon: Icon(Icons.view_day_outlined),
             ),
           ],
@@ -364,9 +385,7 @@ abstract class _ImageReaderState extends State<ImageReader> {
               IconButton(
                 icon: Icon(Icons.skip_next_outlined),
                 color: Colors.white,
-                onPressed: () {
-                  widget.struct.onNextAction();
-                },
+                onPressed: _onNextAction,
               ),
               Container(width: 15),
             ],
@@ -453,7 +472,7 @@ abstract class _ImageReaderState extends State<ImageReader> {
           ),
         );
         late Widget child;
-        switch (widget.struct.pagerDirection) {
+        switch (widget.pagerDirection) {
           case ReaderDirection.TOP_TO_BOTTOM:
             child = Column(children: [
               up,
@@ -479,16 +498,53 @@ abstract class _ImageReaderState extends State<ImageReader> {
         return Container(
           width: constraints.maxWidth,
           height: constraints.maxHeight,
-          child: child,
+          child: Column(
+            children: [
+              Container(
+                height: widget.struct.fullScreen
+                    ? 0
+                    : Scaffold.of(context).appBarMaxHeight ?? 0,
+              ),
+              Expanded(child: child),
+              Container(
+                height: widget.struct.fullScreen ? 0 : 45,
+              ),
+            ],
+          ),
         );
       },
     );
   }
+
+  Future _onSelectDirection() async {
+    await choosePagerDirection(context);
+    if (widget.pagerDirection != gReaderDirection) {
+      widget.struct.onReloadEp();
+    }
+  }
+
+  Future _onSelectReaderType() async {
+    await choosePagerType(context);
+    if (widget.pagerType != currentReaderType()) {
+      widget.struct.onReloadEp();
+    }
+  }
+
+  Future _onNextAction() async {
+    if (widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1)) {
+      widget.struct.onChangeEp(widget.struct.epOrder + 1);
+    } else {
+      defaultToast(context, "已经到头了");
+    }
+  }
+
+  bool _hasNextEp() =>
+      widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class _WebToonReaderState extends _ImageReaderState {
+class _WebToonReaderState extends _ImageReaderContentState {
   var _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
   late final List<Size?> _trueSizes = [];
   late final ItemScrollController _itemScrollController;
@@ -560,7 +616,7 @@ class _WebToonReaderState extends _ImageReaderState {
         for (var index = 0; index < widget.struct.images.length; index++) {
           late Size renderSize;
           if (_trueSizes[index] != null) {
-            if (widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
+            if (widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
               renderSize = Size(
                 constraints.maxWidth,
                 constraints.maxWidth *
@@ -576,7 +632,7 @@ class _WebToonReaderState extends _ImageReaderState {
               );
             }
           } else {
-            if (widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
+            if (widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
               renderSize = Size(constraints.maxWidth, constraints.maxWidth / 2);
             } else {
               // ReaderDirection.LEFT_TO_RIGHT
@@ -616,19 +672,17 @@ class _WebToonReaderState extends _ImageReaderState {
         return ScrollablePositionedList.builder(
           initialScrollIndex: super._startIndex,
           scrollDirection:
-              widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+              widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                   ? Axis.vertical
                   : Axis.horizontal,
-          reverse:
-              widget.struct.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
+          reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
           padding: EdgeInsets.only(
             top: (scaffold.appBarMaxHeight ?? 0),
-            bottom:
-                widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-                    ? 130
-                    : (widget.struct.fullScreen
-                        ? (scaffold.appBarMaxHeight ?? 0)
-                        : 45),
+            bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                ? 130
+                : (widget.struct.fullScreen
+                    ? (scaffold.appBarMaxHeight ?? 0)
+                    : 45),
           ),
           itemScrollController: _itemScrollController,
           itemPositionsListener: _itemPositionsListener,
@@ -648,11 +702,17 @@ class _WebToonReaderState extends _ImageReaderState {
     return Container(
       padding: EdgeInsets.all(20),
       child: MaterialButton(
-        onPressed: widget.struct.onNextAction,
+        onPressed: () {
+          if (super._hasNextEp()) {
+            super._onNextAction();
+          } else {
+            Navigator.of(context).pop();
+          }
+        },
         textColor: Colors.white,
         child: Container(
           padding: EdgeInsets.only(top: 40, bottom: 40),
-          child: Text(widget.struct.onNextText),
+          child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
         ),
       ),
     );
@@ -794,7 +854,7 @@ class _WebToonZoomReaderState extends _WebToonReaderState {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class _GalleryReaderState extends _ImageReaderState {
+class _GalleryReaderState extends _ImageReaderContentState {
   late PageController _pageController;
 
   @override
@@ -834,11 +894,10 @@ class _GalleryReaderState extends _ImageReaderState {
 
   Widget _buildViewer() {
     Widget gallery = PhotoViewGallery.builder(
-      scrollDirection:
-          widget.struct.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-              ? Axis.vertical
-              : Axis.horizontal,
-      reverse: widget.struct.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
+      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+          ? Axis.vertical
+          : Axis.horizontal,
+      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
       backgroundDecoration: BoxDecoration(color: Colors.black),
       loadingBuilder: (context, event) => LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

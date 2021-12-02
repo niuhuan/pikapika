@@ -12,9 +12,9 @@ enum FullScreenAction {
 }
 
 Map<String, FullScreenAction> _fullScreenActionMap = {
-  "使用控制器": FullScreenAction.CONTROLLER,
-  "点击屏幕一次": FullScreenAction.TOUCH_ONCE,
-  "将屏幕划分成三个区域": FullScreenAction.THREE_AREA,
+  "使用控制器全屏": FullScreenAction.CONTROLLER,
+  "点击屏幕一次全屏": FullScreenAction.TOUCH_ONCE,
+  "将屏幕划分成三个区域 (上一页, 下一页, 全屏)": FullScreenAction.THREE_AREA,
 };
 
 const _propertyName = "fullScreenAction";
@@ -51,7 +51,7 @@ String _currentFullScreenActionName() {
 
 Future<void> _chooseFullScreenAction(BuildContext context) async {
   FullScreenAction? result = await chooseMapDialog<FullScreenAction>(
-      context, _fullScreenActionMap, "选择进入全屏的方式");
+      context, _fullScreenActionMap, "选择操控方式");
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     _fullScreenAction = result;
@@ -62,7 +62,7 @@ Widget fullScreenActionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("进入全屏的方式"),
+        title: Text("操控方式"),
         subtitle: Text(_currentFullScreenActionName()),
         onTap: () async {
           await _chooseFullScreenAction(context);
