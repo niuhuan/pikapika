@@ -15,6 +15,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
+import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
@@ -148,9 +149,17 @@ class _ImageReaderState extends State<ImageReader> {
   // 记录初始阅读器类型
   final ReaderType pagerType = currentReaderType();
 
+  // 记录开始的画质
+  final currentQuality = currentQualityCode();
+
   @override
   Widget build(BuildContext context) {
-    return _ImageReaderContent(widget.struct, pagerDirection, pagerType);
+    return _ImageReaderContent(
+      widget.struct,
+      pagerDirection,
+      pagerType,
+      currentQuality,
+    );
   }
 }
 
@@ -163,9 +172,17 @@ class _ImageReaderContent extends StatefulWidget {
   // 记录初始阅读器类型
   final ReaderType pagerType;
 
+  // 记录开始的画质
+  final String currentQuality;
+
   final ImageReaderStruct struct;
 
-  const _ImageReaderContent(this.struct, this.pagerDirection, this.pagerType);
+  const _ImageReaderContent(
+    this.struct,
+    this.pagerDirection,
+    this.pagerType,
+    this.currentQuality,
+  );
 
   @override
   State<StatefulWidget> createState() {
@@ -287,18 +304,6 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       ],
     );
   }
-
-  /*
-            IconButton(
-              onPressed: _onSelectDirection,
-              icon: Icon(Icons.grid_goldenratio),
-            ),
-            IconButton(
-              onPressed: _onSelectReaderType,
-              icon: Icon(Icons.view_day_outlined),
-            ),
-
-   */
 
   Widget _buildBar() {
     return Column(
@@ -529,39 +534,39 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
-  Future _onSelectDirection() async {
-    await choosePagerDirection(context);
-    if (widget.pagerDirection != gReaderDirection) {
-      widget.struct.onReloadEp();
-    }
-  }
-
-  Future _onSelectReaderType() async {
-    await choosePagerType(context);
-    if (widget.pagerType != currentReaderType()) {
-      widget.struct.onReloadEp();
-    }
-  }
-
   Future _onChooseEp() async {
-    // todo
-    var mq = MediaQuery.of(context);
     showMaterialModalBottomSheet(
       context: context,
       backgroundColor: Color(0xFF20253B),
-      builder: (context) => Container(
-        height: mq.size.height / 2,
-        child: _EpChooser(
-          widget.struct.epNameMap,
-          widget.struct.epOrder,
-          widget.struct.onChangeEp,
-        ),
-      ),
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: _EpChooser(
+            widget.struct.epNameMap,
+            widget.struct.epOrder,
+            widget.struct.onChangeEp,
+          ),
+        );
+      },
     );
   }
 
   Future _onMoreSetting() async {
-    // todo
+    await showMaterialModalBottomSheet(
+      context: context,
+      backgroundColor: readerAppbarColor,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 2,
+          child: _SettingPanel(),
+        );
+      },
+    );
+    if (widget.pagerDirection != gReaderDirection ||
+        widget.pagerType != currentReaderType() ||
+        widget.currentQuality != currentQualityCode()) {
+      widget.struct.onReloadEp();
+    }
   }
 
   //
@@ -629,6 +634,88 @@ class _EpChooserState extends State<_EpChooser> {
       initialScrollIndex: widget.epOrder < 2 ? 0 : widget.epOrder - 2,
       itemCount: widgets.length,
       itemBuilder: (BuildContext context, int index) => widgets[index],
+    );
+  }
+}
+
+class _SettingPanel extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _SettingPanelState();
+}
+
+class _SettingPanelState extends State<_SettingPanel> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        Container(
+          child: Row(
+            children: [
+              _bottomIcon(
+                icon: Icons.crop_sharp,
+                title: gReaderDirectionName(),
+                onPressed: () async {
+                  await choosePagerDirection(context);
+                  setState(() {});
+                },
+              ),
+              _bottomIcon(
+                icon: Icons.view_day_outlined,
+                title: currentReaderTypeName(),
+                onPressed: () async {
+                  await choosePagerType(context);
+                  setState(() {});
+                },
+              ),
+              _bottomIcon(
+                icon: Icons.image_aspect_ratio_outlined,
+                title: currentQualityName(),
+                onPressed: () async {
+                  await chooseQuality(context);
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _bottomIcon({
+    required IconData icon,
+    required String title,
+    required void Function() onPressed,
+  }) {
+    return Expanded(
+      child: Center(
+        child: Column(
+          children: [
+            IconButton(
+              iconSize: 55,
+              icon: Column(
+                children: [
+                  Container(height: 3),
+                  Icon(
+                    icon,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  Container(height: 3),
+                  Text(
+                    title,
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
+                  Container(height: 3),
+                ],
+              ),
+              onPressed: onPressed,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

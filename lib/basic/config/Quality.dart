@@ -32,7 +32,7 @@ String currentQualityCode() {
   return _currentQualityCode;
 }
 
-String _currentQualityName() {
+String currentQualityName() {
   for (var e in _qualities.entries) {
     if (e.value == _currentQualityCode) {
       return e.key;
@@ -41,7 +41,7 @@ String _currentQualityName() {
   return '';
 }
 
-Future<void> _chooseQuality(BuildContext context) async {
+Future<void> chooseQuality(BuildContext context) async {
   String? code = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -71,9 +71,9 @@ Widget qualitySetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("浏览时的图片质量"),
-        subtitle: Text(_currentQualityName()),
+        subtitle: Text(currentQualityName()),
         onTap: () async {
-          await _chooseQuality(context);
+          await chooseQuality(context);
           setState(() {});
         },
       );

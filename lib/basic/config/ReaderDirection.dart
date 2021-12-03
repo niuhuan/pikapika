@@ -41,6 +41,8 @@ String _currentReaderDirectionName() {
   return '';
 }
 
+var gReaderDirectionName  = _currentReaderDirectionName;
+
 /// ?? to ActionButton And Event ??
 Future<void> choosePagerDirection(BuildContext buildContext) async {
   ReaderDirection? choose = await showDialog<ReaderDirection>(
