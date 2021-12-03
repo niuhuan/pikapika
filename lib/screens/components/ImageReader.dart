@@ -530,6 +530,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     }
   }
 
+  //
+
   Future _onNextAction() async {
     if (widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1)) {
       widget.struct.onChangeEp(widget.struct.epOrder + 1);
@@ -540,6 +542,14 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
 
   bool _hasNextEp() =>
       widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1);
+
+  double _topBarHeight() {
+    return Scaffold.of(context).appBarMaxHeight ?? 0;
+  }
+
+  double _bottomBarHeight() {
+    return 45;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -677,12 +687,16 @@ class _WebToonReaderState extends _ImageReaderContentState {
                   : Axis.horizontal,
           reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
           padding: EdgeInsets.only(
-            top: (scaffold.appBarMaxHeight ?? 0),
+            // 不管全屏与否, 滚动方向如何, 顶部永远保持间距
+            top: super._topBarHeight(),
             bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-                ? 130
-                : (widget.struct.fullScreen
-                    ? (scaffold.appBarMaxHeight ?? 0)
-                    : 45),
+                ? 130 // 纵向滚动 底部永远都是130的空白
+                : ( // 横向滚动
+                    widget.struct.fullScreen
+                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
+                        : super._bottomBarHeight())
+            // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
+            ,
           ),
           itemScrollController: _itemScrollController,
           itemPositionsListener: _itemPositionsListener,
@@ -975,11 +989,10 @@ class _GalleryReaderState extends _ImageReaderContentState {
         }
       },
     );
-    var scaffold = Scaffold.of(context);
     gallery = Container(
       padding: EdgeInsets.only(
-        top: widget.struct.fullScreen ? 0 : (scaffold.appBarMaxHeight ?? 0),
-        bottom: widget.struct.fullScreen ? 0 : 45,
+        top: widget.struct.fullScreen ? 0 : super._topBarHeight(),
+        bottom: widget.struct.fullScreen ? 0 : super._bottomBarHeight(),
       ),
       child: gallery,
     );
