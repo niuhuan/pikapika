@@ -40,7 +40,7 @@ FullScreenAction _fullScreenActionFromString(String string) {
   return FullScreenAction.CONTROLLER;
 }
 
-String _currentFullScreenActionName() {
+String currentFullScreenActionName() {
   for (var e in _fullScreenActionMap.entries) {
     if (e.value == _fullScreenAction) {
       return e.key;
@@ -49,7 +49,7 @@ String _currentFullScreenActionName() {
   return '';
 }
 
-Future<void> _chooseFullScreenAction(BuildContext context) async {
+Future<void> chooseFullScreenAction(BuildContext context) async {
   FullScreenAction? result = await chooseMapDialog<FullScreenAction>(
       context, _fullScreenActionMap, "选择操控方式");
   if (result != null) {
@@ -63,9 +63,9 @@ Widget fullScreenActionSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("操控方式"),
-        subtitle: Text(_currentFullScreenActionName()),
+        subtitle: Text(currentFullScreenActionName()),
         onTap: () async {
-          await _chooseFullScreenAction(context);
+          await chooseFullScreenAction(context);
           setState(() {});
         },
       );

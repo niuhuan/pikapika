@@ -144,21 +144,25 @@ class ImageReader extends StatefulWidget {
 
 class _ImageReaderState extends State<ImageReader> {
   // 记录初始方向
-  final ReaderDirection pagerDirection = gReaderDirection;
+  final ReaderDirection _pagerDirection = gReaderDirection;
 
   // 记录初始阅读器类型
-  final ReaderType pagerType = currentReaderType();
+  final ReaderType _pagerType = currentReaderType();
 
   // 记录开始的画质
-  final currentQuality = currentQualityCode();
+  final _currentQuality = currentQualityCode();
+
+  // 记录了控制器
+  late FullScreenAction _fullScreenAction = currentFullScreenAction();
 
   @override
   Widget build(BuildContext context) {
     return _ImageReaderContent(
       widget.struct,
-      pagerDirection,
-      pagerType,
-      currentQuality,
+      _pagerDirection,
+      _pagerType,
+      _currentQuality,
+      _fullScreenAction,
     );
   }
 }
@@ -174,6 +178,7 @@ class _ImageReaderContent extends StatefulWidget {
 
   // 记录开始的画质
   final String currentQuality;
+  final FullScreenAction fullScreenAction;
 
   final ImageReaderStruct struct;
 
@@ -182,6 +187,7 @@ class _ImageReaderContent extends StatefulWidget {
     this.pagerDirection,
     this.pagerType,
     this.currentQuality,
+    this.fullScreenAction,
   );
 
   @override
@@ -311,7 +317,6 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         AppBar(
           title: Text(
               "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
-          backgroundColor: readerAppbarColor2,
           actions: [
             IconButton(
               onPressed: _onChooseEp,
@@ -326,7 +331,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         Expanded(child: Container()),
         Container(
           height: 45,
-          color: readerAppbarColor2,
+          color: Color(0x88000000),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -537,7 +542,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Future _onChooseEp() async {
     showMaterialModalBottomSheet(
       context: context,
-      backgroundColor: Color(0xFF20253B),
+      backgroundColor: Color(0xAA000000),
       builder: (context) {
         return Container(
           height: MediaQuery.of(context).size.height / 2,
@@ -554,7 +559,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Future _onMoreSetting() async {
     await showMaterialModalBottomSheet(
       context: context,
-      backgroundColor: readerAppbarColor,
+      backgroundColor: Color(0xAA000000),
       builder: (context) {
         return Container(
           height: MediaQuery.of(context).size.height / 2,
@@ -564,7 +569,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
     if (widget.pagerDirection != gReaderDirection ||
         widget.pagerType != currentReaderType() ||
-        widget.currentQuality != currentQualityCode()) {
+        widget.currentQuality != currentQualityCode() ||
+        widget.fullScreenAction != currentFullScreenAction()) {
       widget.struct.onReloadEp();
     }
   }
@@ -613,7 +619,7 @@ class _EpChooserState extends State<_EpChooser> {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
           decoration: BoxDecoration(
-            color: widget.epOrder == e.key ? Colors.grey.withAlpha(35) : null,
+            color: widget.epOrder == e.key ? Colors.grey.withAlpha(100) : null,
             border: Border.all(
               color: Color(0xff484c60),
               style: BorderStyle.solid,
@@ -672,6 +678,14 @@ class _SettingPanelState extends State<_SettingPanel> {
                 title: currentQualityName(),
                 onPressed: () async {
                   await chooseQuality(context);
+                  setState(() {});
+                },
+              ),
+              _bottomIcon(
+                icon: Icons.control_camera_outlined,
+                title: currentFullScreenActionName(),
+                onPressed: () async {
+                  await chooseFullScreenAction(context);
                   setState(() {});
                 },
               ),
