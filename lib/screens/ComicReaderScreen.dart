@@ -8,9 +8,6 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/Quality.dart';
-import 'package:pikapika/basic/config/ReaderDirection.dart';
-import 'package:pikapika/basic/config/ReaderType.dart';
-import 'package:pikapika/basic/const.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'components/ImageReader.dart';
@@ -146,7 +143,6 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
             appBar: _fullScreen
                 ? null
                 : AppBar(
-                    backgroundColor: readerAppbarColor,
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
             body: ContentError(
@@ -165,7 +161,6 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
             appBar: _fullScreen
                 ? null
                 : AppBar(
-                    backgroundColor: readerAppbarColor,
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
             body: ContentLoading(label: '加载中'),

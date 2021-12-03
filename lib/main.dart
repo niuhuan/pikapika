@@ -36,6 +36,7 @@ class _PikapikaAppState extends State<PikapikaApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: currentThemeData(),
       darkTheme: currentDarkTheme(),
       navigatorObservers: [navigatorObserver, routeObserver],

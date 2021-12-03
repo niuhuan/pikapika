@@ -19,7 +19,6 @@ import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
-import 'package:pikapika/basic/const.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';

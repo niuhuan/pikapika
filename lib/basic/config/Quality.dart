@@ -6,7 +6,7 @@ import '../Method.dart';
 const _ImageQualityOriginal = "original";
 const _ImageQualityLow = "low";
 const _ImageQualityMedium = "medium";
-const ImageQualityHigh = "high";
+const _ImageQualityHigh = "high";
 
 const _LabelOriginal = "原图";
 const _LabelLow = "低";
@@ -17,7 +17,7 @@ var _qualities = {
   _LabelOriginal: _ImageQualityOriginal,
   _LabelLow: _ImageQualityLow,
   _LabelMedium: _ImageQualityMedium,
-  _LabelHigh: ImageQualityHigh,
+  _LabelHigh: _ImageQualityHigh,
 };
 
 const _propertyName = "quality";

@@ -12,11 +12,12 @@ enum FullScreenAction {
 }
 
 Map<String, FullScreenAction> _fullScreenActionMap = {
-  "使用控制器全屏": FullScreenAction.CONTROLLER,
   "点击屏幕一次全屏": FullScreenAction.TOUCH_ONCE,
+  "使用控制器全屏": FullScreenAction.CONTROLLER,
   "将屏幕划分成三个区域 (上一页, 下一页, 全屏)": FullScreenAction.THREE_AREA,
 };
 
+const _defaultController = FullScreenAction.TOUCH_ONCE;
 const _propertyName = "fullScreenAction";
 late FullScreenAction _fullScreenAction;
 
@@ -37,7 +38,7 @@ FullScreenAction _fullScreenActionFromString(String string) {
       return value;
     }
   }
-  return FullScreenAction.CONTROLLER;
+  return _defaultController;
 }
 
 String currentFullScreenActionName() {

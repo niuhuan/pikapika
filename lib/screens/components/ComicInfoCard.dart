@@ -151,7 +151,8 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                   Text.rich(TextSpan(children: [
                                     WidgetSpan(child: iconPage),
                                     WidgetSpan(child: iconSpacing),
-                                    WidgetSpan(child: Text(
+                                    WidgetSpan(
+                                        child: Text(
                                       "${info.epsCount}E / ${info.pagesCount}P",
                                       style: countLabelStyle,
                                       strutStyle: iconLabelStrutStyle,
@@ -178,49 +179,54 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                       ...(like == null
                           ? []
                           : [
-                              _likeLoading
-                                  ? IconButton(
-                                      color: Colors.pink[400],
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.sync,
-                                        size: 26,
-                                      ),
-                                    )
-                                  : IconButton(
-                                      color: Colors.pink[400],
-                                      onPressed: _changeLike,
-                                      icon: Icon(
-                                        like
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        size: 26,
-                                      ),
-                                    ),
+                              Container(height: 10),
+                              Container(
+                                height: 26,
+                                child: _likeLoading
+                                    ? IconButton(
+                                  color: Colors.pink[400],
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.sync,
+                                  ),
+                                )
+                                    : IconButton(
+                                  color: Colors.pink[400],
+                                  onPressed: _changeLike,
+                                  icon: Icon(
+                                    like
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                  ),
+                                ),
+                              ),
                             ]),
                       ...(favourite == null
                           ? []
                           : [
-                              _favouriteLoading
-                                  ? IconButton(
-                                      color: Colors.pink[400],
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.sync,
-                                        size: 26,
-                                      ),
-                                    )
-                                  : IconButton(
-                                      color: Colors.pink[400],
-                                      onPressed: _changeFavourite,
-                                      icon: Icon(
-                                        favourite
-                                            ? Icons.bookmark
-                                            : Icons.bookmark_border,
-                                        size: 26,
-                                      ),
-                                    ),
+                              Container(height: 10),
+                              Container(
+                                height: 26,
+                                child: _favouriteLoading
+                                    ? IconButton(
+                                  color: Colors.pink[400],
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.sync,
+                                  ),
+                                )
+                                    : IconButton(
+                                  color: Colors.pink[400],
+                                  onPressed: _changeFavourite,
+                                  icon: Icon(
+                                    favourite
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                  ),
+                                ),
+                              ),
                             ]),
+                      Container(height: 10),
                     ],
                   ),
                 ),

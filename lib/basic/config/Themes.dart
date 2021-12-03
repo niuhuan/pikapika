@@ -163,11 +163,48 @@ class _DarkTheme extends _ThemePackage {
       );
 }
 
+//
+class _DustyBlueTheme extends _ThemePackage {
+  @override
+  String code() => "dustyBlue";
+
+  @override
+  String name() => "灰蓝";
+
+  @override
+  ThemeData themeData(ThemeData rawData) =>
+      rawData.copyWith(
+        scaffoldBackgroundColor: Color.alphaBlend(Color(0x11999999), Color(0xff20253b)),
+        cardColor: Color.alphaBlend(Color(0x11AAAAAA), Color(0xff20253b)),
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.light(
+          secondary: Colors.blue.shade200,
+        ),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+          color: Color(0xff20253b),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Color(0xff191b26),
+          selectedItemColor: Colors.blue.shade200,
+          unselectedItemColor: Colors.grey.shade500,
+        ),
+        dividerColor: Colors.grey.shade800,
+      );
+}
+
+var _darkTheme = _DarkTheme();
+var _dustyBlueTheme = _DustyBlueTheme();
+
 final _themePackages = <_ThemePackage>[
   _OriginTheme(),
   _PinkTheme(),
   _BlackTheme(),
-  _DarkTheme(),
+  _darkTheme,
+  _dustyBlueTheme,
 ];
 
 // 主题更换事件
@@ -210,11 +247,12 @@ void _changeThemeByCode(String? themeCode) {
   }
   if (_themePackage != null) {
     _themeData = _themePackage.themeData(
-      _fontThemeData(_themePackage == _themePackages[3]),
+      _fontThemeData(
+          _themePackage == _darkTheme || _themePackage == _dustyBlueTheme),
     );
   }
   _currentDarkTheme = _androidNightMode
-      ? _themePackages[3].themeData(_fontThemeData(true))
+      ? _darkTheme.themeData(_fontThemeData(true))
       : _themeData;
   themeEvent.broadcast();
 }

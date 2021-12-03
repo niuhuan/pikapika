@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
-import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';

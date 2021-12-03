@@ -3,10 +3,7 @@ package niuhuan.pikapika
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Build
-import android.os.Environment
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
@@ -32,6 +29,10 @@ import java.nio.file.Files
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
 
     // 为什么换成换成线程池而不继续使用携程 : 下载图片速度慢会占满携程造成拥堵, 接口无法请求
     private val pool = Executors.newCachedThreadPool { runnable ->
