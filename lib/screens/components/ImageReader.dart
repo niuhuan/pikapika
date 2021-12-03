@@ -6,6 +6,7 @@ import 'package:event/event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -287,6 +288,18 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
+  /*
+            IconButton(
+              onPressed: _onSelectDirection,
+              icon: Icon(Icons.grid_goldenratio),
+            ),
+            IconButton(
+              onPressed: _onSelectReaderType,
+              icon: Icon(Icons.view_day_outlined),
+            ),
+
+   */
+
   Widget _buildBar() {
     return Column(
       children: [
@@ -296,12 +309,12 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           backgroundColor: readerAppbarColor2,
           actions: [
             IconButton(
-              onPressed: _onSelectDirection,
-              icon: Icon(Icons.grid_goldenratio),
+              onPressed: _onChooseEp,
+              icon: Icon(Icons.menu_open),
             ),
             IconButton(
-              onPressed: _onSelectReaderType,
-              icon: Icon(Icons.view_day_outlined),
+              onPressed: _onMoreSetting,
+              icon: Icon(Icons.more_horiz),
             ),
           ],
         ),
@@ -530,6 +543,27 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     }
   }
 
+  Future _onChooseEp() async {
+    // todo
+    var mq = MediaQuery.of(context);
+    showMaterialModalBottomSheet(
+      context: context,
+      backgroundColor: Color(0xFF20253B),
+      builder: (context) => Container(
+        height: mq.size.height / 2,
+        child: _EpChooser(
+          widget.struct.epNameMap,
+          widget.struct.epOrder,
+          widget.struct.onChangeEp,
+        ),
+      ),
+    );
+  }
+
+  Future _onMoreSetting() async {
+    // todo
+  }
+
   //
 
   Future _onNextAction() async {
@@ -549,6 +583,53 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
 
   double _bottomBarHeight() {
     return 45;
+  }
+}
+
+class _EpChooser extends StatefulWidget {
+  final Map<int, String> epNameMap;
+  final int epOrder;
+  final FutureOr Function(int) onChangeEp;
+
+  _EpChooser(this.epNameMap, this.epOrder, this.onChangeEp);
+
+  @override
+  State<StatefulWidget> createState() => _EpChooserState();
+}
+
+class _EpChooserState extends State<_EpChooser> {
+  @override
+  Widget build(BuildContext context) {
+    var entries = widget.epNameMap.entries.toList();
+    entries.sort((a, b) => a.key - b.key);
+    var widgets = [
+      Container(height: 20),
+      ...entries.map((e) {
+        return Container(
+          margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          decoration: BoxDecoration(
+            color: widget.epOrder == e.key ? Colors.grey.withAlpha(35) : null,
+            border: Border.all(
+              color: Color(0xff484c60),
+              style: BorderStyle.solid,
+              width: .5,
+            ),
+          ),
+          child: MaterialButton(
+            onPressed: () {
+              widget.onChangeEp(e.key);
+            },
+            textColor: Colors.white,
+            child: Text('${e.value}'),
+          ),
+        );
+      })
+    ];
+    return ScrollablePositionedList.builder(
+      initialScrollIndex: widget.epOrder < 2 ? 0 : widget.epOrder - 2,
+      itemCount: widgets.length,
+      itemBuilder: (BuildContext context, int index) => widgets[index],
+    );
   }
 }
 
