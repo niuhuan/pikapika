@@ -37,9 +37,12 @@ func main() {
 	}
 	var runOptions []flutter.Option
 	runOptions = append(runOptions, flutter.WindowInitialDimensions(width, height))
-	runOptions = append(runOptions, options...)
+	fullScreen, _ := properties.LoadBoolProperty("full_screen", false)
+	if fullScreen {
+		runOptions = append(runOptions, flutter.WindowMode(flutter.WindowModeMaximize))
+	}
 	// ------
-	err := flutter.Run(append(runOptions, mainOptions...)...)
+	err := flutter.Run(append(append(runOptions, options...), mainOptions...)...)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

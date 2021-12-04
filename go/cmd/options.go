@@ -79,5 +79,10 @@ func (p *PikapikaPlugin) InitPluginGLFW(window *glfw.Window) error {
 			properties.SaveProperty("window_height", strconv.Itoa(height))
 		}()
 	})
+	window.SetMaximizeCallback(func(w *glfw.Window, iconified bool) {
+		go func() {
+			properties.SaveProperty("full_screen", strconv.FormatBool(iconified))
+		}()
+	})
 	return nil
 }
