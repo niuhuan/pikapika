@@ -202,6 +202,8 @@ class _ImageReaderContent extends StatefulWidget {
         return _WebToonZoomReaderState();
       case ReaderType.GALLERY:
         return _GalleryReaderState();
+      case ReaderType.WEB_TOON_FREE_ZOOM:
+        return _ListViewReaderState();
       default:
         throw Exception("ERROR READER TYPE");
     }
@@ -352,64 +354,9 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
               ),
               Container(width: 10),
               Expanded(
-                child: Column(
-                  children: [
-                    Expanded(child: Container()),
-                    Container(
-                      height: 25,
-                      child: FlutterSlider(
-                        axis: Axis.horizontal,
-                        values: [_slider.toDouble()],
-                        min: 0,
-                        max: widget.struct.images.length.toDouble(),
-                        onDragging: (handlerIndex, lowerValue, upperValue) {
-                          _slider = (lowerValue.toInt());
-                        },
-                        onDragCompleted:
-                            (handlerIndex, lowerValue, upperValue) {
-                          _slider = (lowerValue.toInt());
-                          if (_slider != _current) {
-                            _needJumpTo(_slider, false);
-                          }
-                        },
-                        trackBar: FlutterSliderTrackBar(
-                          inactiveTrackBar: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey.shade300,
-                          ),
-                          activeTrackBar: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                        step: FlutterSliderStep(
-                          step: 1,
-                          isPercentRange: false,
-                        ),
-                        tooltip: FlutterSliderTooltip(custom: (value) {
-                          double a = value + 1;
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: ShapeDecoration(
-                              color: Colors.black.withAlpha(0xCC),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadiusDirectional.circular(3)),
-                            ),
-                            child: Text(
-                              '${a.toInt()}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                    Expanded(child: Container()),
-                  ],
-                ),
+                child: widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
+                    ? _buildSlider()
+                    : Container(),
               ),
               Container(width: 10),
               IconButton(
@@ -421,6 +368,65 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             ],
           ),
         )
+      ],
+    );
+  }
+
+  Widget _buildSlider() {
+    return Column(
+      children: [
+        Expanded(child: Container()),
+        Container(
+          height: 25,
+          child: FlutterSlider(
+            axis: Axis.horizontal,
+            values: [_slider.toDouble()],
+            min: 0,
+            max: widget.struct.images.length.toDouble(),
+            onDragging: (handlerIndex, lowerValue, upperValue) {
+              _slider = (lowerValue.toInt());
+            },
+            onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+              _slider = (lowerValue.toInt());
+              if (_slider != _current) {
+                _needJumpTo(_slider, false);
+              }
+            },
+            trackBar: FlutterSliderTrackBar(
+              inactiveTrackBar: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey.shade300,
+              ),
+              activeTrackBar: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+            step: FlutterSliderStep(
+              step: 1,
+              isPercentRange: false,
+            ),
+            tooltip: FlutterSliderTooltip(custom: (value) {
+              double a = value + 1;
+              return Container(
+                padding: EdgeInsets.all(8),
+                decoration: ShapeDecoration(
+                  color: Colors.black.withAlpha(0xCC),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusDirectional.circular(3)),
+                ),
+                child: Text(
+                  '${a.toInt()}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+        Expanded(child: Container()),
       ],
     );
   }
@@ -1091,6 +1097,196 @@ class _WebToonZoomReaderState extends _WebToonReaderState {
   @override
   Widget _buildList() {
     return GestureZoomBox(child: super._buildList());
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+class _ListViewReaderState extends _ImageReaderContentState
+    with SingleTickerProviderStateMixin {
+  final List<Size?> _trueSizes = [];
+  final _transformationController = TransformationController();
+  late TapDownDetails _doubleTapDetails;
+  late final _animationController = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: 100),
+  );
+
+  @override
+  void initState() {
+    widget.struct.images.forEach((e) {
+      if (e.downloadLocalPath != null) {
+        _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
+      } else {
+        _trueSizes.add(null);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _transformationController.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void _needJumpTo(int index, bool animation) {}
+
+  @override
+  Widget _buildViewer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: _buildList(),
+    );
+  }
+
+  Widget _buildList() {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        // reload _images size
+        List<Widget> _images = [];
+        for (var index = 0; index < widget.struct.images.length; index++) {
+          late Size renderSize;
+          if (_trueSizes[index] != null) {
+            if (widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
+              renderSize = Size(
+                constraints.maxWidth,
+                constraints.maxWidth *
+                    _trueSizes[index]!.height /
+                    _trueSizes[index]!.width,
+              );
+            } else {
+              renderSize = Size(
+                constraints.maxHeight *
+                    _trueSizes[index]!.width /
+                    _trueSizes[index]!.height,
+                constraints.maxHeight,
+              );
+            }
+          } else {
+            if (widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM) {
+              renderSize = Size(constraints.maxWidth, constraints.maxWidth / 2);
+            } else {
+              // ReaderDirection.LEFT_TO_RIGHT
+              // ReaderDirection.RIGHT_TO_LEFT
+              renderSize =
+                  Size(constraints.maxWidth / 2, constraints.maxHeight);
+            }
+          }
+          var currentIndex = index;
+          var onTrueSize = (Size size) {
+            setState(() {
+              _trueSizes[currentIndex] = size;
+            });
+          };
+          var e = widget.struct.images[index];
+          if (e.downloadLocalPath != null) {
+            _images.add(_WebToonDownloadImage(
+              fileServer: e.fileServer,
+              path: e.path,
+              localPath: e.downloadLocalPath!,
+              fileSize: e.fileSize!,
+              width: e.width!,
+              height: e.height!,
+              format: e.format!,
+              size: renderSize,
+              onTrueSize: onTrueSize,
+            ));
+          } else {
+            _images.add(_WebToonRemoteImage(
+              e.fileServer,
+              e.path,
+              renderSize,
+              onTrueSize,
+            ));
+          }
+        }
+        var list = ListView.builder(
+          scrollDirection:
+              widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                  ? Axis.vertical
+                  : Axis.horizontal,
+          reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
+          padding: EdgeInsets.only(
+            // 不管全屏与否, 滚动方向如何, 顶部永远保持间距
+            top: super._topBarHeight(),
+            bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                ? 130 // 纵向滚动 底部永远都是130的空白
+                : ( // 横向滚动
+                    widget.struct.fullScreen
+                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
+                        : super._bottomBarHeight())
+            // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
+            ,
+          ),
+          itemCount: widget.struct.images.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (widget.struct.images.length == index) {
+              return _buildNextEp();
+            }
+            return _images[index];
+          },
+        );
+        var viewer = InteractiveViewer(
+          transformationController: _transformationController,
+          minScale: 1,
+          maxScale: 2,
+          child: list,
+        );
+        return GestureDetector(
+          onDoubleTap: _handleDoubleTap,
+          onDoubleTapDown: _handleDoubleTapDown,
+          child: viewer,
+        );
+      },
+    );
+  }
+
+  Widget _buildNextEp() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: MaterialButton(
+        onPressed: () {
+          if (super._hasNextEp()) {
+            super._onNextAction();
+          } else {
+            Navigator.of(context).pop();
+          }
+        },
+        textColor: Colors.white,
+        child: Container(
+          padding: EdgeInsets.only(top: 40, bottom: 40),
+          child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
+        ),
+      ),
+    );
+  }
+
+  void _handleDoubleTapDown(TapDownDetails details) {
+    _doubleTapDetails = details;
+  }
+
+  void _handleDoubleTap() {
+    if (_animationController.isAnimating) {
+      return;
+    }
+    if (_transformationController.value != Matrix4.identity()) {
+      _transformationController.value = Matrix4.identity();
+    } else {
+      var position = _doubleTapDetails.localPosition;
+      var animation = Tween(begin: 0, end: 1.0).animate(_animationController);
+      animation.addListener(() {
+        _transformationController.value = Matrix4.identity()
+          ..translate(
+              -position.dx * animation.value, -position.dy * animation.value)
+          ..scale(animation.value + 1.0);
+      });
+      _animationController.forward(from: 0);
+    }
   }
 }
 

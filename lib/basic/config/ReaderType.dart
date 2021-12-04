@@ -7,12 +7,14 @@ enum ReaderType {
   WEB_TOON,
   WEB_TOON_ZOOM,
   GALLERY,
+  WEB_TOON_FREE_ZOOM,
 }
 
 const _types = {
   'WebToon (默认)': ReaderType.WEB_TOON,
-  'WebToon + 双击放大': ReaderType.WEB_TOON_ZOOM,
+  'WebToon (双击放大)': ReaderType.WEB_TOON_ZOOM,
   '相册': ReaderType.GALLERY,
+  'WebToon (ListView双击放大)\n(此模式进度条无效)': ReaderType.WEB_TOON_FREE_ZOOM
 };
 
 const _propertyName = "readerType";
