@@ -12,7 +12,9 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
+import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/Quality.dart';
@@ -115,6 +117,7 @@ class ImageReaderStruct {
   final String comicTitle;
   final FutureOr<dynamic> Function(int) onChangeEp;
   final FutureOr<dynamic> Function() onReloadEp;
+  final FutureOr<dynamic> Function() onDownload;
 
   const ImageReaderStruct({
     required this.images,
@@ -127,6 +130,7 @@ class ImageReaderStruct {
     required this.comicTitle,
     required this.onChangeEp,
     required this.onReloadEp,
+    required this.onDownload,
   });
 }
 
@@ -214,6 +218,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   // 记录了是否切换了音量
   late bool _listVolume;
 
+  // 和初始化与翻页有关
+
   @override
   void initState() {
     _initCurrent();
@@ -276,6 +282,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       });
     }
   }
+
+  // 与显示有关的方法
 
   @override
   Widget build(BuildContext context) {
@@ -562,7 +570,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       builder: (context) {
         return Container(
           height: MediaQuery.of(context).size.height / 2,
-          child: _SettingPanel(),
+          child: _SettingPanel(
+            widget.struct.onReloadEp,
+            widget.struct.onDownload,
+          ),
         );
       },
     );
@@ -574,7 +585,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     }
   }
 
-  //
+  // 给子类调用的方法
 
   Future _onNextAction() async {
     if (widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1)) {
@@ -644,6 +655,11 @@ class _EpChooserState extends State<_EpChooser> {
 }
 
 class _SettingPanel extends StatefulWidget {
+  final FutureOr Function() onReloadEp;
+  final FutureOr Function() onDownload;
+
+  _SettingPanel(this.onReloadEp, this.onDownload);
+
   @override
   State<StatefulWidget> createState() => _SettingPanelState();
 }
@@ -687,6 +703,38 @@ class _SettingPanelState extends State<_SettingPanel> {
                   await chooseFullScreenAction(context);
                   setState(() {});
                 },
+              ),
+            ],
+          ),
+        ),
+        Container(
+          child: Row(
+            children: [
+              _bottomIcon(
+                icon: Icons.shuffle,
+                title: currentAddressName(),
+                onPressed: () async {
+                  await chooseAddress(context);
+                  setState(() {});
+                },
+              ),
+              _bottomIcon(
+                icon: Icons.repeat_one,
+                title: currentImageAddressName(),
+                onPressed: () async {
+                  await chooseImageAddress(context);
+                  setState(() {});
+                },
+              ),
+              _bottomIcon(
+                icon: Icons.refresh,
+                title: "重载页面",
+                onPressed: widget.onReloadEp,
+              ),
+              _bottomIcon(
+                icon: Icons.file_download,
+                title: "下载本作",
+                onPressed: widget.onDownload,
               ),
             ],
           ),
@@ -799,7 +847,6 @@ class _WebToonReaderState extends _ImageReaderContentState {
   }
 
   Widget _buildList() {
-    var scaffold = Scaffold.of(context);
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         // reload _images size

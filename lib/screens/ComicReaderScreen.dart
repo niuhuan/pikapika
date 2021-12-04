@@ -10,6 +10,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
+import 'DownloadConfirmScreen.dart';
 import 'components/ImageReader.dart';
 
 // 在线阅读漫画
@@ -107,6 +108,18 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     ));
   }
 
+  FutureOr<dynamic> _onDownload() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DownloadConfirmScreen(
+          comicInfo: widget.comicInfo,
+          epList: widget.epList.reversed.toList(),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     // EP
@@ -193,6 +206,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
               comicTitle: widget.comicInfo.title,
               onChangeEp: _onChangeEp,
               onReloadEp: _onReloadEp,
+              onDownload: _onDownload,
             ),
           ),
         );

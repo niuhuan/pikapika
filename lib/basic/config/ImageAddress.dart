@@ -21,11 +21,11 @@ int currentImageAddress() {
   return int.parse(_currentImageAddress);
 }
 
-String _currentImageAddressName() {
+String currentImageAddressName() {
   return _imageAddresses[_currentImageAddress] ?? "";
 }
 
-Future<void> _chooseImageAddress(BuildContext context) async {
+Future<void> chooseImageAddress(BuildContext context) async {
   String? choose = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -55,9 +55,9 @@ Widget imageSwitchAddressSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("图片分流"),
-        subtitle: Text(_currentImageAddressName()),
+        subtitle: Text(currentImageAddressName()),
         onTap: () async {
-          await _chooseImageAddress(context);
+          await chooseImageAddress(context);
           setState(() {});
         },
       );

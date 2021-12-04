@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
@@ -67,6 +68,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     _lastChangeRank = position;
     return method.storeViewEp(
         widget.comicInfo.id, _ep.epOrder, _ep.title, position);
+  }
+
+  FutureOr<dynamic> _onDownload() async {
+    defaultToast(context, "您已经在下载阅读");
   }
 
   FutureOr<dynamic> _onChangeEp(int epOrder) {
@@ -183,6 +188,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
               comicTitle: widget.comicInfo.title,
               onReloadEp: _onReloadEp,
               onChangeEp: _onChangeEp,
+              onDownload: _onDownload,
             ),
           ),
         );

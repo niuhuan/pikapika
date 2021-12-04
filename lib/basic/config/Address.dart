@@ -21,11 +21,11 @@ Future<void> initAddress() async {
   _currentAddress = await method.getSwitchAddress();
 }
 
-String _currentAddressName() {
+String currentAddressName() {
   return _addresses[_currentAddress] ?? "";
 }
 
-Future<void> _chooseAddress(BuildContext context) async {
+Future<void> chooseAddress(BuildContext context) async {
   String? choose = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -55,9 +55,9 @@ Widget switchAddressSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text("分流"),
-        subtitle: Text(_currentAddressName()),
+        subtitle: Text(currentAddressName()),
         onTap: () async {
-          await _chooseAddress(context);
+          await chooseAddress(context);
           setState(() {});
         },
       );
