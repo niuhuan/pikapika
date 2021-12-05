@@ -112,7 +112,7 @@ class ResourceDownloadFileImageProvider
       ')';
 }
 
-// 从远端加载图片 暂时未使用 (现在都是先获取路径然后再通过file显示)
+// 从远端加载图片
 class ResourceRemoteImageProvider
     extends ImageProvider<ResourceRemoteImageProvider> {
   final String fileServer;

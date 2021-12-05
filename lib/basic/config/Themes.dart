@@ -90,7 +90,7 @@ class _PinkTheme extends _ThemePackage {
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Colors.pink.shade200,
           iconTheme: IconThemeData(
             color: Colors.white,
@@ -119,7 +119,7 @@ class _BlackTheme extends _ThemePackage {
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Colors.grey.shade800,
           iconTheme: IconThemeData(
             color: Colors.white,
@@ -144,12 +144,12 @@ class _DarkTheme extends _ThemePackage {
   @override
   ThemeData themeData(ThemeData rawData) =>
       rawData.copyWith(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xFF1E1E1E),
           iconTheme: IconThemeData(
             color: Colors.white,
@@ -181,7 +181,7 @@ class _DustyBlueTheme extends _ThemePackage {
           secondary: Colors.blue.shade200,
         ),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xff20253b),
           iconTheme: IconThemeData(
             color: Colors.white,

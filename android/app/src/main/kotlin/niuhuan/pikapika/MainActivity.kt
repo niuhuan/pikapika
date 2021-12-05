@@ -30,10 +30,6 @@ import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-    }
-
     // 为什么换成换成线程池而不继续使用携程 : 下载图片速度慢会占满携程造成拥堵, 接口无法请求
     private val pool = Executors.newCachedThreadPool { runnable ->
         Thread(runnable).also { it.isDaemon = true }

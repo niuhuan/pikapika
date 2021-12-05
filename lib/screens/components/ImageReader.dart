@@ -382,7 +382,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             axis: Axis.horizontal,
             values: [_slider.toDouble()],
             min: 0,
-            max: widget.struct.images.length.toDouble(),
+            max: (widget.struct.images.length - 1).toDouble(),
             onDragging: (handlerIndex, lowerValue, upperValue) {
               _slider = (lowerValue.toInt());
             },
