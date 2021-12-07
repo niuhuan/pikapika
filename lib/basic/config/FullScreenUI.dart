@@ -1,5 +1,7 @@
 /// 全屏操作
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +16,6 @@ enum FullScreenUI {
 
 const _propertyName = "fullScreenUI";
 late FullScreenUI fullScreenUI;
-
 
 Future<void> initFullScreenUI() async {
   fullScreenUI = _fullScreenUIFromString(await method.loadProperty(
@@ -67,21 +68,25 @@ void switchFullScreenUI() {
       list.clear();
       break;
   }
-  print(fullScreenUI);
-  SystemChrome.setEnabledSystemUIOverlays(list);
+  if (Platform.isAndroid || Platform.isIOS) {
+    SystemChrome.setEnabledSystemUIOverlays(list);
+  }
 }
 
 Widget fullScreenUISetting() {
-  return StatefulBuilder(
-    builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
-        title: Text("全屏UI"),
-        subtitle: Text(currentFullScreenUIName()),
-        onTap: () async {
-          await chooseFullScreenUI(context);
-          setState(() {});
-        },
-      );
-    },
-  );
+  if (Platform.isAndroid || Platform.isIOS) {
+    return StatefulBuilder(
+      builder: (BuildContext context, void Function(void Function()) setState) {
+        return ListTile(
+          title: Text("全屏UI"),
+          subtitle: Text(currentFullScreenUIName()),
+          onTap: () async {
+            await chooseFullScreenUI(context);
+            setState(() {});
+          },
+        );
+      },
+    );
+  }
+  return Container();
 }

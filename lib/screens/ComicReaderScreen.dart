@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -216,8 +217,13 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
 
   Future _onFullScreenChange(bool fullScreen) async {
     setState(() {
-      SystemChrome.setEnabledSystemUIOverlays(
-          fullScreen ? [] : SystemUiOverlay.values);
+      if (fullScreen) {
+        if (Platform.isAndroid || Platform.isIOS) {
+          SystemChrome.setEnabledSystemUIOverlays([]);
+        }
+      } else {
+        switchFullScreenUI();
+      }
       _fullScreen = fullScreen;
     });
   }
