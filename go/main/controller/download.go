@@ -47,12 +47,10 @@ func downloadBegin() {
 // 下载周期中, 每个下载单元会调用此方法, 如果返回true应该停止当前动作
 func downloadHasStop() bool {
 	if !downloadRunning {
-		go downloadBegin()
 		return true
 	}
 	if downloadRestart {
 		downloadRestart = false
-		go downloadBegin()
 		return true
 	}
 	return false
@@ -82,6 +80,7 @@ func downloadLoadComic() {
 	}
 	// 检测是否需要停止
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 找到第一个要下载的漫画, 查库有错误就停止, 因为这些错误很少出现, 一旦出现必然是严重的, 例如数据库文件突然被删除
@@ -98,6 +97,7 @@ func downloadLoadComic() {
 func downloadInitComic() {
 	// 检测是否需要停止
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 若没有漫画要下载则重新启动
@@ -190,6 +190,7 @@ func downloadFetchPictures(downloadEp *comic_center.ComicDownloadEp) error {
 func downloadLoadEp() {
 	// 周期停止检测
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 找到第一个需要下载的章节并去处理 （未下载失败的, 且未完成下载的）
@@ -217,6 +218,7 @@ func downloadInitEp() {
 func downloadSummaryDownload() {
 	// 暂停检测
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 加载这个漫画的所有EP
@@ -256,6 +258,7 @@ func downloadSummaryDownload() {
 func downloadLoadPicture() {
 	// 暂停检测
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 获取到这个章节需要下载的图片
@@ -277,6 +280,7 @@ func downloadLoadPicture() {
 		// 暂停检测
 		if downloadHasStop() {
 			wg.Wait()
+			go downloadBegin()
 			return
 		}
 		channel <- 0
@@ -372,6 +376,7 @@ func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
 func downloadSummaryEp() {
 	// 暂停检测
 	if downloadHasStop() {
+		go downloadBegin()
 		return
 	}
 	// 找到所有下载的图片
