@@ -289,33 +289,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
 
   @override
   Widget build(BuildContext context) {
-    switch (currentFullScreenAction()) {
-      case FullScreenAction.CONTROLLER:
-        return Stack(
-          children: [
-            _buildViewerAndBar(),
-            _buildFullScreenController(),
-          ],
-        );
-      case FullScreenAction.TOUCH_ONCE:
-        return _buildTouchOnceController(_buildViewerAndBar());
-      case FullScreenAction.THREE_AREA:
-        return Stack(
-          children: [
-            _buildViewerAndBar(),
-            _buildThreeAreaController(),
-          ],
-        );
-      default:
-        return Container();
-    }
-  }
-
-  Widget _buildViewerAndBar() {
     return Stack(
       children: [
         _buildViewer(),
-        widget.struct.fullScreen ? Container() : _buildBar(),
+        _buildBar(),
       ],
     );
   }
@@ -323,51 +300,56 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Widget _buildBar() {
     return Column(
       children: [
-        AppBar(
-          title: Text(
-              "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
-          actions: [
-            IconButton(
-              onPressed: _onChooseEp,
-              icon: Icon(Icons.menu_open),
-            ),
-            IconButton(
-              onPressed: _onMoreSetting,
-              icon: Icon(Icons.more_horiz),
-            ),
-          ],
-        ),
-        Expanded(child: Container()),
-        Container(
-          height: 45,
-          color: Color(0x88000000),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(width: 15),
-              IconButton(
-                icon: Icon(Icons.fullscreen),
-                color: Colors.white,
-                onPressed: () {
-                  widget.struct.onFullScreenChange(!widget.struct.fullScreen);
-                },
+        widget.struct.fullScreen
+            ? Container()
+            : AppBar(
+                title: Text(
+                    "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
+                actions: [
+                  IconButton(
+                    onPressed: _onChooseEp,
+                    icon: Icon(Icons.menu_open),
+                  ),
+                  IconButton(
+                    onPressed: _onMoreSetting,
+                    icon: Icon(Icons.more_horiz),
+                  ),
+                ],
               ),
-              Container(width: 10),
-              Expanded(
-                child: widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
-                    ? _buildSlider()
-                    : Container(),
+        Expanded(child: _buildController()),
+        widget.struct.fullScreen
+            ? Container()
+            : Container(
+                height: 45,
+                color: Color(0x88000000),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(width: 15),
+                    IconButton(
+                      icon: Icon(Icons.fullscreen),
+                      color: Colors.white,
+                      onPressed: () {
+                        widget.struct
+                            .onFullScreenChange(!widget.struct.fullScreen);
+                      },
+                    ),
+                    Container(width: 10),
+                    Expanded(
+                      child: widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
+                          ? _buildSlider()
+                          : Container(),
+                    ),
+                    Container(width: 10),
+                    IconButton(
+                      icon: Icon(Icons.skip_next_outlined),
+                      color: Colors.white,
+                      onPressed: _onNextAction,
+                    ),
+                    Container(width: 15),
+                  ],
+                ),
               ),
-              Container(width: 10),
-              IconButton(
-                icon: Icon(Icons.skip_next_outlined),
-                color: Colors.white,
-                onPressed: _onNextAction,
-              ),
-              Container(width: 15),
-            ],
-          ),
-        )
       ],
     );
   }
@@ -431,6 +413,19 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
+  Widget _buildController() {
+    switch (currentFullScreenAction()) {
+      case FullScreenAction.CONTROLLER:
+        return _buildFullScreenController();
+      case FullScreenAction.TOUCH_ONCE:
+        return _buildTouchOnceController();
+      case FullScreenAction.THREE_AREA:
+        return _buildThreeAreaController();
+      default:
+        return Container();
+    }
+  }
+
   Widget _buildFullScreenController() {
     if (!widget.struct.fullScreen) {
       return Container();
@@ -466,13 +461,13 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
-  Widget _buildTouchOnceController(Widget viewerAndBar) {
+  Widget _buildTouchOnceController() {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
       },
-      child: viewerAndBar,
+      child: Container(),
     );
   }
 
