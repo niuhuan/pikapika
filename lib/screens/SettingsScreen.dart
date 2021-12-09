@@ -17,6 +17,7 @@ import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
+import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
@@ -43,6 +44,7 @@ class SettingsScreen extends StatelessWidget {
             convertToPNGSetting(),
             readerTypeSetting(),
             readerDirectionSetting(),
+            readerSliderPositionSetting(),
             autoFullScreenSetting(),
             fullScreenActionSetting(),
             volumeControllerSetting(),

@@ -19,6 +19,7 @@ import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
+import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -152,11 +153,11 @@ class _ImageReaderState extends State<ImageReader> {
   // 记录初始阅读器类型
   final ReaderType _pagerType = currentReaderType();
 
-  // 记录开始的画质
-  final _currentQuality = currentQualityCode();
-
   // 记录了控制器
   late FullScreenAction _fullScreenAction = currentFullScreenAction();
+
+  late ReaderSliderPosition _readerSliderPosition =
+      currentReaderSliderPosition();
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +165,8 @@ class _ImageReaderState extends State<ImageReader> {
       widget.struct,
       _pagerDirection,
       _pagerType,
-      _currentQuality,
       _fullScreenAction,
+      _readerSliderPosition,
     );
   }
 }
@@ -179,9 +180,9 @@ class _ImageReaderContent extends StatefulWidget {
   // 记录初始阅读器类型
   final ReaderType pagerType;
 
-  // 记录开始的画质
-  final String currentQuality;
   final FullScreenAction fullScreenAction;
+
+  final ReaderSliderPosition readerSliderPosition;
 
   final ImageReaderStruct struct;
 
@@ -189,8 +190,8 @@ class _ImageReaderContent extends StatefulWidget {
     this.struct,
     this.pagerDirection,
     this.pagerType,
-    this.currentQuality,
     this.fullScreenAction,
+    this.readerSliderPosition,
   );
 
   @override
@@ -298,118 +299,205 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   }
 
   Widget _buildBar() {
-    return Column(
-      children: [
-        widget.struct.fullScreen
-            ? Container()
-            : AppBar(
-                title: Text(
-                    "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
-                actions: [
-                  IconButton(
-                    onPressed: _onChooseEp,
-                    icon: Icon(Icons.menu_open),
+    switch (widget.readerSliderPosition) {
+      case ReaderSliderPosition.BOTTOM:
+        return Column(
+          children: [
+            _buildAppBar(),
+            Expanded(child: _buildController()),
+            widget.struct.fullScreen
+                ? Container()
+                : Container(
+                    height: 45,
+                    color: Color(0x88000000),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(width: 15),
+                        IconButton(
+                          icon: Icon(Icons.fullscreen),
+                          color: Colors.white,
+                          onPressed: () {
+                            widget.struct
+                                .onFullScreenChange(!widget.struct.fullScreen);
+                          },
+                        ),
+                        Container(width: 10),
+                        Expanded(
+                          child:
+                              widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
+                                  ? _buildSliderBottom()
+                                  : Container(),
+                        ),
+                        Container(width: 10),
+                        IconButton(
+                          icon: Icon(Icons.skip_next_outlined),
+                          color: Colors.white,
+                          onPressed: _onNextAction,
+                        ),
+                        Container(width: 15),
+                      ],
+                    ),
                   ),
-                  IconButton(
-                    onPressed: _onMoreSetting,
-                    icon: Icon(Icons.more_horiz),
-                  ),
+          ],
+        );
+      case ReaderSliderPosition.RIGHT:
+        return Column(
+          children: [
+            _buildAppBar(),
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildController(),
+                  _buildSliderRight(),
                 ],
               ),
-        Expanded(child: _buildController()),
-        widget.struct.fullScreen
-            ? Container()
-            : Container(
-                height: 45,
-                color: Color(0x88000000),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(width: 15),
-                    IconButton(
-                      icon: Icon(Icons.fullscreen),
-                      color: Colors.white,
-                      onPressed: () {
-                        widget.struct
-                            .onFullScreenChange(!widget.struct.fullScreen);
-                      },
-                    ),
-                    Container(width: 10),
-                    Expanded(
-                      child: widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
-                          ? _buildSlider()
-                          : Container(),
-                    ),
-                    Container(width: 10),
-                    IconButton(
-                      icon: Icon(Icons.skip_next_outlined),
-                      color: Colors.white,
-                      onPressed: _onNextAction,
-                    ),
-                    Container(width: 15),
-                  ],
-                ),
+            ),
+          ],
+        );
+      case ReaderSliderPosition.LEFT:
+        return Column(
+          children: [
+            _buildAppBar(),
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildController(),
+                  _buildSliderLeft(),
+                ],
               ),
-      ],
-    );
+            ),
+          ],
+        );
+    }
+    return Container();
   }
 
-  Widget _buildSlider() {
+  Widget _buildAppBar() => widget.struct.fullScreen
+      ? Container()
+      : AppBar(
+          title: Text(
+              "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
+          actions: [
+            IconButton(
+              onPressed: _onChooseEp,
+              icon: Icon(Icons.menu_open),
+            ),
+            IconButton(
+              onPressed: _onMoreSetting,
+              icon: Icon(Icons.more_horiz),
+            ),
+          ],
+        );
+
+  Widget _buildSliderBottom() {
     return Column(
       children: [
         Expanded(child: Container()),
         Container(
           height: 25,
-          child: FlutterSlider(
-            axis: Axis.horizontal,
-            values: [_slider.toDouble()],
-            min: 0,
-            max: (widget.struct.images.length - 1).toDouble(),
-            onDragging: (handlerIndex, lowerValue, upperValue) {
-              _slider = (lowerValue.toInt());
-            },
-            onDragCompleted: (handlerIndex, lowerValue, upperValue) {
-              _slider = (lowerValue.toInt());
-              if (_slider != _current) {
-                _needJumpTo(_slider, false);
-              }
-            },
-            trackBar: FlutterSliderTrackBar(
-              inactiveTrackBar: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.grey.shade300,
-              ),
-              activeTrackBar: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
-            step: FlutterSliderStep(
-              step: 1,
-              isPercentRange: false,
-            ),
-            tooltip: FlutterSliderTooltip(custom: (value) {
-              double a = value + 1;
-              return Container(
-                padding: EdgeInsets.all(8),
-                decoration: ShapeDecoration(
-                  color: Colors.black.withAlpha(0xCC),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusDirectional.circular(3)),
-                ),
-                child: Text(
-                  '${a.toInt()}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              );
-            }),
-          ),
+          child: _buildSliderWidget(Axis.horizontal),
         ),
         Expanded(child: Container()),
       ],
+    );
+  }
+
+  Widget _buildSliderLeft() => widget.struct.fullScreen
+      ? Container()
+      : Align(
+          alignment: Alignment.centerLeft,
+          child: Material(
+            color: Color(0x0),
+            child: Container(
+              width: 35,
+              height: 300,
+              decoration: BoxDecoration(
+                color: Color(0x66000000),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              padding: EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
+              child: Center(
+                child: _buildSliderWidget(Axis.vertical),
+              ),
+            ),
+          ),
+        );
+
+  Widget _buildSliderRight() => widget.struct.fullScreen
+      ? Container()
+      : Align(
+          alignment: Alignment.centerRight,
+          child: Material(
+            color: Color(0x0),
+            child: Container(
+              width: 35,
+              height: 300,
+              decoration: BoxDecoration(
+                color: Color(0x66000000),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
+              child: Center(
+                child: _buildSliderWidget(Axis.vertical),
+              ),
+            ),
+          ),
+        );
+
+  Widget _buildSliderWidget(Axis axis) {
+    return FlutterSlider(
+      axis: axis,
+      values: [_slider.toDouble()],
+      min: 0,
+      max: (widget.struct.images.length - 1).toDouble(),
+      onDragging: (handlerIndex, lowerValue, upperValue) {
+        _slider = (lowerValue.toInt());
+      },
+      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+        _slider = (lowerValue.toInt());
+        if (_slider != _current) {
+          _needJumpTo(_slider, false);
+        }
+      },
+      trackBar: FlutterSliderTrackBar(
+        inactiveTrackBar: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.grey.shade300,
+        ),
+        activeTrackBar: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      step: FlutterSliderStep(
+        step: 1,
+        isPercentRange: false,
+      ),
+      tooltip: FlutterSliderTooltip(custom: (value) {
+        double a = value + 1;
+        return Container(
+          padding: EdgeInsets.all(8),
+          decoration: ShapeDecoration(
+            color: Colors.black.withAlpha(0xCC),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusDirectional.circular(3)),
+          ),
+          child: Text(
+            '${a.toInt()}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+        );
+      }),
     );
   }
 
@@ -427,7 +515,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   }
 
   Widget _buildFullScreenController() {
-    if (!widget.struct.fullScreen) {
+    if (widget.readerSliderPosition == ReaderSliderPosition.BOTTOM &&
+        !widget.struct.fullScreen) {
       return Container();
     }
     return Align(
@@ -526,22 +615,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             ]);
             break;
         }
-        return Container(
+        return SizedBox(
           width: constraints.maxWidth,
           height: constraints.maxHeight,
-          child: Column(
-            children: [
-              Container(
-                height: widget.struct.fullScreen
-                    ? 0
-                    : Scaffold.of(context).appBarMaxHeight ?? 0,
-              ),
-              Expanded(child: child),
-              Container(
-                height: widget.struct.fullScreen ? 0 : 45,
-              ),
-            ],
-          ),
+          child: child,
         );
       },
     );
@@ -565,6 +642,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   }
 
   Future _onMoreSetting() async {
+    // 记录开始的画质
+    final currentQuality = currentQualityCode();
+    final cReaderSliderPosition = currentReaderSliderPosition();
+    //
     await showMaterialModalBottomSheet(
       context: context,
       backgroundColor: Color(0xAA000000),
@@ -580,8 +661,9 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
     if (widget.pagerDirection != gReaderDirection ||
         widget.pagerType != currentReaderType() ||
-        widget.currentQuality != currentQualityCode() ||
-        widget.fullScreenAction != currentFullScreenAction()) {
+        currentQuality != currentQualityCode() ||
+        widget.fullScreenAction != currentFullScreenAction() ||
+        cReaderSliderPosition != currentReaderSliderPosition()) {
       widget.struct.onReloadEp();
     }
   }
@@ -599,13 +681,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   bool _hasNextEp() =>
       widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1);
 
-  double _topBarHeight() {
-    return Scaffold.of(context).appBarMaxHeight ?? 0;
-  }
+  double _topBarHeight() => Scaffold.of(context).appBarMaxHeight ?? 0;
 
-  double _bottomBarHeight() {
-    return 45;
-  }
+  double _bottomBarHeight() =>
+      widget.readerSliderPosition == ReaderSliderPosition.BOTTOM ? 45 : 0;
 }
 
 class _EpChooser extends StatefulWidget {
@@ -739,6 +818,20 @@ class _SettingPanelState extends State<_SettingPanel> {
               ),
             ],
           ),
+        ),
+        Row(
+          children: [
+            _bottomIcon(
+              icon: Icons.straighten_sharp,
+              title: currentReaderSliderPositionName(),
+              onPressed: () async {
+                await chooseReaderSliderPosition(context);
+              },
+            ),
+            Expanded(child: Container()),
+            Expanded(child: Container()),
+            Expanded(child: Container()),
+          ],
         ),
       ],
     );
@@ -1415,7 +1508,44 @@ class _GalleryReaderState extends _ImageReaderContentState {
       ),
       child: gallery,
     );
-    return gallery;
+    return Stack(
+      children: [
+        gallery,
+        _buildNextEpController(),
+      ],
+    );
+  }
+
+  Widget _buildNextEpController() {
+    if (_current < widget.struct.images.length - 1) return Container();
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Material(
+        color: Color(0x0),
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+            ),
+            color: Color(0x88000000),
+          ),
+          child: GestureDetector(
+            onTap: () {
+              if (_hasNextEp()) {
+                _onNextAction();
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
+            child: Text(_hasNextEp() ? '下一章' : '结束阅读',
+                style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ),
+    );
   }
 }
 

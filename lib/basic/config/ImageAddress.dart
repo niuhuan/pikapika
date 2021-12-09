@@ -21,9 +21,7 @@ int currentImageAddress() {
   return int.parse(_currentImageAddress);
 }
 
-String currentImageAddressName() {
-  return _imageAddresses[_currentImageAddress] ?? "";
-}
+String currentImageAddressName() => _imageAddresses[_currentImageAddress] ?? "";
 
 Future<void> chooseImageAddress(BuildContext context) async {
   String? choose = await showDialog<String>(

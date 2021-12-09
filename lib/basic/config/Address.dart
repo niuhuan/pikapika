@@ -21,9 +21,7 @@ Future<void> initAddress() async {
   _currentAddress = await method.getSwitchAddress();
 }
 
-String currentAddressName() {
-  return _addresses[_currentAddress] ?? "";
-}
+String currentAddressName() => _addresses[_currentAddress] ?? "";
 
 Future<void> chooseAddress(BuildContext context) async {
   String? choose = await showDialog<String>(

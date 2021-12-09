@@ -19,6 +19,7 @@ import 'package:pikapika/basic/config/Platform.dart';
 import 'package:pikapika/basic/config/Proxy.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
+import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/Themes.dart';
@@ -58,6 +59,7 @@ class _InitScreenState extends State<InitScreen> {
     await initListLayout();
     await initReaderType();
     await initReaderDirection();
+    await initReaderSliderPosition();
     await initAutoFullScreen();
     await initFullScreenAction();
     await initPagerAction();
