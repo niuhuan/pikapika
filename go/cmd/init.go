@@ -7,7 +7,7 @@ import (
 	"path"
 	path2 "path"
 	"path/filepath"
-	"pikapika/main/config"
+	"pikapika/pikapika/config"
 	"runtime"
 	"strings"
 )

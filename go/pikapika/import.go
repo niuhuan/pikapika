@@ -1,4 +1,4 @@
-package controller
+package pikapika
 
 import (
 	"archive/tar"
@@ -11,8 +11,8 @@ import (
 	"net"
 	"os"
 	path2 "path"
-	"pikapika/main/database/comic_center"
-	"pikapika/main/utils"
+	comic_center2 "pikapika/pikapika/database/comic_center"
+	utils2 "pikapika/pikapika/utils"
 	"strconv"
 	"strings"
 )
@@ -96,17 +96,17 @@ func importComicDownload(zipPath string) error {
 	if err != nil {
 		return err
 	}
-	return comic_center.Transaction(func(tx *gorm.DB) error {
+	return comic_center2.Transaction(func(tx *gorm.DB) error {
 		// 删除
-		err := tx.Unscoped().Delete(&comic_center.ComicDownload{}, "id = ?", jsonComicDownload.ID).Error
+		err := tx.Unscoped().Delete(&comic_center2.ComicDownload{}, "id = ?", jsonComicDownload.ID).Error
 		if err != nil {
 			return err
 		}
-		err = tx.Unscoped().Delete(&comic_center.ComicDownloadEp{}, "comic_id = ?", jsonComicDownload.ID).Error
+		err = tx.Unscoped().Delete(&comic_center2.ComicDownloadEp{}, "comic_id = ?", jsonComicDownload.ID).Error
 		if err != nil {
 			return err
 		}
-		err = tx.Unscoped().Delete(&comic_center.ComicDownloadPicture{}, "comic_id = ?", jsonComicDownload.ID).Error
+		err = tx.Unscoped().Delete(&comic_center2.ComicDownloadPicture{}, "comic_id = ?", jsonComicDownload.ID).Error
 		if err != nil {
 			return err
 		}
@@ -129,7 +129,7 @@ func importComicDownload(zipPath string) error {
 			}
 		}
 		// VIEW日志
-		view := comic_center.ComicView{}
+		view := comic_center2.ComicView{}
 		view.ID = jsonComicDownload.ID
 		view.CreatedAt = jsonComicDownload.CreatedAt
 		view.UpdatedAt = jsonComicDownload.UpdatedAt
@@ -153,13 +153,13 @@ func importComicDownload(zipPath string) error {
 		view.IsFavourite = false
 		view.IsLiked = false
 		view.CommentsCount = 0
-		err = comic_center.NoLockActionViewComicUpdateInfoDB(&view, tx)
+		err = comic_center2.NoLockActionViewComicUpdateInfoDB(&view, tx)
 		if err != nil {
 			return err
 		}
 		// 覆盖文件
 		comicDirPath := downloadPath(jsonComicDownload.ID)
-		utils.Mkdir(comicDirPath)
+		utils2.Mkdir(comicDirPath)
 		logoReader, err := zip.Open("logo")
 		if err == nil {
 			defer logoReader.Close()
@@ -167,10 +167,10 @@ func importComicDownload(zipPath string) error {
 			if err != nil {
 				return err
 			}
-			ioutil.WriteFile(path2.Join(comicDirPath, "logo"), logoBuff, utils.CreateFileMode)
+			ioutil.WriteFile(path2.Join(comicDirPath, "logo"), logoBuff, utils2.CreateFileMode)
 		}
 		for _, ep := range jsonComicDownload.EpList {
-			utils.Mkdir(path2.Join(comicDirPath, strconv.Itoa(int(ep.EpOrder))))
+			utils2.Mkdir(path2.Join(comicDirPath, strconv.Itoa(int(ep.EpOrder))))
 			for _, picture := range ep.PictureList {
 				notifyExport("写入 : " + picture.LocalPath)
 				zipEntry, err := zip.Open(picture.SrcPath)
@@ -183,7 +183,7 @@ func importComicDownload(zipPath string) error {
 					if err != nil {
 						return err
 					}
-					return ioutil.WriteFile(downloadPath(picture.LocalPath), entryBuff, utils.CreateFileMode)
+					return ioutil.WriteFile(downloadPath(picture.LocalPath), entryBuff, utils2.CreateFileMode)
 				}()
 				if err != nil {
 					return err

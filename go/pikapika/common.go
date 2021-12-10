@@ -1,9 +1,9 @@
-package controller
+package pikapika
 
 import (
 	"encoding/json"
-	"pikapika/main/database/comic_center"
-	"pikapika/main/database/network_cache"
+	"pikapika/pikapika/database/comic_center"
+	"pikapika/pikapika/database/network_cache"
 	"time"
 )
 

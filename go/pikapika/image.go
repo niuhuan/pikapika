@@ -1,4 +1,4 @@
-package controller
+package pikapika
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
-	"pikapika/main/database/comic_center"
+	"pikapika/pikapika/database/comic_center"
 	"sync"
 	"time"
 )

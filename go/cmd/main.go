@@ -10,7 +10,7 @@ import (
 	_ "image/png"
 	"os"
 	"path/filepath"
-	"pikapika/main/database/properties"
+	"pikapika/pikapika/database/properties"
 	"strconv"
 	"strings"
 )

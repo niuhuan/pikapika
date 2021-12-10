@@ -1,8 +1,8 @@
 package mobile
 
 import (
-	"pikapika/main/config"
-	"pikapika/main/controller"
+	"pikapika/pikapika"
+	"pikapika/pikapika/config"
 )
 
 func InitApplication(application string) {
@@ -10,11 +10,11 @@ func InitApplication(application string) {
 }
 
 func FlatInvoke(method string, params string) (string, error) {
-	return controller.FlatInvoke(method, params)
+	return pikapika.FlatInvoke(method, params)
 }
 
 func EventNotify(notify EventNotifyHandler) {
-	controller.EventNotify = notify.OnNotify
+	pikapika.EventNotify = notify.OnNotify
 }
 
 type EventNotifyHandler interface {

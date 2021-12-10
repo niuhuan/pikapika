@@ -2,11 +2,11 @@ package config
 
 import (
 	"path"
-	"pikapika/main/controller"
-	"pikapika/main/database/comic_center"
-	"pikapika/main/database/network_cache"
-	"pikapika/main/database/properties"
-	"pikapika/main/utils"
+	"pikapika/pikapika"
+	"pikapika/pikapika/database/comic_center"
+	"pikapika/pikapika/database/network_cache"
+	"pikapika/pikapika/database/properties"
+	"pikapika/pikapika/utils"
 )
 
 // InitApplication 由不同的平台直接调用, 根据提供的路径初始化数据库, 资料文件夹
@@ -24,6 +24,6 @@ func InitApplication(applicationDir string) {
 	properties.InitDBConnect(databasesDir)
 	network_cache.InitDBConnect(databasesDir)
 	comic_center.InitDBConnect(databasesDir)
-	controller.InitClient()
-	controller.InitPlugin(remoteDir, downloadDir, tmpDir)
+	pikapika.InitClient()
+	pikapika.InitPlugin(remoteDir, downloadDir, tmpDir)
 }

@@ -1,4 +1,4 @@
-package controller
+package pikapika
 
 import (
 	"bytes"
@@ -8,8 +8,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"pikapika/main/database/comic_center"
-	"pikapika/main/utils"
+	comic_center2 "pikapika/pikapika/database/comic_center"
+	utils2 "pikapika/pikapika/utils"
 	"sync"
 	"time"
 )
@@ -24,8 +24,8 @@ var downloadThreadFetch = 100
 var downloadRunning = false
 var downloadRestart = false
 
-var downloadingComic *comic_center.ComicDownload
-var downloadingEp *comic_center.ComicDownloadEp
+var downloadingComic *comic_center2.ComicDownload
+var downloadingEp *comic_center2.ComicDownloadEp
 
 var dlFlag = true
 
@@ -58,13 +58,13 @@ func downloadHasStop() bool {
 
 // 删除下载任务, 当用户要删除下载的时候, 他会被加入删除队列, 而不是直接被删除, 以减少出错
 func downloadDelete() bool {
-	c, e := comic_center.DeletingComic()
+	c, e := comic_center2.DeletingComic()
 	if e != nil {
 		panic(e)
 	}
 	if c != nil {
 		os.RemoveAll(downloadPath(c.ID))
-		e = comic_center.TrueDelete(c.ID)
+		e = comic_center2.TrueDelete(c.ID)
 		if e != nil {
 			panic(e)
 		}
@@ -85,7 +85,7 @@ func downloadLoadComic() {
 	}
 	// 找到第一个要下载的漫画, 查库有错误就停止, 因为这些错误很少出现, 一旦出现必然是严重的, 例如数据库文件突然被删除
 	var err error
-	downloadingComic, err = comic_center.LoadFirstNeedDownload()
+	downloadingComic, err = comic_center2.LoadFirstNeedDownload()
 	if err != nil {
 		panic(err)
 	}
@@ -109,7 +109,7 @@ func downloadInitComic() {
 	// 打印日志, 并向前端的eventChannel发送下载信息
 	println("正在下载漫画 " + downloadingComic.Title)
 	downloadComicEventSend(downloadingComic)
-	eps, err := comic_center.ListDownloadEpByComicId(downloadingComic.ID)
+	eps, err := comic_center2.ListDownloadEpByComicId(downloadingComic.ID)
 	if err != nil {
 		panic(err)
 	}
@@ -134,7 +134,7 @@ func downloadInitComic() {
 			// 如果未能获取图片地址, 则直接置为失败
 			if !ep.FetchedPictures {
 				println("章节的图片获取失败 " + downloadingComic.Title + " " + ep.Title)
-				err = comic_center.EpFailed(ep.ID)
+				err = comic_center2.EpFailed(ep.ID)
 				if err != nil {
 					panic(err)
 				}
@@ -150,8 +150,8 @@ func downloadInitComic() {
 }
 
 // 获取图片地址
-func downloadFetchPictures(downloadEp *comic_center.ComicDownloadEp) error {
-	var list []comic_center.ComicDownloadPicture
+func downloadFetchPictures(downloadEp *comic_center2.ComicDownloadEp) error {
+	var list []comic_center2.ComicDownloadPicture
 	// 官方的图片只能分页获取, 从第1页开始获取, 每页最多40张图片
 	page := 1
 	for true {
@@ -160,7 +160,7 @@ func downloadFetchPictures(downloadEp *comic_center.ComicDownloadEp) error {
 			return err
 		}
 		for _, doc := range rsp.Docs {
-			list = append(list, comic_center.ComicDownloadPicture{
+			list = append(list, comic_center2.ComicDownloadPicture{
 				ID:           doc.Id,
 				ComicId:      downloadEp.ComicId,
 				EpId:         downloadEp.ID,
@@ -178,7 +178,7 @@ func downloadFetchPictures(downloadEp *comic_center.ComicDownloadEp) error {
 		break
 	}
 	// 保存获取到的图片
-	err := comic_center.FetchPictures(downloadEp.ComicId, downloadEp.ID, &list)
+	err := comic_center2.FetchPictures(downloadEp.ComicId, downloadEp.ID, &list)
 	if err != nil {
 		panic(err)
 	}
@@ -195,7 +195,7 @@ func downloadLoadEp() {
 	}
 	// 找到第一个需要下载的章节并去处理 （未下载失败的, 且未完成下载的）
 	var err error
-	downloadingEp, err = comic_center.LoadFirstNeedDownloadEp(downloadingComic.ID)
+	downloadingEp, err = comic_center2.LoadFirstNeedDownloadEp(downloadingComic.ID)
 	if err != nil {
 		panic(err)
 	}
@@ -222,7 +222,7 @@ func downloadSummaryDownload() {
 		return
 	}
 	// 加载这个漫画的所有EP
-	list, err := comic_center.ListDownloadEpByComicId(downloadingComic.ID)
+	list, err := comic_center2.ListDownloadEpByComicId(downloadingComic.ID)
 	if err != nil {
 		panic(err)
 	}
@@ -234,7 +234,7 @@ func downloadSummaryDownload() {
 	if over {
 		// 如果所有章节下载完成则下载成功
 		downloadAndExportLogo(downloadingComic)
-		err = comic_center.DownloadSuccess(downloadingComic.ID)
+		err = comic_center2.DownloadSuccess(downloadingComic.ID)
 		if err != nil {
 			panic(err)
 		}
@@ -242,7 +242,7 @@ func downloadSummaryDownload() {
 		downloadingComic.DownloadFinishedTime = time.Now()
 	} else {
 		// 否则下载失败
-		err = comic_center.DownloadFailed(downloadingComic.ID)
+		err = comic_center2.DownloadFailed(downloadingComic.ID)
 		if err != nil {
 			panic(err)
 		}
@@ -262,7 +262,7 @@ func downloadLoadPicture() {
 		return
 	}
 	// 获取到这个章节需要下载的图片
-	downloadingPictures, err := comic_center.LoadNeedDownloadPictures(downloadingEp.ID, downloadThreadFetch)
+	downloadingPictures, err := comic_center2.LoadNeedDownloadPictures(downloadingEp.ID, downloadThreadFetch)
 	if err != nil {
 		panic(err)
 	}
@@ -301,7 +301,7 @@ func downloadLoadPicture() {
 var downloadEventChannelMutex = sync.Mutex{}
 
 // 这里不能使用暂停检测, 多次检测会导致问题
-func downloadPicture(downloadingPicture *comic_center.ComicDownloadPicture) {
+func downloadPicture(downloadingPicture *comic_center2.ComicDownloadPicture) {
 	// 下载图片, 最多重试5次
 	println("正在下载图片 " + fmt.Sprintf("%d", downloadingPicture.RankInEp))
 	for i := 0; i < 5; i++ {
@@ -322,7 +322,7 @@ func downloadPicture(downloadingPicture *comic_center.ComicDownloadPicture) {
 	}
 	// 没能下载成功, 图片置为下载失败
 	if !downloadingPicture.DownloadFinished {
-		err := comic_center.PictureFailed(downloadingPicture.ID)
+		err := comic_center2.PictureFailed(downloadingPicture.ID)
 		if err != nil {
 			// ??? panic X channel ???
 			// panic(err)
@@ -331,9 +331,9 @@ func downloadPicture(downloadingPicture *comic_center.ComicDownloadPicture) {
 }
 
 // 下载指定图片
-func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
+func downloadThePicture(picturePoint *comic_center2.ComicDownloadPicture) error {
 	// 为了不和页面前端浏览的数据冲突, 使用url做hash锁
-	lock := utils.HashLock(fmt.Sprintf("%s$%s", picturePoint.FileServer, picturePoint.Path))
+	lock := utils2.HashLock(fmt.Sprintf("%s$%s", picturePoint.FileServer, picturePoint.Path))
 	lock.Lock()
 	defer lock.Unlock()
 	// 图片保存位置使用相对路径储存, 使用绝对路径操作
@@ -351,16 +351,16 @@ func downloadThePicture(picturePoint *comic_center.ComicDownloadPicture) error {
 	// 将图片保存到文件
 	dir := filepath.Dir(realPath)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		os.Mkdir(dir, utils.CreateDirMode)
+		os.Mkdir(dir, utils2.CreateDirMode)
 	}
-	err = ioutil.WriteFile(downloadPath(picturePath), buff, utils.CreateFileMode)
+	err = ioutil.WriteFile(downloadPath(picturePath), buff, utils2.CreateFileMode)
 	if err != nil {
 		return err
 	}
 	// 下载时同时导出
 	downloadAndExport(downloadingComic, downloadingEp, picturePoint, buff, format)
 	// 存入数据库
-	return comic_center.PictureSuccess(
+	return comic_center2.PictureSuccess(
 		picturePoint.ComicId,
 		picturePoint.EpId,
 		picturePoint.ID,
@@ -380,7 +380,7 @@ func downloadSummaryEp() {
 		return
 	}
 	// 找到所有下载的图片
-	list, err := comic_center.ListDownloadPictureByEpId(downloadingEp.ID)
+	list, err := comic_center2.ListDownloadPictureByEpId(downloadingEp.ID)
 	if err != nil {
 		panic(err)
 	}
@@ -390,12 +390,12 @@ func downloadSummaryEp() {
 		over = over && downloadPicture.DownloadFinished
 	}
 	if over {
-		err = comic_center.EpSuccess(downloadingEp.ComicId, downloadingEp.ID)
+		err = comic_center2.EpSuccess(downloadingEp.ComicId, downloadingEp.ID)
 		if err != nil {
 			panic(err)
 		}
 	} else {
-		err = comic_center.EpFailed(downloadingEp.ID)
+		err = comic_center2.EpFailed(downloadingEp.ID)
 		if err != nil {
 			panic(err)
 		}
@@ -409,9 +409,9 @@ var downloadAndExportPath = ""
 
 // 边下载边导出(导出图片)
 func downloadAndExport(
-	downloadingComic *comic_center.ComicDownload,
-	downloadingEp *comic_center.ComicDownloadEp,
-	downloadingPicture *comic_center.ComicDownloadPicture,
+	downloadingComic *comic_center2.ComicDownload,
+	downloadingEp *comic_center2.ComicDownloadEp,
+	downloadingPicture *comic_center2.ComicDownloadPicture,
 	buff []byte,
 	format string,
 ) {
@@ -421,11 +421,11 @@ func downloadAndExport(
 	if i, e := os.Stat(downloadAndExportPath); e == nil {
 		if i.IsDir() {
 			// 进入漫画目录
-			comicDir := path.Join(downloadAndExportPath, utils.ReasonableFileName(downloadingComic.Title))
+			comicDir := path.Join(downloadAndExportPath, utils2.ReasonableFileName(downloadingComic.Title))
 			i, e = os.Stat(comicDir)
 			if e != nil {
 				if os.IsNotExist(e) {
-					e = os.Mkdir(comicDir, utils.CreateDirMode)
+					e = os.Mkdir(comicDir, utils2.CreateDirMode)
 				} else {
 					return
 				}
@@ -434,11 +434,11 @@ func downloadAndExport(
 				return
 			}
 			// 进入章节目录
-			epDir := path.Join(comicDir, utils.ReasonableFileName(fmt.Sprintf("%02d - ", downloadingEp.EpOrder)+downloadingEp.Title))
+			epDir := path.Join(comicDir, utils2.ReasonableFileName(fmt.Sprintf("%02d - ", downloadingEp.EpOrder)+downloadingEp.Title))
 			i, e = os.Stat(epDir)
 			if e != nil {
 				if os.IsNotExist(e) {
-					e = os.Mkdir(epDir, utils.CreateDirMode)
+					e = os.Mkdir(epDir, utils2.CreateDirMode)
 				} else {
 					return
 				}
@@ -448,14 +448,14 @@ func downloadAndExport(
 			}
 			// 写入文件
 			filePath := path.Join(epDir, fmt.Sprintf("%03d.%s", downloadingPicture.RankInEp, aliasFormat(format)))
-			ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
+			ioutil.WriteFile(filePath, buff, utils2.CreateFileMode)
 		}
 	}
 }
 
 // 边下载边导出(导出logo)
 func downloadAndExportLogo(
-	downloadingComic *comic_center.ComicDownload,
+	downloadingComic *comic_center2.ComicDownload,
 ) {
 	if downloadAndExportPath == "" {
 		return
@@ -469,11 +469,11 @@ func downloadAndExportLogo(
 				if i, e := os.Stat(downloadAndExportPath); e == nil {
 					if i.IsDir() {
 						// 进入漫画目录
-						comicDir := path.Join(downloadAndExportPath, utils.ReasonableFileName(downloadingComic.Title))
+						comicDir := path.Join(downloadAndExportPath, utils2.ReasonableFileName(downloadingComic.Title))
 						i, e = os.Stat(comicDir)
 						if e != nil {
 							if os.IsNotExist(e) {
-								e = os.Mkdir(comicDir, utils.CreateDirMode)
+								e = os.Mkdir(comicDir, utils2.CreateDirMode)
 							}
 						}
 						if e != nil {
@@ -481,7 +481,7 @@ func downloadAndExportLogo(
 						}
 						// 写入文件
 						filePath := path.Join(comicDir, fmt.Sprintf("%s.%s", "logo", aliasFormat(f)))
-						ioutil.WriteFile(filePath, buff, utils.CreateFileMode)
+						ioutil.WriteFile(filePath, buff, utils2.CreateFileMode)
 					}
 				}
 			}

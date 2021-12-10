@@ -1,6 +1,6 @@
 // 透传Client的功能并增加缓存
 
-package controller
+package pikapika
 
 import (
 	"encoding/json"
@@ -9,9 +9,9 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"pikapika/main/database/comic_center"
-	"pikapika/main/database/network_cache"
-	"pikapika/main/database/properties"
+	comic_center2 "pikapika/pikapika/database/comic_center"
+	"pikapika/pikapika/database/network_cache"
+	"pikapika/pikapika/database/properties"
 	"regexp"
 	"time"
 )
@@ -200,7 +200,7 @@ func comicInfo(comicId string) (string, error) {
 		network_cache.SaveCache(key, cache)
 	}
 	// 标记历史记录
-	view := comic_center.ComicView{}
+	view := comic_center2.ComicView{}
 	view.ID = comicId
 	view.CreatedAt = comic.CreatedAt
 	view.UpdatedAt = comic.UpdatedAt
@@ -224,7 +224,7 @@ func comicInfo(comicId string) (string, error) {
 	view.IsFavourite = comic.IsFavourite
 	view.IsLiked = comic.IsLiked
 	view.CommentsCount = int32(comic.CommentsCount)
-	err = comic_center.ViewComicUpdateInfo(&view)
+	err = comic_center2.ViewComicUpdateInfo(&view)
 	if err != nil {
 		return "", err
 	}
@@ -283,7 +283,7 @@ func switchLike(comicId string) (string, error) {
 		return "", err
 	}
 	// 更新viewLog里面的favour
-	comic_center.ViewComicUpdateLike(comicId, strings.HasPrefix(*point, "un"))
+	comic_center2.ViewComicUpdateLike(comicId, strings.HasPrefix(*point, "un"))
 	// 删除缓存
 	ComicInfoCleanCache(comicId)
 	return *point, nil
@@ -295,7 +295,7 @@ func switchFavourite(comicId string) (string, error) {
 		return "", err
 	}
 	// 更新viewLog里面的favour
-	comic_center.ViewComicUpdateFavourite(comicId, strings.HasPrefix(*point, "un"))
+	comic_center2.ViewComicUpdateFavourite(comicId, strings.HasPrefix(*point, "un"))
 	// 删除缓存
 	ComicInfoCleanCache(comicId)
 	return *point, nil

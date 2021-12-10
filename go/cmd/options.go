@@ -7,8 +7,8 @@ import (
 	"github.com/go-flutter-desktop/plugins/url_launcher"
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/miguelpruivo/flutter_file_picker/go"
-	"pikapika/main/controller"
-	"pikapika/main/database/properties"
+	"pikapika/pikapika"
+	"pikapika/pikapika/database/properties"
 	"strconv"
 	"sync"
 )
@@ -50,7 +50,7 @@ func (p *PikapikaPlugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 		if argumentsMap, ok := arguments.(map[interface{}]interface{}); ok {
 			if method, ok := argumentsMap["method"].(string); ok {
 				if params, ok := argumentsMap["params"].(string); ok {
-					return controller.FlatInvoke(method, params)
+					return pikapika.FlatInvoke(method, params)
 				}
 			}
 		}
@@ -60,7 +60,7 @@ func (p *PikapikaPlugin) InitPlugin(messenger plugin.BinaryMessenger) error {
 	exporting := plugin.NewEventChannel(messenger, "flatEvent", plugin.StandardMethodCodec{})
 	exporting.Handle(&EventHandler{})
 
-	controller.EventNotify = func(message string) {
+	pikapika.EventNotify = func(message string) {
 		eventMutex.Lock()
 		defer eventMutex.Unlock()
 		sink := eventSink
