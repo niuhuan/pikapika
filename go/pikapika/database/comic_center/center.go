@@ -555,6 +555,19 @@ func DownloadInfo(comicId string) (*ComicDownload, error) {
 	return &download, nil
 }
 
+func UpdateTimeCacheImageTime(id uint) {
+	now := time.Now()
+	mutex.Lock()
+	defer mutex.Unlock()
+	err := db.Model(&RemoteImage{}).Where("id = ?", id).Updates(map[string]interface{}{
+		"created_at": now,
+		"updated_at": now,
+	}).Error
+	if err != nil {
+		panic(err)
+	}
+}
+
 func VACUUM() error {
 	mutex.Lock()
 	defer mutex.Unlock()

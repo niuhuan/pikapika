@@ -10,10 +10,10 @@ import (
 	"io/ioutil"
 	"os"
 	path2 "path"
-	comic_center2 "pikapika/pikapika/database/comic_center"
+	"pikapika/pikapika/database/comic_center"
 	"pikapika/pikapika/database/network_cache"
 	"pikapika/pikapika/database/properties"
-	utils2 "pikapika/pikapika/utils"
+	"pikapika/pikapika/utils"
 	"strconv"
 	"time"
 )
@@ -34,7 +34,7 @@ func InitPlugin(_remoteDir string, _downloadDir string, _tmpDir string) {
 	remoteDir = _remoteDir
 	downloadDir = _downloadDir
 	tmpDir = _tmpDir
-	comic_center2.ResetAll()
+	comic_center.ResetAll()
 	downloadAndExportPath = loadDownloadAndExportPath()
 	downloadThreadCount = loadDownloadThreadCount()
 	go downloadBackground()
@@ -166,7 +166,7 @@ func preLogin() (string, error) {
 	token, _ := properties.LoadToken()
 	tokenTime, _ := properties.LoadTokenTime()
 	if token != "" && tokenTime > 0 {
-		if utils2.Timestamp()-(1000*60*60*24) < tokenTime {
+		if utils.Timestamp()-(1000*60*60*24) < tokenTime {
 			client.Token = token
 			return "true", nil
 		}
@@ -189,7 +189,7 @@ func login() error {
 		return err
 	}
 	properties.SaveToken(client.Token)
-	properties.SaveTokenTime(utils2.Timestamp())
+	properties.SaveTokenTime(utils.Timestamp())
 	return nil
 }
 
@@ -216,16 +216,18 @@ func remoteImageData(params string) (string, error) {
 	json.Unmarshal([]byte(params), &paramsStruct)
 	fileServer := paramsStruct.FileServer
 	path := paramsStruct.Path
-	lock := utils2.HashLock(fmt.Sprintf("%s$%s", fileServer, path))
+	lock := utils.HashLock(fmt.Sprintf("%s$%s", fileServer, path))
 	lock.Lock()
 	defer lock.Unlock()
-	cache := comic_center2.FindRemoteImage(fileServer, path)
+	cache := comic_center.FindRemoteImage(fileServer, path)
 	if cache == nil {
 		remote, err := decodeAndSaveImage(fileServer, path)
 		if err != nil {
 			return "", err
 		}
 		cache = remote
+	} else {
+		go comic_center.UpdateTimeCacheImageTime(cache.ID)
 	}
 	display := DisplayImageData{
 		FileSize:  cache.FileSize,
@@ -245,10 +247,10 @@ func remoteImagePreload(params string) error {
 	json.Unmarshal([]byte(params), &paramsStruct)
 	fileServer := paramsStruct.FileServer
 	path := paramsStruct.Path
-	lock := utils2.HashLock(fmt.Sprintf("%s$%s", fileServer, path))
+	lock := utils.HashLock(fmt.Sprintf("%s$%s", fileServer, path))
 	lock.Lock()
 	defer lock.Unlock()
-	cache := comic_center2.FindRemoteImage(fileServer, path)
+	cache := comic_center.FindRemoteImage(fileServer, path)
 	var err error
 	if cache == nil {
 		_, err = decodeAndSaveImage(fileServer, path)
@@ -256,7 +258,7 @@ func remoteImagePreload(params string) error {
 	return err
 }
 
-func decodeAndSaveImage(fileServer string, path string) (*comic_center2.RemoteImage, error) {
+func decodeAndSaveImage(fileServer string, path string) (*comic_center.RemoteImage, error) {
 	buff, img, format, err := decodeFromUrl(fileServer, path)
 	if err != nil {
 		println(fmt.Sprintf("decode error : %s/static/%s %s", fileServer, path, err.Error()))
@@ -274,7 +276,7 @@ func decodeAndSaveImage(fileServer string, path string) (*comic_center2.RemoteIm
 	if err != nil {
 		return nil, err
 	}
-	remote := comic_center2.RemoteImage{
+	remote := comic_center.RemoteImage{
 		FileServer: fileServer,
 		Path:       path,
 		FileSize:   int64(len(buff)),
@@ -283,7 +285,7 @@ func decodeAndSaveImage(fileServer string, path string) (*comic_center2.RemoteIm
 		Height:     int32(img.Bounds().Dy()),
 		LocalPath:  local,
 	}
-	err = comic_center2.SaveRemoteImage(&remote)
+	err = comic_center.SaveRemoteImage(&remote)
 	return &remote, err
 }
 
@@ -293,8 +295,8 @@ func downloadImagePath(path string) (string, error) {
 
 func createDownload(params string) error {
 	var paramsStruct struct {
-		Comic  comic_center2.ComicDownload     `json:"comic"`
-		EpList []comic_center2.ComicDownloadEp `json:"epList"`
+		Comic  comic_center.ComicDownload     `json:"comic"`
+		EpList []comic_center.ComicDownloadEp `json:"epList"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
 	comic := paramsStruct.Comic
@@ -302,19 +304,19 @@ func createDownload(params string) error {
 	if comic.Title == "" || len(epList) == 0 {
 		return errors.New("params error")
 	}
-	err := comic_center2.CreateDownload(&comic, &epList)
+	err := comic_center.CreateDownload(&comic, &epList)
 	if err != nil {
 		return err
 	}
 	// 创建文件夹
-	utils2.Mkdir(downloadPath(comic.ID))
+	utils.Mkdir(downloadPath(comic.ID))
 	// 复制图标
 	downloadComicLogo(&comic)
 	return nil
 }
 
-func downloadComicLogo(comic *comic_center2.ComicDownload) {
-	lock := utils2.HashLock(fmt.Sprintf("%s$%s", comic.ThumbFileServer, comic.ThumbPath))
+func downloadComicLogo(comic *comic_center.ComicDownload) {
+	lock := utils.HashLock(fmt.Sprintf("%s$%s", comic.ThumbFileServer, comic.ThumbPath))
 	lock.Lock()
 	defer lock.Unlock()
 	buff, image, format, err := decodeFromCache(comic.ThumbFileServer, comic.ThumbPath)
@@ -323,8 +325,8 @@ func downloadComicLogo(comic *comic_center2.ComicDownload) {
 	}
 	if err == nil {
 		comicLogoPath := path2.Join(comic.ID, "logo")
-		ioutil.WriteFile(downloadPath(comicLogoPath), buff, utils2.CreateFileMode)
-		comic_center2.UpdateDownloadLogo(
+		ioutil.WriteFile(downloadPath(comicLogoPath), buff, utils.CreateFileMode)
+		comic_center.UpdateDownloadLogo(
 			comic.ID,
 			int64(len(buff)),
 			format,
@@ -345,8 +347,8 @@ func downloadComicLogo(comic *comic_center2.ComicDownload) {
 
 func addDownload(params string) error {
 	var paramsStruct struct {
-		Comic  comic_center2.ComicDownload     `json:"comic"`
-		EpList []comic_center2.ComicDownloadEp `json:"epList"`
+		Comic  comic_center.ComicDownload     `json:"comic"`
+		EpList []comic_center.ComicDownloadEp `json:"epList"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
 	comic := paramsStruct.Comic
@@ -354,11 +356,11 @@ func addDownload(params string) error {
 	if comic.Title == "" || len(epList) == 0 {
 		return errors.New("params error")
 	}
-	return comic_center2.AddDownload(&comic, &epList)
+	return comic_center.AddDownload(&comic, &epList)
 }
 
 func deleteDownloadComic(comicId string) error {
-	err := comic_center2.Deleting(comicId)
+	err := comic_center.Deleting(comicId)
 	if err != nil {
 		return err
 	}
@@ -367,23 +369,23 @@ func deleteDownloadComic(comicId string) error {
 }
 
 func loadDownloadComic(comicId string) (string, error) {
-	download, err := comic_center2.FindComicDownloadById(comicId)
+	download, err := comic_center.FindComicDownloadById(comicId)
 	if err != nil {
 		return "", err
 	}
 	if download == nil {
 		return "", nil
 	}
-	comic_center2.ViewComic(comicId) // VIEW
+	comic_center.ViewComic(comicId) // VIEW
 	return serialize(download, err)
 }
 
 func allDownloads() (string, error) {
-	return serialize(comic_center2.AllDownloads())
+	return serialize(comic_center.AllDownloads())
 }
 
 func downloadEpList(comicId string) (string, error) {
-	return serialize(comic_center2.ListDownloadEpByComicId(comicId))
+	return serialize(comic_center.ListDownloadEpByComicId(comicId))
 }
 
 func viewLogPage(params string) (string, error) {
@@ -392,11 +394,11 @@ func viewLogPage(params string) (string, error) {
 		Limit  int `json:"limit"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
-	return serialize(comic_center2.ViewLogPage(paramsStruct.Offset, paramsStruct.Limit))
+	return serialize(comic_center.ViewLogPage(paramsStruct.Offset, paramsStruct.Limit))
 }
 
 func downloadPicturesByEpId(epId string) (string, error) {
-	return serialize(comic_center2.ListDownloadPictureByEpId(epId))
+	return serialize(comic_center.ListDownloadPictureByEpId(epId))
 }
 
 func getDownloadRunning() bool {
@@ -418,13 +420,13 @@ func cleanNetworkCache() error {
 
 func cleanImageCache() error {
 	notifyExport("清理图片缓存")
-	err := comic_center2.RemoveAllRemoteImage()
+	err := comic_center.RemoveAllRemoteImage()
 	if err != nil {
 		return err
 	}
 	notifyExport("清理图片文件")
 	os.RemoveAll(remoteDir)
-	utils2.Mkdir(remoteDir)
+	utils.Mkdir(remoteDir)
 	notifyExport("清理结束")
 	return nil
 }
@@ -437,13 +439,13 @@ func clean() error {
 		return err
 	}
 	notifyExport("清理图片缓存")
-	err = comic_center2.RemoveAllRemoteImage()
+	err = comic_center.RemoveAllRemoteImage()
 	if err != nil {
 		return err
 	}
 	notifyExport("清理图片文件")
 	os.RemoveAll(remoteDir)
-	utils2.Mkdir(remoteDir)
+	utils.Mkdir(remoteDir)
 	notifyExport("清理结束")
 	return nil
 }
@@ -457,15 +459,15 @@ func autoClean(expire int64) error {
 	}
 	pageSize := 10
 	for true {
-		images, err := comic_center2.EarliestRemoteImage(earliest, pageSize)
+		images, err := comic_center.EarliestRemoteImage(earliest, pageSize)
 		if err != nil {
 			return err
 		}
 		if len(images) == 0 {
-			return comic_center2.VACUUM()
+			return comic_center.VACUUM()
 		}
 		// delete data & remove pic
-		err = comic_center2.DeleteRemoteImages(images)
+		err = comic_center.DeleteRemoteImages(images)
 		if err != nil {
 			return err
 		}
@@ -487,7 +489,7 @@ func storeViewEp(params string) error {
 		PictureRank int    `json:"pictureRank"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
-	return comic_center2.ViewEpAndPicture(
+	return comic_center.ViewEpAndPicture(
 		paramsStruct.ComicId,
 		paramsStruct.EpOrder,
 		paramsStruct.EpTitle,
@@ -496,7 +498,7 @@ func storeViewEp(params string) error {
 }
 
 func loadView(comicId string) (string, error) {
-	view, err := comic_center2.LoadViewLog(comicId)
+	view, err := comic_center.LoadViewLog(comicId)
 	if err != nil {
 		return "", nil
 	}
@@ -634,10 +636,10 @@ func FlatInvoke(method string, params string) (string, error) {
 	case "viewLogPage":
 		return viewLogPage(params)
 	case "clearAllViewLog":
-		comic_center2.ClearAllViewLog()
+		comic_center.ClearAllViewLog()
 		return "", nil
 	case "deleteViewLog":
-		comic_center2.DeleteViewLog(params)
+		comic_center.DeleteViewLog(params)
 		return "", nil
 	case "cleanNetworkCache":
 		return "", cleanNetworkCache()
@@ -679,7 +681,7 @@ func FlatInvoke(method string, params string) (string, error) {
 	case "downloadPicturesByEpId":
 		return downloadPicturesByEpId(params)
 	case "resetAllDownloads":
-		return "", comic_center2.ResetAll()
+		return "", comic_center.ResetAll()
 	case "exportComicDownload":
 		return exportComicDownload(params)
 	case "exportComicDownloadToJPG":
