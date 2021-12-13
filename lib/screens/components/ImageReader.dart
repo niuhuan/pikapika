@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:another_xlider/another_xlider.dart';
 import 'package:event/event.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -956,11 +955,16 @@ class _WebToonReaderState extends _ImageReaderContentState {
                     _trueSizes[index]!.width,
               );
             } else {
+              var maxHeight = constraints.maxHeight -
+                  super._topBarHeight() -
+                  (widget.struct.fullScreen
+                      ? super._topBarHeight()
+                      : super._bottomBarHeight());
               renderSize = Size(
-                constraints.maxHeight *
+                maxHeight *
                     _trueSizes[index]!.width /
                     _trueSizes[index]!.height,
-                constraints.maxHeight,
+                maxHeight,
               );
             }
           } else {
@@ -1248,11 +1252,16 @@ class _ListViewReaderState extends _ImageReaderContentState
                     _trueSizes[index]!.width,
               );
             } else {
+              var maxHeight = constraints.maxHeight -
+                  super._topBarHeight() -
+                  (widget.struct.fullScreen
+                      ? super._topBarHeight()
+                      : super._bottomBarHeight());
               renderSize = Size(
-                constraints.maxHeight *
+                maxHeight *
                     _trueSizes[index]!.width /
                     _trueSizes[index]!.height,
-                constraints.maxHeight,
+                maxHeight,
               );
             }
           } else {
