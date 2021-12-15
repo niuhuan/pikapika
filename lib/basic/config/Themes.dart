@@ -223,6 +223,9 @@ class _DustyBlueTheme extends _ThemePackage {
             color: Colors.white,
           ),
         ),
+        dialogTheme: DialogTheme(
+          backgroundColor: Color(0xff20253b),
+        ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Color(0xff191b26),
           selectedItemColor: Colors.blue.shade200,
