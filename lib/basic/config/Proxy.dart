@@ -18,10 +18,10 @@ String currentProxyName() {
 Future<dynamic> inputProxy(BuildContext context) async {
   String? input = await displayTextInputDialog(
     context,
-    '代理服务器',
-    '请输入代理服务器',
-    _currentProxy,
-    " ( 例如 socks5://127.0.0.1:1080/ ) ",
+    src: _currentProxy,
+    title: '代理服务器',
+    hint: '请输入代理服务器',
+    desc: " ( 例如 socks5://127.0.0.1:1080/ ) ",
   );
   if (input != null) {
     await method.setProxy(input);

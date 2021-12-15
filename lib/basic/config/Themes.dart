@@ -28,8 +28,8 @@ ThemeData _fontThemeData(bool dark) {
 
 Future<void> inputFont(BuildContext context) async {
   var font = await displayTextInputDialog(
-    context, "字体", "请输入字体", "$_fontFamily",
-    "请输入字体的名称, 例如宋体/黑体, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
+    context, src: "$_fontFamily", title: "字体", hint: "请输入字体",
+    desc: "请输入字体的名称, 例如宋体/黑体, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
   );
   if (font != null) {
     await method.saveProperty(_fontFamilyProperty, font);
@@ -174,7 +174,8 @@ class _DustyBlueTheme extends _ThemePackage {
   @override
   ThemeData themeData(ThemeData rawData) =>
       rawData.copyWith(
-        scaffoldBackgroundColor: Color.alphaBlend(Color(0x11999999), Color(0xff20253b)),
+        scaffoldBackgroundColor: Color.alphaBlend(
+            Color(0x11999999), Color(0xff20253b)),
         cardColor: Color.alphaBlend(Color(0x11AAAAAA), Color(0xff20253b)),
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(

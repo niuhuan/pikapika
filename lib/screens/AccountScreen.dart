@@ -81,10 +81,9 @@ class _AccountScreenState extends State<AccountScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '账号',
-                '请输入账号',
-                _username,
-                "",
+                src: _username,
+                title: '账号',
+                hint: '请输入账号',
               );
               if (input != null) {
                 await method.setUsername(input);
@@ -96,14 +95,13 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           ListTile(
             title: Text("密码"),
-            subtitle: Text(_password == "" ? "未设置" : _password),
+            subtitle: Text(_password == "" ? "未设置" : "******"),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '密码',
-                '请输入密码',
-                _password,
-                "",
+                src: _password,
+                title: '密码',
+                hint: '请输入密码',
               );
               if (input != null) {
                 await method.setPassword(input);

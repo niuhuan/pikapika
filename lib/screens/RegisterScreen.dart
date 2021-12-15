@@ -127,10 +127,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '账号',
-                '请输入账号',
-                _email,
-                "",
+                src: _email,
+                title: '账号',
+                hint: '请输入账号',
               );
               if (input != null) {
                 setState(() {
@@ -145,10 +144,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '密码',
-                '请输入密码',
-                _password,
-                "",
+                src: _password,
+                title: '密码',
+                hint: '请输入密码',
               );
               if (input != null) {
                 setState(() {
@@ -163,10 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '昵称',
-                '请输入昵称',
-                _name,
-                "",
+                src: _name,
+                title: '昵称',
+                hint: '请输入昵称',
               );
               if (input != null) {
                 setState(() {
@@ -237,10 +234,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '问题1',
-                '请输入问题1',
-                _question1,
-                "",
+                src: _question1,
+                title: '问题1',
+                hint: '请输入问题1',
               );
               if (input != null) {
                 setState(() {
@@ -255,10 +251,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '回答1',
-                '请输入回答1',
-                _answer1,
-                "",
+                src: _answer1,
+                title: '回答1',
+                hint: '请输入回答1',
               );
               if (input != null) {
                 setState(() {
@@ -273,10 +268,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '问题2',
-                '请输入问题2',
-                _question2,
-                "",
+                src: _question2,
+                title: '问题2',
+                hint: '请输入问题2',
               );
               if (input != null) {
                 setState(() {
@@ -291,10 +285,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '回答2',
-                '请输入回答2',
-                _answer2,
-                "",
+                src: _answer2,
+                title: '回答2',
+                hint: '请输入回答2',
               );
               if (input != null) {
                 setState(() {
@@ -309,10 +302,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '问题3',
-                '请输入问题3',
-                _question3,
-                "",
+                src: _question3,
+                title: '问题3',
+                hint: '请输入问题3',
               );
               if (input != null) {
                 setState(() {
@@ -327,10 +319,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
-                '回答3',
-                '请输入回答3',
-                _answer3,
-                "",
+                src: _answer3,
+                title: '回答3',
+                hint: '请输入回答3',
               );
               if (input != null) {
                 setState(() {

@@ -51,10 +51,10 @@ Future<String> currentChooserRoot() async {
 Future<dynamic> _inputChooserRoot(BuildContext context) async {
   String? input = await displayTextInputDialog(
     context,
-    '文件夹选择器根路径',
-    '请输入文件夹选择器根路径',
-    _chooserRoot,
-    "导出时选择目录的默认路径, 同时也是根路径, 不能正常导出时也可以尝试设置此选项。",
+    src: _chooserRoot,
+    title: '文件夹选择器根路径',
+    hint: '请输入文件夹选择器根路径',
+    desc: "导出时选择目录的默认路径, 同时也是根路径, 不能正常导出时也可以尝试设置此选项。",
   );
   if (input != null) {
     await method.saveProperty(_propertyName, input);

@@ -147,19 +147,14 @@ Future<T?> chooseMapDialog<T>(
 
 var _controller = TextEditingController.fromValue(TextEditingValue(text: ''));
 
-Future<String?> displayTextInputDialog(
-  BuildContext context,
-  String title,
-  String hint,
-  String src,
-  String desc,
-) {
+Future<String?> displayTextInputDialog(BuildContext context,
+    {String? title, String src = "", String? hint, String? desc}) {
   _controller.text = src;
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(title),
+        title: title == null ? null : Text(title),
         content: SingleChildScrollView(
           child: ListBody(
             children: [
@@ -167,21 +162,23 @@ Future<String?> displayTextInputDialog(
                 controller: _controller,
                 decoration: InputDecoration(hintText: hint),
               ),
-              desc.isEmpty
-                  ? Container()
-                  : Container(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child: Text(
-                        desc,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.color
-                                ?.withOpacity(.5)),
-                      ),
-                    ),
+              ...(desc == null
+                  ? []
+                  : [
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Text(
+                          desc,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.color
+                                  ?.withOpacity(.5)),
+                        ),
+                      )
+                    ]),
             ],
           ),
         ),
