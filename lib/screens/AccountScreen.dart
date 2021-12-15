@@ -95,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           ListTile(
             title: Text("密码"),
-            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 48),
+            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,

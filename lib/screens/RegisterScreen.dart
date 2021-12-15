@@ -139,7 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           ListTile(
             title: Text("密码 (8位以上)"),
-            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 48),
+            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
