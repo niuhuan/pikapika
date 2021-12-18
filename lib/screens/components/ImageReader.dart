@@ -650,7 +650,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       backgroundColor: Color(0xAA000000),
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height / 2,
+          height: MediaQuery.of(context).size.height * (.45),
           child: _SettingPanel(
             widget.struct.onReloadEp,
             widget.struct.onDownload,
@@ -817,20 +817,6 @@ class _SettingPanelState extends State<_SettingPanel> {
               ),
             ],
           ),
-        ),
-        Row(
-          children: [
-            _bottomIcon(
-              icon: Icons.straighten_sharp,
-              title: currentReaderSliderPositionName(),
-              onPressed: () async {
-                await chooseReaderSliderPosition(context);
-              },
-            ),
-            Expanded(child: Container()),
-            Expanded(child: Container()),
-            Expanded(child: Container()),
-          ],
         ),
       ],
     );

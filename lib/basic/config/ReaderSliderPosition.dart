@@ -38,7 +38,7 @@ Future<void> chooseReaderSliderPosition(BuildContext context) async {
     map[value] = key;
   });
   ReaderSliderPosition? result =
-      await chooseMapDialog<ReaderSliderPosition>(context, map, "选择操控方式");
+      await chooseMapDialog<ReaderSliderPosition>(context, map, "选择滑动条位置");
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     _readerSliderPosition = result;
