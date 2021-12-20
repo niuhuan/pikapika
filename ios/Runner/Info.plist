@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Save images</string>
+	<string>Usage images</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Add images</string>
+	<string>Save images</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

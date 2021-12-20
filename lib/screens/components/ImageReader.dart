@@ -629,7 +629,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       backgroundColor: Color(0xAA000000),
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height / 2,
+          height: MediaQuery.of(context).size.height * (.45),
           child: _EpChooser(
             widget.struct.epNameMap,
             widget.struct.epOrder,
