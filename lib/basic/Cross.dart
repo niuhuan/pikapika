@@ -81,7 +81,8 @@ Future<String?> chooseFolder(BuildContext context) async {
     pickText: '将文件保存到这里',
     context: context,
     fsType: FilesystemType.folder,
-    rootDirectory: Directory(await currentChooserRoot()),
+    rootDirectory:
+        Directory.fromUri(Uri.file(await currentChooserRoot())).absolute,
   );
 }
 
