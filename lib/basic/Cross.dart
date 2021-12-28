@@ -12,13 +12,8 @@ import 'config/ChooserRoot.dart';
 
 /// 复制内容到剪切板
 void copyToClipBoard(BuildContext context, String string) {
-  if (Platform.isWindows || Platform.isMacOS) {
-    FlutterClipboard.copy(string);
-    defaultToast(context, "已复制到剪切板");
-  } else if (Platform.isAndroid) {
-    FlutterClipboard.copy(string);
-    defaultToast(context, "已复制到剪切板");
-  }
+  FlutterClipboard.copy(string);
+  defaultToast(context, "已复制到剪切板");
 }
 
 /// 打开web页面
