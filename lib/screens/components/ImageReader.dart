@@ -669,6 +669,17 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
 
   // 给子类调用的方法
 
+  bool _fullscreenController() {
+    switch (currentFullScreenAction()) {
+      case FullScreenAction.CONTROLLER:
+        return false;
+      case FullScreenAction.TOUCH_ONCE:
+        return true;
+      case FullScreenAction.THREE_AREA:
+        return true;
+    }
+  }
+
   Future _onNextAction() async {
     if (widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1)) {
       widget.struct.onChangeEp(widget.struct.epOrder + 1);
@@ -1025,7 +1036,11 @@ class _WebToonReaderState extends _ImageReaderContentState {
   }
 
   Widget _buildNextEp() {
+    if (super._fullscreenController()) {
+      return Container();
+    }
     return Container(
+      color: Colors.transparent,
       padding: EdgeInsets.all(20),
       child: MaterialButton(
         onPressed: () {
@@ -1330,6 +1345,9 @@ class _ListViewReaderState extends _ImageReaderContentState
   }
 
   Widget _buildNextEp() {
+    if (super._fullscreenController()) {
+      return Container();
+    }
     return Container(
       padding: EdgeInsets.all(20),
       child: MaterialButton(
