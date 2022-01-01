@@ -728,6 +728,7 @@ class _EpChooserState extends State<_EpChooser> {
           ),
           child: MaterialButton(
             onPressed: () {
+              Navigator.of(context).pop();
               widget.onChangeEp(e.key);
             },
             textColor: Colors.white,
