@@ -1533,7 +1533,8 @@ class _GalleryReaderState extends _ImageReaderContentState {
   }
 
   Widget _buildNextEpController() {
-    if (_current < widget.struct.images.length - 1) return Container();
+    if (super._fullscreenController() ||
+        _current < widget.struct.images.length - 1) return Container();
     return Align(
       alignment: Alignment.bottomRight,
       child: Material(

@@ -61,19 +61,24 @@ class _ComicListState extends State<ComicList> {
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         ...widget.comicList.map((e) {
-          var shadow = e.categories.map(
-            (c) {
-              switch (currentShadowCategoriesMode()) {
-                case ShadowCategoriesMode.BLACK_LIST:
-                  if (shadowCategories.contains(c)) return true;
-                  break;
-                case ShadowCategoriesMode.WHITE_LIST:
-                  if (!shadowCategories.contains(c)) return true;
-                  break;
+          late bool shadow;
+          X:
+          switch (currentShadowCategoriesMode()) {
+            case ShadowCategoriesMode.BLACK_LIST:
+              shadow = e.categories
+                  .map((c) => shadowCategories.contains(c))
+                  .reduce((value, element) => value || element);
+              break;
+            case ShadowCategoriesMode.WHITE_LIST:
+              for (var c in e.categories) {
+                if (shadowCategories.contains(c)) {
+                  shadow = false;
+                  break X;
+                }
               }
-              return false;
-            },
-          ).reduce((value, element) => value || element);
+              shadow = true;
+              break;
+          }
           if (shadow) {
             return InkWell(
               onTap: () {},
