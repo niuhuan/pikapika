@@ -14,10 +14,10 @@ class ComicCommentItem extends StatefulWidget {
   const ComicCommentItem(this.mainType, this.mainId, this.comment);
 
   @override
-  State<StatefulWidget> createState() => _ComicCommentItem();
+  State<StatefulWidget> createState() => _ComicCommentItemState();
 }
 
-class _ComicCommentItem extends State<ComicCommentItem> {
+class _ComicCommentItemState extends State<ComicCommentItem> {
   var likeLoading = false;
 
   @override

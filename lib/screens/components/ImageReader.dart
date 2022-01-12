@@ -820,7 +820,10 @@ class _SettingPanelState extends State<_SettingPanel> {
               _bottomIcon(
                 icon: Icons.refresh,
                 title: "重载页面",
-                onPressed: widget.onReloadEp,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  widget.onReloadEp();
+                },
               ),
               _bottomIcon(
                 icon: Icons.file_download,
