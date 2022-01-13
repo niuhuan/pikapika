@@ -65,8 +65,8 @@ class _CommentListState extends State<CommentList> {
           children: [
             _buildPrePage(page),
             ...page.docs.map((e) => _buildComment(e)),
-            _buildPostComment(),
             _buildNextPage(page),
+            _buildPostComment(),
           ],
         );
       },

@@ -66,8 +66,8 @@ class _CommentScreenState extends State<CommentScreen> {
           children: [
             _buildPrePage(page),
             ...page.docs.map((e) => _buildComment(e)),
-            _buildPostComment(),
             _buildNextPage(page),
+            _buildPostComment(),
           ],
         );
       },
