@@ -1,7 +1,8 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/screens/InitScreen.dart';
-import 'package:pikapika/basic/Navigatior.dart';
+import 'package:pikapika/basic/Navigator.dart';
+import 'package:pikapika/screens/components/MouseAndTouchScrollBehavior.dart';
 
 import 'basic/config/Themes.dart';
 
@@ -36,6 +37,7 @@ class _PikapikaAppState extends State<PikapikaApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: mouseAndTouchScrollBehavior,
       theme: currentThemeData(),
       darkTheme: currentDarkTheme(),
       navigatorObservers: [navigatorObserver, routeObserver],

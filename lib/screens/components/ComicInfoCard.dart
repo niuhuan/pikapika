@@ -4,7 +4,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
-import 'package:pikapika/basic/Navigatior.dart';
+import 'package:pikapika/basic/Navigator.dart';
 import '../ComicsScreen.dart';
 import 'Images.dart';
 
