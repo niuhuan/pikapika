@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 
 import 'Images.dart';
@@ -45,8 +46,18 @@ class GameTitleCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(info.title, style: titleStyle),
-              Text(info.publisher, style: publisherStyle),
+              GestureDetector(
+                onLongPress: () {
+                  confirmCopy(context, info.title);
+                },
+                child: Text(info.title, style: titleStyle),
+              ),
+              GestureDetector(
+                onLongPress: () {
+                  confirmCopy(context, info.publisher);
+                },
+                child: Text(info.publisher, style: publisherStyle),
+              ),
               Text(info.version, style: versionStyle),
             ],
           ),

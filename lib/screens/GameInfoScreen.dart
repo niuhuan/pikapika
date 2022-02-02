@@ -85,8 +85,8 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      GameDownloadScreen(info)),
+                                builder: (context) => GameDownloadScreen(info),
+                              ),
                             );
                           },
                           child: Container(
