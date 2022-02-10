@@ -76,8 +76,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 ### 开发环境准备
 
 - [golang](https://golang.org/) (1.16以上版本)
-- [flutter](https://flutter.dev/) (stable-2.10.0)
-  - flutter不同版本api差异较大,建议使用临近的beta版本
+- [flutter](https://flutter.dev/) (stable-2.10.1)
 
 ### 环境配置
 
@@ -94,8 +93,17 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
   # 或
   go install github.com/go-flutter-desktop/hover@latest
   ```
-  - 若您希望使用stable版本的flutter, 请使用github.com/niuhuan/hover
-- 安装gcc
+  &- 若您希望使用stable版本的flutter, 请使用 niuhuan/hover (官方hover不支持stable)<br />
+  ```shell
+  go install github.com/niuhuan/hover@latest
+  ```
+  &- niuhuan/hover支持使用代理下载flutter引擎
+  ```shell
+  export GHPROXY=true
+  hover build
+  ```
+
+- 安装gcc (桌面端使用CGO调用flutter引擎)
   ```shell
   # Windows需要安装MSYS(mingw-w64-x86_64-gcc), 并将gcc路径设置到PATH环境变量内
   # MacOS需要安装XCode
@@ -125,10 +133,10 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
     ```
     ```yaml
    # 编辑 pubspec.yaml
-     fonts:
-       - family: Roboto
-         fonts:
-           - asset: fonts/DroidSansFallbackFull.ttf
+  fonts:
+  - family: Roboto
+      fonts:
+        - asset: fonts/DroidSansFallbackFull.ttf
     ```
 
 ### 移动端 (gomobile)
@@ -143,14 +151,23 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
   ```shell
   go install golang.org/x/mobile/cmd/gomobile@latest
   ```
-- 执行编译命令 (bind-android.sh/bind-ios.sh根据平台选择, $system替换为apk/ipa等)
+- 先编译golang库, 再打包flutter 
   ```shell
+  
+  # android
   cd go/mobile
   go get golang.org/x/mobile/cmd/gobind
-  sh bind-ios.sh
-  sh bind-android.sh
-  cd ../../
-  flutter build $system
+  gomobile bind -target=android -o lib/Mobile.aar ./
+  cd ../..
+  flutter build apk
+  
+  # ios
+  cd go/mobile
+  go get golang.org/x/mobile/cmd/gobind
+  gomobile bind -target=ios -o lib/Mobile.xcframework ./
+  cd ../..
+  flutter build ipa
+  
   ```
 
 ## 请您遵守使用规则
