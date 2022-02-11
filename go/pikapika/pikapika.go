@@ -535,7 +535,8 @@ func convertImageToJPEG100(params string) error {
 	return jpeg.Encode(stream, i, &jpeg.Options{Quality: 100})
 }
 
-func httpGet(url string) (string, error) {
+// 检查更新只能使用defaultHttpClient, 而不能使用pika的client, 否则会 "tls handshake failure"
+func defaultHttpClientGet(url string) (string, error) {
 	rsp, err := http.DefaultClient.Get(url)
 	if err != nil {
 		return "", err
@@ -723,8 +724,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return strconv.Itoa(loadDownloadThreadCount()), nil
 	case "switchLikeComment":
 		return switchLikeComment(params)
-	case "httpGet":
-		return httpGet(params)
+	case "defaultHttpClientGet":
+		return defaultHttpClientGet(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

@@ -76,7 +76,8 @@ bool dirtyVersion() {
 // maybe exception
 Future _versionCheck() async {
   if (_versionExp.hasMatch(_version)) {
-    var json = jsonDecode(await method.httpGet(_versionUrl));
+    // 检查更新只能使用defaultHttpClient, 而不能使用pika的client, 否则会 "tls handshake failure"
+    var json = jsonDecode(await method.defaultHttpClientGet(_versionUrl));
     if (json["name"] != null) {
       String latestVersion = (json["name"]);
       if (latestVersion != _version) {

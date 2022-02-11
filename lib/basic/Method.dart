@@ -685,7 +685,7 @@ class Method {
   }
 
   /// HTTP-GET-STRING
-  Future<String> httpGet(String url) async {
-    return await _flatInvoke("httpGet", url);
+  Future<String> defaultHttpClientGet(String url) async {
+    return await _flatInvoke("defaultHttpClientGet", url);
   }
 }
