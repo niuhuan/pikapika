@@ -8,6 +8,7 @@ import (
 	source "github.com/niuhuan/pica-go"
 	"image/jpeg"
 	"io/ioutil"
+	"net/http"
 	"os"
 	path2 "path"
 	"pikapika/pikapika/database/comic_center"
@@ -535,7 +536,7 @@ func convertImageToJPEG100(params string) error {
 }
 
 func httpGet(url string) (string, error) {
-	rsp, err := client.Get(url)
+	rsp, err := http.DefaultClient.Get(url)
 	if err != nil {
 		return "", err
 	}
