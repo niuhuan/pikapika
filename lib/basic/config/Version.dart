@@ -1,7 +1,6 @@
 import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:event/event.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pikapika/basic/Common.dart';

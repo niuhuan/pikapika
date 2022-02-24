@@ -3,13 +3,14 @@
 package pikapika
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	source "github.com/niuhuan/pica-go"
 	"net"
 	"net/http"
 	"net/url"
-	comic_center2 "pikapika/pikapika/database/comic_center"
+	"pikapika/pikapika/database/comic_center"
 	"pikapika/pikapika/database/network_cache"
 	"pikapika/pikapika/database/properties"
 	"regexp"
@@ -200,7 +201,7 @@ func comicInfo(comicId string) (string, error) {
 		network_cache.SaveCache(key, cache)
 	}
 	// 标记历史记录
-	view := comic_center2.ComicView{}
+	view := comic_center.ComicView{}
 	view.ID = comicId
 	view.CreatedAt = comic.CreatedAt
 	view.UpdatedAt = comic.UpdatedAt
@@ -224,7 +225,7 @@ func comicInfo(comicId string) (string, error) {
 	view.IsFavourite = comic.IsFavourite
 	view.IsLiked = comic.IsLiked
 	view.CommentsCount = int32(comic.CommentsCount)
-	err = comic_center2.ViewComicUpdateInfo(&view)
+	err = comic_center.ViewComicUpdateInfo(&view)
 	if err != nil {
 		return "", err
 	}
@@ -283,7 +284,7 @@ func switchLike(comicId string) (string, error) {
 		return "", err
 	}
 	// 更新viewLog里面的favour
-	comic_center2.ViewComicUpdateLike(comicId, strings.HasPrefix(*point, "un"))
+	comic_center.ViewComicUpdateLike(comicId, strings.HasPrefix(*point, "un"))
 	// 删除缓存
 	ComicInfoCleanCache(comicId)
 	return *point, nil
@@ -295,7 +296,7 @@ func switchFavourite(comicId string) (string, error) {
 		return "", err
 	}
 	// 更新viewLog里面的favour
-	comic_center2.ViewComicUpdateFavourite(comicId, strings.HasPrefix(*point, "un"))
+	comic_center.ViewComicUpdateFavourite(comicId, strings.HasPrefix(*point, "un"))
 	// 删除缓存
 	ComicInfoCleanCache(comicId)
 	return *point, nil
@@ -531,4 +532,28 @@ func switchLikeGameComment(params string) (string, error) {
 	network_cache.RemoveCaches("MY_COMMENTS$%")
 	network_cache.RemoveCaches(fmt.Sprintf("GAME_COMMENTS$%s$%%", paramsStruct.GameId))
 	return *rsp, nil
+}
+
+func updatePassword(params string) (string, error) {
+	var paramsStruct struct {
+		OldPassword string `json:"oldPassword"`
+		NewPassword string `json:"newPassword"`
+	}
+	err := json.Unmarshal([]byte(params), &paramsStruct)
+	if err != nil {
+		return "", err
+	}
+	return "", client.UpdatePassword(paramsStruct.OldPassword, paramsStruct.NewPassword)
+}
+
+func updateSlogan(slogan string) (string, error) {
+	return "", client.UpdateSlogan(slogan)
+}
+
+func updateAvatar(avatarBase64 string) (string, error) {
+	buff, err := base64.StdEncoding.DecodeString(avatarBase64)
+	if err != nil {
+		return "", err
+	}
+	return "", client.UpdateAvatar(buff)
 }

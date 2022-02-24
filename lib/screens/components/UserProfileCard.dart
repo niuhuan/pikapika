@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
-import 'package:pikapika/screens/components/ItemBuilder.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/Avatar.dart';
 import 'package:pikapika/screens/components/Images.dart';
-import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/ItemBuilder.dart';
+
+const double _cardHeight = 180;
 
 // 用户信息卡
 class UserProfileCard extends StatefulWidget {
@@ -40,15 +42,39 @@ class _UserProfileCardState extends State<UserProfileCard> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var nameStyle = TextStyle(fontWeight: FontWeight.bold);
+    var nameStyle = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+    );
+    var nameStrutStyle = StrutStyle(
+      fontSize: 14,
+      forceStrutHeight: true,
+      fontWeight: FontWeight.bold,
+    );
     var levelStyle = TextStyle(
-        fontSize: 12, color: theme.colorScheme.secondary.withOpacity(.8));
+      fontSize: 12,
+      color: theme.colorScheme.secondary.withOpacity(.9),
+      fontWeight: FontWeight.bold,
+    );
+    var levelStrutStyle = StrutStyle(
+      fontSize: 12,
+      forceStrutHeight: true,
+      fontWeight: FontWeight.bold,
+    );
+    var sloganStyle = TextStyle(
+      fontSize: 10,
+      color: theme.textTheme.bodyText1?.color?.withOpacity(.5),
+    );
+    var sloganStrutStyle = StrutStyle(
+      fontSize: 10,
+      forceStrutHeight: true,
+    );
     return ItemBuilder(
       future: _future,
       onRefresh: () async {
         setState(() => _future = method.userProfile());
       },
-      height: 150,
+      height: _cardHeight,
       successBuilder:
           (BuildContext context, AsyncSnapshot<UserProfile> snapshot) {
         UserProfile profile = snapshot.data!;
@@ -66,7 +92,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                           path: profile.avatar.path,
                           fileServer: profile.avatar.fileServer,
                           width: constraints.maxWidth,
-                          height: 150,
+                          height: _cardHeight,
                         );
                       },
                     ),
@@ -82,19 +108,44 @@ class _UserProfileCardState extends State<UserProfileCard> {
               ),
             ),
             Container(
-              height: 150,
+              height: _cardHeight,
               child: Column(
                 children: [
                   Expanded(child: Container()),
-                  Avatar(profile.avatar),
-                  Container(width: 18),
+                  Avatar(profile.avatar, size: 65),
+                  Container(height: 5),
                   Text(
                     profile.name,
                     style: nameStyle,
+                    strutStyle: nameStrutStyle,
                   ),
                   Text(
                     "Lv. ${profile.level} (${profile.title})",
                     style: levelStyle,
+                    strutStyle: levelStrutStyle,
+                  ),
+                  Container(height: 8),
+                  GestureDetector(
+                    onTap: () async {
+                      var input = await inputString(
+                        context,
+                        "更新签名",
+                        defaultValue: profile.slogan ?? "",
+                      );
+                      if (input != null) {
+                        await method.updateSlogan(input);
+                        setState(() {
+                          _future = _load();
+                        });
+                      }
+                    },
+                    child: Text(
+                      profile.slogan == null || profile.slogan!.isEmpty
+                          ? "这个人很懒, 什么也没留下"
+                          : profile.slogan!,
+                      style: sloganStyle,
+                      strutStyle: sloganStrutStyle,
+                    ),
                   ),
                   Expanded(child: Container()),
                 ],

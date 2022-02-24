@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:pikapika/basic/Entities.dart';
-import 'package:pikapika/basic/config/Quality.dart';
 
 /// 使用MethodChannel与平台通信
 
@@ -687,5 +686,10 @@ class Method {
   /// HTTP-GET-STRING
   Future<String> defaultHttpClientGet(String url) async {
     return await _flatInvoke("defaultHttpClientGet", url);
+  }
+
+  /// 更新签名
+  Future updateSlogan(String input) async {
+    return await _flatInvoke("updateSlogan", input);
   }
 }

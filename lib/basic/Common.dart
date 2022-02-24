@@ -148,7 +148,11 @@ Future<T?> chooseMapDialog<T>(
 var _controller = TextEditingController.fromValue(TextEditingValue(text: ''));
 
 Future<String?> displayTextInputDialog(BuildContext context,
-    {String? title, String src = "", String? hint, String? desc, bool isPasswd = false}) {
+    {String? title,
+    String src = "",
+    String? hint,
+    String? desc,
+    bool isPasswd = false}) {
   _controller.text = src;
   return showDialog(
     context: context,
@@ -238,8 +242,12 @@ final TextEditingController _textEditController =
     TextEditingController(text: '');
 
 Future<String?> inputString(BuildContext context, String title,
-    {String hint = ""}) async {
-  _textEditController.clear();
+    {String hint = "", String? defaultValue}) async {
+  if (defaultValue != null) {
+    _textEditController.text = defaultValue;
+  } else {
+    _textEditController.clear();
+  }
   return showDialog(
     context: context,
     builder: (context) {

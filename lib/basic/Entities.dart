@@ -22,6 +22,7 @@ class BasicUser {
   late int level;
   late List<String> characters;
   late RemoteImageInfo avatar;
+  late String? slogan;
 
   BasicUser.fromJson(Map<String, dynamic> json) {
     this.id = json["_id"];
@@ -36,6 +37,7 @@ class BasicUser {
         : List.of(json["characters"]).map((e) => "$e").toList();
     this.avatar =
         RemoteImageInfo.fromJson(Map<String, dynamic>.of(json["avatar"]));
+    this.slogan = json["slogan"];
   }
 }
 
@@ -160,12 +162,10 @@ class ComicInfo extends ComicSimple {
 
 /// 漫画创建人信息
 class Creator extends BasicUser {
-  late String slogan;
   late String role;
   late String character;
 
   Creator.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    this.slogan = json["slogan"];
     this.role = json["role"];
     this.character = json["character"];
   }
