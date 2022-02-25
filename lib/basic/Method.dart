@@ -692,4 +692,10 @@ class Method {
   Future updateSlogan(String input) async {
     return await _flatInvoke("updateSlogan", input);
   }
+
+  /// 更新签名
+  Future updateAvatar(String data) async {
+    return await _flatInvoke("updateAvatar", data);
+  }
+
 }

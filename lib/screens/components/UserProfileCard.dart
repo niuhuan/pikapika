@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -112,7 +116,14 @@ class _UserProfileCardState extends State<UserProfileCard> {
               child: Column(
                 children: [
                   Expanded(child: Container()),
-                  Avatar(profile.avatar, size: 65),
+                  GestureDetector(
+                    onTap: () async {
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        await _updateAvatarPhone();
+                      }
+                    },
+                    child: Avatar(profile.avatar, size: 65),
+                  ),
                   Container(height: 5),
                   Text(
                     profile.name,
@@ -134,9 +145,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                       );
                       if (input != null) {
                         await method.updateSlogan(input);
-                        setState(() {
-                          _future = _load();
-                        });
+                        _reload();
                       }
                     },
                     child: Text(
@@ -155,5 +164,47 @@ class _UserProfileCardState extends State<UserProfileCard> {
         );
       },
     );
+  }
+
+  Future _updateAvatarPhone() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final theme = Theme.of(context);
+      final cropper = ImageCropper();
+      File? croppedFile = await cropper.cropImage(
+        sourcePath: image.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
+        aspectRatio: CropAspectRatio(ratioX: 200, ratioY: 200),
+        maxWidth: 200,
+        maxHeight: 200,
+        androidUiSettings: AndroidUiSettings(
+          toolbarTitle: "修改头像",
+          toolbarColor: theme.appBarTheme.backgroundColor,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: true,
+        ),
+        iosUiSettings: IOSUiSettings(
+          resetAspectRatioEnabled: true,
+          aspectRatioLockEnabled: true,
+          title: "修改头像",
+        ),
+      );
+      if (croppedFile != null) {
+        var buff = await croppedFile.readAsBytes();
+        var data = base64Encode(buff);
+        await method.updateAvatar(data);
+        _reload();
+      }
+    }
+  }
+
+  void _reload() {
+    setState(() {
+      _future = _load();
+    });
   }
 }

@@ -46,6 +46,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/niuhuan/pica-go v0.0.0-20220223122613-0d7d95a9c728 h1:zcO9WFgYbQ3g9U1nbJ6PCelzGB/BaPsCW9jwNry2JXM=
 github.com/niuhuan/pica-go v0.0.0-20220223122613-0d7d95a9c728/go.mod h1:r76zBgH9AYkv0ptyEVoPUIdt33sT0Ts7xgcg742OZtw=
+github.com/niuhuan/pica-go v0.0.0-20220224154849-76bf750f8c4d h1:f3V6V1Y+5j/AvhsIGA6aQ/K2Ez1AeYbuCG9uI4fGC6M=
+github.com/niuhuan/pica-go v0.0.0-20220224154849-76bf750f8c4d/go.mod h1:r76zBgH9AYkv0ptyEVoPUIdt33sT0Ts7xgcg742OZtw=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
