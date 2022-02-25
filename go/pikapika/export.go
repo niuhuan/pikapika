@@ -13,7 +13,8 @@ import (
 	"os"
 	"path"
 	"pikapika/pikapika/database/comic_center"
-	utils2 "pikapika/pikapika/utils"
+	"pikapika/pikapika/utils"
+	"strings"
 	"time"
 )
 
@@ -73,6 +74,7 @@ func exportComicDownload(params string) (filePath string, err error) {
 	var paramsStruct struct {
 		ComicId string `json:"comicId"`
 		Dir     string `json:"dir"`
+		Name    string `json:"name"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
 	comicId := paramsStruct.ComicId
@@ -90,7 +92,21 @@ func exportComicDownload(params string) (filePath string, err error) {
 		err = errors.New("not download finish")
 		return
 	}
-	filePath = path.Join(dir, fmt.Sprintf("%s-%s.zip", utils2.ReasonableFileName(comic.Title), time.Now().Format("2006_01_02_15_04_05.999")))
+	name := strings.TrimSpace(paramsStruct.Name)
+	if len(name) > 0 {
+		name = utils.ReasonableFileName(name) + ".zip"
+	} else {
+		name = fmt.Sprintf("%s-%s.zip", utils.ReasonableFileName(comic.Title), time.Now().Format("2006_01_02_15_04_05.999"))
+	}
+	filePath = path.Join(dir, name)
+	ex, err := utils.Exists(filePath)
+	if err != nil {
+		return "", err
+	}
+	if ex {
+		err = errors.New("exists")
+		return
+	}
 	println(fmt.Sprintf("ZIP : %s", filePath))
 	fileStream, err := os.Create(filePath)
 	if err != nil {
@@ -357,6 +373,7 @@ func exportComicDownloadToJPG(params string) error {
 	var paramsStruct struct {
 		ComicId string `json:"comicId"`
 		Dir     string `json:"dir"`
+		Name    string `json:"name"`
 	}
 	json.Unmarshal([]byte(params), &paramsStruct)
 	comicId := paramsStruct.ComicId
@@ -372,13 +389,26 @@ func exportComicDownloadToJPG(params string) error {
 	if !comic.DownloadFinished {
 		return errors.New("not download finish")
 	}
-	dirPath := path.Join(dir, fmt.Sprintf("%s-%s", utils2.ReasonableFileName(comic.Title), time.Now().Format("2006_01_02_15_04_05.999")))
+	name := strings.TrimSpace(paramsStruct.Name)
+	if len(name) > 0 {
+		name = utils.ReasonableFileName(name)
+	} else {
+		name = fmt.Sprintf("%s-%s", utils.ReasonableFileName(comic.Title), time.Now().Format("2006_01_02_15_04_05.999"))
+	}
+	dirPath := path.Join(dir, name)
 	println(fmt.Sprintf("DIR : %s", dirPath))
-	err = os.Mkdir(dirPath, utils2.CreateDirMode)
+	ex, err := utils.Exists(dirPath)
 	if err != nil {
 		return err
 	}
-	err = os.Mkdir(path.Join(dirPath, "pictures"), utils2.CreateDirMode)
+	if ex {
+		return errors.New("exists")
+	}
+	err = os.Mkdir(dirPath, utils.CreateDirMode)
+	if err != nil {
+		return err
+	}
+	err = os.Mkdir(path.Join(dirPath, "pictures"), utils.CreateDirMode)
 	if err != nil {
 		return err
 	}

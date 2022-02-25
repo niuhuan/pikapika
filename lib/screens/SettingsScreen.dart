@@ -11,6 +11,7 @@ import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapika/basic/config/ConvertToPNG.dart';
 import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
+import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
@@ -87,6 +88,7 @@ class SettingsScreen extends StatelessWidget {
             chooserRootSetting(),
             downloadThreadCountSetting(),
             downloadAndExportPathSetting(),
+            exportRenameSetting(),
             fontSetting(),
             Divider(),
             migrate(context),

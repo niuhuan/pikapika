@@ -539,18 +539,24 @@ class Method {
   }
 
   /// 导出下载的漫画到zip
-  Future<dynamic> exportComicDownload(String comicId, String dir) {
+  Future<dynamic> exportComicDownload(String comicId, String dir, String name) {
     return _flatInvoke("exportComicDownload", {
       "comicId": comicId,
       "dir": dir,
+      "name": name,
     });
   }
 
   /// 导出下载的图片到HTML+JPG
-  Future<dynamic> exportComicDownloadToJPG(String comicId, String dir) {
+  Future<dynamic> exportComicDownloadToJPG(
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,
       "dir": dir,
+      "name": name,
     });
   }
 

@@ -30,6 +30,7 @@ import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 
+import '../basic/config/ExportRename.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
 
@@ -78,6 +79,7 @@ class _InitScreenState extends State<InitScreen> {
     await initDownloadThreadCount();
     await initConvertToPNG();
     await initNoAnimation();
+    await initExportRename();
     await initVersion();
     autoCheckNewVersion();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟

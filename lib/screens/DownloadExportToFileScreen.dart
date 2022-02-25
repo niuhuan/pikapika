@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/screens/DownloadExportToSocketScreen.dart';
 
 import 'components/ContentError.dart';
@@ -133,6 +134,19 @@ class _DownloadExportToFileScreenState
             defaultToast(context, "$e");
             return;
           }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
           print("path $path");
           if (path != null) {
             try {
@@ -142,6 +156,7 @@ class _DownloadExportToFileScreenState
               await method.exportComicDownloadToJPG(
                 widget.comicId,
                 path,
+                name,
               );
               setState(() {
                 exportResult = "导出成功";
@@ -169,6 +184,19 @@ class _DownloadExportToFileScreenState
             defaultToast(context, "$e");
             return;
           }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
           print("path $path");
           if (path != null) {
             try {
@@ -178,6 +206,7 @@ class _DownloadExportToFileScreenState
               await method.exportComicDownload(
                 widget.comicId,
                 path,
+                name,
               );
               setState(() {
                 exportResult = "导出成功";
