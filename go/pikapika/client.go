@@ -543,7 +543,12 @@ func updatePassword(params string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return "", client.UpdatePassword(paramsStruct.OldPassword, paramsStruct.NewPassword)
+	err = client.UpdatePassword(paramsStruct.OldPassword, paramsStruct.NewPassword)
+	if err != nil {
+		return "", err
+	}
+	setPassword(paramsStruct.NewPassword)
+	return "", nil
 }
 
 func updateSlogan(slogan string) (string, error) {

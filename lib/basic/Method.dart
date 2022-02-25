@@ -698,4 +698,11 @@ class Method {
     return await _flatInvoke("updateAvatar", data);
   }
 
+  /// 修改密码
+  Future updatePassword(String oldPassword, String newPassword) {
+    return _flatInvoke("updatePassword", {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+    });
+  }
 }

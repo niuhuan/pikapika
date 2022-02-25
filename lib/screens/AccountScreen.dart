@@ -54,7 +54,6 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget _buildGui() {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
         title: Text('配置选项'),
         actions: [
           IconButton(

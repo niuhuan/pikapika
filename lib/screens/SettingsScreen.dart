@@ -16,10 +16,10 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
+import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
-import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
@@ -30,6 +30,7 @@ import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
+import 'ModifyPasswordScreen.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -37,6 +38,17 @@ class SettingsScreen extends StatelessWidget {
         appBar: AppBar(title: Text('设置')),
         body: ListView(
           children: [
+            Divider(),
+            ListTile(
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ModifyPasswordScreen()),
+                );
+              },
+              title: Text('修改密码'),
+            ),
             Divider(),
             NetworkSetting(),
             Divider(),
