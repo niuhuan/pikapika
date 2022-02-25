@@ -10,7 +10,6 @@ import '../Method.dart';
 const _versionUrl =
     "https://api.github.com/repos/niuhuan/pikapika/releases/latest";
 const _versionAssets = 'lib/assets/version.txt';
-RegExp _versionExp = RegExp(r"^v\d+\.\d+.\d+$");
 
 late String _version;
 String? _latestVersion;
@@ -69,12 +68,12 @@ Future manualCheckNewVersion(BuildContext context) async {
 }
 
 bool dirtyVersion() {
-  return !_versionExp.hasMatch(_version);
+  return "dirty" == _version;
 }
 
 // maybe exception
 Future _versionCheck() async {
-  if (_versionExp.hasMatch(_version)) {
+  if (!dirtyVersion()) {
     // 检查更新只能使用defaultHttpClient, 而不能使用pika的client, 否则会 "tls handshake failure"
     var json = jsonDecode(await method.defaultHttpClientGet(_versionUrl));
     if (json["name"] != null) {

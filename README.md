@@ -38,6 +38,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 - [x] 用户
     - [x] 登录 / 注册 / 获取个人信息 / 自动打卡
+    - [x] 修改密码 / 修改签名 / 修改头像
 - [x] 漫画
     - [x] 分类 / 搜索 / 随机本子 / 看此本子的也在看 / 排行榜
     - [x] 在分类中搜索 / 按 "分类 / 标签 / 创建人 / 汉化组" 检索
@@ -76,7 +77,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 ### 开发环境准备
 
 - [golang](https://golang.org/) (1.16以上版本)
-- [flutter](https://flutter.dev/) (stable-2.10.1)
+- [flutter](https://flutter.dev/) (stable-2.10.2)
 
 ### 环境配置
 
@@ -151,7 +152,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
   ```shell
   go install golang.org/x/mobile/cmd/gomobile@latest
   ```
-- 先编译golang库, 再打包flutter 
+- 先编译golang库, 再打包flutter
   ```shell
   
   # android
