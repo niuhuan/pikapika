@@ -66,6 +66,10 @@ func LoadBoolProperty(name string, defaultValue bool) (bool, error) {
 	return strconv.ParseBool(stringValue)
 }
 
+func SaveBoolProperty(name string, value bool) error {
+	return SaveProperty(name, strconv.FormatBool(value))
+}
+
 func LoadIntProperty(name string, defaultValue int) (int, error) {
 	str, err := LoadProperty(name, fmt.Sprintf("%d", defaultValue))
 	if err != nil {
@@ -76,10 +80,6 @@ func LoadIntProperty(name string, defaultValue int) (int, error) {
 
 func SaveIntProperty(name string, value int) error {
 	return SaveProperty(name, strconv.Itoa(value))
-}
-
-func SaveBoolProperty(name string, value bool) error {
-	return SaveProperty(name, strconv.FormatBool(value))
 }
 
 func SaveProxy(value string) error {

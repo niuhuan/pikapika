@@ -730,6 +730,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return updateSlogan(params)
 	case "updateAvatar":
 		return updateAvatar(params)
+	case "defaultHttpClientGet":
+		return defaultHttpClientGet(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

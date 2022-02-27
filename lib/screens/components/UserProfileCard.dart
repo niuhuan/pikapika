@@ -131,7 +131,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
                     strutStyle: nameStrutStyle,
                   ),
                   Text(
-                    "Lv. ${profile.level} (${profile.title})",
+                    "(Lv. ${profile.level}) (${profile.title})",
                     style: levelStyle,
                     strutStyle: levelStrutStyle,
                   ),
