@@ -12,7 +12,10 @@ String errorType(String error) {
   if (error.contains("timeout") ||
       error.contains("connection refused") ||
       error.contains("deadline") ||
-      error.contains("connection abort")) {
+      error.contains("connection abort") ||
+      error.contains("certificate") ||
+      error.contains("x509") ||
+      error.contains("ssl")) {
     return ERROR_TYPE_NETWORK;
   }
   if (error.contains("permission denied")) {

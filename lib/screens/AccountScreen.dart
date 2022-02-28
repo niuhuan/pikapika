@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
-import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
@@ -155,7 +155,7 @@ class _AccountScreenState extends State<AccountScreen> {
       setState(() {
         _logging = false;
       });
-      var message = "请检查账号密码";
+      var message = "请检查账号密码或网络环境";
       switch (errorType("$e")) {
         case ERROR_TYPE_NETWORK:
           message = "网络不通";
@@ -163,6 +163,9 @@ class _AccountScreenState extends State<AccountScreen> {
         case ERROR_TYPE_TIME:
           message = "请检查设备时间";
           break;
+      }
+      if ("$e".contains("email") && "$e".contains("password")) {
+        message = "请检查账号密码";
       }
       alertDialog(
         context,
