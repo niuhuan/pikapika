@@ -97,26 +97,27 @@ List<T> filteredList<T>(List<T> list, bool Function(T) filter) {
 Future<T?> chooseListDialog<T>(
     BuildContext context, String title, List<T> items,
     {String? tips}) async {
-  List<Widget> widgets = [];
-  if (tips != null) {
-    widgets.add(Container(
-      padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
-      child: Text(tips),
-    ));
-  }
-  widgets.addAll(items.map((e) => SimpleDialogOption(
-        onPressed: () {
-          Navigator.of(context).pop(e);
-        },
-        child: Text('$e'),
-      )));
-
   return showDialog<T>(
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
         title: Text(title),
-        children: widgets,
+        children: [
+          ...items.map((e) => SimpleDialogOption(
+                onPressed: () {
+                  Navigator.of(context).pop(e);
+                },
+                child: Text('$e'),
+              )),
+          ...tips != null
+              ? [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
+                    child: Text(tips),
+                  ),
+                ]
+              : [],
+        ],
       );
     },
   );
