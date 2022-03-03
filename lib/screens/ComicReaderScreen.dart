@@ -18,7 +18,7 @@ import 'components/ImageReader.dart';
 class ComicReaderScreen extends StatefulWidget {
   final ComicInfo comicInfo;
   final List<Ep> epList;
-  final currentEpOrder;
+  final int currentEpOrder;
   final int? initPicturePosition;
   late final bool autoFullScreen;
 
