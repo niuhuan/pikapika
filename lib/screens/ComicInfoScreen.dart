@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
-import 'package:pikapika/screens/ComicsScreen.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/Navigator.dart';
+import 'package:pikapika/screens/ComicsScreen.dart';
 import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
-import 'package:pikapika/basic/Method.dart';
+
 import 'ComicReaderScreen.dart';
 import 'DownloadConfirmScreen.dart';
-import 'components/CommentList.dart';
 import 'components/ComicDescriptionCard.dart';
 import 'components/ComicInfoCard.dart';
 import 'components/ComicTagsCard.dart';
+import 'components/CommentList.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
@@ -241,7 +242,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
           return IconButton(
             onPressed: () {
               setState(() {
-                _epListFuture = _loadEps();
+                this._epListFuture = _loadEps();
               });
             },
             icon: Icon(Icons.sync_problem),
