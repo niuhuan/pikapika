@@ -11,5 +11,5 @@ cd build
 mkdir -p Payload
 mv ios/iphoneos/Runner.app Payload
 
-sh ../scripts/thin_payload.sh
+sh ../scripts/thin-payload.sh
 zip -9 nosign.ipa -r Payload

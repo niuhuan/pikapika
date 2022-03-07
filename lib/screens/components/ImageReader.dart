@@ -506,6 +506,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         return _buildFullScreenController();
       case FullScreenAction.TOUCH_ONCE:
         return _buildTouchOnceController();
+      case FullScreenAction.TOUCH_DOUBLE:
+        return _buildTouchDoubleController();
+      case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
+        return _buildTouchDoubleOnceNextController();
       case FullScreenAction.THREE_AREA:
         return _buildThreeAreaController();
       default:
@@ -553,6 +557,30 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
+        widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+      },
+      child: Container(),
+    );
+  }
+
+  Widget _buildTouchDoubleController() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onDoubleTap: () {
+        widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+      },
+      child: Container(),
+    );
+  }
+
+  Widget _buildTouchDoubleOnceNextController() {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        _readerControllerEvent
+            .broadcast(_ReaderControllerEventArgs("DOWN"));
+      },
+      onDoubleTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
       },
       child: Container(),
@@ -674,6 +702,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       case FullScreenAction.CONTROLLER:
         return false;
       case FullScreenAction.TOUCH_ONCE:
+        return true;
+      case FullScreenAction.TOUCH_DOUBLE:
+        return true;
+      case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
         return true;
       case FullScreenAction.THREE_AREA:
         return true;
