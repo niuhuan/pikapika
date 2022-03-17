@@ -50,7 +50,7 @@ class _GamesScreenState extends State<GamesScreen> {
               gameCard = GameCard(element);
             } else {
               wraps.add(Wrap(
-                children: [GameCard(element), gameCard!],
+                children: [GameCard(element), gameCard],
                 alignment: WrapAlignment.center,
               ));
               gameCard = null;
@@ -58,7 +58,7 @@ class _GamesScreenState extends State<GamesScreen> {
           }
           if (gameCard != null) {
             wraps.add(Wrap(
-              children: [gameCard!],
+              children: [gameCard],
               alignment: WrapAlignment.center,
             ));
           }

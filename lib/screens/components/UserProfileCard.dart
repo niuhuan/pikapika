@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,8 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/Avatar.dart';
 import 'package:pikapika/screens/components/Images.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
+
+import 'DesktopCropper.dart';
 
 const double _cardHeight = 180;
 
@@ -120,6 +123,10 @@ class _UserProfileCardState extends State<UserProfileCard> {
                     onTap: () async {
                       if (Platform.isAndroid || Platform.isIOS) {
                         await _updateAvatarPhone();
+                      } else if (Platform.isMacOS ||
+                          Platform.isWindows ||
+                          Platform.isLinux) {
+                        await _updateAvatarDesktop();
                       }
                     },
                     child: Avatar(profile.avatar, size: 65),
@@ -195,6 +202,29 @@ class _UserProfileCardState extends State<UserProfileCard> {
       );
       if (croppedFile != null) {
         var buff = await croppedFile.readAsBytes();
+        var data = base64Encode(buff);
+        await method.updateAvatar(data);
+        _reload();
+      }
+    }
+  }
+
+  Future _updateAvatarDesktop() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+    if (result != null) {
+      List<int>? buff = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (BuildContext context) {
+          return DesktopCropper(
+            file: result.files.first.path!,
+            aspectRatio: 1,
+            title: "裁剪头像",
+          );
+        }),
+      );
+      if (buff != null) {
         var data = base64Encode(buff);
         await method.updateAvatar(data);
         _reload();
