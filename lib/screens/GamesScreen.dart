@@ -9,6 +9,8 @@ import 'components/Images.dart';
 
 // 游戏列表
 class GamesScreen extends StatefulWidget {
+  const GamesScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _GamesScreenState();
 }
@@ -43,7 +45,7 @@ class _GamesScreenState extends State<GamesScreen> {
 
           List<Wrap> wraps = [];
           GameCard? gameCard;
-          page.docs.forEach((element) {
+          for (var element in page.docs) {
             if (gameCard == null) {
               gameCard = GameCard(element);
             } else {
@@ -53,7 +55,7 @@ class _GamesScreenState extends State<GamesScreen> {
               ));
               gameCard = null;
             }
-          });
+          }
           if (gameCard != null) {
             wraps.add(Wrap(
               children: [gameCard!],
@@ -85,18 +87,16 @@ class _GamesScreenState extends State<GamesScreen> {
                           builder: (context) {
                             return AlertDialog(
                               content: Card(
-                                child: Container(
-                                  child: TextField(
-                                    controller: _textEditController,
-                                    decoration: new InputDecoration(
-                                      labelText: "请输入页数：",
-                                    ),
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp(r'\d+')),
-                                    ],
+                                child: TextField(
+                                  controller: _textEditController,
+                                  decoration: const InputDecoration(
+                                    labelText: "请输入页数：",
                                   ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'\d+')),
+                                  ],
                                 ),
                               ),
                               actions: <Widget>[
@@ -104,13 +104,13 @@ class _GamesScreenState extends State<GamesScreen> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('取消'),
+                                  child: const Text('取消'),
                                 ),
                                 MaterialButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                     var text = _textEditController.text;
-                                    if (text.length == 0 || text.length > 5) {
+                                    if (text.isEmpty || text.length > 5) {
                                       return;
                                     }
                                     var num = int.parse(text);
@@ -119,7 +119,7 @@ class _GamesScreenState extends State<GamesScreen> {
                                     }
                                     _onPageChange(num);
                                   },
-                                  child: Text('确定'),
+                                  child: const Text('确定'),
                                 ),
                               ],
                             );
@@ -186,7 +186,7 @@ class _GamesScreenState extends State<GamesScreen> {
 class GameCard extends StatelessWidget {
   final GameSimple info;
 
-  GameCard(this.info);
+  const GameCard(this.info, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -215,8 +215,8 @@ class GameCard extends StatelessWidget {
               );
             },
             child: Container(
-              padding: EdgeInsets.all(10),
-              child: Container(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
                 width: imageWidth,
                 child: Column(
                   children: [

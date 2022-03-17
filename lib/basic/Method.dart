@@ -13,7 +13,7 @@ class Method {
   Method._();
 
   /// channel
-  MethodChannel _channel = MethodChannel("method");
+  final MethodChannel _channel = const MethodChannel("method");
 
   /// 平铺调用, 为了直接与golang进行通信
   Future<dynamic> _flatInvoke(String method, dynamic params) {

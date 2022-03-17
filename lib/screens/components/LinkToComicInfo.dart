@@ -10,7 +10,8 @@ class LinkToComicInfo extends StatelessWidget {
   const LinkToComicInfo({
     required this.comicId,
     required this.child,
-  });
+    Key? key,
+  }):super(key: key);
 
   @override
   Widget build(BuildContext context) => InkWell(

@@ -13,6 +13,8 @@ import 'components/DownloadInfoCard.dart';
 
 // 下载列表
 class DownloadListScreen extends StatefulWidget {
+  const DownloadListScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _DownloadListScreenState();
 }
@@ -25,15 +27,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   void _onMessageChange(String event) {
     print("EVENT");
     print(event);
-    if (event is String) {
-      try {
-        setState(() {
-          _downloading = DownloadComic.fromJson(json.decode(event));
-        });
-      } catch (e, s) {
-        print(e);
-        print(s);
-      }
+    try {
+      setState(() {
+        _downloading = DownloadComic.fromJson(json.decode(event));
+      });
+    } catch (e, s) {
+      print(e);
+      print(s);
     }
   }
 

@@ -5,6 +5,8 @@ import 'components/ComicPager.dart';
 
 // 收藏的漫画
 class FavouritePaperScreen extends StatefulWidget {
+  const FavouritePaperScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _FavouritePaperScreen();
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
-import 'dart:ui';
 
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
 
@@ -60,21 +59,19 @@ class ContentError extends StatelessWidget {
             onTap: onRefresh,
             child: ListView(
               children: [
-                Container(
+                SizedBox(
                   height: height,
                   child: Column(
                     children: [
                       Expanded(child: Container()),
-                      Container(
-                        child: Icon(
-                          iconData,
-                          size: iconSize,
-                          color: Colors.grey.shade600,
-                        ),
+                      Icon(
+                        iconData,
+                        size: iconSize,
+                        color: Colors.grey.shade600,
                       ),
                       Container(height: min / 10),
                       Container(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 30,
                           right: 30,
                         ),
@@ -99,21 +96,19 @@ class ContentError extends StatelessWidget {
           onRefresh: onRefresh,
           child: ListView(
             children: [
-              Container(
+              SizedBox(
                 height: height,
                 child: Column(
                   children: [
                     Expanded(child: Container()),
-                    Container(
-                      child: Icon(
-                        iconData,
-                        size: iconSize,
-                        color: Colors.grey.shade600,
-                      ),
+                    Icon(
+                      iconData,
+                      size: iconSize,
+                      color: Colors.grey.shade600,
                     ),
                     Container(height: min / 10),
                     Container(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         left: 30,
                         right: 30,
                       ),

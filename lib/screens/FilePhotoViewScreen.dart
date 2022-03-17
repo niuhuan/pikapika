@@ -8,7 +8,7 @@ import 'package:pikapika/screens/components/Images.dart';
 class FilePhotoViewScreen extends StatelessWidget {
   final String filePath;
 
-  FilePhotoViewScreen(this.filePath);
+  const FilePhotoViewScreen(this.filePath, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(

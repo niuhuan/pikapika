@@ -115,53 +115,43 @@ class DownloadInfoCard extends StatelessWidget {
                           ),
                           Container(width: 20),
                           task.deleting
-                              ? Container(
-                                  child: Text('删除中',
+                              ? Text('删除中',
+                                  style: TextStyle(
+                                      color: Color.alphaBlend(
+                                          textColor.withAlpha(0x33),
+                                          Colors.red.shade500)))
+                              : task.downloadFailed
+                                  ? Text('下载失败',
                                       style: TextStyle(
                                           color: Color.alphaBlend(
                                               textColor.withAlpha(0x33),
-                                              Colors.red.shade500))),
-                                )
-                              : task.downloadFailed
-                                  ? Container(
-                                      child: Text('下载失败',
+                                              Colors.red.shade500)))
+                                  : task.downloadFinished
+                                      ? Text('下载完成',
                                           style: TextStyle(
                                               color: Color.alphaBlend(
-                                                  textColor.withAlpha(0x33),
-                                                  Colors.red.shade500))),
-                                    )
-                                  : task.downloadFinished
-                                      ? Container(
-                                          child: Text('下载完成',
+                                                  textColorAlpha,
+                                                  Colors.green.shade500)))
+                                      : downloading // downloader.downloadingTask() == task.id
+                                          ? Text('下载中',
                                               style: TextStyle(
                                                   color: Color.alphaBlend(
                                                       textColorAlpha,
-                                                      Colors.green.shade500))),
-                                        )
-                                      : downloading // downloader.downloadingTask() == task.id
-                                          ? Container(
-                                              child: Text('下载中',
-                                                  style: TextStyle(
-                                                      color: Color.alphaBlend(
-                                                          textColorAlpha,
-                                                          Colors
-                                                              .blue.shade500))),
-                                            )
-                                          : Container(
-                                              child: Text('队列中',
-                                                  style: TextStyle(
-                                                      color: Color.alphaBlend(
-                                                          textColorAlpha,
-                                                          Colors.lightBlue
-                                                              .shade500))),
-                                            ),
+                                                      Colors
+                                                          .blue.shade500)))
+                                          : Text('队列中',
+                                              style: TextStyle(
+                                                  color: Color.alphaBlend(
+                                                      textColorAlpha,
+                                                      Colors.lightBlue
+                                                          .shade500))),
                         ],
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.only(left: 8),
                   height: imageHeight,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

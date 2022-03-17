@@ -19,8 +19,8 @@ void defaultToast(BuildContext context, String title) {
     position: StyledToastPosition.center,
     animation: StyledToastAnimation.scale,
     reverseAnimation: StyledToastAnimation.fade,
-    duration: Duration(seconds: 4),
-    animDuration: Duration(seconds: 1),
+    duration: const Duration(seconds: 4),
+    animDuration: const Duration(seconds: 1),
     curve: Curves.elasticOut,
     reverseCurve: Curves.linear,
   );
@@ -33,22 +33,20 @@ Future<bool> confirmDialog(
           context: context,
           builder: (context) => AlertDialog(
                 title: Text(title),
-                content: new SingleChildScrollView(
-                  child: new ListBody(
-                    children: <Widget>[
-                      new Text(content),
-                    ],
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[Text(content)],
                   ),
                 ),
                 actions: <Widget>[
-                  new MaterialButton(
-                    child: new Text('取消'),
+                  MaterialButton(
+                    child: const Text('取消'),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
-                  new MaterialButton(
-                    child: new Text('确定'),
+                  MaterialButton(
+                    child: const Text('确定'),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
@@ -61,35 +59,36 @@ Future<bool> confirmDialog(
 /// 显示一个消息提示框
 Future alertDialog(BuildContext context, String title, String content) {
   return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(title),
-            content: new SingleChildScrollView(
-              child: new ListBody(
-                children: <Widget>[
-                  new Text(content),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              new MaterialButton(
-                child: new Text('确定'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ));
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(title),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text(content),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        MaterialButton(
+          child: const Text('确定'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+  );
 }
 
 /// stream-filter的替代方法
 List<T> filteredList<T>(List<T> list, bool Function(T) filter) {
   List<T> result = [];
-  list.forEach((element) {
+  for (var element in list) {
     if (filter(element)) {
       result.add(element);
     }
-  });
+  }
   return result;
 }
 
@@ -197,7 +196,7 @@ Future<String?> displayTextInputDialog(BuildContext context,
             },
           ),
           MaterialButton(
-            child: Text('确认'),
+            child: const Text('确认'),
             onPressed: () {
               Navigator.of(context).pop(_controller.text);
             },
@@ -258,12 +257,10 @@ Future<String?> inputString(BuildContext context, String title,
             child: ListBody(
               children: [
                 Text(title),
-                Container(
-                  child: TextField(
-                    controller: _textEditController,
-                    decoration: new InputDecoration(
-                      labelText: "$hint",
-                    ),
+                TextField(
+                  controller: _textEditController,
+                  decoration:  InputDecoration(
+                    labelText: hint,
                   ),
                 ),
               ],
@@ -275,13 +272,13 @@ Future<String?> inputString(BuildContext context, String title,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('取消'),
+            child: const Text('取消'),
           ),
           MaterialButton(
             onPressed: () {
               Navigator.pop(context, _textEditController.text);
             },
-            child: Text('确定'),
+            child: const Text('确定'),
           ),
         ],
       );

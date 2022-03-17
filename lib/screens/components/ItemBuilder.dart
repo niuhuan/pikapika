@@ -31,7 +31,7 @@ class ItemBuilder<T> extends StatelessWidget {
                 print("${snapshot.stackTrace}");
                 return InkWell(
                   onTap: onRefresh,
-                  child: Container(
+                  child: SizedBox(
                     width: _maxWidth,
                     height: _loadingHeight,
                     child: Center(
@@ -42,7 +42,7 @@ class ItemBuilder<T> extends StatelessWidget {
                 );
               }
               if (snapshot.connectionState != ConnectionState.done) {
-                return Container(
+                return SizedBox(
                   width: _maxWidth,
                   height: _loadingHeight,
                   child: Center(
@@ -50,7 +50,7 @@ class ItemBuilder<T> extends StatelessWidget {
                   ),
                 );
               }
-              return Container(
+              return SizedBox(
                 width: _maxWidth,
                 height: height,
                 child: successBuilder(context, snapshot),

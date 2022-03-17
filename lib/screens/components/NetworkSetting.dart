@@ -5,16 +5,16 @@ import 'package:pikapika/basic/config/Proxy.dart';
 
 // 网络设置
 class NetworkSetting extends StatelessWidget {
+  const NetworkSetting({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          switchAddressSetting(),
-          imageSwitchAddressSetting(),
-          proxySetting(),
-        ],
-      ),
+    return Column(
+      children: [
+        switchAddressSetting(),
+        imageSwitchAddressSetting(),
+        proxySetting(),
+      ],
     );
   }
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
@@ -76,10 +75,10 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   }
 
   FutureOr<dynamic> _onChangeEp(int epOrder) {
-    var orderMap = Map<int, Ep>();
-    widget.epList.forEach((element) {
+    var orderMap = <int, Ep>{};
+    for (var element in widget.epList) {
       orderMap[element.order] = element;
-    });
+    }
     if (orderMap.containsKey(epOrder)) {
       _replacement = true;
       Navigator.of(context).pushReplacement(
@@ -124,11 +123,11 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   @override
   void initState() {
     // EP
-    widget.epList.forEach((element) {
+    for (var element in widget.epList) {
       if (element.order == widget.currentEpOrder) {
         _ep = element;
       }
-    });
+    }
     // INIT
     _future = _load();
     super.initState();
@@ -177,13 +176,13 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
-            body: ContentLoading(label: '加载中'),
+            body: const ContentLoading(label: '加载中'),
           );
         }
-        var epNameMap = Map<int, String>();
-        widget.epList.forEach((element) {
+        var epNameMap = <int, String>{};
+        for (var element in widget.epList) {
           epNameMap[element.order] = element.title;
-        });
+        }
         return Scaffold(
           body: ImageReader(
             ImageReaderStruct(

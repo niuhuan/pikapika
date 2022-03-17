@@ -153,17 +153,15 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                   builder: (context) {
                     return AlertDialog(
                       content: Card(
-                        child: Container(
-                          child: TextField(
-                            controller: _textEditController,
-                            decoration: new InputDecoration(
-                              labelText: "请输入页数：",
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(RegExp(r'\d+')),
-                            ],
+                        child: TextField(
+                          controller: _textEditController,
+                          decoration: const InputDecoration(
+                            labelText: "请输入页数：",
                           ),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                          ],
                         ),
                       ),
                       actions: <Widget>[
@@ -177,7 +175,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                           onPressed: () {
                             Navigator.pop(context);
                             var text = _textEditController.text;
-                            if (text.length == 0 || text.length > 5) {
+                            if (text.isEmpty || text.length > 5) {
                               return;
                             }
                             var num = int.parse(text);
@@ -240,6 +238,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
         text: '下一页',
       );
     }
+    return null;
   }
 }
 
@@ -391,5 +390,6 @@ class _StreamComicPagerState extends State<StreamComicPager> {
     if (_loading) {
       return FitButton(onPressed: () {}, text: '加载中');
     }
+    return null;
   }
 }

@@ -15,21 +15,21 @@ class Badged extends StatelessWidget {
     return Stack(
       children: [
         child,
-        new Positioned(
+        Positioned(
           right: 0,
-          child: new Container(
-            padding: EdgeInsets.all(1),
-            decoration: new BoxDecoration(
+          child: Container(
+            padding: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
               color: Colors.red,
               borderRadius: BorderRadius.circular(6),
             ),
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: 12,
               minHeight: 12,
             ),
-            child: new Text(
+            child: Text(
               badge!,
-              style: new TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 8,
               ),

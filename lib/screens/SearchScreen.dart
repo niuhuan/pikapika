@@ -24,9 +24,9 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  late TextEditingController _textEditController =
+  late final TextEditingController _textEditController =
       TextEditingController(text: widget.keyword);
-  late SearchBar _searchBar = SearchBar(
+  late final SearchBar _searchBar = SearchBar(
     hintText: '搜索 ${categoryTitle(widget.category)}',
     controller: _textEditController,
     inBar: false,

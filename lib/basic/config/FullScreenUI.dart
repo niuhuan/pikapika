@@ -67,6 +67,8 @@ void switchFullScreenUI() {
     case FullScreenUI.ALL:
       list.clear();
       break;
+    case FullScreenUI.NO:
+      break;
   }
   if (Platform.isAndroid || Platform.isIOS) {
     SystemChrome.setEnabledSystemUIOverlays(list);
@@ -78,7 +80,7 @@ Widget fullScreenUISetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: Text("全屏UI"),
+          title: const Text("全屏UI"),
           subtitle: Text(currentFullScreenUIName()),
           onTap: () async {
             await chooseFullScreenUI(context);

@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/dialog/mult_select_dialog.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../Method.dart';
@@ -33,11 +32,11 @@ Future<void> _chooseShadowCategories(BuildContext context) async {
     context: context,
     builder: (ctx) {
       var initialValue = <String>[];
-      shadowCategories.forEach((element) {
+      for (var element in shadowCategories) {
         if (shadowCategories.contains(element)) {
           initialValue.add(element);
         }
-      });
+      }
       return MultiSelectDialog<String>(
         title: Text('封印'),
         searchHint: '搜索',

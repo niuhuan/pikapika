@@ -8,12 +8,14 @@ import 'package:pikapika/screens/components/ContentLoading.dart';
 
 // 数据迁移页面
 class MigrateScreen extends StatefulWidget {
+  const MigrateScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _MigrateScreenState();
 }
 
 class _MigrateScreenState extends State<MigrateScreen> {
-  late Future _future = _load();
+  late final Future _future = _load();
   late String _current;
   late List<String> paths;
   String _message = "";

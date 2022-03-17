@@ -1,0 +1,8 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: false
+    unnecessary_this: false
+    file_names: false
+    constant_identifier_names: false

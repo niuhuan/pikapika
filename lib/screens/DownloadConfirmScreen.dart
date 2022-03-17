@@ -25,8 +25,8 @@ class DownloadConfirmScreen extends StatefulWidget {
 
 class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
   DownloadComic? _task; // 之前的下载任务
-  List<int> _taskedEps = []; // 已经下载的EP
-  List<int> _selectedEps = []; // 选中的EP
+  final List<int> _taskedEps = []; // 已经下载的EP
+  final List<int> _selectedEps = []; // 选中的EP
   late Future f = _load();
 
   Future<dynamic> _load() async {
@@ -41,11 +41,11 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
   void _selectAll() {
     setState(() {
       _selectedEps.clear();
-      widget.epList.forEach((element) {
+      for (var element in widget.epList) {
         if (!_taskedEps.contains(element.order)) {
           _selectedEps.add(element.order);
         }
-      });
+      }
     });
   }
 
@@ -75,7 +75,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
     };
     // 下载EP列表
     List<Map<String, dynamic>> list = [];
-    widget.epList.forEach((element) {
+    for (var element in widget.epList) {
       if (_selectedEps.contains(element.order)) {
         list.add({
           "comicId": widget.comicInfo.id,
@@ -85,7 +85,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
           "title": element.title,
         });
       }
-    });
+    }
     // 如果之前下载过就将EP加入下载
     // 如果之前没有下载过就创建下载
     if (_task != null) {

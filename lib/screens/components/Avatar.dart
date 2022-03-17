@@ -10,7 +10,7 @@ class Avatar extends StatelessWidget {
   final RemoteImageInfo avatarImage;
   final double size;
 
-  const Avatar(this.avatarImage, {this.size = 50});
+  const Avatar(this.avatarImage, {this.size = 50, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

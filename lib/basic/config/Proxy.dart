@@ -9,6 +9,7 @@ late String _currentProxy;
 
 Future<String?> initProxy() async {
   _currentProxy = await method.getProxy();
+  return null;
 }
 
 String currentProxyName() {

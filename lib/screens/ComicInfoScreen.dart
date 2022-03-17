@@ -151,19 +151,19 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                               onLongPress: () {
                                 confirmCopy(
                                   context,
-                                  "${_comicInfo.creator.name}",
+                                  _comicInfo.creator.name,
                                 );
                               },
                               child: Text(
-                                "${_comicInfo.creator.name}",
-                                style: TextStyle(
+                                _comicInfo.creator.name,
+                                style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
                                 ),
                               ),
                             ),
                           ),
-                          TextSpan(
+                          const TextSpan(
                             text: "  ",
                             style: TextStyle(
                               fontSize: 14,
@@ -195,8 +195,8 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                           confirmCopy(context, _comicInfo.chineseTeam);
                         },
                         child: Text(
-                          "${_comicInfo.chineseTeam}",
-                          style: TextStyle(
+                          _comicInfo.chineseTeam,
+                          style: const TextStyle(
                             fontSize: 13,
                             color: Colors.grey,
                           ),
@@ -300,15 +300,13 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
               alignment: WrapAlignment.spaceAround,
               children: [
                 ..._epList.map((e) {
-                  return Container(
-                    child: MaterialButton(
-                      onPressed: () {
-                        _push(_comicInfo, _epList, e.order, null);
-                      },
-                      color: Colors.white,
-                      child:
-                          Text(e.title, style: TextStyle(color: Colors.black)),
-                    ),
+                  return MaterialButton(
+                    onPressed: () {
+                      _push(_comicInfo, _epList, e.order, null);
+                    },
+                    color: Colors.white,
+                    child:
+                        Text(e.title, style: TextStyle(color: Colors.black)),
                   );
                 }),
               ],

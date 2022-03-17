@@ -18,7 +18,7 @@ import 'components/Images.dart';
 
 // 分类
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen();
+  const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CategoriesScreenState();
@@ -41,7 +41,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     },
     buildDefaultAppBar: (BuildContext context) {
       return AppBar(
-        title: new Text('分类'),
+        title: Text('分类'),
         actions: [
           shadowCategoriesActionButton(context),
           _searchBar.getSearchAction(context),
@@ -55,11 +55,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Future<List<Category>> _fetch() async {
     List<Category> categories = await method.categories();
     storedCategories = [];
-    categories.forEach((element) {
+    for (var element in categories) {
       if (!element.isWeb) {
         storedCategories.add(element.title);
       }
-    });
+    }
     return categories;
   }
 
@@ -151,7 +151,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       list.add(
         GestureDetector(
           onTap: onTap,
-          child: Container(
+          child: SizedBox(
             width: blockSize,
             child: Column(
               children: [
@@ -221,7 +221,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       list.add(
         GestureDetector(
           onTap: onTap,
-          child: Container(
+          child: SizedBox(
             width: blockSize,
             child: Column(
               children: [

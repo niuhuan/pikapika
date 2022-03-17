@@ -181,7 +181,7 @@ class DownloadImage extends StatefulWidget {
 }
 
 class _DownloadImageState extends State<DownloadImage> {
-  late Future<String> _future = method.downloadImagePath(widget.path);
+  late final Future<String> _future = method.downloadImagePath(widget.path);
 
   @override
   Widget build(BuildContext context) {
@@ -276,7 +276,7 @@ Widget buildSvg(String source, double? width, double? height,
   var widget = Container(
     width: width,
     height: height,
-    padding: margin != null ? EdgeInsets.all(10) : null,
+    padding: margin != null ? const EdgeInsets.all(10) : null,
     child: Center(
       child: SvgPicture.asset(
         source,
@@ -319,7 +319,7 @@ Widget buildLoading(double? width, double? height) {
   if (width != null && height != null) {
     size = width < height ? width : height;
   }
-  return Container(
+  return SizedBox(
     width: width,
     height: height,
     child: Center(

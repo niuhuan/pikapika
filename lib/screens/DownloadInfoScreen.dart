@@ -19,10 +19,11 @@ class DownloadInfoScreen extends StatefulWidget {
   final String comicId;
   final String comicTitle;
 
-  DownloadInfoScreen({
+  const DownloadInfoScreen({
     required this.comicId,
     required this.comicTitle,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DownloadInfoScreenState();
@@ -143,15 +144,13 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
                     },
                   ),
                   ..._epList.map((e) {
-                    return Container(
-                      child: MaterialButton(
-                        onPressed: () {
-                          _push(_task, _epList, e.epOrder, null);
-                        },
-                        color: Colors.white,
-                        child: Text(e.title,
-                            style: TextStyle(color: Colors.black)),
-                      ),
+                    return MaterialButton(
+                      onPressed: () {
+                        _push(_task, _epList, e.epOrder, null);
+                      },
+                      color: Colors.white,
+                      child: Text(e.title,
+                          style: const TextStyle(color: Colors.black)),
                     );
                   }),
                 ],

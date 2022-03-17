@@ -13,6 +13,8 @@ import 'components/ContentLoading.dart';
 
 // 账户设置
 class AccountScreen extends StatefulWidget {
+  const AccountScreen({Key? key}) : super(key: key);
+
   @override
   _AccountScreenState createState() => _AccountScreenState();
 }

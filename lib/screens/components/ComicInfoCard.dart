@@ -168,7 +168,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: imageHeight,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -180,7 +180,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                           ? []
                           : [
                               Container(height: 10),
-                              Container(
+                              SizedBox(
                                 height: 26,
                                 child: _likeLoading
                                     ? IconButton(
@@ -205,7 +205,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                           ? []
                           : [
                               Container(height: 10),
-                              Container(
+                              SizedBox(
                                 height: 26,
                                 child: _favouriteLoading
                                     ? IconButton(

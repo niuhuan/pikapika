@@ -89,14 +89,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_registerOver) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('注册成功'),
+          title: const Text('注册成功'),
         ),
         body: Center(
           child: Container(
             child: Column(
               children: [
                 Expanded(child: Container()),
-                Text('您已经注册成功, 请返回登录'),
+                const Text('您已经注册成功, 请返回登录'),
                 Text('账号 : $_email'),
                 Text('昵称 : $_name'),
                 Expanded(child: Container()),

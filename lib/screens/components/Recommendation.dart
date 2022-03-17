@@ -44,7 +44,7 @@ class _RecommendationState extends State<Recommendation> {
                           (route) => i++ < 10);
                     },
                     child: Card(
-                      child: Container(
+                      child: SizedBox(
                         width: width,
                         child: Column(
                           children: [
@@ -60,8 +60,8 @@ class _RecommendationState extends State<Recommendation> {
                               e.title + '\n',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1.4),
-                              strutStyle: StrutStyle(height: 1.4),
+                              style: const TextStyle(height: 1.4),
+                              strutStyle: const StrutStyle(height: 1.4),
                             ),
                           ],
                         ),

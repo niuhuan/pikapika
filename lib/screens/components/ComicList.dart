@@ -18,7 +18,9 @@ class ComicList extends StatefulWidget {
   final List<ComicSimple> comicList;
   final ScrollController? controller;
 
-  const ComicList(this.comicList, {this.appendWidget, this.controller});
+  const ComicList(this.comicList,
+      {this.appendWidget, this.controller, Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicListState();
@@ -112,7 +114,7 @@ class _ComicListState extends State<ComicList> {
         }).toList(),
         ...widget.appendWidget != null
             ? [
-                Container(
+                SizedBox(
                   height: 80,
                   child: widget.appendWidget,
                 ),
@@ -132,7 +134,7 @@ class _ComicListState extends State<ComicList> {
     var height = width * coverHeight / coverWidth;
     List<Widget> wraps = [];
     List<Widget> tmp = [];
-    widget.comicList.forEach((e) {
+    for (var e in widget.comicList) {
       var shadow = e.categories.map(
         (c) {
           switch (currentShadowCategoriesMode()) {
@@ -193,12 +195,13 @@ class _ComicListState extends State<ComicList> {
         ));
         tmp = [];
       }
-    });
+    }
     // 追加特殊按钮
     if (widget.appendWidget != null) {
       tmp.add(Container(
-        color: (Theme.of(context).textTheme.bodyText1?.color ?? Color(0))
-            .withOpacity(.1),
+        color:
+            (Theme.of(context).textTheme.bodyText1?.color ?? Colors.transparent)
+                .withOpacity(.1),
         margin: EdgeInsets.only(
           left: (rowCap - tmp.length) * gap,
           right: (rowCap - tmp.length) * gap,
@@ -211,7 +214,7 @@ class _ComicListState extends State<ComicList> {
       ));
     }
     // 最后一页没有下一页所有有可能为空
-    if (tmp.length > 0) {
+    if (tmp.isNotEmpty) {
       wraps.add(Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -240,7 +243,7 @@ class _ComicListState extends State<ComicList> {
     double shadowFontSize = max(width / 9, 12);
     List<Widget> wraps = [];
     List<Widget> tmp = [];
-    widget.comicList.forEach((e) {
+    for (var e in widget.comicList) {
       var shadow = e.categories.map(
         (c) {
           switch (currentShadowCategoriesMode()) {
@@ -330,12 +333,13 @@ class _ComicListState extends State<ComicList> {
         ));
         tmp = [];
       }
-    });
+    }
     // 追加特殊按钮
     if (widget.appendWidget != null) {
       tmp.add(Container(
-        color: (Theme.of(context).textTheme.bodyText1?.color ?? Color(0))
-            .withOpacity(.1),
+        color:
+            (Theme.of(context).textTheme.bodyText1?.color ?? Colors.transparent)
+                .withOpacity(.1),
         margin: EdgeInsets.only(
           left: (rowCap - tmp.length) * gap,
           right: (rowCap - tmp.length) * gap,
@@ -348,7 +352,7 @@ class _ComicListState extends State<ComicList> {
       ));
     }
     // 最后一页没有下一页所有有可能为空
-    if (tmp.length > 0) {
+    if (tmp.isNotEmpty) {
       wraps.add(Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

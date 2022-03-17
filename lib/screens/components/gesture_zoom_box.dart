@@ -36,7 +36,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox>
   bool _isScaling = false;
   bool _isDragging = false;
 
-  double _maxDragOver = 100; // 拖动超出边界的最大值
+  final double _maxDragOver = 100; // 拖动超出边界的最大值
 
   @override
   void initState() {

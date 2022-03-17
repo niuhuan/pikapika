@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 // 由于Flutter的EventChannel只能订阅一次, 且为了和golang的的通信, 这里实现了多次订阅的分发和平铺
 // 根据eventName订阅和取消订阅
 
-var _eventChannel = EventChannel("flatEvent");
+var _eventChannel = const EventChannel("flatEvent");
 StreamSubscription? _eventChannelListen;
 
 Map<void Function(String args), String> _eventMap = {};
@@ -28,7 +28,7 @@ void unregisterEvent(void Function(String args) eventHandler) {
     throw 'no register';
   }
   _eventMap.remove(eventHandler);
-  if (_eventMap.length == 0) {
+  if (_eventMap.isEmpty) {
     _eventChannelListen?.cancel();
   }
 }

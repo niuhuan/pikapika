@@ -10,7 +10,8 @@ class ComicListBuilder extends StatefulWidget {
   final Future<List<ComicSimple>> future;
   final Future Function() reload;
 
-  ComicListBuilder(this.future, this.reload);
+  const ComicListBuilder(this.future, this.reload, {Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicListBuilderState();

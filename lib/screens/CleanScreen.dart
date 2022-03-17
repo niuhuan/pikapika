@@ -8,6 +8,8 @@ import 'components/ContentLoading.dart';
 
 // 清理
 class CleanScreen extends StatefulWidget {
+  const CleanScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _CleanScreenState();
 }
@@ -44,15 +46,15 @@ class _CleanScreenState extends State<CleanScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('清理'),
+        title: const Text('清理'),
       ),
       body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: _cleanResult != "" ? Text(_cleanResult) : Container(),
           ),
-          Container(
+          SizedBox(
             height: 50,
             child: FitButton(
               text: '清理网络缓存',
@@ -61,7 +63,7 @@ class _CleanScreenState extends State<CleanScreen> {
               },
             ),
           ),
-          Container(
+          SizedBox(
             height: 50,
             child: FitButton(
               text: '清理图片缓存',
@@ -70,7 +72,7 @@ class _CleanScreenState extends State<CleanScreen> {
               },
             ),
           ),
-          Container(
+          SizedBox(
             height: 50,
             child: FitButton(
               text: '清理全部缓存',

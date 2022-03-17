@@ -34,12 +34,14 @@ import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text('设置')),
+        appBar: AppBar(title: const Text('设置')),
         body: ListView(
           children: [
-            Divider(),
+            const Divider(),
             ListTile(
               onTap: () async {
                 Navigator.push(
@@ -48,11 +50,11 @@ class SettingsScreen extends StatelessWidget {
                       builder: (context) => ModifyPasswordScreen()),
                 );
               },
-              title: Text('修改密码'),
+              title: const Text('修改密码'),
             ),
-            Divider(),
-            NetworkSetting(),
-            Divider(),
+            const Divider(),
+            const NetworkSetting(),
+            const Divider(),
             qualitySetting(),
             convertToPNGSetting(),
             readerTypeSetting(),
@@ -63,7 +65,7 @@ class SettingsScreen extends StatelessWidget {
             volumeControllerSetting(),
             keyboardControllerSetting(),
             noAnimationSetting(),
-            Divider(),
+            const Divider(),
             shadowCategoriesModeSetting(),
             shadowCategoriesSetting(),
             pagerActionSetting(),

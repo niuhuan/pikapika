@@ -28,7 +28,8 @@ class CommentScreen extends StatefulWidget {
   final String mainId;
   final CommentBase comment;
 
-  const CommentScreen(this.mainType, this.mainId, this.comment);
+  const CommentScreen(this.mainType, this.mainId, this.comment, {Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CommentScreenState();

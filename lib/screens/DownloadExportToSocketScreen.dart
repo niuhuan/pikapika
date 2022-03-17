@@ -15,11 +15,12 @@ class DownloadExportToSocketScreen extends StatefulWidget {
   final String comicId;
   final String comicTitle;
 
-  DownloadExportToSocketScreen({
+  const DownloadExportToSocketScreen({
     required this.task,
     required this.comicId,
     required this.comicTitle,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DownloadExportToSocketScreenState();
@@ -28,7 +29,7 @@ class DownloadExportToSocketScreen extends StatefulWidget {
 class _DownloadExportToSocketScreenState
     extends State<DownloadExportToSocketScreen> {
   late Future<int> _future = method.exportComicUsingSocket(widget.comicId);
-  late Future<String> _ipFuture = method.clientIpSet();
+  late final Future<String> _ipFuture = method.clientIpSet();
 
   late String exportMessage = "";
 
@@ -89,16 +90,16 @@ class _DownloadExportToSocketScreenState
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.hasError) {
-                          return Text('获取IP失败');
+                          return const Text('获取IP失败');
                         }
                         if (snapshot.connectionState != ConnectionState.done) {
-                          return Text('正在获取IP');
+                          return const Text('正在获取IP');
                         }
                         return Text('${snapshot.data}');
                       },
                     ),
                     Text('端口号:${snapshot.data}'),
-                    Text('$exportMessage'),
+                    Text(exportMessage),
                   ],
                 ),
               ),

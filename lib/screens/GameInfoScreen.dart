@@ -14,7 +14,7 @@ import 'components/GameTitleCard.dart';
 class GameInfoScreen extends StatefulWidget {
   final String gameId;
 
-  const GameInfoScreen(this.gameId);
+  const GameInfoScreen(this.gameId,{Key? key}):super(key: key);
 
   @override
   State<StatefulWidget> createState() => _GameInfoScreenState();
@@ -127,33 +127,31 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                       ),
                     ),
                     Container(height: 20),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 40,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(.025),
-                            child: TabBar(
-                              tabs: <Widget>[
-                                Tab(text: '详情 '),
-                                Tab(text: '评论 (${info.commentsCount})'),
-                              ],
-                              indicatorColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              labelColor:
-                                  Theme.of(context).colorScheme.secondary,
-                              onTap: (val) async {
-                                setState(() {
-                                  _tabIndex = val;
-                                });
-                              },
-                            ),
+                    Column(
+                      children: [
+                        Container(
+                          height: 40,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(.025),
+                          child: TabBar(
+                            tabs: <Widget>[
+                              Tab(text: '详情 '),
+                              Tab(text: '评论 (${info.commentsCount})'),
+                            ],
+                            indicatorColor:
+                                Theme.of(context).colorScheme.secondary,
+                            labelColor:
+                                Theme.of(context).colorScheme.secondary,
+                            onTap: (val) async {
+                              setState(() {
+                                _tabIndex = val;
+                              });
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     _tabIndex == 0
                         ? Container(

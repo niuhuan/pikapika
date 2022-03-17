@@ -18,7 +18,7 @@ class GameDownloadScreen extends StatefulWidget {
 
 class _GameDownloadScreenState extends State<GameDownloadScreen> {
   late Future<List<String>> _future =
-      method.downloadGame("${widget.info.androidLinks[0]}");
+      method.downloadGame(widget.info.androidLinks[0]);
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +34,19 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
             onRefresh: () async  {
               setState(() {
                 _future =
-                    method.downloadGame("${widget.info.androidLinks[0]}");
+                    method.downloadGame(widget.info.androidLinks[0]);
               });
             },
             successBuilder:
                 (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-              return Container(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(30),
-                      child: Text('获取到下载链接, 您只需要选择其中一个'),
-                    ),
-                    ...snapshot.data!.map((e) => _copyCard(e)),
-                  ],
-                ),
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(30),
+                    child: const Text('获取到下载链接, 您只需要选择其中一个'),
+                  ),
+                  ...snapshot.data!.map((e) => _copyCard(e)),
+                ],
               );
             },
           ),

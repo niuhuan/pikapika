@@ -16,6 +16,8 @@ const double _cardHeight = 180;
 
 // 用户信息卡
 class UserProfileCard extends StatefulWidget {
+  const UserProfileCard({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _UserProfileCardState();
 }
@@ -46,11 +48,11 @@ class _UserProfileCardState extends State<UserProfileCard> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var nameStyle = TextStyle(
+    var nameStyle = const TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
     );
-    var nameStrutStyle = StrutStyle(
+    var nameStrutStyle = const StrutStyle(
       fontSize: 14,
       forceStrutHeight: true,
       fontWeight: FontWeight.bold,
@@ -60,7 +62,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
       color: theme.colorScheme.secondary.withOpacity(.9),
       fontWeight: FontWeight.bold,
     );
-    var levelStrutStyle = StrutStyle(
+    var levelStrutStyle = const StrutStyle(
       fontSize: 12,
       forceStrutHeight: true,
       fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
       fontSize: 10,
       color: theme.textTheme.bodyText1?.color?.withOpacity(.5),
     );
-    var sloganStrutStyle = StrutStyle(
+    var sloganStrutStyle = const StrutStyle(
       fontSize: 10,
       forceStrutHeight: true,
     );
@@ -84,34 +86,32 @@ class _UserProfileCardState extends State<UserProfileCard> {
         UserProfile profile = snapshot.data!;
         return Stack(
           children: [
-            Container(
-              child: Stack(
-                children: [
-                  Opacity(
-                    opacity: .25, //
-                    child: LayoutBuilder(
-                      builder:
-                          (BuildContext context, BoxConstraints constraints) {
-                        return RemoteImage(
-                          path: profile.avatar.path,
-                          fileServer: profile.avatar.fileServer,
-                          width: constraints.maxWidth,
-                          height: _cardHeight,
-                        );
-                      },
-                    ),
+            Stack(
+              children: [
+                Opacity(
+                  opacity: .25, //
+                  child: LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return RemoteImage(
+                        path: profile.avatar.path,
+                        fileServer: profile.avatar.fileServer,
+                        width: constraints.maxWidth,
+                        height: _cardHeight,
+                      );
+                    },
                   ),
-                  Positioned.fromRect(
-                    rect: Rect.largest,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                      child: Container(),
-                    ),
+                ),
+                Positioned.fromRect(
+                  rect: Rect.largest,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                    child: Container(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
+            SizedBox(
               height: _cardHeight,
               child: Column(
                 children: [
@@ -177,7 +177,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
         aspectRatioPresets: [
           CropAspectRatioPreset.square,
         ],
-        aspectRatio: CropAspectRatio(ratioX: 200, ratioY: 200),
+        aspectRatio: const CropAspectRatio(ratioX: 200, ratioY: 200),
         maxWidth: 200,
         maxHeight: 200,
         androidUiSettings: AndroidUiSettings(
@@ -187,7 +187,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: true,
         ),
-        iosUiSettings: IOSUiSettings(
+        iosUiSettings: const IOSUiSettings(
           resetAspectRatioEnabled: true,
           aspectRatioLockEnabled: true,
           title: "修改头像",

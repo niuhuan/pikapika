@@ -15,13 +15,11 @@ class FitButton extends StatelessWidget {
           width: constraints.maxWidth,
           height: constraints.maxHeight,
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: MaterialButton(
               onPressed: onPressed,
-              child: Container(
-                child: Center(
-                  child: Text(text),
-                ),
+              child: Center(
+                child: Text(text),
               ),
             ),
           ),

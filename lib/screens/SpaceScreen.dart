@@ -15,7 +15,8 @@ import 'components/UserProfileCard.dart';
 
 // 个人空间页面
 class SpaceScreen extends StatefulWidget {
-  const SpaceScreen();
+  const SpaceScreen({Key? key}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _SpaceScreenState();
@@ -58,17 +59,17 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 );
               }
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           ),
           IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutScreen()),
+                MaterialPageRoute(builder: (context) => const AboutScreen()),
               );
             },
             icon: Badged(
-              child: Icon(Icons.info_outline),
+              child: const Icon(Icons.info_outline),
               badge: latestVersion() == null ? null : "1",
             ),
           ),
@@ -76,18 +77,18 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
               );
             },
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
           ),
         ],
       ),
       body: ListView(
         children: [
-          Divider(),
-          UserProfileCard(),
-          Divider(),
+          const Divider(),
+          const UserProfileCard(),
+          const Divider(),
           ListTile(
             onTap: () async {
               await chooseTheme(context);
@@ -96,7 +97,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             title: Text('主题'),
             subtitle: Text(currentThemeName()),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -106,7 +107,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             },
             title: Text('我的收藏'),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -116,17 +117,17 @@ class _SpaceScreenState extends State<SpaceScreen> {
             },
             title: Text('浏览记录'),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DownloadListScreen()),
+                MaterialPageRoute(builder: (context) => const DownloadListScreen()),
               );
             },
-            title: Text('我的下载'),
+            title: const Text('我的下载'),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );

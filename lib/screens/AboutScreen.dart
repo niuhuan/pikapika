@@ -9,6 +9,8 @@ const _releasesUrl = "https://github.com/niuhuan/pikapika/releases";
 
 // 关于
 class AboutScreen extends StatefulWidget {
+  const AboutScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _AboutScreenState();
 }
@@ -40,11 +42,11 @@ class _AboutScreenState extends State<AboutScreen> {
     var _dirty = dirtyVersion();
     return Scaffold(
       appBar: AppBar(
-        title: Text('关于'),
+        title: const Text('关于'),
       ),
       body: ListView(
         children: [
-          Container(
+          SizedBox(
             width: min / 2,
             height: min / 2,
             child: Center(

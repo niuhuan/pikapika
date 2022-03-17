@@ -32,7 +32,7 @@ class ComicsScreen extends StatefulWidget {
 }
 
 class _ComicsScreenState extends State<ComicsScreen> {
-  late SearchBar _categorySearchBar = SearchBar(
+  late final SearchBar _categorySearchBar = SearchBar(
     hintText: '搜索分类 - ${categoryTitle(widget.category)}',
     inBar: false,
     setState: setState,
@@ -49,7 +49,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
     },
     buildDefaultAppBar: (BuildContext context) {
       return AppBar(
-        title: new Text(categoryTitle(widget.category)),
+        title: Text(categoryTitle(widget.category)),
         actions: [
           shadowCategoriesActionButton(context),
           chooseLayoutActionButton(context),

@@ -29,7 +29,7 @@ Future<void> _chooseAndroidDisplayMode(BuildContext context) async {
     list.addAll(_modes);
     String? result = await chooseListDialog<String>(context, "安卓屏幕刷新率", list);
     if (result != null) {
-      await method.saveProperty(_propertyName, "$result");
+      await method.saveProperty(_propertyName, result);
       _androidDisplayMode = result;
       await _changeMode();
     }

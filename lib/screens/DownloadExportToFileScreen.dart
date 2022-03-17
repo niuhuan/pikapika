@@ -20,10 +20,11 @@ class DownloadExportToFileScreen extends StatefulWidget {
   final String comicId;
   final String comicTitle;
 
-  DownloadExportToFileScreen({
+  const DownloadExportToFileScreen({
     required this.comicId,
     required this.comicTitle,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DownloadExportToFileScreenState();
@@ -233,7 +234,7 @@ class _DownloadExportToFileScreenState
             return;
           }
           if (!(await Permission.storage.request()).isGranted) {
-            return null;
+            return;
           }
           try {
             setState(() {

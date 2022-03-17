@@ -76,10 +76,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   }
 
   FutureOr<dynamic> _onChangeEp(int epOrder) {
-    var orderMap = Map<int, DownloadEp>();
-    widget.epList.forEach((element) {
+    var orderMap = <int, DownloadEp>{};
+    for (var element in widget.epList) {
       orderMap[element.epOrder] = element;
-    });
+    }
     if (orderMap.containsKey(epOrder)) {
       _replacement = true;
       Navigator.of(context).pushReplacement(
@@ -114,11 +114,11 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   @override
   void initState() {
     // EP
-    widget.epList.forEach((element) {
+    for (var element in widget.epList) {
       if (element.epOrder == widget.currentEpOrder) {
         _ep = element;
       }
-    });
+    }
     // INIT
     _future = _load();
     super.initState();
@@ -169,10 +169,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
             body: ContentLoading(label: '加载中'),
           );
         }
-        var epNameMap = Map<int, String>();
-        widget.epList.forEach((element) {
+        var epNameMap = <int, String>{};
+        for (var element in widget.epList) {
           epNameMap[element.epOrder] = element.title;
-        });
+        }
         return Scaffold(
           body: ImageReader(
             ImageReaderStruct(

@@ -7,7 +7,7 @@ import 'components/Images.dart';
 
 // 浏览记录
 class ViewLogsScreen extends StatefulWidget {
-  const ViewLogsScreen();
+  const ViewLogsScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ViewLogsScreenState();
@@ -175,7 +175,7 @@ class ViewLogWrap extends StatelessWidget {
           onDelete(e.id);
         },
         child: Card(
-          child: Container(
+          child: SizedBox(
             width: width,
             child: Column(
               children: [
@@ -200,7 +200,7 @@ class ViewLogWrap extends StatelessWidget {
       );
     });
 
-    Map<int, List<Widget>> map = Map();
+    Map<int, List<Widget>> map = {};
     for (var i = 0; i < entries.length; i++) {
       late List<Widget> list;
       if (i % 4 == 0) {

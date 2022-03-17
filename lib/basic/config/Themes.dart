@@ -380,7 +380,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                 )
             ));
             return SimpleDialog(
-              title: Text("选择主题"),
+              title: const Text("选择主题"),
               children: list,
             );
           })

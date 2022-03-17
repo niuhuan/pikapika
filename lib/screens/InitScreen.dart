@@ -36,6 +36,8 @@ import 'AppScreen.dart';
 
 // 初始化界面
 class InitScreen extends StatefulWidget {
+  const InitScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _InitScreenState();
 }
@@ -104,7 +106,7 @@ class _InitScreenState extends State<InitScreen> {
       backgroundColor: Color(0xfffffced),
       body: ConstrainedBox(
         constraints: BoxConstraints.expand(),
-        child: new Image.asset(
+        child: Image.asset(
           "lib/assets/init.jpg",
           fit: BoxFit.contain,
         ),

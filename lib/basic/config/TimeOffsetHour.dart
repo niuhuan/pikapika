@@ -31,7 +31,7 @@ Future<void> _chooseTimeZone(BuildContext context) async {
       result = result.substring(1);
     }
     _timeOffsetHour = int.parse(result);
-    await method.saveProperty(_propertyName, "$result");
+    await method.saveProperty(_propertyName, result);
   }
 }
 

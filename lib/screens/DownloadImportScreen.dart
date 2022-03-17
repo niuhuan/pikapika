@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -13,6 +11,8 @@ import 'components/ContentLoading.dart';
 
 // 导入
 class DownloadImportScreen extends StatefulWidget {
+  const DownloadImportScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _DownloadImportScreenState();
 }

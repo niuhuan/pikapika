@@ -139,7 +139,7 @@ class ImageReaderStruct {
 class ImageReader extends StatefulWidget {
   final ImageReaderStruct struct;
 
-  const ImageReader(this.struct);
+  const ImageReader(this.struct, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ImageReaderState();
@@ -153,9 +153,9 @@ class _ImageReaderState extends State<ImageReader> {
   final ReaderType _pagerType = currentReaderType();
 
   // 记录了控制器
-  late FullScreenAction _fullScreenAction = currentFullScreenAction();
+  late final FullScreenAction _fullScreenAction = currentFullScreenAction();
 
-  late ReaderSliderPosition _readerSliderPosition =
+  late final ReaderSliderPosition _readerSliderPosition =
       currentReaderSliderPosition();
 
   @override
@@ -245,7 +245,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   void _onPageControl(_ReaderControllerEventArgs? args) {
     if (args != null) {
       var event = args.key;
-      switch ("$event") {
+      switch (event) {
         case "UP":
           if (_current > 0) {
             _needJumpTo(_current - 1, true);
@@ -369,7 +369,6 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           ],
         );
     }
-    return Container();
   }
 
   Widget _buildAppBar() => widget.struct.fullScreen
@@ -393,7 +392,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     return Column(
       children: [
         Expanded(child: Container()),
-        Container(
+        SizedBox(
           height: 25,
           child: _buildSliderWidget(Axis.horizontal),
         ),
@@ -407,7 +406,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       : Align(
           alignment: Alignment.centerLeft,
           child: Material(
-            color: Color(0x0),
+            color: Colors.transparent,
             child: Container(
               width: 35,
               height: 300,
@@ -431,7 +430,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       : Align(
           alignment: Alignment.centerRight,
           child: Material(
-            color: Color(0x0),
+            color: Colors.transparent,
             child: Container(
               width: 35,
               height: 300,
@@ -525,7 +524,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Material(
-        color: Color(0x0),
+        color: Colors.transparent,
         child: Container(
           padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           margin: EdgeInsets.only(bottom: 10),
@@ -577,8 +576,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        _readerControllerEvent
-            .broadcast(_ReaderControllerEventArgs("DOWN"));
+        _readerControllerEvent.broadcast(_ReaderControllerEventArgs("DOWN"));
       },
       onDoubleTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
@@ -656,7 +654,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       context: context,
       backgroundColor: Color(0xAA000000),
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * (.45),
           child: _EpChooser(
             widget.struct.epNameMap,
@@ -677,7 +675,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       context: context,
       backgroundColor: Color(0xAA000000),
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * (.45),
           child: _SettingPanel(
             widget.struct.onReloadEp,
@@ -749,11 +747,11 @@ class _EpChooserState extends State<_EpChooser> {
       Container(height: 20),
       ...entries.map((e) {
         return Container(
-          margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          margin: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
           decoration: BoxDecoration(
             color: widget.epOrder == e.key ? Colors.grey.withAlpha(100) : null,
             border: Border.all(
-              color: Color(0xff484c60),
+              color: const Color(0xff484c60),
               style: BorderStyle.solid,
               width: .5,
             ),
@@ -764,7 +762,7 @@ class _EpChooserState extends State<_EpChooser> {
               widget.onChangeEp(e.key);
             },
             textColor: Colors.white,
-            child: Text('${e.value}'),
+            child: Text(e.value),
           ),
         );
       })
@@ -792,78 +790,74 @@ class _SettingPanelState extends State<_SettingPanel> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Container(
-          child: Row(
-            children: [
-              _bottomIcon(
-                icon: Icons.crop_sharp,
-                title: gReaderDirectionName(),
-                onPressed: () async {
-                  await choosePagerDirection(context);
-                  setState(() {});
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.view_day_outlined,
-                title: currentReaderTypeName(),
-                onPressed: () async {
-                  await choosePagerType(context);
-                  setState(() {});
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.image_aspect_ratio_outlined,
-                title: currentQualityName(),
-                onPressed: () async {
-                  await chooseQuality(context);
-                  setState(() {});
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.control_camera_outlined,
-                title: currentFullScreenActionName(),
-                onPressed: () async {
-                  await chooseFullScreenAction(context);
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
+        Row(
+          children: [
+            _bottomIcon(
+              icon: Icons.crop_sharp,
+              title: gReaderDirectionName(),
+              onPressed: () async {
+                await choosePagerDirection(context);
+                setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.view_day_outlined,
+              title: currentReaderTypeName(),
+              onPressed: () async {
+                await choosePagerType(context);
+                setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.image_aspect_ratio_outlined,
+              title: currentQualityName(),
+              onPressed: () async {
+                await chooseQuality(context);
+                setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.control_camera_outlined,
+              title: currentFullScreenActionName(),
+              onPressed: () async {
+                await chooseFullScreenAction(context);
+                setState(() {});
+              },
+            ),
+          ],
         ),
-        Container(
-          child: Row(
-            children: [
-              _bottomIcon(
-                icon: Icons.shuffle,
-                title: currentAddressName(),
-                onPressed: () async {
-                  await chooseAddress(context);
-                  setState(() {});
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.repeat_one,
-                title: currentImageAddressName(),
-                onPressed: () async {
-                  await chooseImageAddress(context);
-                  setState(() {});
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.refresh,
-                title: "重载页面",
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  widget.onReloadEp();
-                },
-              ),
-              _bottomIcon(
-                icon: Icons.file_download,
-                title: "下载本作",
-                onPressed: widget.onDownload,
-              ),
-            ],
-          ),
+        Row(
+          children: [
+            _bottomIcon(
+              icon: Icons.shuffle,
+              title: currentAddressName(),
+              onPressed: () async {
+                await chooseAddress(context);
+                setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.repeat_one,
+              title: currentImageAddressName(),
+              onPressed: () async {
+                await chooseImageAddress(context);
+                setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.refresh,
+              title: "重载页面",
+              onPressed: () {
+                Navigator.of(context).pop();
+                widget.onReloadEp();
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.file_download,
+              title: "下载本作",
+              onPressed: widget.onDownload,
+            ),
+          ],
         ),
       ],
     );
@@ -917,13 +911,13 @@ class _WebToonReaderState extends _ImageReaderContentState {
 
   @override
   void initState() {
-    widget.struct.images.forEach((e) {
+    for (var e in widget.struct.images) {
       if (e.downloadLocalPath != null) {
         _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
       } else {
         _trueSizes.add(null);
       }
-    });
+    }
     _itemScrollController = ItemScrollController();
     _itemPositionsListener = ItemPositionsListener.create();
     _itemPositionsListener.itemPositions.addListener(_onListCurrentChange);
@@ -1077,7 +1071,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
     }
     return Container(
       color: Colors.transparent,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: MaterialButton(
         onPressed: () {
           if (super._hasNextEp()) {
@@ -1238,18 +1232,18 @@ class _ListViewReaderState extends _ImageReaderContentState
   late TapDownDetails _doubleTapDetails;
   late final _animationController = AnimationController(
     vsync: this,
-    duration: Duration(milliseconds: 100),
+    duration: const Duration(milliseconds: 100),
   );
 
   @override
   void initState() {
-    widget.struct.images.forEach((e) {
+    for (var e in widget.struct.images) {
       if (e.downloadLocalPath != null) {
         _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
       } else {
         _trueSizes.add(null);
       }
-    });
+    }
     super.initState();
   }
 
@@ -1467,6 +1461,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
     }
   }
 
+  @override
   Widget _buildViewer() {
     Widget gallery = PhotoViewGallery.builder(
       scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
@@ -1574,7 +1569,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
     return Align(
       alignment: Alignment.bottomRight,
       child: Material(
-        color: Color(0x0),
+        color: Colors.transparent,
         child: Container(
           margin: EdgeInsets.only(bottom: 10),
           padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),

@@ -9,21 +9,20 @@ import 'Images.dart';
 class GameTitleCard extends StatelessWidget {
   final GameInfo info;
 
-  const GameTitleCard(this.info);
+  const GameTitleCard(this.info, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double iconMargin = 20;
     double iconSize = 60;
-    BorderRadius iconRadius = BorderRadius.all(Radius.circular(6));
-    TextStyle titleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+    BorderRadius iconRadius = const BorderRadius.all(Radius.circular(6));
+    TextStyle titleStyle =
+        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
     TextStyle publisherStyle = TextStyle(
       color: Theme.of(context).colorScheme.secondary,
       fontSize: 12.5,
     );
-    TextStyle versionStyle = TextStyle(
-      fontSize: 12.5,
-    );
+    TextStyle versionStyle = const TextStyle(fontSize: 12.5);
     double platformMargin = 10;
     double platformSize = 25;
     return Row(

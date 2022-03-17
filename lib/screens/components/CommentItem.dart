@@ -11,7 +11,8 @@ class ComicCommentItem extends StatefulWidget {
   final String mainId;
   final CommentBase comment;
 
-  const ComicCommentItem(this.mainType, this.mainId, this.comment);
+  const ComicCommentItem(this.mainType, this.mainId, this.comment, {Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicCommentItemState();
@@ -24,7 +25,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
   Widget build(BuildContext context) {
     var comment = widget.comment;
     var theme = Theme.of(context);
-    var nameStyle = TextStyle(fontWeight: FontWeight.bold);
+    var nameStyle = const TextStyle(fontWeight: FontWeight.bold);
     var levelStyle = TextStyle(
         fontSize: 12, color: theme.colorScheme.secondary.withOpacity(.8));
     var connectStyle =
@@ -32,7 +33,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
     var datetimeStyle = TextStyle(
         color: theme.textTheme.bodyText1?.color?.withOpacity(.6), fontSize: 12);
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
@@ -58,7 +59,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
               children: [
                 LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                    return Container(
+                    return SizedBox(
                       width: constraints.maxWidth,
                       child: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -77,7 +78,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
                 Container(height: 3),
                 LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                    return Container(
+                    return SizedBox(
                       width: constraints.maxWidth,
                       child: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -103,7 +104,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
                                         text: '${comment.commentsCount}',
                                       ),
                                     ])
-                                  : TextSpan(),
+                                  : const TextSpan(),
                               WidgetSpan(child: Container(width: 12)),
                               WidgetSpan(
                                   child: GestureDetector(
@@ -136,6 +137,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
                                       }
                                     });
                                   } catch (e, s) {
+                                    print("$e\n$s");
                                     defaultToast(context, "点赞失败");
                                   } finally {
                                     setState(() {
