@@ -6,8 +6,8 @@ import '../Common.dart';
 import '../Method.dart';
 
 enum FullScreenAction {
-  CONTROLLER,
   TOUCH_ONCE,
+  CONTROLLER,
   TOUCH_DOUBLE,
   TOUCH_DOUBLE_ONCE_NEXT,
   THREE_AREA,
@@ -15,9 +15,9 @@ enum FullScreenAction {
 
 Map<String, FullScreenAction> _fullScreenActionMap = {
   "点击屏幕一次全屏": FullScreenAction.TOUCH_ONCE,
+  "使用控制器全屏": FullScreenAction.CONTROLLER,
   "双击屏幕全屏": FullScreenAction.TOUCH_DOUBLE,
   "双击屏幕全屏 + 单击屏幕下一页": FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT,
-  "使用控制器全屏": FullScreenAction.CONTROLLER,
   "将屏幕划分成三个区域 (上一页, 下一页, 全屏)": FullScreenAction.THREE_AREA,
 };
 
