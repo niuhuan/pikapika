@@ -77,7 +77,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 ### 开发环境准备
 
 - [golang](https://golang.org/) (1.16以上版本)
-- [flutter](https://flutter.dev/) (stable-2.10.2)
+- [flutter](https://flutter.dev/) (stable-2.10.3)
 
 ### 环境配置
 
@@ -94,11 +94,8 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
   # 或
   go install github.com/go-flutter-desktop/hover@latest
   ```
-  &- 若您希望使用stable版本的flutter, 请使用 niuhuan/hover (官方hover不支持stable)<br />
-  ```shell
-  go install github.com/niuhuan/hover@latest
-  ```
-  &- niuhuan/hover支持使用代理下载flutter引擎
+
+  您也可以使用非官方的hover, 将上面的mod名称改为github.com/niuhuan/hover, 支持使用代理下载flutter引擎
   ```shell
   export GHPROXY=true
   hover build
