@@ -6,6 +6,7 @@ import 'package:pikapika/screens/components/ContentBuilder.dart';
 
 import 'GameInfoScreen.dart';
 import 'components/Images.dart';
+import 'components/RightClickPop.dart';
 
 // 游戏列表
 class GamesScreen extends StatefulWidget {
@@ -31,10 +32,14 @@ class _GamesScreenState extends State<GamesScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('游戏'),
+        title: const Text('游戏'),
       ),
       body: ContentBuilder(
         future: _future,
@@ -64,9 +69,9 @@ class _GamesScreenState extends State<GamesScreen> {
           }
           return Scaffold(
             appBar: PreferredSize(
-              preferredSize: Size.fromHeight(40),
+              preferredSize: const Size.fromHeight(40),
               child: Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -168,7 +173,7 @@ class _GamesScreenState extends State<GamesScreen> {
                             _onPageChange(page.page + 1);
                           },
                           child: Container(
-                            padding: EdgeInsets.only(top: 30, bottom: 30),
+                            padding: const EdgeInsets.only(top: 30, bottom: 30),
                             child: Text('下一页'),
                           ),
                         ),

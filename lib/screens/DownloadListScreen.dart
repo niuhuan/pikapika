@@ -10,6 +10,7 @@ import 'DownloadImportScreen.dart';
 import 'DownloadInfoScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/RightClickPop.dart';
 
 // 下载列表
 class DownloadListScreen extends StatefulWidget {
@@ -54,9 +55,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final screen = Scaffold(
       appBar: AppBar(
-        title: Text('下载列表'),
+        title: const Text('下载列表'),
         actions: [
           importButton(),
           pauseButton(),
@@ -68,13 +69,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         builder: (BuildContext context,
             AsyncSnapshot<List<DownloadComic>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
+            return const ContentLoading(label: '加载中');
           }
 
           if (snapshot.hasError) {
             print("${snapshot.error}");
             print("${snapshot.stackTrace}");
-            return Center(child: Text('加载失败'));
+            return const Center(child: Text('加载失败'));
           }
 
           var data = snapshot.data!;
@@ -106,6 +107,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         },
       ),
     );
+    return RightClickPop(screen);
   }
 
   Widget downloadWidget(DownloadComic e) {
@@ -155,12 +157,12 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         child: Column(
           children: [
             Expanded(child: Container()),
-            Icon(
+            const Icon(
               Icons.label_important,
               size: 18,
               color: Colors.white,
             ),
-            Text(
+            const Text(
               '导入',
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
@@ -197,7 +199,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                         _downloadRunning = to;
                       });
                     },
-                    child: Text('确认'),
+                    child: const Text('确认'),
                   ),
                 ],
               );

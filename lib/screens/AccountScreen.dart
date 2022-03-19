@@ -62,22 +62,22 @@ class _AccountScreenState extends State<AccountScreen> {
             onPressed: () {
               chooseTheme(context);
             },
-            icon: Text('主题'),
+            icon: const Text('主题'),
           ),
           IconButton(
             onPressed: _toDownloadList,
-            icon: Icon(Icons.download_rounded),
+            icon: const Icon(Icons.download_rounded),
           ),
           IconButton(
             onPressed: _logIn,
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
           ),
         ],
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text("账号"),
+            title: const Text("账号"),
             subtitle: Text(_username == "" ? "未设置" : _username),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -95,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
             },
           ),
           ListTile(
-            title: Text("密码"),
+            title: const Text("密码"),
             subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -113,12 +113,12 @@ class _AccountScreenState extends State<AccountScreen> {
               }
             },
           ),
-          NetworkSetting(),
+          const NetworkSetting(),
           Row(
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Text.rich(TextSpan(
                     text: '没有账号,我要注册',
                     style: TextStyle(
@@ -180,7 +180,7 @@ class _AccountScreenState extends State<AccountScreen> {
   _toDownloadList() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DownloadListScreen()),
+      MaterialPageRoute(builder: (context) => const DownloadListScreen()),
     );
   }
 }

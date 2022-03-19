@@ -417,7 +417,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                   bottomRight: Radius.circular(10),
                 ),
               ),
-              padding: EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
+              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
               child: Center(
                 child: _buildSliderWidget(Axis.vertical),
               ),
@@ -441,7 +441,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                   bottomLeft: Radius.circular(10),
                 ),
               ),
-              padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
+              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
               child: Center(
                 child: _buildSliderWidget(Axis.vertical),
               ),
@@ -481,7 +481,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       tooltip: FlutterSliderTooltip(custom: (value) {
         double a = value + 1;
         return Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: ShapeDecoration(
             color: Colors.black.withAlpha(0xCC),
             shape: RoundedRectangleBorder(
@@ -526,8 +526,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-          margin: EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          margin: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(10),
@@ -1082,7 +1082,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
         },
         textColor: Colors.white,
         child: Container(
-          padding: EdgeInsets.only(top: 40, bottom: 40),
+          padding: const EdgeInsets.only(top: 40, bottom: 40),
           child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
         ),
       ),
@@ -1379,7 +1379,7 @@ class _ListViewReaderState extends _ImageReaderContentState
       return Container();
     }
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: MaterialButton(
         onPressed: () {
           if (super._hasNextEp()) {
@@ -1390,7 +1390,7 @@ class _ListViewReaderState extends _ImageReaderContentState
         },
         textColor: Colors.white,
         child: Container(
-          padding: EdgeInsets.only(top: 40, bottom: 40),
+          padding: const EdgeInsets.only(top: 40, bottom: 40),
           child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
         ),
       ),
@@ -1571,8 +1571,8 @@ class _GalleryReaderState extends _ImageReaderContentState {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),

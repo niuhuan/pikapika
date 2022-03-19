@@ -16,7 +16,7 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Container(
-      margin: EdgeInsets.all(_avatarMargin),
+      margin: const EdgeInsets.all(_avatarMargin),
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(

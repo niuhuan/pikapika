@@ -129,7 +129,7 @@ class _CommentListState extends State<CommentList> {
             ),
           ),
         ),
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         child: Center(
           child: Text('我有话要讲'),
         ),
@@ -147,7 +147,7 @@ class _CommentListState extends State<CommentList> {
           });
         },
         child: Container(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Center(
             child: Text('上一页'),
           ),
@@ -167,7 +167,7 @@ class _CommentListState extends State<CommentList> {
           });
         },
         child: Container(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Center(
             child: Text('下一页'),
           ),

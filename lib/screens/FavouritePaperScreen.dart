@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
 import 'components/ComicPager.dart';
+import 'components/RightClickPop.dart';
 
 // 收藏的漫画
 class FavouritePaperScreen extends StatefulWidget {
@@ -17,10 +18,14 @@ class _FavouritePaperScreen extends State<FavouritePaperScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('收藏'),
+        title: const Text('收藏'),
       ),
       body: ComicPager(
         fetchPage: _fetch,

@@ -7,6 +7,8 @@ import 'package:pikapika/screens/components/CommentItem.dart';
 import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
+import 'components/RightClickPop.dart';
+
 class _CommentChildPage extends e.Page {
   late List<ChildOfComment> docs;
 
@@ -76,10 +78,14 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('评论'),
+        title: const Text('评论'),
       ),
       body: Column(
         children: [
@@ -138,8 +144,8 @@ class _CommentScreenState extends State<CommentScreen> {
             ),
           ),
         ),
-        padding: EdgeInsets.all(30),
-        child: Center(
+        padding: const EdgeInsets.all(30),
+        child: const Center(
           child: Text('我有话要讲'),
         ),
       ),
@@ -156,8 +162,8 @@ class _CommentScreenState extends State<CommentScreen> {
           });
         },
         child: Container(
-          padding: EdgeInsets.all(30),
-          child: Center(
+          padding: const EdgeInsets.all(30),
+          child: const Center(
             child: Text('上一页'),
           ),
         ),
@@ -176,8 +182,8 @@ class _CommentScreenState extends State<CommentScreen> {
           });
         },
         child: Container(
-          padding: EdgeInsets.all(30),
-          child: Center(
+          padding: const EdgeInsets.all(30),
+          child: const Center(
             child: Text('下一页'),
           ),
         ),

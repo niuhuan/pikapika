@@ -37,7 +37,7 @@ Widget androidSecureFlagSetting() {
     return StatefulBuilder(builder:
         (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-          title: Text("禁止截图/禁止显示在任务视图"),
+          title: const Text("禁止截图/禁止显示在任务视图"),
           subtitle: Text(_androidSecureFlag ? "是" : "否"),
           onTap: () async {
             await _chooseAndroidSecureFlag(context);

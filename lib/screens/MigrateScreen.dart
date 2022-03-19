@@ -6,6 +6,8 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 
+import 'components/RightClickPop.dart';
+
 // 数据迁移页面
 class MigrateScreen extends StatefulWidget {
   const MigrateScreen({Key? key}) : super(key: key);
@@ -31,10 +33,14 @@ class _MigrateScreenState extends State<MigrateScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('数据迁移'),
+        title: const Text('数据迁移'),
       ),
       body: ContentBuilder(
         future: _future,
@@ -46,8 +52,8 @@ class _MigrateScreenState extends State<MigrateScreen> {
               return ListView(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
+                    padding: const EdgeInsets.all(10),
+                    child: const Text(
                       "1. 为了手机数据存储空间不足, 且具有内存卡的安卓手机设计, 可将数据迁移到内存卡上。\n\n"
                       "2. 您在迁移之前, 请确保您的下载处于暂停状态, 或下载均已完成, 以保证您的数据完整性。\n\n"
                       "3. 如果迁移中断, 迁移失败, 或其他原因导致程序无法启动, 图片失效等问题, 您可在程序管理中清除本应用程序的数据, 以回复正常使用。\n\n"
@@ -58,18 +64,18 @@ class _MigrateScreenState extends State<MigrateScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Text("当前文件储存路径 : $_current"),
                   ),
                   ...paths.map((e) => Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: MaterialButton(
                           color: Theme.of(context).accentColor,
                           textColor: Theme.of(context)
                               .accentTextTheme
                               .subtitle1
                               ?.color,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           onPressed: () async {
                             if (!await confirmDialog(context, "文件迁移",
                                 "您将要迁移到$e, 迁移过程中一定《 不 要 关 闭 程 序 》")) {
@@ -96,9 +102,9 @@ class _MigrateScreenState extends State<MigrateScreen> {
                 ],
               );
             case 1:
-              return ContentLoading(label: "迁移中");
+              return const ContentLoading(label: "迁移中");
             case 2:
-              return Center(child: Text("迁移成功 您需要关闭应用程序重新启动"));
+              return const Center(child: Text("迁移成功 您需要关闭应用程序重新启动"));
             case 3:
               return Center(child: Text("迁移失败\n$_message"));
             default:

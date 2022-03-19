@@ -63,7 +63,7 @@ class GameTitleCard extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(right: iconMargin),
-          // padding: EdgeInsets.only(
+          // padding: const EdgeInsets.only(
           //   left: platformMargin,
           //   right: platformMargin,
           // ),

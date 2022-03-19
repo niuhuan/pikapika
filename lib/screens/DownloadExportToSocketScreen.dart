@@ -74,16 +74,16 @@ class _DownloadExportToSocketScreenState
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
+            return const ContentLoading(label: '加载中');
           }
           return ListView(
             children: [
               DownloadInfoCard(task: widget.task),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                         'TIPS : 传输成功之前请不要退出页面, 一次只能导出到一个设备, 两台设备需要在同一网段或无限局域网中, 请另外一台设备输入 IP:端口 , 有一个IP时请选择无限局域网的IP, 通常是192.168开头'),
                     FutureBuilder(
                       future: _ipFuture,

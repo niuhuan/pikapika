@@ -52,7 +52,7 @@ Future<void> choosePagerType(BuildContext buildContext) async {
     context: buildContext,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text("选择阅读模式"),
+        title: const Text("选择阅读模式"),
         children: _types.entries
             .map((e) => SimpleDialogOption(
                   child: Text(e.key),
@@ -74,7 +74,7 @@ Widget readerTypeSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("阅读器模式"),
+        title: const Text("阅读器模式"),
         subtitle: Text(currentReaderTypeName()),
         onTap: () async {
           await choosePagerType(context);

@@ -95,7 +95,7 @@ class _InitScreenState extends State<InitScreen> {
       // 否则跳转到登录页
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AccountScreen()),
+        MaterialPageRoute(builder: (context) => const AccountScreen()),
       );
     }
   }
@@ -103,9 +103,9 @@ class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfffffced),
+      backgroundColor: const Color(0xfffffced),
       body: ConstrainedBox(
-        constraints: BoxConstraints.expand(),
+        constraints: const BoxConstraints.expand(),
         child: Image.asset(
           "lib/assets/init.jpg",
           fit: BoxFit.contain,

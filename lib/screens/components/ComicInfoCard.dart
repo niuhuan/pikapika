@@ -32,7 +32,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
     bool? like = info is ComicInfo ? info.isLiked : null;
     bool? favourite = info is ComicInfo ? (info).isFavourite : null;
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -43,7 +43,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 10),
             child: RemoteImage(
               fileServer: info.thumb.fileServer,
               path: info.thumb.path,
@@ -86,11 +86,11 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                         widget.linkItem
                             ? TextSpan(
                                 children: [
-                                  TextSpan(text: '分类 :'),
+                                  const TextSpan(text: '分类 :'),
                                   ...info.categories.map(
                                     (e) => TextSpan(
                                       children: [
-                                        TextSpan(text: ' '),
+                                        const TextSpan(text: ' '),
                                         TextSpan(
                                           text: e,
                                           recognizer: TapGestureRecognizer()
@@ -149,7 +149,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                           ...(info.epsCount > 0
                               ? [
                                   Text.rich(TextSpan(children: [
-                                    WidgetSpan(child: iconPage),
+                                    const WidgetSpan(child: iconPage),
                                     WidgetSpan(child: iconSpacing),
                                     WidgetSpan(
                                         child: Text(
@@ -184,21 +184,21 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                 height: 26,
                                 child: _likeLoading
                                     ? IconButton(
-                                  color: Colors.pink[400],
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.sync,
-                                  ),
-                                )
+                                        color: Colors.pink[400],
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.sync,
+                                        ),
+                                      )
                                     : IconButton(
-                                  color: Colors.pink[400],
-                                  onPressed: _changeLike,
-                                  icon: Icon(
-                                    like
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                  ),
-                                ),
+                                        color: Colors.pink[400],
+                                        onPressed: _changeLike,
+                                        icon: Icon(
+                                          like
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                        ),
+                                      ),
                               ),
                             ]),
                       ...(favourite == null
@@ -209,21 +209,21 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                 height: 26,
                                 child: _favouriteLoading
                                     ? IconButton(
-                                  color: Colors.pink[400],
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.sync,
-                                  ),
-                                )
+                                        color: Colors.pink[400],
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.sync,
+                                        ),
+                                      )
                                     : IconButton(
-                                  color: Colors.pink[400],
-                                  onPressed: _changeFavourite,
-                                  icon: Icon(
-                                    favourite
-                                        ? Icons.bookmark
-                                        : Icons.bookmark_border,
-                                  ),
-                                ),
+                                        color: Colors.pink[400],
+                                        onPressed: _changeFavourite,
+                                        icon: Icon(
+                                          favourite
+                                              ? Icons.bookmark
+                                              : Icons.bookmark_border,
+                                        ),
+                                      ),
                               ),
                             ]),
                       Container(height: 10),
@@ -277,12 +277,12 @@ double imageHeight = 315 / 3.15;
 Widget buildFinished(bool comicFinished) {
   if (comicFinished) {
     return Container(
-      padding: EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
         color: Colors.orange.shade800,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Text(
+      child: const Text(
         "完结",
         style: TextStyle(
           fontSize: 10,
@@ -313,13 +313,13 @@ final iconLabelStyle = TextStyle(
   color: Colors.pink.shade400,
   height: 1.2,
 );
-final iconLabelStrutStyle = StrutStyle(
+const iconLabelStrutStyle = StrutStyle(
   height: 1.2,
 );
 
-final iconPage =
+const iconPage =
     Icon(Icons.ballot_outlined, size: _iconSize, color: Colors.grey);
-final countLabelStyle = TextStyle(
+const countLabelStyle = TextStyle(
   fontSize: 13,
   color: Colors.grey,
   height: 1.2,
@@ -328,7 +328,7 @@ final countLabelStyle = TextStyle(
 final iconMargin = Container(width: 20);
 final iconSpacing = Container(width: 5);
 
-final titleStyle = TextStyle(fontWeight: FontWeight.bold);
+const titleStyle = TextStyle(fontWeight: FontWeight.bold);
 final authorStyle = TextStyle(
   fontSize: 13,
   color: Colors.pink.shade300,

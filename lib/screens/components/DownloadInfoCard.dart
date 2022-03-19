@@ -46,7 +46,7 @@ class DownloadInfoCard extends StatelessWidget {
     List<dynamic> categories = json.decode(task.categories);
     var categoriesString = categories.map((e) => "$e").join(" ");
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -57,7 +57,7 @@ class DownloadInfoCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 10),
             child: task.thumbLocalPath == ""
                 ? RemoteImage(
                     fileServer: task.thumbFileServer,

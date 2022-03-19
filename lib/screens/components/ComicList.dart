@@ -85,7 +85,7 @@ class _ComicListState extends State<ComicList> {
             return InkWell(
               onTap: () {},
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -311,7 +311,7 @@ class _ComicListState extends State<ComicList> {
                               fontSize: titleFontSize,
                               height: 1.2,
                             ),
-                            strutStyle: StrutStyle(height: 1.2),
+                            strutStyle: const StrutStyle(height: 1.2),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),

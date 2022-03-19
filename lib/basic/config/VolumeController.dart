@@ -30,7 +30,7 @@ Widget volumeControllerSetting() {
     return StatefulBuilder(builder:
         (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-          title: Text("阅读器音量键翻页"),
+          title: const Text("阅读器音量键翻页"),
           subtitle: Text(volumeController ? "是" : "否"),
           onTap: () async {
             await _chooseVolumeController(context);

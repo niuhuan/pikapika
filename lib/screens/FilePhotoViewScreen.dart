@@ -4,6 +4,8 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/screens/components/Images.dart';
 
+import 'components/RightClickPop.dart';
+
 // 预览图片
 class FilePhotoViewScreen extends StatelessWidget {
   final String filePath;
@@ -11,7 +13,11 @@ class FilePhotoViewScreen extends StatelessWidget {
   const FilePhotoViewScreen(this.filePath, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) => Scaffold(
         body: Stack(
           children: [
             GestureDetector(
@@ -31,8 +37,8 @@ class FilePhotoViewScreen extends StatelessWidget {
             InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Container(
-                margin: EdgeInsets.only(top: 30),
-                padding: EdgeInsets.only(left: 4, right: 4),
+                margin: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(left: 4, right: 4),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(.75),
                   borderRadius: BorderRadius.only(

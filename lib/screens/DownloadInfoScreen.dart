@@ -82,7 +82,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
                 ),
               );
             },
-            icon: Icon(Icons.add_to_home_screen),
+            icon: const Icon(Icons.add_to_home_screen),
           ),
           IconButton(
             onPressed: () {
@@ -95,7 +95,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
                 ),
               );
             },
-            icon: Icon(Icons.settings_ethernet_outlined),
+            icon: const Icon(Icons.settings_ethernet_outlined),
           ),
         ],
       ),
@@ -113,7 +113,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
+            return const ContentLoading(label: '加载中');
           }
           List<dynamic> tagsDynamic = json.decode(_task.tags);
           List<String> tags = tagsDynamic.map((e) => "$e").toList();

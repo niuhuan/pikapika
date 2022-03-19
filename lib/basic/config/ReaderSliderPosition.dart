@@ -49,7 +49,7 @@ Widget readerSliderPositionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("滚动条的位置"),
+        title: const Text("滚动条的位置"),
         subtitle: Text(currentReaderSliderPositionName()),
         onTap: () async {
           await chooseReaderSliderPosition(context);

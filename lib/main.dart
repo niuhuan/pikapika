@@ -7,7 +7,7 @@ import 'package:pikapika/screens/components/MouseAndTouchScrollBehavior.dart';
 import 'basic/config/Themes.dart';
 
 void main() {
-  runApp(PikapikaApp());
+  runApp(const PikapikaApp());
 }
 
 class PikapikaApp extends StatefulWidget {
@@ -41,7 +41,7 @@ class _PikapikaAppState extends State<PikapikaApp> {
       theme: currentThemeData(),
       darkTheme: currentDarkTheme(),
       navigatorObservers: [navigatorObserver, routeObserver],
-      home: InitScreen(),
+      home: const InitScreen(),
     );
   }
 }

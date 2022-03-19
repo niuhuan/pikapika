@@ -63,7 +63,7 @@ class _DesktopCropperState extends State<DesktopCropper> {
           baseSizeImage =
               image.copyResize(baseSizeImage, height: 200, width: 200);
         }
-        var f = image.encodeJpg(baseSizeImage!);
+        var f = image.encodeJpg(baseSizeImage);
         Navigator.of(context).pop(f);
       }
     }

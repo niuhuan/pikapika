@@ -49,7 +49,7 @@ Future<void> choosePagerDirection(BuildContext buildContext) async {
     context: buildContext,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text("选择翻页方向"),
+        title: const Text("选择翻页方向"),
         children: _types.entries
             .map((e) => SimpleDialogOption(
                   child: Text(e.key),
@@ -71,7 +71,7 @@ Widget readerDirectionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("阅读器方向"),
+        title: const Text("阅读器方向"),
         subtitle: Text(_currentReaderDirectionName()),
         onTap: () async {
           await choosePagerDirection(context);

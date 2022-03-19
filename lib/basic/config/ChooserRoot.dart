@@ -66,7 +66,7 @@ Widget chooserRootSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("文件夹选择器默认路径"),
+        title: const Text("文件夹选择器默认路径"),
         subtitle: Text(_currentChooserRoot()),
         onTap: () async {
           await _inputChooserRoot(context);

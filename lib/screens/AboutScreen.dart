@@ -5,6 +5,8 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/components/Badge.dart';
 
+import 'components/RightClickPop.dart';
+
 const _releasesUrl = "https://github.com/niuhuan/pikapika/releases";
 
 // 关于
@@ -33,7 +35,11 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var min = size.width < size.height ? size.width : size.height;
     var _currentVersion = currentVersion();
@@ -59,21 +65,21 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
           ),
           Container(height: 20),
-          Divider(),
+          const Divider(),
           Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '软件版本 : $_currentVersion',
-                  style: TextStyle(
+                  style: const TextStyle(
                     height: 1.3,
                   ),
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       "检查更新 : ",
                       style: TextStyle(
                         height: 1.3,
@@ -87,12 +93,12 @@ class _AboutScreenState extends State<AboutScreen> {
               ],
             ),
           ),
-          Divider(),
+          const Divider(),
           autoUpdateCheckSetting(),
-          Divider(),
+          const Divider(),
           Container(
-            padding: EdgeInsets.all(20),
-            child: SelectableText(
+            padding: const EdgeInsets.all(20),
+            child: const SelectableText(
               "提示 : \n"
               "1. 详情页的作者/上传者/分类/标签都可以点击\n"
               "2. 详情页的作者/上传者/标题长按可以复制\n"
@@ -104,7 +110,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );
@@ -118,16 +124,16 @@ class _AboutScreenState extends State<AboutScreen> {
             WidgetSpan(
               child: Badged(
                 child: Container(
-                  padding: EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.only(right: 12),
                   child: Text(
                     latestVersion,
-                    style: TextStyle(height: 1.3),
+                    style: const TextStyle(height: 1.3),
                   ),
                 ),
                 badge: "1",
               ),
             ),
-            TextSpan(text: "  "),
+            const TextSpan(text: "  "),
             TextSpan(
               text: "去下载",
               style: TextStyle(
@@ -144,13 +150,13 @@ class _AboutScreenState extends State<AboutScreen> {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: "未检测到新版本", style: TextStyle(height: 1.3)),
+          const TextSpan(text: "未检测到新版本", style: TextStyle(height: 1.3)),
           WidgetSpan(
             alignment: PlaceholderAlignment.middle,
             child: Container(
-              padding: EdgeInsets.all(4),
-              margin: EdgeInsets.only(left: 3, right: 3),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(4),
+              margin: const EdgeInsets.only(left: 3, right: 3),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
             ),
@@ -187,13 +193,13 @@ class _AboutScreenState extends State<AboutScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(),
-          Text("更新内容:"),
+          const Divider(),
+          const Text("更新内容:"),
           Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: Text(
               latestVersionInfo,
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
           ),
         ],
@@ -202,9 +208,9 @@ class _AboutScreenState extends State<AboutScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(),
+        const Divider(),
         Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           child: Text.rich(
             TextSpan(
               text: "去RELEASE仓库",

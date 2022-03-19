@@ -43,7 +43,7 @@ Widget timeZoneSetting() {
         c = "+" + c;
       }
       return ListTile(
-        title: Text("时区"),
+        title: const Text("时区"),
         subtitle: Text(c),
         onTap: () async {
           await _chooseTimeZone(context);

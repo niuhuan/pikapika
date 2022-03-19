@@ -9,6 +9,7 @@ import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';
+import 'components/RightClickPop.dart';
 
 // 漫画列表
 class ComicsScreen extends StatefulWidget {
@@ -96,7 +97,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
             ));
           }
         },
-        icon: Icon(Icons.category),
+        icon: const Icon(Icons.category),
       );
 
   Future<ComicsPage> _load(String _currentSort, int _currentPage) {
@@ -111,7 +112,11 @@ class _ComicsScreenState extends State<ComicsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     PreferredSizeWidget? appBar;
     if (widget.tag == null &&
         widget.creatorId == null &&

@@ -27,7 +27,7 @@ Widget downloadAndExportPathSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: Text("下载的同时导出到文件系统"),
+          title: const Text("下载的同时导出到文件系统"),
           subtitle: Text(_downloadAndExportPath),
           onTap: () async {
             if (_downloadAndExportPath == "") {

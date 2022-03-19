@@ -46,7 +46,7 @@ Future<void> chooseQuality(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text("请选择图片质量"),
+        title: const Text("请选择图片质量"),
         children: <Widget>[
           ..._qualities.entries.map(
             (e) => SimpleDialogOption(
@@ -70,7 +70,7 @@ Widget qualitySetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("浏览时的图片质量"),
+        title: const Text("浏览时的图片质量"),
         subtitle: Text(currentQualityName()),
         onTap: () async {
           await chooseQuality(context);

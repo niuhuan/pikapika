@@ -62,12 +62,12 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('导入'),
+        title: const Text('导入'),
       ),
       body: ListView(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Text(_importMessage),
           ),
           ...actions,
@@ -116,7 +116,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           }
         }
       },
-      child: Text('选择zip文件进行导入'),
+      child: const Text('选择zip文件进行导入'),
     );
   }
 
@@ -146,7 +146,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           }
         }
       },
-      child: Text('从其他设备导入'),
+      child: const Text('从其他设备导入'),
     );
   }
 }

@@ -27,7 +27,7 @@ Future<void> chooseImageAddress(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text('选择图片分流'),
+        title: const Text('选择图片分流'),
         children: <Widget>[
           ..._imageAddresses.entries.map(
             (e) => SimpleDialogOption(
@@ -51,7 +51,7 @@ Widget imageSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("图片分流"),
+        title: const Text("图片分流"),
         subtitle: Text(currentImageAddressName()),
         onTap: () async {
           await chooseImageAddress(context);

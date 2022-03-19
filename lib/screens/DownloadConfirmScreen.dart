@@ -7,6 +7,7 @@ import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'package:pikapika/basic/Method.dart';
 
 import 'components/ComicInfoCard.dart';
+import 'components/RightClickPop.dart';
 
 // 确认下载
 class DownloadConfirmScreen extends StatefulWidget {
@@ -99,7 +100,11 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("下载 - ${widget.comicInfo.title}"),
@@ -110,10 +115,10 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
           if (snapshot.hasError) {
             print(snapshot.error);
             print(snapshot.stackTrace);
-            return Text('error');
+            return const Text('error');
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
+            return const ContentLoading(label: '加载中');
           }
           return ListView(
             children: [
@@ -126,7 +131,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
                 children: [
                   ...widget.epList.map((e) {
                     return Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: MaterialButton(
                         onPressed: () {
                           _clickOfEp(e);
@@ -141,7 +146,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
                               width: 10,
                             ),
                             Text(e.title,
-                                style: TextStyle(color: Colors.black)),
+                                style: const TextStyle(color: Colors.black)),
                           ],
                         ),
                       ),
@@ -159,7 +164,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
   Widget _buildButtons() {
     var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -176,13 +181,13 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
             color: theme.colorScheme.secondary,
             textColor: Colors.white,
             onPressed: _selectAll,
-            child: Text('全选'),
+            child: const Text('全选'),
           ),
           MaterialButton(
             color: theme.colorScheme.secondary,
             textColor: Colors.white,
             onPressed: _download,
-            child: Text('确定下载'),
+            child: const Text('确定下载'),
           ),
         ],
       ),
@@ -201,12 +206,12 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
 
   Icon _iconOfEp(Ep e) {
     if (_taskedEps.contains(e.order)) {
-      return Icon(Icons.download_rounded, color: Colors.black);
+      return const Icon(Icons.download_rounded, color: Colors.black);
     }
     if (_selectedEps.contains(e.order)) {
-      return Icon(Icons.check_box, color: Colors.black);
+      return const Icon(Icons.check_box, color: Colors.black);
     }
-    return Icon(Icons.check_box_outline_blank, color: Colors.black);
+    return const Icon(Icons.check_box_outline_blank, color: Colors.black);
   }
 
   void _clickOfEp(Ep e) {

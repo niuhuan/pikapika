@@ -41,7 +41,7 @@ Widget androidDisplayModeSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: Text("屏幕刷新率(安卓)"),
+          title: const Text("屏幕刷新率(安卓)"),
           subtitle: Text(_androidDisplayMode),
           onTap: () async {
             await _chooseAndroidDisplayMode(context);

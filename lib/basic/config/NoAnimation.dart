@@ -29,7 +29,7 @@ Widget noAnimationSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("取消键盘或音量翻页动画"),
+        title: const Text("取消键盘或音量翻页动画"),
         subtitle: Text(_noAnimation ? "是" : "否"),
         onTap: () async {
           await _chooseNoAnimation(context);

@@ -140,7 +140,7 @@ Widget autoUpdateCheckSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("自动检查更新"),
+        title: const Text("自动检查更新"),
         subtitle: Text(_periodText()),
         onTap: () async {
           await _choosePeriod(context);

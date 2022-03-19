@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 
 import 'components/GameTitleCard.dart';
+import 'components/RightClickPop.dart';
 
 // 游戏下载地址列表页
 class GameDownloadScreen extends StatefulWidget {
@@ -21,7 +22,11 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
       method.downloadGame(widget.info.androidLinks[0]);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("下载 - ${widget.info.title}"),
@@ -64,8 +69,8 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
         children: [
           Expanded(
             child: Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.grey.shade500,

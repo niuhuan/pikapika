@@ -67,7 +67,7 @@ Widget fullScreenActionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("操控方式"),
+        title: const Text("操控方式"),
         subtitle: Text(currentFullScreenActionName()),
         onTap: () async {
           await chooseFullScreenAction(context);

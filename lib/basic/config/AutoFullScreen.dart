@@ -31,7 +31,7 @@ Widget autoFullScreenSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("进入阅读器自动全屏"),
+        title: const Text("进入阅读器自动全屏"),
         subtitle: Text(_autoFullScreen ? "是" : "否"),
         onTap: () async {
           await _chooseAutoFullScreen(context);

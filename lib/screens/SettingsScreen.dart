@@ -28,6 +28,7 @@ import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
+import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
@@ -37,7 +38,11 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('设置')),
         body: ListView(
           children: [
@@ -47,7 +52,7 @@ class SettingsScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ModifyPasswordScreen()),
+                      builder: (context) => const ModifyPasswordScreen()),
                 );
               },
               title: const Text('修改密码'),
@@ -72,31 +77,31 @@ class SettingsScreen extends StatelessWidget {
             fullScreenUISetting(),
             contentFailedReloadActionSetting(),
             timeZoneSetting(),
-            Divider(),
+            const Divider(),
             autoCleanSecSetting(),
             ListTile(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CleanScreen()),
+                  MaterialPageRoute(builder: (context) => const CleanScreen()),
                 );
               },
-              title: Text('清除缓存'),
+              title: const Text('清除缓存'),
             ),
-            Divider(),
+            const Divider(),
             androidDisplayModeSetting(),
             androidSecureFlagSetting(),
-            Divider(),
+            const Divider(),
             chooserRootSetting(),
             downloadThreadCountSetting(),
             downloadAndExportPathSetting(),
             exportRenameSetting(),
             fontSetting(),
-            Divider(),
+            const Divider(),
             migrate(context),
-            Divider(),
+            const Divider(),
             autoUpdateCheckSetting(),
-            Divider(),
+            const Divider(),
           ],
         ),
       );
@@ -104,15 +109,15 @@ class SettingsScreen extends StatelessWidget {
   Widget migrate(BuildContext context) {
     if (Platform.isAndroid) {
       return ListTile(
-        title: Text("文件迁移"),
-        subtitle: Text("更换您的数据文件夹"),
+        title: const Text("文件迁移"),
+        subtitle: const Text("更换您的数据文件夹"),
         onTap: () async {
           var f =
               await confirmDialog(context, "文件迁移", "此功能菜单保存后, 需要重启程序, 您确认吗");
           if (f) {
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (BuildContext context) {
-                return MigrateScreen();
+                return const MigrateScreen();
               }),
               (route) => false,
             );
@@ -122,4 +127,5 @@ class SettingsScreen extends StatelessWidget {
     }
     return Container();
   }
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import 'ComicInfoScreen.dart';
 import 'components/Images.dart';
@@ -105,12 +106,12 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener(
+    final screen = NotificationListener(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('浏览记录'),
+          title: const Text('浏览记录'),
           actions: [
-            IconButton(onPressed: _clearAll, icon: Icon(Icons.auto_delete)),
+            IconButton(onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
           ],
         ),
         body: ListView(
@@ -133,6 +134,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
         return true;
       },
     );
+    return RightClickPop(screen);
   }
 
   void _chooseComic(String comicId) {
@@ -190,8 +192,8 @@ class ViewLogWrap extends StatelessWidget {
                   e.title + '\n',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(height: 1.4),
-                  strutStyle: StrutStyle(height: 1.4),
+                  style: const TextStyle(height: 1.4),
+                  strutStyle: const StrutStyle(height: 1.4),
                 ),
               ],
             ),

@@ -43,8 +43,8 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
               text = '开始阅读';
             }
             return Container(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              margin: EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               width: width,
               child: MaterialButton(
                 onPressed: onPressed,
@@ -57,7 +57,7 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
                             .bodyText1!
                             .color!
                             .withOpacity(.05),
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Text(
                           text,
                           textAlign: TextAlign.center,

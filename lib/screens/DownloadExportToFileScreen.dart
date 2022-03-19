@@ -85,18 +85,18 @@ class _DownloadExportToFileScreenState
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return ContentLoading(label: '加载中');
+            return const ContentLoading(label: '加载中');
           }
           return ListView(
             children: [
               DownloadInfoCard(task: _task),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: exportResult != "" ? Text(exportResult) : Container(),
               ),
               Container(
-                padding: EdgeInsets.all(8),
-                child: Text('TIPS : 选择一个目录'),
+                padding: const EdgeInsets.all(8),
+                child: const Text('TIPS : 选择一个目录'),
               ),
               ..._buildExportToFileButtons(),
               MaterialButton(
@@ -280,7 +280,7 @@ class _DownloadExportToFileScreenState
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
           width: constraints.maxWidth,
-          padding: EdgeInsets.only(top: 15, bottom: 15),
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
           color: (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
               .withOpacity(.05),
           child: Text(

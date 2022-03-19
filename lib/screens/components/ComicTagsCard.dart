@@ -12,7 +12,7 @@ class ComicTagsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.only(top: 5, bottom: 5),
+      padding: const EdgeInsets.only(top: 5, bottom: 5),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -27,13 +27,13 @@ class ComicTagsCard extends StatelessWidget {
               navPushOrReplace(context, (context) => ComicsScreen(tag: e));
             },
             child: Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 10,
                 right: 10,
                 top: 3,
                 bottom: 3,
               ),
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 left: 5,
                 right: 5,
                 top: 3,

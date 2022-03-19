@@ -34,7 +34,7 @@ Widget proxySetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("代理服务器"),
+        title: const Text("代理服务器"),
         subtitle: Text(currentProxyName()),
         onTap: () async {
           await inputProxy(context);

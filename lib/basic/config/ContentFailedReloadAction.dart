@@ -58,7 +58,7 @@ Widget contentFailedReloadActionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("加载失败时"),
+        title: const Text("加载失败时"),
         subtitle: Text(_currentContentFailedReloadActionName()),
         onTap: () async {
           await _chooseContentFailedReloadAction(context);

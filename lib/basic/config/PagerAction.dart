@@ -58,7 +58,7 @@ Widget pagerActionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("列表页加载方式"),
+        title: const Text("列表页加载方式"),
         subtitle: Text(_currentPagerActionName()),
         onTap: () async {
           await _choosePagerAction(context);

@@ -28,7 +28,7 @@ Future<void> chooseAddress(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text('选择分流'),
+        title: const Text('选择分流'),
         children: <Widget>[
           ..._addresses.entries.map(
             (e) => SimpleDialogOption(
@@ -52,7 +52,7 @@ Widget switchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("分流"),
+        title: const Text("分流"),
         subtitle: Text(currentAddressName()),
         onTap: () async {
           await chooseAddress(context);

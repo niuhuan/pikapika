@@ -5,6 +5,7 @@ import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/Entities.dart';
 import 'components/ComicPager.dart';
 
@@ -80,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ));
           }
         },
-        icon: Icon(Icons.category),
+        icon: const Icon(Icons.category),
       );
 
   Future<ComicsPage> _fetch(String _currentSort, int _currentPage) {
@@ -97,7 +98,11 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: _searchBar.build(context),
       body: ComicPager(

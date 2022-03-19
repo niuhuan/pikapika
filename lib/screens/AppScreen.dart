@@ -52,13 +52,13 @@ class _AppScreenState extends State<AppScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.public),
             label: '浏览',
           ),
           BottomNavigationBarItem(
             icon: Badged(
-              child: Icon(Icons.face),
+              child: const Icon(Icons.face),
               badge: latestVersion() == null ? null : "1",
             ),
             label: '我的',

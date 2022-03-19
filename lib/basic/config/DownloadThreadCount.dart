@@ -15,7 +15,7 @@ Widget downloadThreadCountSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("下载线程数"),
+        title: const Text("下载线程数"),
         subtitle: Text("$_downloadThreadCount"),
         onTap: () async {
           int? value = await chooseListDialog(context, "选择下载线程数", _values);

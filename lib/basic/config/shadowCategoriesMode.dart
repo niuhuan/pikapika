@@ -61,7 +61,7 @@ Widget shadowCategoriesModeSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("封印模式"),
+        title: const Text("封印模式"),
         subtitle: Text(_currentShadowCategoriesMode()),
         onTap: () async {
           await _chooseShadowCategoriesMode(context);

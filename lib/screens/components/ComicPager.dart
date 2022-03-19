@@ -14,14 +14,13 @@ import 'ContentLoading.dart';
 class ComicPager extends StatefulWidget {
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
-  const ComicPager({required this.fetchPage});
+  const ComicPager({required this.fetchPage, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicPagerState();
 }
 
 class _ComicPagerState extends State<ComicPager> {
-
   @override
   void initState() {
     shadowCategoriesEvent.subscribe(_onShadowChange);
@@ -35,8 +34,7 @@ class _ComicPagerState extends State<ComicPager> {
   }
 
   void _onShadowChange(EventArgs? args) {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -89,10 +87,10 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
       future: _pageFuture,
       builder: (BuildContext context, AsyncSnapshot<ComicsPage> snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          return Text('初始化');
+          return const Text('初始化');
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return ContentLoading(label: '加载中');
+          return const ContentLoading(label: '加载中');
         }
         if (snapshot.hasError) {
           return ContentError(
@@ -115,7 +113,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
 
   PreferredSize _buildAppBar(ComicsPage comicsPage, BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(40),
+      preferredSize: const Size.fromHeight(40),
       child: Container(
         decoration: BoxDecoration(
           border: Border(
@@ -169,7 +167,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('取消'),
+                          child: const Text('取消'),
                         ),
                         MaterialButton(
                           onPressed: () {
@@ -185,7 +183,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                             _currentPage = num;
                             _load();
                           },
-                          child: Text('确定'),
+                          child: const Text('确定'),
                         ),
                       ],
                     );
@@ -208,7 +206,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                       _load();
                     }
                   },
-                  child: Text('上一页'),
+                  child: const Text('上一页'),
                 ),
                 MaterialButton(
                   minWidth: 0,
@@ -218,7 +216,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                       _load();
                     }
                   },
-                  child: Text('下一页'),
+                  child: const Text('下一页'),
                 )
               ],
             ),
@@ -298,7 +296,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
     } catch (e, s) {
       _error = true;
       print("$e\n$s");
-      throw e;
+      rethrow;
     } finally {
       setState(() {
         _loading = false;
@@ -334,7 +332,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
 
   PreferredSize _buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(40),
+      preferredSize: const Size.fromHeight(40),
       child: Container(
         decoration: BoxDecoration(
           border: Border(

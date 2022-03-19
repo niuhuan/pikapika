@@ -29,7 +29,7 @@ Widget exportRenameSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("导出时进行重命名"),
+        title: const Text("导出时进行重命名"),
         subtitle: Text(_exportRename ? "是" : "否"),
         onTap: () async {
           await _chooseExportRename(context);

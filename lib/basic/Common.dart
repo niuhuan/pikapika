@@ -172,7 +172,7 @@ Future<String?> displayTextInputDialog(BuildContext context,
                   ? []
                   : [
                       Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        padding: const EdgeInsets.only(top: 20, bottom: 10),
                         child: Text(
                           desc,
                           style: TextStyle(

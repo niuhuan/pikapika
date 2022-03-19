@@ -25,7 +25,7 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  late SearchBar _searchBar = SearchBar(
+  late final SearchBar _searchBar = SearchBar(
     hintText: '搜索',
     inBar: false,
     setState: setState,
@@ -41,7 +41,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     },
     buildDefaultAppBar: (BuildContext context) {
       return AppBar(
-        title: Text('分类'),
+        title: const Text('分类'),
         actions: [
           shadowCategoriesActionButton(context),
           _searchBar.getSearchAction(context),
@@ -113,7 +113,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               );
             }
             if (snapshot.connectionState != ConnectionState.done) {
-              return ContentLoading(label: '加载中');
+              return const ContentLoading(label: '加载中');
             }
             return ListView(
               children: [
@@ -123,7 +123,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   alignment: WrapAlignment.spaceAround,
                   children: _buildChannels(),
                 ),
-                Divider(),
+                const Divider(),
                 Wrap(
                   runSpacing: 20,
                   alignment: WrapAlignment.spaceAround,
@@ -253,7 +253,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RankingsScreen()),
+          MaterialPageRoute(builder: (context) => const RankingsScreen()),
         );
       },
     );
@@ -265,7 +265,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RandomComicsScreen()),
+          MaterialPageRoute(builder: (context) => const RandomComicsScreen()),
         );
       },
     );
@@ -277,7 +277,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => GamesScreen()),
+          MaterialPageRoute(builder: (context) => const GamesScreen()),
         );
       },
     );

@@ -12,6 +12,7 @@ import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'DownloadConfirmScreen.dart';
 import 'components/ImageReader.dart';
+import 'components/RightClickPop.dart';
 
 // 在线阅读漫画
 class ComicReaderScreen extends StatefulWidget {
@@ -142,7 +143,11 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return readerKeyboardHolder(_build(context));
   }
 

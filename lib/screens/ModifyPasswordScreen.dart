@@ -3,8 +3,11 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 
 import '../basic/Common.dart';
+import 'components/RightClickPop.dart';
 
 class ModifyPasswordScreen extends StatefulWidget {
+  const ModifyPasswordScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _ModifyPasswordScreenState();
 }
@@ -16,15 +19,19 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
   late String _newPasswordRep = "";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("修改密码"),
+        title: const Text("修改密码"),
       ),
       body: _loading
           ? Stack(
               children: [
-                ContentLoading(label: "请稍后"),
+                const ContentLoading(label: "请稍后"),
                 WillPopScope(
                   child: Container(),
                   onWillPop: () async {
@@ -42,7 +49,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
       children: [
         const Divider(),
         ListTile(
-          title: Text("旧密码"),
+          title: const Text("旧密码"),
           subtitle: Text(_oldPassword == "" ? "未填写" : '\u2022' * 10),
           onTap: () async {
             String? input = await displayTextInputDialog(
@@ -61,7 +68,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
         ),
         const Divider(),
         ListTile(
-          title: Text("新密码"),
+          title: const Text("新密码"),
           subtitle: Text(_newPassword == "" ? "未填写" : '\u2022' * 10),
           onTap: () async {
             String? input = await displayTextInputDialog(
@@ -80,7 +87,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
         ),
         const Divider(),
         ListTile(
-          title: Text("重复输入新密码"),
+          title: const Text("重复输入新密码"),
           subtitle: Text(_newPasswordRep == "" ? "未填写" : '\u2022' * 10),
           onTap: () async {
             String? input = await displayTextInputDialog(
@@ -99,7 +106,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
         ),
         const Divider(),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: MaterialButton(
             textColor: Colors.white,
             color: Theme.of(context).appBarTheme.backgroundColor,
@@ -122,7 +129,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
                 });
               }
             },
-            child: Text("确认"),
+            child: const Text("确认"),
           ),
         ),
       ],

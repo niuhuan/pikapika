@@ -38,10 +38,10 @@ Future<void> _chooseShadowCategories(BuildContext context) async {
         }
       }
       return MultiSelectDialog<String>(
-        title: Text('封印'),
+        title: const Text('封印'),
         searchHint: '搜索',
-        cancelText: Text('取消'),
-        confirmText: Text('确定'),
+        cancelText: const Text('取消'),
+        confirmText: const Text('确定'),
         items: storedCategories.map((e) => MultiSelectItem(e, e)).toList(),
         initialValue: initialValue,
         onConfirm: (List<String>? value) async {
@@ -69,7 +69,7 @@ Widget shadowCategoriesSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("封印"),
+        title: const Text("封印"),
         subtitle: Text(jsonEncode(shadowCategories)),
         onTap: () async {
           await _chooseShadowCategories(context);

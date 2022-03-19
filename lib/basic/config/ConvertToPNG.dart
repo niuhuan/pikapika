@@ -34,7 +34,7 @@ Widget convertToPNGSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: Text("读取到超大图片时进行缩放(防止崩溃)"),
+          title: const Text("读取到超大图片时进行缩放(防止崩溃)"),
           subtitle: Text(_convertToPNG ? "是" : "否"),
           onTap: () async {
             await _chooseConvertToPNGSetting(context);

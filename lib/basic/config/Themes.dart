@@ -42,7 +42,7 @@ Widget fontSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("字体"),
+        title: const Text("字体"),
         subtitle: Text("$_fontFamily"),
         onTap: () async {
           await inputFont(context);
@@ -170,7 +170,7 @@ class _DarkTheme extends _ThemePackage {
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xFF1E1E1E),
           iconTheme: IconThemeData(
@@ -207,13 +207,16 @@ class _DustyBlueTheme extends _ThemePackage {
   ThemeData themeData(ThemeData rawData) =>
       rawData.copyWith(
         scaffoldBackgroundColor: Color.alphaBlend(
-            Color(0x11999999), Color(0xff20253b)),
-        cardColor: Color.alphaBlend(Color(0x11AAAAAA), Color(0xff20253b)),
+          const Color(0x11999999), const Color(0xff20253b),
+        ),
+        cardColor: Color.alphaBlend(
+          const Color(0x11AAAAAA), const Color(0xff20253b),
+        ),
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
           secondary: Colors.blue.shade200,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xff20253b),
           iconTheme: IconThemeData(
@@ -339,7 +342,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                       onChange(!_androidNightMode);
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: 3, bottom: 3),
+                      margin: const EdgeInsets.only(top: 3, bottom: 3),
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(
@@ -362,7 +365,7 @@ Future<dynamic> chooseTheme(BuildContext buildContext) async {
                             value: _androidNightMode,
                             onChanged: onChange,
                           ),
-                          Text("随手机进入黑暗模式"),
+                          const Text("随手机进入黑暗模式"),
                         ],
                       ),
                     ),

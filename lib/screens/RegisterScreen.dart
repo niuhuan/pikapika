@@ -3,11 +3,14 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
+import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import 'components/ContentLoading.dart';
 
 /// 注册页面
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _RegisterScreenState();
 }
@@ -86,23 +89,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     if (_registerOver) {
       return Scaffold(
         appBar: AppBar(
           title: const Text('注册成功'),
         ),
         body: Center(
-          child: Container(
-            child: Column(
-              children: [
-                Expanded(child: Container()),
-                const Text('您已经注册成功, 请返回登录'),
-                Text('账号 : $_email'),
-                Text('昵称 : $_name'),
-                Expanded(child: Container()),
-                Expanded(child: Container()),
-              ],
-            ),
+          child: Column(
+            children: [
+              Expanded(child: Container()),
+              const Text('您已经注册成功, 请返回登录'),
+              Text('账号 : $_email'),
+              Text('昵称 : $_name'),
+              Expanded(child: Container()),
+              Expanded(child: Container()),
+            ],
           ),
         ),
       );
@@ -110,18 +115,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_registering) {
       return Scaffold(
         appBar: AppBar(),
-        body: ContentLoading(label: '注册中'),
+        body: const ContentLoading(label: '注册中'),
       );
     }
     return Scaffold(
-      appBar: AppBar(title: Text('注册'), actions: [
-        IconButton(onPressed: () => _register(), icon: Icon(Icons.check),),
+      appBar: AppBar(title: const Text('注册'), actions: [
+        IconButton(
+          onPressed: () => _register(), icon: const Icon(Icons.check),),
       ],),
       body: ListView(
         children: [
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text("账号 (不一定是邮箱/登录使用)"),
+            title: const Text("账号 (不一定是邮箱/登录使用)"),
             subtitle: Text(_email == "" ? "未设置" : _email),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -138,7 +144,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("密码 (8位以上)"),
+            title: const Text("密码 (8位以上)"),
             subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -156,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("昵称 (2-50字)"),
+            title: const Text("昵称 (2-50字)"),
             subtitle: Text(_name == "" ? "未设置" : _name),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -173,29 +179,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("性别"),
+            title: const Text("性别"),
             subtitle: Text(_genderText(_gender)),
             onTap: () async {
               String? result = await showDialog<String>(
                 context: context,
                 builder: (BuildContext context) {
                   return SimpleDialog(
-                    title: Text('选择您的性别'),
+                    title: const Text('选择您的性别'),
                     children: [
                       SimpleDialogOption(
-                        child: Text('扶她'),
+                        child: const Text('扶她'),
                         onPressed: () {
                           Navigator.pop(context, 'bot');
                         },
                       ),
                       SimpleDialogOption(
-                        child: Text('公'),
+                        child: const Text('公'),
                         onPressed: () {
                           Navigator.pop(context, 'm');
                         },
                       ),
                       SimpleDialogOption(
-                        child: Text('母'),
+                        child: const Text('母'),
                         onPressed: () {
                           Navigator.pop(context, 'f');
                         },
@@ -212,7 +218,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("生日"),
+            title: const Text("生日"),
             subtitle: Text(_birthday),
             onTap: () async {
               DatePicker.showDatePicker(
@@ -227,9 +233,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               );
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text("问题1"),
+            title: const Text("问题1"),
             subtitle: Text(_question1 == "" ? "未设置" : _question1),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -246,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("回答1"),
+            title: const Text("回答1"),
             subtitle: Text(_answer1 == "" ? "未设置" : _answer1),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -263,7 +269,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("问题2"),
+            title: const Text("问题2"),
             subtitle: Text(_question2 == "" ? "未设置" : _question2),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -280,7 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("回答2"),
+            title: const Text("回答2"),
             subtitle: Text(_answer2 == "" ? "未设置" : _answer2),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -297,7 +303,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("问题3"),
+            title: const Text("问题3"),
             subtitle: Text(_question3 == "" ? "未设置" : _question3),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -314,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: Text("回答3"),
+            title: const Text("回答3"),
             subtitle: Text(_answer3 == "" ? "未设置" : _answer3),
             onTap: () async {
               String? input = await displayTextInputDialog(
@@ -330,9 +336,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               }
             },
           ),
-          Divider(),
-          NetworkSetting(),
-          Divider(),
+          const Divider(),
+          const NetworkSetting(),
+          const Divider(),
         ],
       ),
     );

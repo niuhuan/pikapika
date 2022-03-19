@@ -17,6 +17,7 @@ import 'components/CommentList.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
+import 'components/RightClickPop.dart';
 
 // 漫画详情
 class ComicInfoScreen extends StatefulWidget {
@@ -73,7 +74,11 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return RightClickPop(buildScreen(context));
+  }
+
+  Widget buildScreen(BuildContext context) {
     return FutureBuilder(
       future: _comicFuture,
       builder: (BuildContext context, AsyncSnapshot<ComicInfo> snapshot) {
@@ -94,7 +99,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(),
-            body: ContentLoading(label: '加载中'),
+            body: const ContentLoading(label: '加载中'),
           );
         }
         var _comicInfo = snapshot.data!;
@@ -122,7 +127,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                 ComicTagsCard(_comicInfo.tags),
                 ComicDescriptionCard(description: _comicInfo.description),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
@@ -173,7 +178,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                           TextSpan(
                             text:
                                 "( ${formatTimeToDate(_comicInfo.updatedAt)} )",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 13,
                               color: Colors.grey,
                             ),
@@ -245,11 +250,11 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                 this._epListFuture = _loadEps();
               });
             },
-            icon: Icon(Icons.sync_problem),
+            icon: const Icon(Icons.sync_problem),
           );
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return IconButton(onPressed: () {}, icon: Icon(Icons.sync));
+          return IconButton(onPressed: () {}, icon: const Icon(Icons.sync));
         }
         var _epList = snapshot.data!;
         return IconButton(
@@ -264,7 +269,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
               ),
             );
           },
-          icon: Icon(Icons.download_rounded),
+          icon: const Icon(Icons.download_rounded),
         );
       },
     );
@@ -305,8 +310,10 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                       _push(_comicInfo, _epList, e.order, null);
                     },
                     color: Colors.white,
-                    child:
-                        Text(e.title, style: TextStyle(color: Colors.black)),
+                    child: Text(
+                      e.title,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   );
                 }),
               ],

@@ -31,7 +31,7 @@ Widget keyboardControllerSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: Text("阅读器键盘翻页(仅PC)"),
+          title: const Text("阅读器键盘翻页(仅PC)"),
           subtitle: Text(keyboardController ? "是" : "否"),
           onTap: () async {
             await _chooseKeyboardController(context);
