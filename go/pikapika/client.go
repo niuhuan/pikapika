@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	source "github.com/niuhuan/pica-go"
+	"golang.org/x/net/proxy"
 	"net"
 	"net/http"
 	"net/url"
@@ -47,13 +48,6 @@ var switchAddresses = map[int]string{
 var switchAddress = 1
 var switchAddressPattern, _ = regexp.Compile("^.+picacomic\\.com:\\d+$")
 
-func switchAddressContext(ctx context.Context, network, addr string) (net.Conn, error) {
-	if sAddr, ok := switchAddresses[switchAddress]; ok {
-		addr = sAddr
-	}
-	return dialer.DialContext(ctx, network, addr)
-}
-
 func changeProxyUrl(urlStr string) bool {
 	if urlStr == "" {
 		client.Transport = &http.Transport{
@@ -61,19 +55,60 @@ func changeProxyUrl(urlStr string) bool {
 			ExpectContinueTimeout: time.Second * 10,
 			ResponseHeaderTimeout: time.Second * 10,
 			IdleConnTimeout:       time.Second * 10,
-			DialContext:           switchAddressContext,
+			DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+				if sAddr, ok := switchAddresses[switchAddress]; ok {
+					addr = sAddr
+				}
+				return dialer.DialContext(ctx, network, addr)
+			},
+		}
+		imageHttpClient.Transport = &http.Transport{
+			TLSHandshakeTimeout:   time.Second * 10,
+			ExpectContinueTimeout: time.Second * 10,
+			ResponseHeaderTimeout: time.Second * 10,
+			IdleConnTimeout:       time.Second * 10,
+			DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+				return dialer.DialContext(ctx, network, addr)
+			},
 		}
 		return false
 	}
 	client.Transport = &http.Transport{
-		Proxy: func(_ *http.Request) (*url.URL, error) {
-			return url.Parse(urlStr)
-		},
 		TLSHandshakeTimeout:   time.Second * 10,
 		ExpectContinueTimeout: time.Second * 10,
 		ResponseHeaderTimeout: time.Second * 10,
 		IdleConnTimeout:       time.Second * 10,
-		DialContext:           switchAddressContext,
+		DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+			proxyUrl, err := url.Parse(urlStr)
+			if err != nil {
+				return nil, err
+			}
+			proxy, err := proxy.FromURL(proxyUrl, proxy.Direct)
+			if err != nil {
+				return nil, err
+			}
+			if sAddr, ok := switchAddresses[switchAddress]; ok {
+				addr = sAddr
+			}
+			return proxy.Dial(network, addr)
+		},
+	}
+	imageHttpClient.Transport = &http.Transport{
+		TLSHandshakeTimeout:   time.Second * 10,
+		ExpectContinueTimeout: time.Second * 10,
+		ResponseHeaderTimeout: time.Second * 10,
+		IdleConnTimeout:       time.Second * 10,
+		DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+			proxyUrl, err := url.Parse(urlStr)
+			if err != nil {
+				return nil, err
+			}
+			proxy, err := proxy.FromURL(proxyUrl, proxy.Direct)
+			if err != nil {
+				return nil, err
+			}
+			return proxy.Dial(network, addr)
+		},
 	}
 	return true
 }
