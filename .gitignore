@@ -54,5 +54,8 @@ app.*.map.json
 
 ios/build/
 
+# IDE
+*.iml
+
 # APP
 /lib/assets/version.txt
