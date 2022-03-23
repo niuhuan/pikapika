@@ -38,8 +38,8 @@ class _PikapikaAppState extends State<PikapikaApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       scrollBehavior: mouseAndTouchScrollBehavior,
-      theme: currentThemeData(),
-      darkTheme: currentDarkTheme(),
+      theme: currentLightThemeData(),
+      darkTheme: currentDarkThemeData(),
       navigatorObservers: [navigatorObserver, routeObserver],
       home: const InitScreen(),
     );

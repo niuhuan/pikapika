@@ -60,7 +60,7 @@ class _AccountScreenState extends State<AccountScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              chooseTheme(context);
+              // todo : chooseTheme(context);
             },
             icon: const Text('主题'),
           ),

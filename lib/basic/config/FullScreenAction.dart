@@ -28,7 +28,7 @@ late FullScreenAction _fullScreenAction;
 Future<void> initFullScreenAction() async {
   _fullScreenAction = _fullScreenActionFromString(await method.loadProperty(
     _propertyName,
-    FullScreenAction.CONTROLLER.toString(),
+    FullScreenAction.TOUCH_ONCE.toString(),
   ));
 }
 

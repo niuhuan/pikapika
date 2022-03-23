@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
-import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/AccountScreen.dart';
 import 'package:pikapika/screens/DownloadListScreen.dart';
 import 'package:pikapika/screens/FavouritePaperScreen.dart';
+import 'package:pikapika/screens/ThemeScreen.dart';
 import 'package:pikapika/screens/ViewLogsScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
+import '../basic/config/Themes.dart';
 import 'SettingsScreen.dart';
 import 'components/Badge.dart';
 import 'components/UserProfileCard.dart';
@@ -17,13 +18,11 @@ import 'components/UserProfileCard.dart';
 class SpaceScreen extends StatefulWidget {
   const SpaceScreen({Key? key}) : super(key: key);
 
-
   @override
   State<StatefulWidget> createState() => _SpaceScreenState();
 }
 
 class _SpaceScreenState extends State<SpaceScreen> {
-
   @override
   void initState() {
     versionEvent.subscribe(_onVersion);
@@ -44,7 +43,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('我的'),
+        title: const Text('我的'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -55,7 +54,8 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 await method.setPassword("");
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => AccountScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const AccountScreen()),
                 );
               }
             },
@@ -91,38 +91,45 @@ class _SpaceScreenState extends State<SpaceScreen> {
           const Divider(),
           ListTile(
             onTap: () async {
-              await chooseTheme(context);
-              setState(() {});
+              if (androidNightModeDisplay) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ThemeScreen()),
+                );
+              } else {
+                chooseLightTheme(context);
+              }
             },
-            title: Text('主题'),
-            subtitle: Text(currentThemeName()),
+            title: const Text('主题'),
           ),
           const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FavouritePaperScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const FavouritePaperScreen()),
               );
             },
-            title: Text('我的收藏'),
+            title: const Text('我的收藏'),
           ),
           const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ViewLogsScreen()),
+                MaterialPageRoute(builder: (context) => const ViewLogsScreen()),
               );
             },
-            title: Text('浏览记录'),
+            title: const Text('浏览记录'),
           ),
           const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const DownloadListScreen()),
+                MaterialPageRoute(
+                    builder: (context) => const DownloadListScreen()),
               );
             },
             title: const Text('我的下载'),
