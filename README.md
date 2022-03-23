@@ -1,7 +1,6 @@
 PIKAPIKA - 漫画客户端
 ========
 [![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE) 
-[![ci-release](https://img.shields.io/github/workflow/status/niuhuan/pikapika/Release)](https://github.com/niuhuan/pikapika/releases) 
 [![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases) 
 [![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases) 
 
