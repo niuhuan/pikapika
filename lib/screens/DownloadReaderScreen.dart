@@ -13,6 +13,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ImageReader.dart';
+import 'components/RightClickPop.dart';
 
 // 阅读下载的内容
 class DownloadReaderScreen extends StatefulWidget {
@@ -133,7 +134,15 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
     return readerKeyboardHolder(_build(context));
   }
 
@@ -166,7 +175,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
-            body: ContentLoading(label: '加载中'),
+            body: const ContentLoading(label: '加载中'),
           );
         }
         var epNameMap = <int, String>{};

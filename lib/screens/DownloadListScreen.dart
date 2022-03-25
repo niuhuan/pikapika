@@ -107,7 +107,11 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         },
       ),
     );
-    return RightClickPop(screen);
+    return rightClickPop(
+      child: screen,
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget downloadWidget(DownloadComic e) {
@@ -147,7 +151,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DownloadImportScreen(),
+              builder: (context) => const DownloadImportScreen(),
             ),
           );
           setState(() {
@@ -179,7 +183,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('下载任务'),
+                title: const Text('下载任务'),
                 content: Text(
                   _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
                 ),
@@ -188,7 +192,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    child: Text('取消'),
+                    child: const Text('取消'),
                   ),
                   MaterialButton(
                     onPressed: () async {
@@ -218,7 +222,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             ),
             Text(
               _downloadRunning ? '下载中' : '暂停中',
-              style: TextStyle(fontSize: 14, color: Colors.white),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
           ],
@@ -238,12 +242,12 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         child: Column(
           children: [
             Expanded(child: Container()),
-            Icon(
+            const Icon(
               Icons.sync_problem,
               size: 18,
               color: Colors.white,
             ),
-            Text(
+            const Text(
               '恢复',
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),

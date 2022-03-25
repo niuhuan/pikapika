@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 
 import 'components/ContentLoading.dart';
+import 'components/RightClickPop.dart';
 
 // 导入
 class DownloadImportScreen extends StatefulWidget {
@@ -42,7 +43,15 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: !_importing,
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
     if (_importing) {
       return Scaffold(
         body: ContentLoading(label: _importMessage),

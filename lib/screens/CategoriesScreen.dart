@@ -147,7 +147,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
     List<Widget> list = [];
 
-    var append = (Widget widget, String title, Function() onTap) {
+    append(Widget widget, String title, Function() onTap) {
       list.add(
         GestureDetector(
           onTap: onTap,
@@ -174,7 +174,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         ),
       );
-    };
+    }
 
     append(
       buildSvg('lib/assets/books.svg', imageSize, imageSize, margin: 20),
@@ -217,7 +217,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
     List<Widget> list = [];
 
-    var append = (Widget widget, String title, Function() onTap) {
+    append(Widget widget, String title, Function() onTap) {
       list.add(
         GestureDetector(
           onTap: onTap,
@@ -244,7 +244,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         ),
       );
-    };
+    }
 
     append(
       buildSvg('lib/assets/rankings.svg', imageSize, imageSize,

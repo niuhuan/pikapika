@@ -61,7 +61,7 @@ Widget shadowCategoriesActionButton(BuildContext context) {
     onPressed: () {
       _chooseShadowCategories(context);
     },
-    icon: Icon(Icons.hide_source),
+    icon: const Icon(Icons.hide_source),
   );
 }
 

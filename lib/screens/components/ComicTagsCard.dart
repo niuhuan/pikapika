@@ -45,7 +45,7 @@ class ComicTagsCard extends StatelessWidget {
                   style: BorderStyle.solid,
                   color: Colors.pink.shade400,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(30)),
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
               child: Text(
                 e,
@@ -53,7 +53,7 @@ class ComicTagsCard extends StatelessWidget {
                   color: Colors.pink.shade500,
                   height: 1.4,
                 ),
-                strutStyle: StrutStyle(
+                strutStyle: const StrutStyle(
                   height: 1.4,
                 ),
               ),

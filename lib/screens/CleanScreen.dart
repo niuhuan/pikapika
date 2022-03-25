@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/FitButton.dart';
 import 'components/ContentLoading.dart';
+import 'components/RightClickPop.dart';
 
 // 清理
 class CleanScreen extends StatefulWidget {
@@ -38,7 +39,15 @@ class _CleanScreenState extends State<CleanScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
     if (_cleaning) {
       return Scaffold(
         body: ContentLoading(label: _cleaningMessage),

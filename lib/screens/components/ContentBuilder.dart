@@ -27,7 +27,7 @@ class ContentBuilder<T> extends StatelessWidget {
           );
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return ContentLoading(label: '加载中');
+          return const ContentLoading(label: '加载中');
         }
         return successBuilder(context, snapshot);
       },

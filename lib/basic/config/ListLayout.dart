@@ -51,5 +51,5 @@ IconButton chooseLayoutActionButton(BuildContext context) => IconButton(
       onPressed: () {
         _chooseListLayout(context);
       },
-      icon: Icon(Icons.view_quilt),
+      icon: const Icon(Icons.view_quilt),
     );

@@ -134,7 +134,11 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
         return true;
       },
     );
-    return RightClickPop(screen);
+    return rightClickPop(
+      child: screen,
+      context: context,
+      canPop: true,
+    );
   }
 
   void _chooseComic(String comicId) {

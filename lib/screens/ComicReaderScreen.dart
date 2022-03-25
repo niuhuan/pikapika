@@ -144,7 +144,11 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
 
   @override
   Widget build(BuildContext context){
-    return RightClickPop(buildScreen(context));
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget buildScreen(BuildContext context) {

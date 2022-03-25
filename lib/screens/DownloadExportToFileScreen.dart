@@ -14,6 +14,7 @@ import 'package:pikapika/screens/DownloadExportToSocketScreen.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/RightClickPop.dart';
 
 // 导出
 class DownloadExportToFileScreen extends StatefulWidget {
@@ -61,7 +62,15 @@ class _DownloadExportToFileScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: !exporting,
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
     if (exporting) {
       return Scaffold(
         body: ContentLoading(label: exportMessage),

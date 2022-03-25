@@ -29,7 +29,7 @@ class CommentList extends StatefulWidget {
   final CommentMainType mainType;
   final String mainId;
 
-  CommentList(this.mainType, this.mainId);
+  const CommentList(this.mainType, this.mainId, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _CommentListState();
@@ -130,7 +130,7 @@ class _CommentListState extends State<CommentList> {
           ),
         ),
         padding: const EdgeInsets.all(30),
-        child: Center(
+        child: const Center(
           child: Text('我有话要讲'),
         ),
       ),
@@ -148,7 +148,7 @@ class _CommentListState extends State<CommentList> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: Center(
+          child: const Center(
             child: Text('上一页'),
           ),
         ),
@@ -168,7 +168,7 @@ class _CommentListState extends State<CommentList> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: Center(
+          child: const Center(
             child: Text('下一页'),
           ),
         ),

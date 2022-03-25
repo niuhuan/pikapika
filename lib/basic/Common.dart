@@ -145,7 +145,7 @@ Future<T?> chooseMapDialog<T>(
 
 /// 输入对话框1
 
-var _controller = TextEditingController.fromValue(TextEditingValue(text: ''));
+var _controller = TextEditingController.fromValue(const TextEditingValue(text: ''));
 
 Future<String?> displayTextInputDialog(BuildContext context,
     {String? title,
@@ -190,7 +190,7 @@ Future<String?> displayTextInputDialog(BuildContext context,
         ),
         actions: <Widget>[
           MaterialButton(
-            child: Text('取消'),
+            child: const Text('取消'),
             onPressed: () {
               Navigator.of(context).pop();
             },

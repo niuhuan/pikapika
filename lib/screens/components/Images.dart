@@ -308,7 +308,7 @@ Widget buildMock(double? width, double? height) {
 
 Widget buildError(double? width, double? height) {
   return Image(
-    image: AssetImage('lib/assets/error.png'),
+    image: const AssetImage('lib/assets/error.png'),
     width: width,
     height: height,
   );

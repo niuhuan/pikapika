@@ -35,8 +35,12 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
-    return RightClickPop(buildScreen(context));
+  Widget build(BuildContext context) {
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget buildScreen(BuildContext context) {

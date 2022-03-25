@@ -14,7 +14,11 @@ class FilePhotoViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return RightClickPop(buildScreen(context));
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget buildScreen(BuildContext context) => Scaffold(
@@ -41,12 +45,12 @@ class FilePhotoViewScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4, right: 4),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(.75),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
                     bottomRight: Radius.circular(8),
                   ),
                 ),
-                child: Icon(Icons.keyboard_backspace, color: Colors.white),
+                child: const Icon(Icons.keyboard_backspace, color: Colors.white),
               ),
             ),
           ],

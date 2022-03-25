@@ -9,6 +9,7 @@ import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
+import 'ThemeScreen.dart';
 import 'components/ContentLoading.dart';
 
 // 账户设置
@@ -48,7 +49,7 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildLogging() {
-    return Scaffold(
+    return const Scaffold(
       body: ContentLoading(label: '登录中'),
     );
   }
@@ -56,11 +57,18 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget _buildGui() {
     return Scaffold(
       appBar: AppBar(
-        title: Text('配置选项'),
+        title: const Text('配置选项'),
         actions: [
           IconButton(
             onPressed: () {
-              // todo : chooseTheme(context);
+              if (androidNightModeDisplay) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ThemeScreen()),
+                );
+              } else {
+                chooseLightTheme(context);
+              }
             },
             icon: const Text('主题'),
           ),
@@ -130,7 +138,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    RegisterScreen()),
+                                    const RegisterScreen()),
                           ).then((value) => _loadProperties()),
                   )),
                 ),
@@ -150,7 +158,7 @@ class _AccountScreenState extends State<AccountScreen> {
       await method.login();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AppScreen()),
+        MaterialPageRoute(builder: (context) => const AppScreen()),
       );
     } catch (e, s) {
       print("$e\n$s");

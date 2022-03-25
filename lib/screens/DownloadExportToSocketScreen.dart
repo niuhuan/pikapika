@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/RightClickPop.dart';
 
 // 传输到其他设备
 class DownloadExportToSocketScreen extends StatefulWidget {
@@ -55,7 +56,15 @@ class _DownloadExportToSocketScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("网络导出 - " + widget.comicTitle),

@@ -30,6 +30,7 @@ import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
+import '../basic/config/UsingRightClickPop.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
@@ -39,7 +40,11 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RightClickPop(buildScreen(context));
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget buildScreen(BuildContext context) => Scaffold(
@@ -97,6 +102,7 @@ class SettingsScreen extends StatelessWidget {
             downloadAndExportPathSetting(),
             exportRenameSetting(),
             fontSetting(),
+            usingRightClickPopSetting(),
             const Divider(),
             migrate(context),
             const Divider(),

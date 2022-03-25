@@ -33,7 +33,11 @@ class _GamesScreenState extends State<GamesScreen> {
 
   @override
   Widget build(BuildContext context){
-    return RightClickPop(buildScreen(context));
+    return rightClickPop(
+      child: buildScreen(context),
+      context: context,
+      canPop: true,
+    );
   }
 
   Widget buildScreen(BuildContext context) {
@@ -146,7 +150,7 @@ class _GamesScreenState extends State<GamesScreen> {
                               _onPageChange(page.page - 1);
                             }
                           },
-                          child: Text('上一页'),
+                          child: const Text('上一页'),
                         ),
                         MaterialButton(
                           minWidth: 0,
@@ -155,7 +159,7 @@ class _GamesScreenState extends State<GamesScreen> {
                               _onPageChange(page.page + 1);
                             }
                           },
-                          child: Text('下一页'),
+                          child: const Text('下一页'),
                         )
                       ],
                     ),
@@ -174,7 +178,7 @@ class _GamesScreenState extends State<GamesScreen> {
                           },
                           child: Container(
                             padding: const EdgeInsets.only(top: 30, bottom: 30),
-                            child: Text('下一页'),
+                            child: const Text('下一页'),
                           ),
                         ),
                       ]
@@ -235,8 +239,8 @@ class GameCard extends StatelessWidget {
                       info.title + '\n',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(height: 1.4),
-                      strutStyle: StrutStyle(height: 1.4),
+                      style: const TextStyle(height: 1.4),
+                      strutStyle: const StrutStyle(height: 1.4),
                     ),
                     Text(
                       info.publisher,

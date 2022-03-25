@@ -99,7 +99,7 @@ class _PinkTheme extends _ThemePackage {
         appBarTheme: AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Colors.pink.shade200,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white,
           ),
         ),
@@ -141,7 +141,7 @@ class _BlackTheme extends _ThemePackage {
         appBarTheme: AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Colors.grey.shade800,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white,
           ),
         ),
@@ -238,11 +238,11 @@ class _DustyBlueTheme extends _ThemePackage {
             color: Colors.white,
           ),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: const DialogTheme(
           backgroundColor: Color(0xff20253b),
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Color(0xff191b26),
+          backgroundColor: const Color(0xff191b26),
           selectedItemColor: Colors.blue.shade200,
           unselectedItemColor: Colors.grey.shade500,
         ),

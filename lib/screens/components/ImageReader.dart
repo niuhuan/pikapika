@@ -71,7 +71,7 @@ var _volumeListenCount = 0;
 // 监听后会拦截安卓手机音量键
 // 仅最后一次监听生效
 // event可能为DOWN/UP
-EventChannel volumeButtonChannel = EventChannel("volume_button");
+EventChannel volumeButtonChannel = const EventChannel("volume_button");
 StreamSubscription? volumeS;
 
 void addVolumeListen() {
@@ -308,13 +308,13 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                 ? Container()
                 : Container(
                     height: 45,
-                    color: Color(0x88000000),
+                    color: const Color(0x88000000),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(width: 15),
                         IconButton(
-                          icon: Icon(Icons.fullscreen),
+                          icon: const Icon(Icons.fullscreen),
                           color: Colors.white,
                           onPressed: () {
                             widget.struct
@@ -330,7 +330,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                         ),
                         Container(width: 10),
                         IconButton(
-                          icon: Icon(Icons.skip_next_outlined),
+                          icon: const Icon(Icons.skip_next_outlined),
                           color: Colors.white,
                           onPressed: _onNextAction,
                         ),
@@ -379,11 +379,11 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           actions: [
             IconButton(
               onPressed: _onChooseEp,
-              icon: Icon(Icons.menu_open),
+              icon: const Icon(Icons.menu_open),
             ),
             IconButton(
               onPressed: _onMoreSetting,
-              icon: Icon(Icons.more_horiz),
+              icon: const Icon(Icons.more_horiz),
             ),
           ],
         );
@@ -410,14 +410,15 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             child: Container(
               width: 35,
               height: 300,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0x66000000),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
               ),
-              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
+              padding:
+                  const EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
               child: Center(
                 child: _buildSliderWidget(Axis.vertical),
               ),
@@ -434,14 +435,15 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             child: Container(
               width: 35,
               height: 300,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0x66000000),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
                 ),
               ),
-              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
+              padding:
+                  const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
               child: Center(
                 child: _buildSliderWidget(Axis.vertical),
               ),
@@ -474,7 +476,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           color: Theme.of(context).colorScheme.secondary,
         ),
       ),
-      step: FlutterSliderStep(
+      step: const FlutterSliderStep(
         step: 1,
         isPercentRange: false,
       ),
@@ -489,7 +491,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           ),
           child: Text(
             '${a.toInt()}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
             ),
@@ -526,9 +528,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           margin: const EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(10),
               bottomRight: Radius.circular(10),
@@ -652,7 +655,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Future _onChooseEp() async {
     showMaterialModalBottomSheet(
       context: context,
-      backgroundColor: Color(0xAA000000),
+      backgroundColor: const Color(0xAA000000),
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * (.45),
@@ -673,7 +676,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     //
     await showMaterialModalBottomSheet(
       context: context,
-      backgroundColor: Color(0xAA000000),
+      backgroundColor: const Color(0xAA000000),
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * (.45),
@@ -885,7 +888,7 @@ class _SettingPanelState extends State<_SettingPanel> {
                   Container(height: 3),
                   Text(
                     title,
-                    style: TextStyle(color: Colors.white, fontSize: 10),
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
                     maxLines: 1,
                     textAlign: TextAlign.center,
                   ),
@@ -951,7 +954,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
       _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
       _itemScrollController.scrollTo(
         index: index, // 减1 当前position 再减少1 前一个
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
       );
     }
   }
@@ -959,7 +962,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
   @override
   Widget _buildViewer() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.black,
       ),
       child: _buildList(),
@@ -1005,11 +1008,12 @@ class _WebToonReaderState extends _ImageReaderContentState {
             }
           }
           var currentIndex = index;
-          var onTrueSize = (Size size) {
+          onTrueSize(Size size) {
             setState(() {
               _trueSizes[currentIndex] = size;
             });
-          };
+          }
+
           var e = widget.struct.images[index];
           if (e.downloadLocalPath != null) {
             _images.add(_WebToonDownloadImage(
@@ -1260,7 +1264,7 @@ class _ListViewReaderState extends _ImageReaderContentState
   @override
   Widget _buildViewer() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.black,
       ),
       child: _buildList(),
@@ -1306,11 +1310,12 @@ class _ListViewReaderState extends _ImageReaderContentState
             }
           }
           var currentIndex = index;
-          var onTrueSize = (Size size) {
+          onTrueSize(Size size) {
             setState(() {
               _trueSizes[currentIndex] = size;
             });
-          };
+          }
+
           var e = widget.struct.images[index];
           if (e.downloadLocalPath != null) {
             _images.add(_WebToonDownloadImage(
@@ -1448,7 +1453,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
     } else {
       _pageController.animateToPage(
         index,
-        duration: Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 400),
         curve: Curves.ease,
       );
     }
@@ -1468,7 +1473,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
           ? Axis.vertical
           : Axis.horizontal,
       reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-      backgroundDecoration: BoxDecoration(color: Colors.black),
+      backgroundDecoration: const BoxDecoration(color: Colors.black),
       loadingBuilder: (context, event) => LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return buildLoading(constraints.maxWidth, constraints.maxHeight);
@@ -1515,14 +1520,15 @@ class _GalleryReaderState extends _ImageReaderContentState {
       child: gallery,
       onLongPress: () async {
         if (_current >= 0 && _current < widget.struct.images.length) {
-          Future<String> Function() load = () async {
+          Future<String> load() async {
             var item = widget.struct.images[_current];
             if (item.downloadLocalPath != null) {
               return method.downloadImagePath(item.downloadLocalPath!);
             }
             var data = await method.remoteImageData(item.fileServer, item.path);
             return data.finalPath;
-          };
+          }
+
           String? choose =
               await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
           switch (choose) {
@@ -1572,8 +1578,9 @@ class _GalleryReaderState extends _ImageReaderContentState {
         color: Colors.transparent,
         child: Container(
           margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-          decoration: BoxDecoration(
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               bottomLeft: Radius.circular(10),
@@ -1589,7 +1596,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
               }
             },
             child: Text(_hasNextEp() ? '下一章' : '结束阅读',
-                style: TextStyle(color: Colors.white)),
+                style: const TextStyle(color: Colors.white)),
           ),
         ),
       ),
