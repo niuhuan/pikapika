@@ -26,6 +26,7 @@ import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
+import 'package:pikapika/basic/config/UsingRightClickPop.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
@@ -83,6 +84,7 @@ class _InitScreenState extends State<InitScreen> {
     await initNoAnimation();
     await initExportRename();
     await initVersion();
+    await initUsingRightClickPop();
     autoCheckNewVersion();
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {

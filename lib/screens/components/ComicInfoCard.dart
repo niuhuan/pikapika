@@ -12,9 +12,14 @@ import 'Images.dart';
 class ComicInfoCard extends StatefulWidget {
   final bool linkItem;
   final ComicSimple info;
+  final bool viewed;
 
-  const ComicInfoCard(this.info, {Key? key, this.linkItem = false})
-      : super(key: key);
+  const ComicInfoCard(
+    this.info, {
+    Key? key,
+    this.linkItem = false,
+    this.viewed = false,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicInfoCard();
@@ -175,6 +180,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       buildFinished(info.finished),
+                      ...buildViewed(widget.viewed),
                       Expanded(child: Container()),
                       ...(like == null
                           ? []
@@ -297,6 +303,34 @@ Widget buildFinished(bool comicFinished) {
     );
   }
   return Container();
+}
+
+List<Widget> buildViewed(viewed) {
+  if (!viewed) {
+    return [];
+  }
+  return [
+    Container(height: 5),
+    Container(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      decoration: BoxDecoration(
+        color: Colors.yellow.shade800,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: const Text(
+        "看过",
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          height: 1.2,
+        ),
+        strutStyle: StrutStyle(
+          height: 1.2,
+        ),
+      ),
+    ),
+  ];
 }
 
 const double _iconSize = 15;

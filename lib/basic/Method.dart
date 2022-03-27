@@ -711,4 +711,9 @@ class Method {
       "newPassword": newPassword,
     });
   }
+
+  Future<List<String>> loadViewedList(List<String> list) async {
+    return List.of(jsonDecode(await _flatInvoke("loadViewedList", list)))
+        .cast();
+  }
 }

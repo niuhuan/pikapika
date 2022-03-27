@@ -4,6 +4,7 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
@@ -18,17 +19,31 @@ class ComicList extends StatefulWidget {
   final List<ComicSimple> comicList;
   final ScrollController? controller;
 
-  const ComicList(this.comicList,
-      {this.appendWidget, this.controller, Key? key})
-      : super(key: key);
+  const ComicList(
+    this.comicList, {
+    this.appendWidget,
+    this.controller,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicListState();
 }
 
 class _ComicListState extends State<ComicList> {
+  final List<String> viewedList = [];
+
+  Future _loadViewed() async {
+    if (widget.comicList.isNotEmpty) {
+      viewedList.addAll(await method
+          .loadViewedList(widget.comicList.map((e) => e.id).toList()));
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
+    _loadViewed();
     listLayoutEvent.subscribe(_onLayoutChange);
     super.initState();
   }
@@ -109,7 +124,10 @@ class _ComicListState extends State<ComicList> {
           }
           return LinkToComicInfo(
             comicId: e.id,
-            child: ComicInfoCard(e),
+            child: ComicInfoCard(
+              e,
+              viewed: viewedList.contains(e.id),
+            ),
           );
         }).toList(),
         ...widget.appendWidget != null

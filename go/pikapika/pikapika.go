@@ -549,6 +549,20 @@ func defaultHttpClientGet(url string) (string, error) {
 	return string(buff), nil
 }
 
+func loadViewedList(params string) (string, error) {
+	var ids []string
+	err := json.Unmarshal([]byte(params), &ids)
+	if err != nil {
+		return "", err
+	}
+	viewedList := comic_center.ViewedList(ids)
+	ids = make([]string, len(viewedList))
+	for i, view := range viewedList {
+		ids[i] = view.ID
+	}
+	return serialize(ids, nil)
+}
+
 func FlatInvoke(method string, params string) (string, error) {
 	switch method {
 	case "saveProperty":
@@ -732,6 +746,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return updateAvatar(params)
 	case "defaultHttpClientGet":
 		return defaultHttpClientGet(params)
+	case "loadViewedList":
+		return loadViewedList(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

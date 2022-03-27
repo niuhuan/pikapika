@@ -568,6 +568,14 @@ func UpdateTimeCacheImageTime(id uint) {
 	}
 }
 
+func ViewedList(ids []string) (viewedList []ComicView) {
+	err := db.Find(&viewedList, ids).Error
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
 func VACUUM() error {
 	mutex.Lock()
 	defer mutex.Unlock()
