@@ -18,7 +18,7 @@ Map<String, FullScreenAction> _fullScreenActionMap = {
   "使用控制器全屏": FullScreenAction.CONTROLLER,
   "双击屏幕全屏": FullScreenAction.TOUCH_DOUBLE,
   "双击屏幕全屏 + 单击屏幕下一页": FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT,
-  "将屏幕划分成三个区域 (上一页, 下一页, 全屏)": FullScreenAction.THREE_AREA,
+  "将屏幕划分成三个区域 (上一页, 下一页, 全屏) (不能使用快捷下一页按钮)": FullScreenAction.THREE_AREA,
 };
 
 const _defaultController = FullScreenAction.TOUCH_ONCE;

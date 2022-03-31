@@ -12,8 +12,7 @@ require (
 	github.com/niuhuan/pica-go v0.0.0-20220224154849-76bf750f8c4d
 	github.com/pkg/errors v0.9.1
 	golang.org/x/image v0.0.0-20190802002840-cff245a6509b
-	golang.org/x/mobile v0.0.0-20220325161704-447654d348e3 // indirect
-	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
+	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f
 	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gorm.io/driver/sqlite v1.1.4
