@@ -63,6 +63,19 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 - 在 macos 数据文件将会"~/Library/Application Support/pikapika"
 - 在 linux 数据文件将会"~/.pikapika"
 
+
+## 运行 / 构建
+
+这个应用程序使用golang和dart(flutter)作为主要语言, 可以兼容Windows, linux, MacOS, Android, IOS
+
+使用了不同的框架桥接到桌面和移动平台上
+
+- go-flutter => Windows / MacOS / Linux
+- gomobile => Android / IOS
+
+![平台](images/platforms.png)
+
+
 ## 请您遵守使用规则
 
 本软件或本软件的拓展, 个人或企业不可用于商业用途, 不可上架任何商店
