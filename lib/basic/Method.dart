@@ -716,4 +716,10 @@ class Method {
     return List.of(jsonDecode(await _flatInvoke("loadViewedList", list)))
         .cast();
   }
+
+  Future<List<Collection>> collections() async {
+    String rsp = await _flatInvoke("collections", "");
+    List list = json.decode(rsp);
+    return list.map((e) => Collection.fromJson(e)).toList();
+  }
 }

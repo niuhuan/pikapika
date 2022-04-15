@@ -748,6 +748,8 @@ func FlatInvoke(method string, params string) (string, error) {
 		return defaultHttpClientGet(params)
 	case "loadViewedList":
 		return loadViewedList(params)
+	case "collections":
+		return collections(params)
 	}
 	return "", errors.New("method not found : " + method)
 }

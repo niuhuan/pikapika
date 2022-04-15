@@ -289,53 +289,21 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
 
   @override
   Widget build(BuildContext context) {
-    switch (currentFullScreenAction()) {
-      // 按钮
-      case FullScreenAction.CONTROLLER:
-        return Stack(
-          children: [
-            _buildViewer(),
-            _buildBar(_buildFullScreenControllerStackItem()),
-          ],
-        );
-      case FullScreenAction.TOUCH_ONCE:
-        return Stack(
-          children: [
-            _buildTouchOnceControllerAction(_buildViewer()),
-            _buildBar(Container()),
-          ],
-        );
-      case FullScreenAction.TOUCH_DOUBLE:
-        return Stack(
-          children: [
-            _buildTouchDoubleControllerAction(_buildViewer()),
-            _buildBar(Container()),
-          ],
-        );
-      case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
-        return Stack(
-          children: [
-            _buildTouchDoubleOnceNextControllerAction(_buildViewer()),
-            _buildBar(Container()),
-          ],
-        );
-      case FullScreenAction.THREE_AREA:
-        return Stack(
-          children: [
-            _buildViewer(),
-            _buildBar(_buildThreeAreaControllerAction()),
-          ],
-        );
-    }
+    return Stack(
+      children: [
+        _buildViewer(),
+        _buildBar(),
+      ],
+    );
   }
 
-  Widget _buildBar(Widget child) {
+  Widget _buildBar() {
     switch (widget.readerSliderPosition) {
       case ReaderSliderPosition.BOTTOM:
         return Column(
           children: [
             _buildAppBar(),
-            Expanded(child: child),
+            Expanded(child: _buildController()),
             widget.struct.fullScreen
                 ? Container()
                 : Container(
@@ -379,7 +347,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             Expanded(
               child: Stack(
                 children: [
-                  child,
+                  _buildController(),
                   _buildSliderRight(),
                 ],
               ),
@@ -393,7 +361,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             Expanded(
               child: Stack(
                 children: [
-                  child,
+                  _buildController(),
                   _buildSliderLeft(),
                 ],
               ),
@@ -533,7 +501,24 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
-  Widget _buildFullScreenControllerStackItem() {
+  Widget _buildController() {
+    switch (currentFullScreenAction()) {
+      case FullScreenAction.CONTROLLER:
+        return _buildFullScreenController();
+      case FullScreenAction.TOUCH_ONCE:
+        return _buildTouchOnceController();
+      case FullScreenAction.TOUCH_DOUBLE:
+        return _buildTouchDoubleController();
+      case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
+        return _buildTouchDoubleOnceNextController();
+      case FullScreenAction.THREE_AREA:
+        return _buildThreeAreaController();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _buildFullScreenController() {
     if (widget.readerSliderPosition == ReaderSliderPosition.BOTTOM &&
         !widget.struct.fullScreen) {
       return Container();
@@ -570,27 +555,27 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     );
   }
 
-  Widget _buildTouchOnceControllerAction(Widget child) {
+  Widget _buildTouchOnceController() {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
       },
-      child: child,
+      child: Container(),
     );
   }
 
-  Widget _buildTouchDoubleControllerAction(Widget child) {
+  Widget _buildTouchDoubleController() {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onDoubleTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
       },
-      child: child,
+      child: Container(),
     );
   }
 
-  Widget _buildTouchDoubleOnceNextControllerAction(Widget child) {
+  Widget _buildTouchDoubleOnceNextController() {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -599,11 +584,11 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       onDoubleTap: () {
         widget.struct.onFullScreenChange(!widget.struct.fullScreen);
       },
-      child: child,
+      child: Container(),
     );
   }
 
-  Widget _buildThreeAreaControllerAction() {
+  Widget _buildThreeAreaController() {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         var up = Expanded(
@@ -718,11 +703,11 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       case FullScreenAction.CONTROLLER:
         return false;
       case FullScreenAction.TOUCH_ONCE:
-        return false;
+        return true;
       case FullScreenAction.TOUCH_DOUBLE:
-        return false;
+        return true;
       case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
-        return false;
+        return true;
       case FullScreenAction.THREE_AREA:
         return true;
     }
@@ -968,7 +953,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
       }
       _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
       _itemScrollController.scrollTo(
-        index: index,
+        index: index, // 减1 当前position 再减少1 前一个
         duration: const Duration(milliseconds: 400),
       );
     }

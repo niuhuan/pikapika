@@ -138,6 +138,24 @@ func categories() (string, error) {
 	return cache, nil
 }
 
+
+func collections(_ string) (string, error) {
+	key := "COLLECTIONS"
+	expire := time.Hour * 3
+	cache := network_cache.LoadCache(key, expire)
+	if cache != "" {
+		return cache, nil
+	}
+	collections, err := client.Collections()
+	if err != nil {
+		return "", err
+	}
+	buff, _ := json.Marshal(&collections)
+	cache = string(buff)
+	network_cache.SaveCache(key, cache)
+	return cache, nil
+}
+
 func comics(params string) (string, error) {
 	var paramsStruct struct {
 		Category    string `json:"category"`

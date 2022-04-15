@@ -6,6 +6,7 @@ import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
 import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/screens/ComicCollectionsScreen.dart';
 import 'package:pikapika/screens/RankingsScreen.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
@@ -180,6 +181,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       buildSvg('lib/assets/books.svg', imageSize, imageSize, margin: 20),
       "全分类",
       () => _navigateToCategory(null),
+    );
+
+    append(
+      Icon(
+        Icons.recommend_outlined,
+        size: imageSize,
+        color: Colors.grey,
+      ),
+      "推荐",
+      () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ComicCollectionsScreen(),
+          ),
+        );
+      },
     );
 
     for (var i = 0; i < cList.length; i++) {

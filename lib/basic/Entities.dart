@@ -674,3 +674,16 @@ class GameCommentChild extends ChildOfComment {
     this.game = json["_game"];
   }
 }
+
+class Collection {
+  late String title;
+  late List<ComicSimple> comics;
+
+  Collection.fromJson(Map<String, dynamic> json) {
+    this.title = json["title"];
+    this.comics = List.from(json["comics"])
+        .map((e) => Map<String, dynamic>.from(e))
+        .map((e) => ComicSimple.fromJson(e))
+        .toList();
+  }
+}
