@@ -36,7 +36,7 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('随机本子'),
+        title: const Text('随机本子'),
         actions: [
           shadowCategoriesActionButton(context),
           chooseLayoutActionButton(context),

@@ -735,7 +735,7 @@ class _EpChooser extends StatefulWidget {
   final int epOrder;
   final FutureOr Function(int) onChangeEp;
 
-  _EpChooser(this.epNameMap, this.epOrder, this.onChangeEp);
+  const _EpChooser(this.epNameMap, this.epOrder, this.onChangeEp);
 
   @override
   State<StatefulWidget> createState() => _EpChooserState();
@@ -782,7 +782,7 @@ class _SettingPanel extends StatefulWidget {
   final FutureOr Function() onReloadEp;
   final FutureOr Function() onDownload;
 
-  _SettingPanel(this.onReloadEp, this.onDownload);
+  const _SettingPanel(this.onReloadEp, this.onDownload);
 
   @override
   State<StatefulWidget> createState() => _SettingPanelState();
@@ -866,42 +866,42 @@ class _SettingPanelState extends State<_SettingPanel> {
     );
   }
 
-  Widget _bottomIcon({
-    required IconData icon,
-    required String title,
-    required void Function() onPressed,
-  }) {
-    return Expanded(
-      child: Center(
-        child: Column(
-          children: [
-            IconButton(
-              iconSize: 55,
-              icon: Column(
-                children: [
-                  Container(height: 3),
-                  Icon(
-                    icon,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                  Container(height: 3),
-                  Text(
-                    title,
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(height: 3),
-                ],
-              ),
-              onPressed: onPressed,
-            )
-          ],
+    Widget _bottomIcon({
+      required IconData icon,
+      required String title,
+      required void Function() onPressed,
+    }) {
+      return Expanded(
+        child: Center(
+          child: Column(
+            children: [
+              IconButton(
+                iconSize: 55,
+                icon: Column(
+                  children: [
+                    Container(height: 3),
+                    Icon(
+                      icon,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                    Container(height: 3),
+                    Text(
+                      title,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
+                    Container(height: 3),
+                  ],
+                ),
+                onPressed: onPressed,
+              )
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1104,7 +1104,7 @@ class _WebToonDownloadImage extends _WebToonReaderImage {
   final int height;
   final String format;
 
-  _WebToonDownloadImage({
+  const _WebToonDownloadImage({
     required this.fileServer,
     required this.path,
     required this.localPath,
@@ -1137,7 +1137,7 @@ class _WebToonRemoteImage extends _WebToonReaderImage {
   final String fileServer;
   final String path;
 
-  _WebToonRemoteImage(
+  const _WebToonRemoteImage(
     this.fileServer,
     this.path,
     Size size,
@@ -1155,7 +1155,7 @@ abstract class _WebToonReaderImage extends StatefulWidget {
   final Size size;
   final Function(Size)? onTrueSize;
 
-  _WebToonReaderImage(this.size, this.onTrueSize);
+  const _WebToonReaderImage(this.size, this.onTrueSize);
 
   @override
   State<StatefulWidget> createState() => _WebToonReaderImageState();

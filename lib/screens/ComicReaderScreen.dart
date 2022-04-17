@@ -62,7 +62,10 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     } while (page.pages > page.page);
     if (widget.autoFullScreen) {
       setState(() {
-        SystemChrome.setEnabledSystemUIOverlays([]);
+        SystemChrome.setEnabledSystemUIMode(
+          SystemUiMode.manual,
+          overlays: [],
+        );
         _fullScreen = true;
       });
     }
@@ -227,7 +230,10 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     setState(() {
       if (fullScreen) {
         if (Platform.isAndroid || Platform.isIOS) {
-          SystemChrome.setEnabledSystemUIOverlays([]);
+          SystemChrome.setEnabledSystemUIMode(
+            SystemUiMode.manual,
+            overlays: [],
+          );
         }
       } else {
         switchFullScreenUI();

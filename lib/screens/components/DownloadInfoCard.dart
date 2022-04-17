@@ -13,7 +13,7 @@ class DownloadInfoCard extends StatelessWidget {
   final bool downloading;
   final bool linkItem;
 
-  DownloadInfoCard({
+  const DownloadInfoCard({
     Key? key,
     required this.task,
     this.downloading = false,

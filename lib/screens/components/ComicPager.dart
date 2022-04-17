@@ -261,7 +261,8 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   late bool _loading = false;
   late bool _over = false;
   late bool _error = false;
-  late Future<dynamic> _pageFuture;
+
+  // late Future<dynamic> _pageFuture;
 
   void _onScroll() {
     if (_over || _error || _loading) {
@@ -276,7 +277,8 @@ class _StreamComicPagerState extends State<StreamComicPager> {
 
   Future<dynamic> _load() async {
     setState(() {
-      _pageFuture = _fetch();
+      //_pageFuture =
+      _fetch();
     });
   }
 

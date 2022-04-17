@@ -33,7 +33,7 @@ class _MigrateScreenState extends State<MigrateScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -74,11 +74,9 @@ class _MigrateScreenState extends State<MigrateScreen> {
                   ...paths.map((e) => Container(
                         padding: const EdgeInsets.all(10),
                         child: MaterialButton(
-                          color: Theme.of(context).accentColor,
-                          textColor: Theme.of(context)
-                              .accentTextTheme
-                              .subtitle1
-                              ?.color,
+                          color: Theme.of(context).colorScheme.secondary,
+                          textColor:
+                              Theme.of(context).textTheme.bodyText1?.color,
                           padding: const EdgeInsets.all(10),
                           onPressed: () async {
                             if (!await confirmDialog(context, "文件迁移",

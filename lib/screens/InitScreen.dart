@@ -91,7 +91,7 @@ class _InitScreenState extends State<InitScreen> {
       // 如果token或username+password有效则直接进入登录好的界面
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AppScreen()),
+        MaterialPageRoute(builder: (context) => const AppScreen()),
       );
     } else {
       // 否则跳转到登录页

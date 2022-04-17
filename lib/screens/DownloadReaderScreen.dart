@@ -60,7 +60,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     }
     if (widget.autoFullScreen) {
       setState(() {
-        SystemChrome.setEnabledSystemUIOverlays([]);
+        SystemChrome.setEnabledSystemUIMode(
+          SystemUiMode.manual,
+          overlays: [],
+        );
         _fullScreen = true;
       });
     }
@@ -210,7 +213,10 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     setState(() {
       if (fullScreen) {
         if (Platform.isAndroid || Platform.isIOS) {
-          SystemChrome.setEnabledSystemUIOverlays([]);
+          SystemChrome.setEnabledSystemUIMode(
+            SystemUiMode.manual,
+            overlays: [],
+          );
         }
       } else {
         switchFullScreenUI();

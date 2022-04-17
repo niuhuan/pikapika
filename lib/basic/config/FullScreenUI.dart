@@ -71,7 +71,10 @@ void switchFullScreenUI() {
       break;
   }
   if (Platform.isAndroid || Platform.isIOS) {
-    SystemChrome.setEnabledSystemUIOverlays(list);
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: list,
+    );
   }
 }
 

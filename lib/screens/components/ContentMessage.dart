@@ -25,7 +25,6 @@ class ContentMessage extends StatelessWidget {
           var iconSize = min / 2.3;
           var textSize = min / 16;
           var tipSize = min / 20;
-          var infoSize = min / 30;
           if (contentFailedReloadAction ==
               ContentFailedReloadAction.TOUCH_LOADER) {
             return GestureDetector(
@@ -110,7 +109,6 @@ class ContentMessage extends StatelessWidget {
         var width = constraints.maxWidth;
         var height = constraints.maxHeight;
         var min = width < height ? width : height;
-        var theme = Theme.of(context);
         return Center(
           child: Column(
             children: [

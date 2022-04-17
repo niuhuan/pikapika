@@ -177,13 +177,14 @@ class _DarkTheme extends _ThemePackage {
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xFF1E1E1E),
+          foregroundColor: Colors.white,
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
@@ -219,6 +220,7 @@ class _DustyBlueTheme extends _ThemePackage {
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
+        brightness: Brightness.dark,
         scaffoldBackgroundColor: Color.alphaBlend(
           const Color(0x11999999),
           const Color(0xff20253b),
@@ -227,13 +229,13 @@ class _DustyBlueTheme extends _ThemePackage {
           const Color(0x11AAAAAA),
           const Color(0xff20253b),
         ),
-        brightness: Brightness.light,
         colorScheme: ColorScheme.light(
           secondary: Colors.blue.shade200,
         ),
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color(0xff20253b),
+          foregroundColor: Colors.white,
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
@@ -273,7 +275,7 @@ class _DarkBlackTheme extends _ThemePackage {
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         colorScheme: ColorScheme.light(
           secondary: Colors.pink.shade200,
         ),
@@ -281,6 +283,7 @@ class _DarkBlackTheme extends _ThemePackage {
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Color.fromARGB(0xff, 10, 10, 10),
+          foregroundColor: Colors.white,
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
