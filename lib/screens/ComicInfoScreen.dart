@@ -7,6 +7,7 @@ import 'package:pikapika/basic/Navigator.dart';
 import 'package:pikapika/screens/ComicsScreen.dart';
 import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
+import 'package:pikapika/screens/components/Recommendation.dart';
 
 import 'ComicReaderScreen.dart';
 import 'DownloadConfirmScreen.dart';
@@ -111,10 +112,12 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
         var _tabs = <Widget>[
           Tab(text: '章节 (${_comicInfo.epsCount})'),
           Tab(text: '评论 (${_comicInfo.commentsCount})'),
+          const Tab(text: '推荐'),
         ];
         var _views = <Widget>[
           _buildEpWrap(_epListFuture, _comicInfo),
           CommentList(CommentMainType.COMIC, _comicInfo.id),
+          Recommendation(comicId: _comicInfo.id),
         ];
         return DefaultTabController(
           length: _tabs.length,

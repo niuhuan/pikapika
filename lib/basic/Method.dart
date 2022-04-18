@@ -285,7 +285,7 @@ class Method {
     return ComicsPage.fromJson(json.decode(rsp));
   }
 
-  /// 看了此漫画的人还看了...(此接口似乎失效了)
+  /// 看了此漫画的人还看了...
   Future<List<ComicSimple>> recommendation(String comicId) async {
     String rsp = await _flatInvoke("recommendation", comicId);
     List list = json.decode(rsp);

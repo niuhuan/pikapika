@@ -7,7 +7,6 @@ import 'ItemBuilder.dart';
 import 'Images.dart';
 
 // 看过此本子的也在看
-// 一直返回空数组, 所以没有使用
 class Recommendation extends StatefulWidget {
   final String comicId;
 

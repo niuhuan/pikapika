@@ -28,11 +28,18 @@ jobs:
         with:
           repository: ${{ github.event.inputs.repo }}
           ref: 'master'
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ env.go_version }}
+      - name: Cache go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: Check release
         run: |
           cd ci
@@ -75,6 +82,39 @@ jobs:
         with:
           go-version: ${{ env.go_version }}
 
+      - name: Cache go modules (Linux/Android)
+        if: matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' || matrix.config.target == 'linux'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Cache go modules (macOS/ios)
+        if: matrix.config.target == 'macos' || matrix.config.target == 'ios'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/Library/Caches/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Cache go modules (Windows)
+        if: matrix.config.target == 'windows'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\go-build
+            ~\go\pkg\mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
       - id: check_asset
         name: Check asset
         run: |
@@ -87,6 +127,20 @@ jobs:
         with:
           channel: ${{ env.flutter_channel }}
           flutter-version: ${{ env.flutter_version }}
+
+      - name: Check core
+        uses: actions/checkout@v3
+          with:
+            repository: 'niuhuan/pikapika-go-core'
+            token: ${{ secrets.GH_TOKEN }}
+            path: 'go'
+
+      - name: Cache Flutter dependencies (Linux/Android)
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' || matrix.config.target == 'linux' )
+        uses: actions/cache@v3
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.os }}-flutter
 
       - name: Setup java (Android)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )
