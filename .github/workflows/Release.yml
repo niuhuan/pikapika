@@ -130,10 +130,10 @@ jobs:
 
       - name: Check core
         uses: actions/checkout@v3
-          with:
-            repository: 'niuhuan/pikapika-go-core'
-            token: ${{ secrets.GH_TOKEN }}
-            path: 'go'
+        with:
+          repository: 'niuhuan/pikapika-go-core'
+          token: ${{ secrets.GH_TOKEN }}
+          path: 'go'
 
       - name: Cache Flutter dependencies (Linux/Android)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' || matrix.config.target == 'linux' )
@@ -242,14 +242,11 @@ jobs:
 
       - name: Sign APK (Android)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: build/app/outputs/flutter-apk
-          signingKeyBase64: ${{ secrets.SIGN_FILE_BASE64 }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          KEY_FILE_BASE64: ${{ secrets.KEY_FILE_BASE64 }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          sh scripts/sign-apk-github-actions.sh
 
       - name: Upload Asset (All)
         if: steps.check_asset.outputs.skip_build != 'true'
