@@ -1,5 +1,5 @@
 PIKAPIKA - 漫画客户端
-========
+===================
 [![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE) 
 [![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases) 
 [![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases) 
@@ -58,12 +58,15 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 ## 其他说明
 
-- 在ios/android环境 数据文件将会保存在程序自身数据目录中, 删除就会清理
-- 在 windows 数据文件将会保存在程序同一目录
-- 在 macos 数据文件将会"~/Library/Application Support/pikapika"
-- 在 linux 数据文件将会"~/.pikapika"
+数据资料存储位置
+- ios/android : 程序自身数据目录中, 删除就会清理
+- windows : 程序同一目录中data文件夹下
+- macos : ~/Library/Application\ Support/pikapika
+- linux : ~/.pikapika
 
-## 运行 / 构建
+## 技术架构
+
+### 多平台适配
 
 这个应用程序使用golang和dart(flutter)作为主要语言, 可以兼容Windows, linux, MacOS, Android, IOS
 
@@ -74,10 +77,10 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 ![平台](images/platforms.png)
 
-### 开发环境准备
+### 构建环境
 
-- [golang](https://golang.org/) (1.16以上版本)
-- [flutter](https://flutter.dev/) (stable-2.10.3)
+- [golang](https://golang.org/) (1.16)
+- [flutter](https://flutter.dev/) (2.10.3)
 
 ## 请您遵守使用规则
 
@@ -92,5 +95,6 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 软件副本分发规则
 
 - 不要在任何其他 **二次元软件** 的 **聊天社区** 或 **开发社区** 内, 发布有关本软件的链接或信息
-- 尽可能 **不要** 发送本软件安装包到任何社区内, 即不要将APK/IPA/ZIP/DMG发送包括任何聊天软件内的群聊功能中,
-- 若您有意分享本软件的副本, 应使用私聊窗口发送, 或粘贴github中releases页面的链接.
+- 尽可能 **不要** 发送本软件安装包到任何社区内, 即尽可能不要将APK/IPA/ZIP/DMG发送包括任何聊天软件内的群聊功能中
+- 分享本软件时, 尽可能粘贴github中releases页面的链接
+- 若您有意直接分享本软件的分发副本, 应使用私聊窗口发送
