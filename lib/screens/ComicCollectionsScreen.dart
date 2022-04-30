@@ -73,7 +73,12 @@ class _ComicCollectionsScreenState extends State<ComicCollectionsScreen> {
                 color: appBarTheme.backgroundColor,
                 child: TabBar(
                   indicatorColor: theme.dividerColor,
-                  tabs: collection.map((e) => Tab(text: e.title)).toList(),
+                  tabs: collection
+                      .map((e) => Tab(
+                          text: e.title.indexOf("推薦") > 0
+                              ? e.title.substring(0, e.title.indexOf("推薦"))
+                              : e.title))
+                      .toList(),
                 ),
               ),
               body: TabBarView(

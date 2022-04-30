@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:filesystem_picker/filesystem_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -43,7 +43,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -96,15 +96,15 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           defaultToast(context, "$e");
           return;
         }
-        String? path = await FilesystemPicker.open(
-          title: '选择要导入的文件',
-          context: context,
-          rootDirectory: Directory(chooseRoot),
-          fsType: FilesystemType.file,
-          folderIconColor: Colors.teal,
-          allowedExtensions: ['.zip'],
-          fileTileSelectMode: FileTileSelectMode.wholeTile,
+        var ls = await FilePicker.platform.pickFiles(
+          dialogTitle: '选择要导入的文件',
+          allowMultiple: false,
+          initialDirectory: chooseRoot,
+          type: FileType.custom,
+          allowedExtensions: ['zip'],
+          allowCompression: false,
         );
+        String? path = ls != null && ls.count > 0 ? ls.paths[0] : null;
         if (path != null) {
           try {
             setState(() {
