@@ -8,7 +8,6 @@ import 'package:pikapika/basic/config/AutoClean.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
-import 'package:pikapika/basic/config/ConvertToPNG.dart';
 import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/ExportRename.dart';
@@ -66,7 +65,6 @@ class SettingsScreen extends StatelessWidget {
             const NetworkSetting(),
             const Divider(),
             qualitySetting(),
-            convertToPNGSetting(),
             readerTypeSetting(),
             readerDirectionSetting(),
             readerSliderPositionSetting(),

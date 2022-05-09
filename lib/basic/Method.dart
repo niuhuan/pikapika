@@ -684,11 +684,6 @@ class Method {
     return _flatInvoke("saveDownloadThreadCount", "$value");
   }
 
-  /// 转化为PNG
-  Future<Uint8List> convertToPNG(String path) async {
-    return await _channel.invokeMethod("convertToPNG", {"path": path});
-  }
-
   /// HTTP-GET-STRING
   Future<String> defaultHttpClientGet(String url) async {
     return await _flatInvoke("defaultHttpClientGet", url);

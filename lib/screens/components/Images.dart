@@ -6,19 +6,11 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pikapika/basic/config/ConvertToPNG.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 
 import '../FilePhotoViewScreen.dart';
-
-Future<Uint8List> _loadImageFile(String path) {
-  if (convertToPNG()) {
-    return method.convertToPNG(path);
-  }
-  return File(path).readAsBytes();
-}
 
 // 从本地加载图片
 class ResourceFileImageProvider
@@ -46,7 +38,7 @@ class ResourceFileImageProvider
   Future<ui.Codec> _loadAsync(ResourceFileImageProvider key) async {
     assert(key == this);
     return PaintingBinding.instance!
-        .instantiateImageCodec(await _loadImageFile(path));
+        .instantiateImageCodec(await File(path).readAsBytes());
   }
 
   @override
