@@ -717,4 +717,8 @@ class Method {
     List list = json.decode(rsp);
     return list.map((e) => Collection.fromJson(e)).toList();
   }
+
+  Future<bool> verifyAuthentication() async {
+    return await _channel.invokeMethod("verifyAuthentication");
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
 import 'package:pikapika/basic/config/AndroidSecureFlag.dart';
+import 'package:pikapika/basic/config/Authentication.dart';
 import 'package:pikapika/basic/config/AutoClean.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
@@ -43,6 +44,8 @@ class InitScreen extends StatefulWidget {
 }
 
 class _InitScreenState extends State<InitScreen> {
+  var _authenticating = false;
+
   @override
   initState() {
     _init();
@@ -83,7 +86,51 @@ class _InitScreenState extends State<InitScreen> {
     await initExportRename();
     await initVersion();
     await initUsingRightClickPop();
+    await initAuthentication();
     autoCheckNewVersion();
+    setState(() {
+      _authenticating = currentAuthentication();
+    });
+    if (_authenticating) {
+      _goAuthentication();
+    } else {
+      _goApplication();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_authenticating) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("身份验证"),
+        ),
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: MaterialButton(
+              onPressed: () {
+                _goAuthentication();
+              },
+              child: const Text('您在之前使用APP时开启了身份验证, 请点这段文字进行身份核查, 核查通过后将会进入APP'),
+            ),
+          ),
+        ),
+      );
+    }
+    return Scaffold(
+      backgroundColor: const Color(0xfffffced),
+      body: ConstrainedBox(
+        constraints: const BoxConstraints.expand(),
+        child: Image.asset(
+          "lib/assets/init.jpg",
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
+  }
+
+  Future _goApplication() async {
     // 登录, 如果token失效重新登录, 网络不好的时候可能需要1分钟
     if (await method.preLogin()) {
       // 如果token或username+password有效则直接进入登录好的界面
@@ -100,17 +147,9 @@ class _InitScreenState extends State<InitScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xfffffced),
-      body: ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: Image.asset(
-          "lib/assets/init.jpg",
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
+  Future _goAuthentication() async {
+    if (await method.verifyAuthentication()) {
+      _goApplication();
+    }
   }
 }

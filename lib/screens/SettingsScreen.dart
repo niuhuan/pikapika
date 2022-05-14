@@ -29,13 +29,17 @@ import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
+import '../basic/config/Authentication.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  final bool hiddenAccountInfo;
+
+  const SettingsScreen({Key? key, this.hiddenAccountInfo = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +55,18 @@ class SettingsScreen extends StatelessWidget {
         body: ListView(
           children: [
             const Divider(),
-            ListTile(
-              onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ModifyPasswordScreen()),
-                );
-              },
-              title: const Text('修改密码'),
-            ),
+            hiddenAccountInfo
+                ? Container()
+                : ListTile(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ModifyPasswordScreen()),
+                      );
+                    },
+                    title: const Text('修改密码'),
+                  ),
             const Divider(),
             const NetworkSetting(),
             const Divider(),
@@ -94,6 +100,7 @@ class SettingsScreen extends StatelessWidget {
             const Divider(),
             androidDisplayModeSetting(),
             androidSecureFlagSetting(),
+            authenticationSetting(),
             const Divider(),
             chooserRootSetting(),
             downloadThreadCountSetting(),
@@ -131,5 +138,4 @@ class SettingsScreen extends StatelessWidget {
     }
     return Container();
   }
-
 }

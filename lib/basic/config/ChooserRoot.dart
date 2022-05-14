@@ -63,6 +63,9 @@ Future<dynamic> _inputChooserRoot(BuildContext context) async {
 }
 
 Widget chooserRootSetting() {
+  if (Platform.isIOS) {
+    return Container();
+  }
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(

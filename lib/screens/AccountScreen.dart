@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
+import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import 'AppScreen.dart';
@@ -59,6 +60,19 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         title: const Text('配置选项'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(
+                    hiddenAccountInfo: true,
+                  ),
+                ),
+              );
+            },
+            icon: const Text('设置'),
+          ),
           IconButton(
             onPressed: () {
               if (androidNightModeDisplay) {

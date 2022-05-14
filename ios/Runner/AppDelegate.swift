@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import Mobile
+import LocalAuthentication
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -33,6 +34,18 @@ import Mobile
                     }else{
                         result(FlutterError(code: "", message: "params error", details: ""))
                     }
+                }
+                else if call.method == "verifyAuthentication"{
+                    let context = LAContext()
+                    let can = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+                    guard can == true else {
+                        result(false)
+                        return
+                    }
+                    context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "身份验证") { (success, error) in
+                        result(success)
+                    }
+
                 }
                 else if call.method == "iosSaveFileToImage"{
                     if let args = call.arguments as? Dictionary<String, Any>,
