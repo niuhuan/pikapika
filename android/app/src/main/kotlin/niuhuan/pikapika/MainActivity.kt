@@ -1,11 +1,12 @@
 package niuhuan.pikapika
 
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.hardware.biometrics.BiometricPrompt
 import android.os.*
 import android.provider.MediaStore
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Display
 import android.view.KeyEvent
@@ -27,6 +28,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.nio.file.Files
 import java.util.concurrent.Executors
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.TimeUnit
 
 class MainActivity : FlutterActivity() {
 
@@ -70,13 +73,16 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         Mobile.initApplication(androidDataLocal())
         // Method Channel
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "method").setMethodCallHandler { call, result ->
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "method"
+        ).setMethodCallHandler { call, result ->
             result.withCoroutine {
                 when (call.method) {
                     "flatInvoke" -> {
                         Mobile.flatInvoke(
-                                call.argument("method")!!,
-                                call.argument("params")!!
+                            call.argument("method")!!,
+                            call.argument("params")!!
                         )
                     }
                     "androidSaveFileToImage" -> {
@@ -96,6 +102,7 @@ class MainActivity : FlutterActivity() {
                     // 获取可以迁移数据地址
                     "androidGetExtendDirs" -> androidGetExtendDirs()
                     "androidSecureFlag" -> androidSecureFlag(call.argument("flag")!!)
+                    "verifyAuthentication" -> auth()
                     else -> {
                         notImplementedToken
                     }
@@ -107,25 +114,25 @@ class MainActivity : FlutterActivity() {
         val eventMutex = Mutex()
         var eventSink: EventChannel.EventSink? = null
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, "flatEvent")
-                .setStreamHandler(object : EventChannel.StreamHandler {
-                    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-                        events?.let { events ->
-                            scope.launch {
-                                eventMutex.lock()
-                                eventSink = events
-                                eventMutex.unlock()
-                            }
-                        }
-                    }
-
-                    override fun onCancel(arguments: Any?) {
+            .setStreamHandler(object : EventChannel.StreamHandler {
+                override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    events?.let { events ->
                         scope.launch {
                             eventMutex.lock()
-                            eventSink = null
+                            eventSink = events
                             eventMutex.unlock()
                         }
                     }
-                })
+                }
+
+                override fun onCancel(arguments: Any?) {
+                    scope.launch {
+                        eventMutex.lock()
+                        eventSink = null
+                        eventMutex.unlock()
+                    }
+                }
+            })
         Mobile.eventNotify { message ->
             scope.launch {
                 eventMutex.lock()
@@ -143,7 +150,7 @@ class MainActivity : FlutterActivity() {
 
         //
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, "volume_button")
-                .setStreamHandler(volumeStreamHandler)
+            .setStreamHandler(volumeStreamHandler)
 
     }
 
@@ -239,16 +246,17 @@ class MainActivity : FlutterActivity() {
                     put(MediaStore.MediaColumns.IS_PENDING, 1)
                 }
             }
-            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)?.let { uri ->
-                contentResolver.openOutputStream(uri)?.use { fos ->
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                ?.let { uri ->
+                    contentResolver.openOutputStream(uri)?.use { fos ->
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //this one
+                        contentValues.clear()
+                        contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
+                        contentResolver.update(uri, contentValues, null, null)
+                    }
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { //this one
-                    contentValues.clear()
-                    contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
-                    contentResolver.update(uri, contentValues, null, null)
-                }
-            }
         }
     }
 
@@ -339,20 +347,62 @@ class MainActivity : FlutterActivity() {
     private fun androidSecureFlag(flag: Boolean) {
         uiThreadHandler.post {
             if (flag) {
-                window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_SECURE,
+                    WindowManager.LayoutParams.FLAG_SECURE
+                )
             } else {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
             }
         }
     }
 
-    private fun compressBitMap(bitmap: Bitmap): ByteArray {
-        val bos = ByteArrayOutputStream()
-        bos.use { bos ->
-            Log.d("BITMAP", bitmap.width.toString())
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+    // withCoroutine -> queue
+    private fun auth(): Boolean {
+        var queue = LinkedBlockingQueue<Boolean>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            var mBiometricPrompt = BiometricPrompt.Builder(this)
+                .setTitle("验证身份")
+                .setDescription("需要验证您的身份")
+                .setNegativeButton(
+                    "取消", mainExecutor
+                ) { _, _ -> queue.add(false) }
+                .build()
+
+
+            var mCancellationSignal = CancellationSignal()
+            mCancellationSignal.setOnCancelListener {
+                queue.add(false)
+            }
+
+            var mAuthenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+                    queue.add(false)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    queue.add(false)
+                }
+
+                override fun onAuthenticationSucceeded(result1: BiometricPrompt.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result1)
+                    queue.add(true)
+                }
+            }
+
+            mBiometricPrompt.authenticate(
+                mCancellationSignal,
+                mainExecutor,
+                mAuthenticationCallback
+            )
+
+        } else {
+            queue.add(false)
         }
-        return bos.toByteArray()
+
+        return queue.poll(5, TimeUnit.MINUTES) ?: false
     }
 
 

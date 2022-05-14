@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/config/Platform.dart';
 
 import '../Common.dart';
 import '../Method.dart';
@@ -30,19 +31,32 @@ Future<void> _chooseAuthentication(BuildContext context) async {
 }
 
 Widget authenticationSetting() {
-  if (Platform.isIOS != true) {
-    return Container();
+  if (Platform.isIOS) {
+    return StatefulBuilder(
+      builder: (BuildContext context, void Function(void Function()) setState) {
+        return ListTile(
+          title: const Text("进入APP时验证身份"),
+          subtitle: Text(_authentication ? "是" : "否"),
+          onTap: () async {
+            await _chooseAuthentication(context);
+            setState(() {});
+          },
+        );
+      },
+    );
+  } else if (androidVersion >= 29) {
+    return StatefulBuilder(
+      builder: (BuildContext context, void Function(void Function()) setState) {
+        return ListTile(
+          title: const Text("进入APP时验证指纹(如果系统已经录入)"),
+          subtitle: Text(_authentication ? "是" : "否"),
+          onTap: () async {
+            await _chooseAuthentication(context);
+            setState(() {});
+          },
+        );
+      },
+    );
   }
-  return StatefulBuilder(
-    builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
-        title: const Text("进入APP时验证身份"),
-        subtitle: Text(_authentication ? "是" : "否"),
-        onTap: () async {
-          await _chooseAuthentication(context);
-          setState(() {});
-        },
-      );
-    },
-  );
+  return Container();
 }
