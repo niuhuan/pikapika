@@ -36,8 +36,14 @@ func main() {
 	version.Info = strings.TrimSpace(string(infoFile))
 	// get target
 	target := os.Getenv("TARGET")
-	if ghToken == "" {
+	if target == "" {
 		println("Env ${TARGET} is not set")
+		os.Exit(1)
+	}
+	// get target
+	flutterVersion := os.Getenv("flutter_version")
+	if target == "" {
+		println("Env ${flutter_version} is not set")
 		os.Exit(1)
 	}
 	//
@@ -48,31 +54,31 @@ func main() {
 	switch target {
 	case "macos":
 		releaseFilePath = "build/build.dmg"
-		releaseFileName = fmt.Sprintf("pikapika-%v-macos-intel.dmg", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-macos-intel.dmg", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "ios":
 		releaseFilePath = "build/nosign.ipa"
-		releaseFileName = fmt.Sprintf("pikapika-%v-ios-nosign.ipa", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-ios-nosign.ipa", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "windows":
 		releaseFilePath = "build/build.zip"
-		releaseFileName = fmt.Sprintf("pikapika-%v-windows-x86_64.zip", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-windows-x86_64.zip", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "linux":
 		releaseFilePath = "build/build.AppImage"
-		releaseFileName = fmt.Sprintf("pikapika-%v-linux-x86_64.AppImage", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-linux-x86_64.AppImage", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "android-arm32":
 		releaseFilePath = "build/app/outputs/flutter-apk/app-release.apk"
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm32.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm32.apk", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "android-arm64":
 		releaseFilePath = "build/app/outputs/flutter-apk/app-release.apk"
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm64.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm64.apk", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	case "android-x86_64":
 		releaseFilePath = "build/app/outputs/flutter-apk/app-release.apk"
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-x86_64.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-x86_64.apk", version.Code, flutterVersion)
 		contentType = "application/octet-stream"
 	}
 	releaseFilePath = path.Join("..", releaseFilePath)

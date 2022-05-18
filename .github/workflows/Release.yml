@@ -6,7 +6,6 @@ on:
 env:
   go_version: '1.16'
   flutter_channel: 'stable'
-  flutter_version: '2.10.3'
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
@@ -55,23 +54,40 @@ jobs:
         config:
           - target: linux
             host: ubuntu-latest
+            flutter_version: '3.0.0'
           - target: windows
             host: windows-latest
+            flutter_version: '3.0.0'
           - target: macos
             host: macos-latest
+            flutter_version: '3.0.0'
           - target: ios
             host: macos-latest
+            flutter_version: '3.0.0'
           - target: android-arm32
             host: ubuntu-latest
+            flutter_version: '2.10.3'
           - target: android-arm64
             host: ubuntu-latest
+            flutter_version: '2.10.3'
           - target: android-x86_64
             host: ubuntu-latest
+            flutter_version: '2.10.3'
+          - target: android-arm32
+            host: ubuntu-latest
+            flutter_version: '3.0.0'
+          - target: android-arm64
+            host: ubuntu-latest
+            flutter_version: '3.0.0'
+          - target: android-x86_64
+            host: ubuntu-latest
+            flutter_version: '3.0.0'
 
     runs-on: ${{ matrix.config.host }}
 
     env:
       TARGET: ${{ matrix.config.target }}
+      flutter_version: ${{ matrix.config.flutter_version }}
 
     steps:
       - name: Checkout

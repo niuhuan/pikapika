@@ -211,7 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ],
-                  )
+                  );
                 },
               );
               if (result != null) {

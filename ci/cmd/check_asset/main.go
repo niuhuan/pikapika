@@ -35,27 +35,33 @@ func main() {
 	version.Info = strings.TrimSpace(string(infoFile))
 	// get target
 	target := os.Getenv("TARGET")
-	if ghToken == "" {
+	if target == "" {
 		println("Env ${TARGET} is not set")
+		os.Exit(1)
+	}
+	// get target
+	flutterVersion := os.Getenv("flutter_version")
+	if target == "" {
+		println("Env ${flutter_version} is not set")
 		os.Exit(1)
 	}
 	//
 	var releaseFileName string
 	switch target {
 	case "macos":
-		releaseFileName = fmt.Sprintf("pikapika-%v-macos-intel.dmg", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-macos-intel.dmg", version.Code, flutterVersion)
 	case "ios":
-		releaseFileName = fmt.Sprintf("pikapika-%v-ios-nosign.ipa", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-ios-nosign.ipa", version.Code, flutterVersion)
 	case "windows":
-		releaseFileName = fmt.Sprintf("pikapika-%v-windows-x86_64.zip", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-windows-x86_64.zip", version.Code, flutterVersion)
 	case "linux":
-		releaseFileName = fmt.Sprintf("pikapika-%v-linux-x86_64.AppImage", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-linux-x86_64.AppImage", version.Code, flutterVersion)
 	case "android-arm32":
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm32.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm32.apk", version.Code, flutterVersion)
 	case "android-arm64":
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm64.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm64.apk", version.Code, flutterVersion)
 	case "android-x86_64":
-		releaseFileName = fmt.Sprintf("pikapika-%v-android-x86_64.apk", version.Code)
+		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-x86_64.apk", version.Code, flutterVersion)
 	}
 	// get version
 	getReleaseRequest, err := http.NewRequest(
