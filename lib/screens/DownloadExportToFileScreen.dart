@@ -277,7 +277,7 @@ class _DownloadExportToFileScreenState
             });
           }
         },
-        child: _buildButtonInner('将所有图片到处到手机相机'),
+        child: _buildButtonInner('将所有图片导出到手机相册'),
       ));
       widgets.add(Container(height: 10));
     }

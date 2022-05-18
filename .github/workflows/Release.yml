@@ -54,13 +54,16 @@ jobs:
         config:
           - target: linux
             host: ubuntu-latest
-            flutter_version: '3.0.0'
+            flutter_version: '2.10.3'
+          - target: linux
+            host: ubuntu-latest
+            flutter_version: '2.10.3'
           - target: windows
             host: windows-latest
-            flutter_version: '3.0.0'
+            flutter_version: '2.10.3'
           - target: macos
             host: macos-latest
-            flutter_version: '3.0.0'
+            flutter_version: '2.10.3'
           - target: ios
             host: macos-latest
             flutter_version: '3.0.0'
@@ -145,6 +148,7 @@ jobs:
           flutter-version: ${{ env.flutter_version }}
 
       - name: Check core
+        if: steps.check_asset.outputs.skip_build != 'true'
         uses: actions/checkout@v3
         with:
           repository: 'niuhuan/pikapika-go-core'
