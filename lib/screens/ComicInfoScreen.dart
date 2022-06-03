@@ -33,6 +33,7 @@ class ComicInfoScreen extends StatefulWidget {
 class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   late var _tabIndex = 0;
   late Future<ComicInfo> _comicFuture = _loadComic();
+  late Key _comicFutureKey = UniqueKey();
   late Future<ViewLog?> _viewFuture = _loadViewLog();
   late Future<List<Ep>> _epListFuture = _loadEps();
 
@@ -85,6 +86,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
 
   Widget buildScreen(BuildContext context) {
     return FutureBuilder(
+      key: _comicFutureKey,
       future: _comicFuture,
       builder: (BuildContext context, AsyncSnapshot<ComicInfo> snapshot) {
         if (snapshot.hasError) {
@@ -96,6 +98,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
               onRefresh: () async {
                 setState(() {
                   _comicFuture = _loadComic();
+                  _comicFutureKey = UniqueKey();
                 });
               },
             ),

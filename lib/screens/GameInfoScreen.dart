@@ -15,7 +15,7 @@ import 'components/RightClickPop.dart';
 class GameInfoScreen extends StatefulWidget {
   final String gameId;
 
-  const GameInfoScreen(this.gameId,{Key? key}):super(key: key);
+  const GameInfoScreen(this.gameId, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _GameInfoScreenState();
@@ -23,9 +23,10 @@ class GameInfoScreen extends StatefulWidget {
 
 class _GameInfoScreenState extends State<GameInfoScreen> {
   late var _future = method.game(widget.gameId);
+  late var _key = UniqueKey();
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -35,6 +36,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
 
   Widget buildScreen(BuildContext context) {
     return FutureBuilder(
+      key: _key,
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<GameInfo> snapshot) {
         if (snapshot.hasError) {
@@ -48,6 +50,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                 onRefresh: () async {
                   setState(() {
                     _future = method.game(widget.gameId);
+                    _key = UniqueKey();
                   });
                 }),
           );
@@ -86,7 +89,8 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                         bottom: 10,
                       ),
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
                         child: MaterialButton(
                           color: Theme.of(context).colorScheme.secondary,
                           textColor: Colors.white,
@@ -151,8 +155,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                             ],
                             indicatorColor:
                                 Theme.of(context).colorScheme.secondary,
-                            labelColor:
-                                Theme.of(context).colorScheme.secondary,
+                            labelColor: Theme.of(context).colorScheme.secondary,
                             onTap: (val) async {
                               setState(() {
                                 _tabIndex = val;
