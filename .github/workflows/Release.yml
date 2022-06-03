@@ -16,6 +16,7 @@ jobs:
     needs:
       - check_release
       - build_release_assets
+      - send_to_community
     steps:
       - run: exit 0
 
@@ -273,4 +274,37 @@ jobs:
         run: |
           cd ci
           go run ./cmd/upload_asset
+
+
+
+  send_to_community:
+    name: CI is green
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.inputs.repo }}
+          ref: 'master'
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.go_version }}
+      - name: Cache go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Send to community
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_IDS: ${{ secrets.TG_CHAT_IDS }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHAT_IDS: ${{ secrets.DISCORD_CHAT_IDS }}
+        run: |
+          cd ci
+          go run ./cmd/send_to_community
+
 

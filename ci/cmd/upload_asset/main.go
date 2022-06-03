@@ -8,12 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"strings"
 )
-
-const owner = "niuhuan"
-const repo = "pikapika"
-const ua = "niuhuan pikapika ci"
 
 func main() {
 	// get ghToken
@@ -23,17 +18,7 @@ func main() {
 		os.Exit(1)
 	}
 	// get version
-	var version commons.Version
-	codeFile, err := ioutil.ReadFile("version.code.txt")
-	if err != nil {
-		panic(err)
-	}
-	version.Code = strings.TrimSpace(string(codeFile))
-	infoFile, err := ioutil.ReadFile("version.info.txt")
-	if err != nil {
-		panic(err)
-	}
-	version.Info = strings.TrimSpace(string(infoFile))
+	version := commons.LoadVersion()
 	// get target
 	target := os.Getenv("TARGET")
 	if target == "" {
@@ -90,13 +75,13 @@ func main() {
 	// get version
 	getReleaseRequest, err := http.NewRequest(
 		"GET",
-		fmt.Sprintf("https://api.github.com/repos/%v/%v/releases/tags/%v", owner, repo, version.Code),
+		fmt.Sprintf("https://api.github.com/repos/%v/%v/releases/tags/%v", commons.Owner, commons.Repo, version.Code),
 		nil,
 	)
 	if err != nil {
 		panic(err)
 	}
-	getReleaseRequest.Header.Set("User-Agent", ua)
+	getReleaseRequest.Header.Set("User-Agent", commons.Ua)
 	getReleaseRequest.Header.Set("Authorization", "token "+ghToken)
 	getReleaseResponse, err := http.DefaultClient.Do(getReleaseRequest)
 	if err != nil {
@@ -121,12 +106,12 @@ func main() {
 		panic(err)
 	}
 	defer file.Close()
-	uploadUrl := fmt.Sprintf("https://uploads.github.com/repos/%v/%v/releases/%v/assets?name=%v", owner, repo, release.Id, releaseFileName)
+	uploadUrl := fmt.Sprintf("https://uploads.github.com/repos/%v/%v/releases/%v/assets?name=%v", commons.Owner, commons.Repo, release.Id, releaseFileName)
 	uploadRequest, err := http.NewRequest("POST", uploadUrl, file)
 	if err != nil {
 		panic(err)
 	}
-	uploadRequest.Header.Set("User-Agent", ua)
+	uploadRequest.Header.Set("User-Agent", commons.Ua)
 	uploadRequest.Header.Set("Authorization", "token "+ghToken)
 	uploadRequest.Header.Set("Content-Type", contentType)
 	uploadRequest.ContentLength = contentLength

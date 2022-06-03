@@ -8,13 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strings"
 )
-
-const owner = "niuhuan"
-const repo = "pikapika"
-const ua = "niuhuan pikapika ci"
-const mainBranch = "master"
 
 func main() {
 	// get ghToken
@@ -24,27 +18,17 @@ func main() {
 		os.Exit(1)
 	}
 	// get version
-	var version commons.Version
-	codeFile, err := ioutil.ReadFile("version.code.txt")
-	if err != nil {
-		panic(err)
-	}
-	version.Code = strings.TrimSpace(string(codeFile))
-	infoFile, err := ioutil.ReadFile("version.info.txt")
-	if err != nil {
-		panic(err)
-	}
-	version.Info = strings.TrimSpace(string(infoFile))
+	version := commons.LoadVersion()
 	// get version
 	getReleaseRequest, err := http.NewRequest(
 		"GET",
-		fmt.Sprintf("https://api.github.com/repos/%v/%v/releases/tags/%v", owner, repo, version.Code),
+		fmt.Sprintf("https://api.github.com/repos/%v/%v/releases/tags/%v", commons.Owner, commons.Repo, version.Code),
 		nil,
 	)
 	if err != nil {
 		panic(nil)
 	}
-	getReleaseRequest.Header.Set("User-Agent", ua)
+	getReleaseRequest.Header.Set("User-Agent", commons.Ua)
 	getReleaseRequest.Header.Set("Authorization", "token "+ghToken)
 	getReleaseResponse, err := http.DefaultClient.Do(getReleaseRequest)
 	if err != nil {
@@ -52,10 +36,10 @@ func main() {
 	}
 	defer getReleaseResponse.Body.Close()
 	if getReleaseResponse.StatusCode == 404 {
-		url := fmt.Sprintf("https://api.github.com/repos/%v/%v/releases", owner, repo)
+		url := fmt.Sprintf("https://api.github.com/repos/%v/%v/releases", commons.Owner, commons.Repo)
 		body := map[string]interface{}{
 			"tag_name":         version.Code,
-			"target_commitish": mainBranch,
+			"target_commitish": commons.MainBranch,
 			"name":             version.Code,
 			"body":             version.Info,
 		}
@@ -69,7 +53,7 @@ func main() {
 		if err != nil {
 			panic(nil)
 		}
-		createReleaseRequest.Header.Set("User-Agent", ua)
+		createReleaseRequest.Header.Set("User-Agent", commons.Ua)
 		createReleaseRequest.Header.Set("Authorization", "token "+ghToken)
 		var createReleaseResponse *http.Response
 		createReleaseResponse, err = http.DefaultClient.Do(createReleaseRequest)
