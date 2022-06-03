@@ -2,6 +2,7 @@ package main
 
 import (
 	"ci/commons"
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/andersfylling/disgord"
@@ -50,7 +51,7 @@ func main() {
 		var discordChatIds []uint64
 		json.Unmarshal([]byte(discordChatIdsStr), &discordChatIds)
 		if len(discordChatIds) > 0 {
-			sendMessageToDiscord(tgToken, discordChatIds, message)
+			sendMessageToDiscord(discordToken, discordChatIds, message)
 		}
 	}
 }
@@ -72,11 +73,15 @@ func sendMessageToTg(token string, ids []int64, message string) {
 }
 
 func sendMessageToDiscord(token string, ids []uint64, message string) {
-	client := disgord.New(disgord.Config{
+	client, err := disgord.NewClient(context.Background(), disgord.Config{
 		BotToken: token,
 	})
+	if err != nil {
+		fmt.Sprintf("discord login failed : %v", err.Error())
+		return
+	}
 	for _, id := range ids {
-		_, err := client.SendMsg(disgord.Snowflake(id), message)
+		_, err = client.SendMsg(disgord.Snowflake(id), message)
 		if err != nil {
 			fmt.Sprintf("Send message to tg chat : %v (error : %v)", id, err.Error())
 		} else {
