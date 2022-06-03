@@ -53,12 +53,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - target: linux
-            host: ubuntu-latest
-            flutter_version: '2.10.3'
-          - target: linux
-            host: ubuntu-latest
-            flutter_version: '2.10.3'
           - target: windows
             host: windows-latest
             flutter_version: '2.10.3'
