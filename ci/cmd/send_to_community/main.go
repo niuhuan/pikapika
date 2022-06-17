@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	return
 	// get version
 	var version commons.Version
 	codeFile, err := ioutil.ReadFile("version.code.txt")
@@ -31,7 +32,6 @@ func main() {
 		"%v 版本 %v 发布! \n\n"+
 			"更新内容:\n"+
 			"%v\n\n"+
-			"请不要传播本应用到其他社区\n\n"+
 			"https://github.com/%v/%v/releases/tag/%v",
 		commons.Repo, version.Code, version.Info, commons.Owner, commons.Repo, version.Code,
 	)
