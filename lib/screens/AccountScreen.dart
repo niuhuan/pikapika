@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -7,9 +11,12 @@ import 'package:pikapika/basic/enum/ErrorTypes.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
+import '../basic/Navigator.dart';
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
+import 'PkzArchiveScreen.dart';
 import 'ThemeScreen.dart';
 import 'components/ContentLoading.dart';
 
@@ -25,11 +32,32 @@ class _AccountScreenState extends State<AccountScreen> {
   late bool _logging = false;
   late String _username = "";
   late String _password = "";
+  late StreamSubscription<Uri> _linkSubscription;
 
   @override
   void initState() {
+    final appLinks = AppLinks();
+    // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
+    _linkSubscription = appLinks.uriLinkStream.listen((uri) async {
+      RegExp regExp = RegExp(r"^.*\.pkz$");
+      final matches = regExp.allMatches(uri.toString());
+      if (matches.isNotEmpty) {
+        File file = await toFile(uri.toString());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PkzArchiveScreen(pkzPath: file.path),
+        ));
+      }
+    });
+
     _loadProperties();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _linkSubscription.cancel();
+    super.dispose();
   }
 
   Future _loadProperties() async {

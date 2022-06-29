@@ -21,6 +21,7 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
+import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
@@ -30,7 +31,7 @@ import 'Images.dart';
 ///////////////
 
 Event<_ReaderControllerEventArgs> _readerControllerEvent =
-Event<_ReaderControllerEventArgs>();
+    Event<_ReaderControllerEventArgs>();
 
 class _ReaderControllerEventArgs extends EventArgs {
   final String key;
@@ -93,6 +94,13 @@ void delVolumeListen() {
 
 // 对Reader的传参以及封装
 
+class PkzFile {
+  final String pkzPath;
+  final String path;
+
+  PkzFile(this.pkzPath, this.path);
+}
+
 class ReaderImageInfo {
   final String fileServer;
   final String path;
@@ -101,9 +109,18 @@ class ReaderImageInfo {
   final int? height;
   final String? format;
   final int? fileSize;
+  final PkzFile? pkzFile;
 
-  ReaderImageInfo(this.fileServer, this.path, this.downloadLocalPath,
-      this.width, this.height, this.format, this.fileSize);
+  ReaderImageInfo(
+    this.fileServer,
+    this.path,
+    this.downloadLocalPath,
+    this.width,
+    this.height,
+    this.format,
+    this.fileSize, {
+    this.pkzFile,
+  });
 }
 
 class ImageReaderStruct {
@@ -156,7 +173,7 @@ class _ImageReaderState extends State<ImageReader> {
   late final FullScreenAction _fullScreenAction = currentFullScreenAction();
 
   late final ReaderSliderPosition _readerSliderPosition =
-  currentReaderSliderPosition();
+      currentReaderSliderPosition();
 
   @override
   Widget build(BuildContext context) {
@@ -186,12 +203,12 @@ class _ImageReaderContent extends StatefulWidget {
   final ImageReaderStruct struct;
 
   const _ImageReaderContent(
-      this.struct,
-      this.pagerDirection,
-      this.pagerType,
-      this.fullScreenAction,
-      this.readerSliderPosition,
-      );
+    this.struct,
+    this.pagerDirection,
+    this.pagerType,
+    this.fullScreenAction,
+    this.readerSliderPosition,
+  );
 
   @override
   State<StatefulWidget> createState() {
@@ -290,7 +307,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   @override
   Widget build(BuildContext context) {
     switch (currentFullScreenAction()) {
-    // 按钮
+      // 按钮
       case FullScreenAction.CONTROLLER:
         return Stack(
           children: [
@@ -339,37 +356,37 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             widget.struct.fullScreen
                 ? Container()
                 : Container(
-              height: 45,
-              color: const Color(0x88000000),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(width: 15),
-                  IconButton(
-                    icon: const Icon(Icons.fullscreen),
-                    color: Colors.white,
-                    onPressed: () {
-                      widget.struct
-                          .onFullScreenChange(!widget.struct.fullScreen);
-                    },
+                    height: 45,
+                    color: const Color(0x88000000),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(width: 15),
+                        IconButton(
+                          icon: const Icon(Icons.fullscreen),
+                          color: Colors.white,
+                          onPressed: () {
+                            widget.struct
+                                .onFullScreenChange(!widget.struct.fullScreen);
+                          },
+                        ),
+                        Container(width: 10),
+                        Expanded(
+                          child:
+                              widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
+                                  ? _buildSliderBottom()
+                                  : Container(),
+                        ),
+                        Container(width: 10),
+                        IconButton(
+                          icon: const Icon(Icons.skip_next_outlined),
+                          color: Colors.white,
+                          onPressed: _onNextAction,
+                        ),
+                        Container(width: 15),
+                      ],
+                    ),
                   ),
-                  Container(width: 10),
-                  Expanded(
-                    child:
-                    widget.pagerType != ReaderType.WEB_TOON_FREE_ZOOM
-                        ? _buildSliderBottom()
-                        : Container(),
-                  ),
-                  Container(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.skip_next_outlined),
-                    color: Colors.white,
-                    onPressed: _onNextAction,
-                  ),
-                  Container(width: 15),
-                ],
-              ),
-            ),
           ],
         );
       case ReaderSliderPosition.RIGHT:
@@ -406,19 +423,19 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Widget _buildAppBar() => widget.struct.fullScreen
       ? Container()
       : AppBar(
-    title: Text(
-        "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
-    actions: [
-      IconButton(
-        onPressed: _onChooseEp,
-        icon: const Icon(Icons.menu_open),
-      ),
-      IconButton(
-        onPressed: _onMoreSetting,
-        icon: const Icon(Icons.more_horiz),
-      ),
-    ],
-  );
+          title: Text(
+              "${widget.struct.epNameMap[widget.struct.epOrder] ?? ""} - ${widget.struct.comicTitle}"),
+          actions: [
+            IconButton(
+              onPressed: _onChooseEp,
+              icon: const Icon(Icons.menu_open),
+            ),
+            IconButton(
+              onPressed: _onMoreSetting,
+              icon: const Icon(Icons.more_horiz),
+            ),
+          ],
+        );
 
   Widget _buildSliderBottom() {
     return Column(
@@ -436,52 +453,52 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   Widget _buildSliderLeft() => widget.struct.fullScreen
       ? Container()
       : Align(
-    alignment: Alignment.centerLeft,
-    child: Material(
-      color: Colors.transparent,
-      child: Container(
-        width: 35,
-        height: 300,
-        decoration: const BoxDecoration(
-          color: Color(0x66000000),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+          alignment: Alignment.centerLeft,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: 35,
+              height: 300,
+              decoration: const BoxDecoration(
+                color: Color(0x66000000),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              padding:
+                  const EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
+              child: Center(
+                child: _buildSliderWidget(Axis.vertical),
+              ),
+            ),
           ),
-        ),
-        padding:
-        const EdgeInsets.only(top: 10, bottom: 10, left: 6, right: 5),
-        child: Center(
-          child: _buildSliderWidget(Axis.vertical),
-        ),
-      ),
-    ),
-  );
+        );
 
   Widget _buildSliderRight() => widget.struct.fullScreen
       ? Container()
       : Align(
-    alignment: Alignment.centerRight,
-    child: Material(
-      color: Colors.transparent,
-      child: Container(
-        width: 35,
-        height: 300,
-        decoration: const BoxDecoration(
-          color: Color(0x66000000),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
+          alignment: Alignment.centerRight,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: 35,
+              height: 300,
+              decoration: const BoxDecoration(
+                color: Color(0x66000000),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              padding:
+                  const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
+              child: Center(
+                child: _buildSliderWidget(Axis.vertical),
+              ),
+            ),
           ),
-        ),
-        padding:
-        const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 6),
-        child: Center(
-          child: _buildSliderWidget(Axis.vertical),
-        ),
-      ),
-    ),
-  );
+        );
 
   Widget _buildSliderWidget(Axis axis) {
     return FlutterSlider(
@@ -544,7 +561,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         color: Colors.transparent,
         child: Container(
           padding:
-          const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           margin: const EdgeInsets.only(bottom: 10),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -930,7 +947,13 @@ class _WebToonReaderState extends _ImageReaderContentState {
   @override
   void initState() {
     for (var e in widget.struct.images) {
-      if (e.downloadLocalPath != null) {
+      if (e.pkzFile != null &&
+          e.width != null &&
+          e.height != null &&
+          e.width! > 0 &&
+          e.height! > 0) {
+        _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
+      } else if (e.downloadLocalPath != null) {
         _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
       } else {
         _trueSizes.add(null);
@@ -1030,7 +1053,16 @@ class _WebToonReaderState extends _ImageReaderContentState {
           }
 
           var e = widget.struct.images[index];
-          if (e.downloadLocalPath != null) {
+          if (e.pkzFile != null) {
+            _images.add(_WebToonPkzImage(
+              width: e.width!,
+              height: e.height!,
+              format: e.format!,
+              size: renderSize,
+              onTrueSize: onTrueSize,
+              pkzFile: e.pkzFile!,
+            ));
+          } else if (e.downloadLocalPath != null) {
             _images.add(_WebToonDownloadImage(
               fileServer: e.fileServer,
               path: e.path,
@@ -1054,9 +1086,9 @@ class _WebToonReaderState extends _ImageReaderContentState {
         return ScrollablePositionedList.builder(
           initialScrollIndex: super._startIndex,
           scrollDirection:
-          widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-              ? Axis.vertical
-              : Axis.horizontal,
+              widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                  ? Axis.vertical
+                  : Axis.horizontal,
           reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
           padding: EdgeInsets.only(
             // 不管全屏与否, 滚动方向如何, 顶部永远保持间距
@@ -1064,9 +1096,9 @@ class _WebToonReaderState extends _ImageReaderContentState {
             bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                 ? 130 // 纵向滚动 底部永远都是130的空白
                 : ( // 横向滚动
-                widget.struct.fullScreen
-                    ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
-                    : super._bottomBarHeight())
+                    widget.struct.fullScreen
+                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
+                        : super._bottomBarHeight())
             // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
             ,
           ),
@@ -1147,17 +1179,47 @@ class _WebToonDownloadImage extends _WebToonReaderImage {
   }
 }
 
+// 来自PKZ
+class _WebToonPkzImage extends StatelessWidget {
+  final PkzFile pkzFile;
+  final int width;
+  final int height;
+  final String format;
+  final Size size;
+  Function(Size)? onTrueSize;
+
+  _WebToonPkzImage({
+    required this.pkzFile,
+    required this.width,
+    required this.height,
+    required this.format,
+    required this.size,
+    required this.onTrueSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PkzLoadingImage(
+      pkzPath: pkzFile.pkzPath,
+      path: pkzFile.path,
+      width: size.width,
+      height: size.height,
+      onTrueSize: onTrueSize,
+    );
+  }
+}
+
 // 来自远端
 class _WebToonRemoteImage extends _WebToonReaderImage {
   final String fileServer;
   final String path;
 
   _WebToonRemoteImage(
-      this.fileServer,
-      this.path,
-      Size size,
-      Function(Size)? onTrueSize,
-      ) : super(size, onTrueSize);
+    this.fileServer,
+    this.path,
+    Size size,
+    Function(Size)? onTrueSize,
+  ) : super(size, onTrueSize);
 
   @override
   Future<RemoteImageData> imageData() async {
@@ -1197,14 +1259,14 @@ class _WebToonReaderImageState extends State<_WebToonReaderImage> {
         return FutureBuilder(
           future: _future,
           builder: (
-              BuildContext context,
-              AsyncSnapshot<RemoteImageData> snapshot,
-              ) {
+            BuildContext context,
+            AsyncSnapshot<RemoteImageData> snapshot,
+          ) {
             if (snapshot.hasError) {
               return GestureDetector(
                 onLongPress: () async {
                   String? choose =
-                  await chooseListDialog(context, '请选择', ['重新加载图片']);
+                      await chooseListDialog(context, '请选择', ['重新加载图片']);
                   switch (choose) {
                     case '重新加载图片':
                       setState(() {
@@ -1257,7 +1319,13 @@ class _ListViewReaderState extends _ImageReaderContentState
   @override
   void initState() {
     for (var e in widget.struct.images) {
-      if (e.downloadLocalPath != null) {
+      if (e.pkzFile != null &&
+          e.width != null &&
+          e.height != null &&
+          e.width! > 0 &&
+          e.height! > 0) {
+        _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
+      } else if (e.downloadLocalPath != null) {
         _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
       } else {
         _trueSizes.add(null);
@@ -1332,7 +1400,16 @@ class _ListViewReaderState extends _ImageReaderContentState
           }
 
           var e = widget.struct.images[index];
-          if (e.downloadLocalPath != null) {
+          if (e.pkzFile != null) {
+            _images.add(_WebToonPkzImage(
+              width: e.width!,
+              height: e.height!,
+              format: e.format!,
+              size: renderSize,
+              onTrueSize: onTrueSize,
+              pkzFile: e.pkzFile!,
+            ));
+          } else if (e.downloadLocalPath != null) {
             _images.add(_WebToonDownloadImage(
               fileServer: e.fileServer,
               path: e.path,
@@ -1355,9 +1432,9 @@ class _ListViewReaderState extends _ImageReaderContentState
         }
         var list = ListView.builder(
           scrollDirection:
-          widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-              ? Axis.vertical
-              : Axis.horizontal,
+              widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+                  ? Axis.vertical
+                  : Axis.horizontal,
           reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
           padding: EdgeInsets.only(
             // 不管全屏与否, 滚动方向如何, 顶部永远保持间距
@@ -1365,9 +1442,9 @@ class _ListViewReaderState extends _ImageReaderContentState
             bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                 ? 130 // 纵向滚动 底部永远都是130的空白
                 : ( // 横向滚动
-                widget.struct.fullScreen
-                    ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
-                    : super._bottomBarHeight())
+                    widget.struct.fullScreen
+                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
+                        : super._bottomBarHeight())
             // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
             ,
           ),
@@ -1499,10 +1576,26 @@ class _GalleryReaderState extends _ImageReaderContentState {
       itemCount: widget.struct.images.length,
       builder: (BuildContext context, int index) {
         var item = widget.struct.images[index];
+        if (item.pkzFile != null) {
+          return PhotoViewGalleryPageOptions(
+            imageProvider:
+            PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path),
+            errorBuilder: (b, e, s) {
+              print("$e,$s");
+              return LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return buildError(
+                      constraints.maxWidth, constraints.maxHeight);
+                },
+              );
+            },
+            filterQuality: FilterQuality.high,
+          );
+        }
         if (item.downloadLocalPath != null) {
           return PhotoViewGalleryPageOptions(
             imageProvider:
-            ResourceDownloadFileImageProvider(item.downloadLocalPath!),
+                ResourceDownloadFileImageProvider(item.downloadLocalPath!),
             errorBuilder: (b, e, s) {
               print("$e,$s");
               return LayoutBuilder(
@@ -1517,7 +1610,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
         }
         return PhotoViewGalleryPageOptions(
           imageProvider:
-          ResourceRemoteImageProvider(item.fileServer, item.path),
+              ResourceRemoteImageProvider(item.fileServer, item.path),
           errorBuilder: (b, e, s) {
             print("$e,$s");
             return LayoutBuilder(
@@ -1535,6 +1628,11 @@ class _GalleryReaderState extends _ImageReaderContentState {
       child: gallery,
       onLongPress: () async {
         if (_current >= 0 && _current < widget.struct.images.length) {
+          var item = widget.struct.images[_current];
+          if (item.pkzFile != null) {
+            return;
+          }
+
           Future<String> load() async {
             var item = widget.struct.images[_current];
             if (item.downloadLocalPath != null) {
@@ -1545,7 +1643,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
           }
 
           String? choose =
-          await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
+              await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
           switch (choose) {
             case '预览图片':
               try {
@@ -1594,7 +1692,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
         child: Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding:
-          const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),

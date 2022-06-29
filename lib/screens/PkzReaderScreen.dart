@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart' as p;
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
@@ -16,46 +17,56 @@ import 'components/ImageReader.dart';
 import 'components/RightClickPop.dart';
 
 // 阅读下载的内容
-class DownloadReaderScreen extends StatefulWidget {
-  final DownloadComic comicInfo;
-  final List<DownloadEp> epList;
-  final int currentEpOrder;
+class PkzReaderScreen extends StatefulWidget {
+  final String pkzPath;
+  final PkzComic comicInfo;
+  late final List<PkzChapter> epList;
+  final String currentEpId;
   final int? initPicturePosition;
   final ReaderType pagerType = currentReaderType();
   final ReaderDirection pagerDirection = gReaderDirection;
   late final bool autoFullScreen;
 
-  DownloadReaderScreen({
+  PkzReaderScreen({
     Key? key,
     required this.comicInfo,
-    required this.epList,
-    required this.currentEpOrder,
+    required this.currentEpId,
     this.initPicturePosition,
     bool? autoFullScreen,
+    required this.pkzPath,
   }) : super(key: key) {
+    epList = [];
+    for (var volume in comicInfo.volumes) {
+      for (var chapter in volume.chapters) {
+        epList.add(chapter);
+      }
+    }
     this.autoFullScreen = autoFullScreen ?? currentAutoFullScreen();
   }
 
   @override
-  State<StatefulWidget> createState() => _DownloadReaderScreenState();
+  State<StatefulWidget> createState() => _PkzReaderScreenState();
 }
 
-class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
-  late DownloadEp _ep;
+class _PkzReaderScreenState extends State<PkzReaderScreen> {
+  late PkzChapter _ep;
+  late int _epOrder;
   late bool _fullScreen = false;
-  late List<DownloadPicture> pictures = [];
+  late List<PkzPicture> pictures = [];
   late Future _future = _load();
   int? _lastChangeRank;
   bool _replacement = false;
 
-  Future _load() async {
-    if (widget.initPicturePosition == null) {
-      await method.storeViewEp(widget.comicInfo.id, _ep.epOrder, _ep.title, 0);
-    }
+  @override
+  void initState() {
+    // EP
     pictures.clear();
     for (var ep in widget.epList) {
-      if (ep.epOrder == widget.currentEpOrder) {
-        pictures.addAll((await method.downloadPicturesByEpId(ep.id)));
+      if (ep.id == widget.currentEpId) {
+        _ep = ep;
+        _epOrder = widget.epList.indexOf(ep);
+        pictures.addAll(ep.pictures);
+        break;
       }
     }
     if (widget.autoFullScreen) {
@@ -66,62 +77,6 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
         );
         _fullScreen = true;
       });
-    }
-  }
-
-  Future _onPositionChange(int position) async {
-    _lastChangeRank = position;
-    return method.storeViewEp(
-        widget.comicInfo.id, _ep.epOrder, _ep.title, position);
-  }
-
-  FutureOr<dynamic> _onDownload() async {
-    defaultToast(context, "您阅读的是下载漫画");
-  }
-
-  FutureOr<dynamic> _onChangeEp(int epOrder) {
-    var orderMap = <int, DownloadEp>{};
-    for (var element in widget.epList) {
-      orderMap[element.epOrder] = element;
-    }
-    if (orderMap.containsKey(epOrder)) {
-      _replacement = true;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => DownloadReaderScreen(
-            comicInfo: widget.comicInfo,
-            epList: widget.epList,
-            currentEpOrder: epOrder,
-            autoFullScreen: _fullScreen,
-          ),
-        ),
-      );
-    }
-  }
-
-  FutureOr<dynamic> _onReloadEp() {
-    _replacement = true;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => DownloadReaderScreen(
-          comicInfo: widget.comicInfo,
-          epList: widget.epList,
-          currentEpOrder: widget.currentEpOrder,
-          initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
-          // maybe null
-          autoFullScreen: _fullScreen,
-        ),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    // EP
-    for (var element in widget.epList) {
-      if (element.epOrder == widget.currentEpOrder) {
-        _ep = element;
-      }
     }
     // INIT
     _future = _load();
@@ -136,8 +91,71 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     super.dispose();
   }
 
+  Future _load() async {
+    if (widget.initPicturePosition == null) {
+      await method.viewPkzEpAndPicture(
+        p.basename(widget.pkzPath),
+        widget.pkzPath,
+        widget.comicInfo.id,
+        widget.comicInfo.title,
+        _ep.id,
+        _ep.title,
+        0,
+      );
+    }
+  }
+
+  Future _onPositionChange(int position) async {
+    _lastChangeRank = position;
+    await method.viewPkzEpAndPicture(
+      p.basename(widget.pkzPath),
+      widget.pkzPath,
+      widget.comicInfo.id,
+      widget.comicInfo.title,
+      _ep.id,
+      _ep.title,
+      position,
+    );
+    return;
+  }
+
+  FutureOr<dynamic> _onDownload() async {
+    defaultToast(context, "您阅读的是下载漫画");
+  }
+
+  FutureOr<dynamic> _onChangeEp(int epOrder) {
+    final ep = widget.epList[epOrder];
+    _replacement = true;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => PkzReaderScreen(
+          comicInfo: widget.comicInfo,
+          pkzPath: widget.pkzPath,
+          currentEpId: ep.id,
+          autoFullScreen: _fullScreen,
+        ),
+      ),
+    );
+  }
+
+  FutureOr<dynamic> _onReloadEp() {
+    _replacement = true;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => PkzReaderScreen(
+          comicInfo: widget.comicInfo,
+          currentEpId: widget.currentEpId,
+          initPicturePosition: _lastChangeRank ?? widget.initPicturePosition,
+          // maybe null
+          autoFullScreen: _fullScreen,
+          pkzPath: widget.pkzPath,
+        ),
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -182,21 +200,29 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
           );
         }
         var epNameMap = <int, String>{};
-        for (var element in widget.epList) {
-          epNameMap[element.epOrder] = element.title;
+        for (var i = 0; i < widget.epList.length; i++) {
+          epNameMap[i] = widget.epList[i].title;
         }
         return Scaffold(
           body: ImageReader(
             ImageReaderStruct(
               images: pictures
-                  .map((e) => ReaderImageInfo(e.fileServer, e.path, e.localPath,
-                      e.width, e.height, e.format, e.fileSize))
+                  .map((e) => ReaderImageInfo(
+                        "",
+                        "",
+                        "",
+                        e.width,
+                        e.height,
+                        e.format,
+                        0,
+                        pkzFile: PkzFile(widget.pkzPath, e.picturePath),
+                      ))
                   .toList(),
               fullScreen: _fullScreen,
               onFullScreenChange: _onFullScreenChange,
               onPositionChange: _onPositionChange,
               initPosition: widget.initPicturePosition,
-              epOrder: _ep.epOrder,
+              epOrder: _epOrder,
               epNameMap: epNameMap,
               comicTitle: widget.comicInfo.title,
               onReloadEp: _onReloadEp,

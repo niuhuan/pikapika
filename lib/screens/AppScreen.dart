@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/components/Badge.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
 import 'CategoriesScreen.dart';
+import 'PkzArchiveScreen.dart';
 import 'SpaceScreen.dart';
 
 // MAIN UI 底部导航栏
@@ -14,15 +20,32 @@ class AppScreen extends StatefulWidget {
 }
 
 class _AppScreenState extends State<AppScreen> {
+  late StreamSubscription<Uri> _linkSubscription;
+
   @override
   void initState() {
     versionEvent.subscribe(_onVersion);
+    final appLinks = AppLinks();
+    // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
+    _linkSubscription = appLinks.uriLinkStream.listen((uri) async {
+      RegExp regExp = RegExp(r"^.*\.pkz$");
+      final matches = regExp.allMatches(uri.toString());
+      if (matches.isNotEmpty) {
+        File file = await toFile(uri.toString());
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PkzArchiveScreen(pkzPath: file.path),
+        ));
+      }
+    });
+
     super.initState();
   }
 
   @override
   void dispose() {
     versionEvent.unsubscribe(_onVersion);
+    _linkSubscription.cancel();
     super.dispose();
   }
 

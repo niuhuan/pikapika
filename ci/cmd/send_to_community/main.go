@@ -14,7 +14,6 @@ import (
 )
 
 func main() {
-	return
 	// get version
 	var version commons.Version
 	codeFile, err := ioutil.ReadFile("version.code.txt")

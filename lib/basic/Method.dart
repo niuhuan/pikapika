@@ -560,6 +560,19 @@ class Method {
     });
   }
 
+  /// 导出下载的图片到PKZ
+  Future<dynamic> exportComicDownloadToPkz(
+    List<String> comicIds,
+    String dir,
+    String name,
+  ) {
+    return _flatInvoke("exportComicDownloadToPkz", {
+      "comicIds": comicIds,
+      "dir": dir,
+      "name": name,
+    });
+  }
+
   /// 使用网络将下载传输到其他设备
   Future<int> exportComicUsingSocket(String comicId) async {
     return int.parse(await _flatInvoke("exportComicUsingSocket", comicId));
@@ -720,5 +733,90 @@ class Method {
 
   Future<bool> verifyAuthentication() async {
     return await _channel.invokeMethod("verifyAuthentication");
+  }
+
+  Future<PkzArchive> pkzInfo(String pkzPath) async {
+    return PkzArchive.fromJson(
+        jsonDecode(await _flatInvoke("pkzInfo", pkzPath)));
+  }
+
+  Future<Uint8List> loadPkzFile(String pkzPath, String path) async {
+    return base64Decode(await _flatInvoke("loadPkzFile", {
+      "pkzPath": pkzPath,
+      "path": path,
+    }));
+  }
+
+  Future<List<PkzComicViewLog>> pkzComicViewLogs(
+    String fileName,
+    String comicId,
+  ) async {
+    return List.of(jsonDecode(await _flatInvoke("pkzComicViewLogs", fileName)))
+        .map((e) => PkzComicViewLog.fromJson(e))
+        .toList();
+  }
+
+  Future<PkzComicViewLog?> pkzComicViewLogByPkzNameAndId(
+    String fileName,
+    String comicId,
+  ) async {
+    String data = await _flatInvoke("pkzComicViewLogByPkzNameAndId", {
+      "fileName": fileName,
+      "comicId": comicId,
+    });
+    if (data == "" || data == "nil" || data == "null") {
+      return null;
+    }
+    return PkzComicViewLog.fromJson(jsonDecode(data));
+  }
+
+  Future viewPkz(
+    String fileName,
+    String filePath,
+  ) async {
+    return _flatInvoke("viewPkz", {
+      "fileName": fileName,
+      "filePath": filePath,
+    });
+  }
+
+  Future viewPkzComic(
+    String fileName,
+    String filePath,
+    String comicId,
+    String comicTitle,
+  ) async {
+    return _flatInvoke("viewPkzComic", {
+      "fileName": fileName,
+      "filePath": filePath,
+      "comicId": comicId,
+      "comicTitle": comicTitle,
+    });
+  }
+
+  Future viewPkzEpAndPicture(
+    String fileName,
+    String filePath,
+    String comicId,
+    String comicTitle,
+    String epId,
+    String epTitle,
+    int pictureRank,
+  ) async {
+    return _flatInvoke("viewPkzEpAndPicture", {
+      "fileName": fileName,
+      "filePath": filePath,
+      "comicId": comicId,
+      "comicTitle": comicTitle,
+      "epId": epId,
+      "epTitle": epTitle,
+      "pictureRank": pictureRank,
+    });
+  }
+
+  Future<List<Knight>> leaderboardOfKnight() async {
+    return List.of(jsonDecode(await _flatInvoke("leaderboardOfKnight", "")))
+        .map((e) => Knight.fromJson(e))
+        .toList();
   }
 }

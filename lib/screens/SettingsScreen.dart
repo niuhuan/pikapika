@@ -25,7 +25,7 @@ import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
-import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 

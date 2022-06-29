@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
-import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/screens/ComicCollectionsScreen.dart';

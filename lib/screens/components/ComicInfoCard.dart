@@ -367,3 +367,8 @@ final authorStyle = TextStyle(
   fontSize: 13,
   color: Colors.pink.shade300,
 );
+
+final authorStyleX = TextStyle(
+  fontSize: 13,
+  color: Colors.pink.shade300.withOpacity(.7),
+);

@@ -7,7 +7,7 @@ import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
-import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 
 import 'ComicInfoCard.dart';
 import 'Images.dart';

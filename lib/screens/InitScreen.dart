@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
@@ -29,8 +32,10 @@ import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/UsingRightClickPop.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
-import 'package:pikapika/basic/config/shadowCategoriesMode.dart';
-
+import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
+import 'package:pikapika/screens/PkzArchiveScreen.dart';
+import 'package:app_links/app_links.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/ExportRename.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
@@ -88,6 +93,32 @@ class _InitScreenState extends State<InitScreen> {
     await initUsingRightClickPop();
     await initAuthentication();
     autoCheckNewVersion();
+
+    final appLinks = AppLinks();
+    String? initUrl;
+    if (Platform.isAndroid || Platform.isIOS) {
+      try {
+        initUrl = (await appLinks.getInitialAppLink())?.toString();
+        // Use the uri and warn the user, if it is not correct,
+        // but keep in mind it could be `null`.
+      } on FormatException {
+        // Handle exception by warning the user their action did not succeed
+        // return?
+      }
+    }
+    if (initUrl != null) {
+      RegExp regExp = RegExp(r"^.*\.pkz$");
+      final matches = regExp.allMatches(initUrl!);
+      if (matches.isNotEmpty) {
+        File file = await toFile(initUrl!);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PkzArchiveScreen(pkzPath: file.path),
+        ));
+        return;
+      }
+    }
+
     setState(() {
       _authenticating = currentAuthentication();
     });
@@ -112,7 +143,8 @@ class _InitScreenState extends State<InitScreen> {
               onPressed: () {
                 _goAuthentication();
               },
-              child: const Text('您在之前使用APP时开启了身份验证, 请点这段文字进行身份核查, 核查通过后将会进入APP'),
+              child:
+                  const Text('您在之前使用APP时开启了身份验证, 请点这段文字进行身份核查, 核查通过后将会进入APP'),
             ),
           ),
         ),

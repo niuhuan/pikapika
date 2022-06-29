@@ -687,3 +687,328 @@ class Collection {
         .toList();
   }
 }
+
+class PkzArchive {
+  PkzArchive({
+    required this.coverPath,
+    required this.authorAvatarPath,
+    required this.comics,
+    required this.comicCount,
+    required this.volumesCount,
+    required this.chapterCount,
+    required this.pictureCount,
+  });
+
+  late final String coverPath;
+  late final String authorAvatarPath;
+  late final List<PkzComic> comics;
+  late final int comicCount;
+  late final int volumesCount;
+  late final int chapterCount;
+  late final int pictureCount;
+
+  PkzArchive.fromJson(Map<String, dynamic> json) {
+    coverPath = json['cover_path'];
+    authorAvatarPath = json['author_avatar_path'];
+    comics =
+        List.from(json['comics']).map((e) => PkzComic.fromJson(e)).toList();
+    comicCount = json['comic_count'];
+    volumesCount = json['volumes_count'];
+    chapterCount = json['chapter_count'];
+    pictureCount = json['picture_count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['cover_path'] = coverPath;
+    _data['author_avatar_path'] = authorAvatarPath;
+    _data['comics'] = comics.map((e) => e.toJson()).toList();
+    _data['comic_count'] = comicCount;
+    _data['volumes_count'] = volumesCount;
+    _data['chapter_count'] = chapterCount;
+    _data['picture_count'] = pictureCount;
+    return _data;
+  }
+}
+
+class PkzComic {
+  PkzComic({
+    required this.id,
+    required this.title,
+    required this.categories,
+    required this.tags,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.description,
+    required this.chineseTeam,
+    required this.finished,
+    required this.coverPath,
+    required this.authorAvatarPath,
+    required this.volumes,
+    required this.volumesCount,
+    required this.chapterCount,
+    required this.pictureCount,
+    required this.idx,
+  });
+
+  late final String id;
+  late final String title;
+  late final List<String> categories;
+  late final List<String> tags;
+  late final int updatedAt;
+  late final int createdAt;
+  late final String description;
+  late final String chineseTeam;
+  late final bool finished;
+  late final String coverPath;
+  late final String authorAvatarPath;
+  late final List<PkzVolume> volumes;
+  late final int volumesCount;
+  late final int chapterCount;
+  late final int pictureCount;
+  late final int idx;
+  late final String author;
+  late final String authorId;
+
+  PkzComic.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    categories = List.castFrom<dynamic, String>(json['categories']);
+    tags = List.castFrom<dynamic, String>(json['tags']);
+    updatedAt = json['updated_at'];
+    createdAt = json['created_at'];
+    description = json['description'];
+    chineseTeam = json['chinese_team'];
+    finished = json['finished'];
+    coverPath = json['cover_path'];
+    authorAvatarPath = json['author_avatar_path'];
+    volumes =
+        List.from(json['volumes']).map((e) => PkzVolume.fromJson(e)).toList();
+    volumesCount = json['volumes_count'];
+    chapterCount = json['chapter_count'];
+    pictureCount = json['picture_count'];
+    idx = json['idx'];
+    author = json['author'];
+    authorId = json['author_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['title'] = title;
+    _data['categories'] = categories;
+    _data['tags'] = tags;
+    _data['updated_at'] = updatedAt;
+    _data['created_at'] = createdAt;
+    _data['description'] = description;
+    _data['chinese_team'] = chineseTeam;
+    _data['finished'] = finished;
+    _data['cover_path'] = coverPath;
+    _data['author_avatar_path'] = authorAvatarPath;
+    _data['volumes'] = volumes.map((e) => e.toJson()).toList();
+    _data['volumes_count'] = volumesCount;
+    _data['chapter_count'] = chapterCount;
+    _data['picture_count'] = pictureCount;
+    _data['idx'] = idx;
+    _data['author'] = author;
+    _data['author_id'] = authorId;
+    return _data;
+  }
+}
+
+class PkzVolume {
+  PkzVolume({
+    required this.id,
+    required this.title,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.coverPath,
+    required this.chapters,
+    required this.chapterCount,
+    required this.pictureCount,
+    required this.idx,
+  });
+
+  late final String id;
+  late final String title;
+  late final int updatedAt;
+  late final int createdAt;
+  late final String coverPath;
+  late final List<PkzChapter> chapters;
+  late final int chapterCount;
+  late final int pictureCount;
+  late final int idx;
+
+  PkzVolume.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    updatedAt = json['updated_at'];
+    createdAt = json['created_at'];
+    coverPath = json['cover_path'];
+    chapters =
+        List.from(json['chapters']).map((e) => PkzChapter.fromJson(e)).toList();
+    chapterCount = json['chapter_count'];
+    pictureCount = json['picture_count'];
+    idx = json['idx'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['title'] = title;
+    _data['updated_at'] = updatedAt;
+    _data['created_at'] = createdAt;
+    _data['cover_path'] = coverPath;
+    _data['chapters'] = chapters.map((e) => e.toJson()).toList();
+    _data['chapter_count'] = chapterCount;
+    _data['picture_count'] = pictureCount;
+    _data['idx'] = idx;
+    return _data;
+  }
+}
+
+class PkzChapter {
+  PkzChapter({
+    required this.id,
+    required this.title,
+    required this.updatedAt,
+    required this.createdAt,
+    required this.coverPath,
+    required this.pictures,
+    required this.pictureCount,
+    required this.idx,
+  });
+
+  late final String id;
+  late final String title;
+  late final int updatedAt;
+  late final int createdAt;
+  late final String coverPath;
+  late final List<PkzPicture> pictures;
+  late final int pictureCount;
+  late final int idx;
+
+  PkzChapter.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    updatedAt = json['updated_at'];
+    createdAt = json['created_at'];
+    coverPath = json['cover_path'];
+    pictures =
+        List.from(json['pictures']).map((e) => PkzPicture.fromJson(e)).toList();
+    pictureCount = json['picture_count'];
+    idx = json['idx'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['title'] = title;
+    _data['updated_at'] = updatedAt;
+    _data['created_at'] = createdAt;
+    _data['cover_path'] = coverPath;
+    _data['pictures'] = pictures.map((e) => e.toJson()).toList();
+    _data['picture_count'] = pictureCount;
+    _data['idx'] = idx;
+    return _data;
+  }
+}
+
+class PkzPicture {
+  PkzPicture({
+    required this.id,
+    required this.title,
+    required this.width,
+    required this.height,
+    required this.format,
+    required this.picturePath,
+    required this.idx,
+  });
+
+  late final String id;
+  late final String title;
+  late final int width;
+  late final int height;
+  late final String format;
+  late final String picturePath;
+  late final int idx;
+
+  PkzPicture.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    width = json['width'];
+    height = json['height'];
+    format = json['format'];
+    picturePath = json['picture_path'];
+    idx = json['idx'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['title'] = title;
+    _data['width'] = width;
+    _data['height'] = height;
+    _data['format'] = format;
+    _data['picture_path'] = picturePath;
+    _data['idx'] = idx;
+    return _data;
+  }
+}
+
+class Knight extends BasicUser {
+  late final String role;
+  late final String character;
+  late final int comicsUploaded;
+
+  Knight.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    role = json['role'];
+    character = json['character'];
+    comicsUploaded = json['comicsUploaded'];
+  }
+}
+
+class PkzComicViewLog {
+  PkzComicViewLog({
+    required this.fileName,
+    required this.lastViewComicId,
+    required this.filePath,
+    required this.lastViewComicTitle,
+    required this.lastViewEpId,
+    required this.lastViewEpName,
+    required this.lastViewPictureRank,
+    required this.lastViewTime,
+  });
+  late final String fileName;
+  late final String lastViewComicId;
+  late final String filePath;
+  late final String lastViewComicTitle;
+  late final String lastViewEpId;
+  late final String lastViewEpName;
+  late final int lastViewPictureRank;
+  late final String lastViewTime;
+
+  PkzComicViewLog.fromJson(Map<String, dynamic> json){
+    fileName = json['fileName'];
+    lastViewComicId = json['lastViewComicId'];
+    filePath = json['filePath'];
+    lastViewComicTitle = json['lastViewComicTitle'];
+    lastViewEpId = json['lastViewEpId'];
+    lastViewEpName = json['lastViewEpName'];
+    lastViewPictureRank = json['lastViewPictureRank'];
+    lastViewTime = json['lastViewTime'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['fileName'] = fileName;
+    _data['lastViewComicId'] = lastViewComicId;
+    _data['filePath'] = filePath;
+    _data['lastViewComicTitle'] = lastViewComicTitle;
+    _data['lastViewEpId'] = lastViewEpId;
+    _data['lastViewEpName'] = lastViewEpName;
+    _data['lastViewPictureRank'] = lastViewPictureRank;
+    _data['lastViewTime'] = lastViewTime;
+    return _data;
+  }
+}
