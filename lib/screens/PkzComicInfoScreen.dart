@@ -1,19 +1,29 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/PkzReaderScreen.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
 import '../basic/Navigator.dart';
+import 'PkzArchiveScreen.dart';
 import 'components/PkzComicInfoCard.dart';
 
 class PkzComicInfoScreen extends StatefulWidget {
+  final bool holdPkz;
   final String pkzPath;
   final PkzComic pkzComic;
 
-  const PkzComicInfoScreen(
-      {Key? key, required this.pkzPath, required this.pkzComic})
-      : super(key: key);
+  const PkzComicInfoScreen({
+    Key? key,
+    required this.pkzPath,
+    required this.pkzComic,
+    this.holdPkz = false,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PkzComicInfoScreenState();
@@ -22,9 +32,25 @@ class PkzComicInfoScreen extends StatefulWidget {
 class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
     with RouteAware {
   PkzComicViewLog? _log;
+  StreamSubscription<Uri>? _linkSubscription;
 
   @override
   void initState() {
+    if (widget.holdPkz) {
+      final appLinks = AppLinks();
+      // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
+      _linkSubscription = appLinks.uriLinkStream.listen((uri) async {
+        RegExp regExp = RegExp(r"^.*\.pkz$");
+        final matches = regExp.allMatches(uri.toString());
+        if (matches.isNotEmpty) {
+          File file = await toFile(uri.toString());
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) =>
+                PkzArchiveScreen(pkzPath: file.path),
+          ));
+        }
+      });
+    }
     _load();
     super.initState();
   }
@@ -37,6 +63,7 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
 
   @override
   void dispose() {
+    _linkSubscription?.cancel();
     routeObserver.unsubscribe(this);
     super.dispose();
   }

@@ -62,8 +62,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         actions: [
           exportButton(),
           importButton(),
-          pauseButton(),
           resetFailedButton(),
+          pauseButton(),
         ],
       ),
       body: FutureBuilder(
@@ -147,8 +147,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   }
 
   Widget exportButton() {
-    return MaterialButton(
-        minWidth: 0,
+    return IconButton(
         onPressed: () async {
           await Navigator.push(
             context,
@@ -157,7 +156,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             ),
           );
         },
-        child: Column(
+        icon: Column(
           children: [
             Expanded(child: Container()),
             const Icon(
@@ -175,8 +174,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   }
 
   Widget importButton() {
-    return MaterialButton(
-        minWidth: 0,
+    return IconButton(
         onPressed: () async {
           await Navigator.push(
             context,
@@ -188,7 +186,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             _f = method.allDownloads();
           });
         },
-        child: Column(
+        icon: Column(
           children: [
             Expanded(child: Container()),
             const Icon(
@@ -260,8 +258,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   }
 
   Widget resetFailedButton() {
-    return MaterialButton(
-        minWidth: 0,
+    return IconButton(
         onPressed: () async {
           await method.resetFailed();
           setState(() {
@@ -269,7 +266,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           });
           defaultToast(context, "所有失败的下载已经恢复");
         },
-        child: Column(
+        icon: Column(
           children: [
             Expanded(child: Container()),
             const Icon(

@@ -27,7 +27,7 @@ String _currentChooserRoot() {
     } else if (Platform.isAndroid) {
       return '/storage/emulated/0';
     } else {
-      throw 'error';
+      return '';
     }
   }
   return _chooserRoot;

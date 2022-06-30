@@ -113,7 +113,7 @@ class _InitScreenState extends State<InitScreen> {
         File file = await toFile(initUrl!);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              PkzArchiveScreen(pkzPath: file.path),
+              PkzArchiveScreen(pkzPath: file.path, holdPkz: true),
         ));
         return;
       }

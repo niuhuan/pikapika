@@ -7,6 +7,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 
+import 'PkzArchiveScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/RightClickPop.dart';
 
@@ -60,13 +61,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
 
     List<Widget> actions = [];
 
-    if (Platform.isWindows ||
-        Platform.isMacOS ||
-        Platform.isLinux ||
-        Platform.isAndroid) {
-      actions.add(_fileImportButton());
-    }
-
+    actions.add(_fileImportButton());
     actions.add(_networkImportButton());
 
     return Scaffold(
@@ -101,31 +96,44 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           allowMultiple: false,
           initialDirectory: chooseRoot,
           type: FileType.custom,
-          allowedExtensions: ['zip'],
+          allowedExtensions: ['pkz', 'zip'],
           allowCompression: false,
         );
         String? path = ls != null && ls.count > 0 ? ls.paths[0] : null;
         if (path != null) {
-          try {
-            setState(() {
-              _importing = true;
-            });
-            await method.importComicDownload(path);
-            setState(() {
-              _importMessage = "导入成功";
-            });
-          } catch (e) {
-            setState(() {
-              _importMessage = "导入失败 $e";
-            });
-          } finally {
-            setState(() {
-              _importing = false;
-            });
+          if (path.endsWith(".pkz")) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    PkzArchiveScreen(pkzPath: path),
+              ),
+            );
+          } else if (path.endsWith(".zip")) {
+            try {
+              setState(() {
+                _importing = true;
+              });
+              await method.importComicDownload(path);
+              setState(() {
+                _importMessage = "导入成功";
+              });
+            } catch (e) {
+              setState(() {
+                _importMessage = "导入失败 $e";
+              });
+            } finally {
+              setState(() {
+                _importing = false;
+              });
+            }
           }
         }
       },
-      child: const Text('选择zip文件进行导入'),
+      child: const Text(
+        '选择zip文件进行导入\n选择pkz文件进行阅读',
+        style: TextStyle(),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
