@@ -17,10 +17,37 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
+				<string>niuhuan.pkz</string>
 				<string>pkz</string>
 			</array>
 		</dict>
 	</array>
+	<key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key>
+            <string>niuhuan.pkz</string>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+                <string>public.content</string>
+                <string>com.apple.package</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>PKZ Archive</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>pkz</string>
+                </array>
+                <key>public.mime-type</key>
+                <array>
+                 <string>text/vnd.niuhuan.pkz</string>
+                </array>
+            </dict>
+        </dict>
+    </array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

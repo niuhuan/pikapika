@@ -1,6 +1,4 @@
 PODS:
-  - app_links (0.0.1):
-    - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -48,18 +46,20 @@ PODS:
   - SDWebImage/Core (5.12.5)
   - SwiftyGif (5.4.3)
   - TOCropViewController (2.6.1)
+  - uni_links (0.0.1):
+    - Flutter
   - uri_to_file (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - app_links (from `.symlinks/plugins/app_links/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - uri_to_file (from `.symlinks/plugins/uri_to_file/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
@@ -72,8 +72,6 @@ SPEC REPOS:
     - TOCropViewController
 
 EXTERNAL SOURCES:
-  app_links:
-    :path: ".symlinks/plugins/app_links/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
@@ -84,13 +82,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  uni_links:
+    :path: ".symlinks/plugins/uni_links/ios"
   uri_to_file:
     :path: ".symlinks/plugins/uri_to_file/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  app_links: 8941e7bac086136bae70d619141c36f258f4381d
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 817ab1d8cd2da9d2da412a417162deee3500fc95
@@ -101,6 +100,7 @@ SPEC CHECKSUMS:
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
+  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   uri_to_file: c4726881848febf4806f0a5707bd12903e02b0f0
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 

@@ -34,7 +34,7 @@ import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
-import 'package:app_links/app_links.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/ExportRename.dart';
 import 'AccountScreen.dart';
@@ -94,11 +94,10 @@ class _InitScreenState extends State<InitScreen> {
     await initAuthentication();
     autoCheckNewVersion();
 
-    final appLinks = AppLinks();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {
-        initUrl = (await appLinks.getInitialAppLink())?.toString();
+        initUrl = (await getInitialUri())?.toString();
         // Use the uri and warn the user, if it is not correct,
         // but keep in mind it could be `null`.
       } on FormatException {

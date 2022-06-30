@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:permission_handler/permission_handler.dart';
@@ -9,6 +8,7 @@ import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'package:pikapika/screens/components/PkzComicInfoCard.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
 import '../basic/Navigator.dart';
@@ -33,18 +33,18 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
   late String _fileName;
   late Future _future;
   late PkzArchive _info;
-  StreamSubscription<Uri>? _linkSubscription;
+  StreamSubscription<String?>? _linkSubscription;
 
   @override
   void initState() {
     if (widget.holdPkz) {
-      final appLinks = AppLinks();
       // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
-      _linkSubscription = appLinks.uriLinkStream.listen((uri) async {
+      _linkSubscription = linkStream.listen((uri) async {
+        if(uri == null) return;
         RegExp regExp = RegExp(r"^.*\.pkz$");
-        final matches = regExp.allMatches(uri.toString());
+        final matches = regExp.allMatches(uri);
         if (matches.isNotEmpty) {
-          File file = await toFile(uri.toString());
+          File file = await toFile(uri);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) =>
@@ -95,7 +95,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
         builder: (BuildContext context) => PkzComicInfoScreen(
           pkzPath: widget.pkzPath,
           pkzComic: _info.comics.first,
-          holdPkz: true,
+          holdPkz: widget.holdPkz,
         ),
       ));
     }
