@@ -6,6 +6,7 @@ import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/DownloadExportGroupScreen.dart';
 import 'DownloadImportScreen.dart';
 import 'DownloadInfoScreen.dart';
 import 'components/ContentLoading.dart';
@@ -59,6 +60,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
       appBar: AppBar(
         title: const Text('下载列表'),
         actions: [
+          exportButton(),
           importButton(),
           pauseButton(),
           resetFailedButton(),
@@ -142,6 +144,34 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         downloading: _downloading != null && _downloading!.id == e.id,
       ),
     );
+  }
+
+  Widget exportButton() {
+    return MaterialButton(
+        minWidth: 0,
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DownloadExportGroupScreen(),
+            ),
+          );
+        },
+        child: Column(
+          children: [
+            Expanded(child: Container()),
+            const Icon(
+              Icons.send_to_mobile,
+              size: 18,
+              color: Colors.white,
+            ),
+            const Text(
+              '导出',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
+            Expanded(child: Container()),
+          ],
+        ));
   }
 
   Widget importButton() {

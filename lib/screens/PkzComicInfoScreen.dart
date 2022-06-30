@@ -179,14 +179,13 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
                 chapters[c.id] = (c);
               }
             }
-            print("chapters : ${chapters}");
             if (chapters.isEmpty) {
               return Container();
             }
             final width = constraints.maxWidth;
             return Container(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(top: 10, bottom: 10),
               width: width,
               child: MaterialButton(
                 onPressed: () {

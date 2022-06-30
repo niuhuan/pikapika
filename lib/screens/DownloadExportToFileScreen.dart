@@ -234,7 +234,7 @@ class _DownloadExportToFileScreenState
           }
         },
         child:
-            _buildButtonInner('导出到xxx.pkz\n(可直接打开观看的格式,不支持导入,可以躲避BD网盘或者TX的检测)'),
+            _buildButtonInner('导出到xxx.pkz\n(可直接打开观看的格式,不支持导入)\n(可以躲避网盘或者聊天软件的扫描)'),
       ));
       widgets.add(Container(height: 10));
       /////////////////////
