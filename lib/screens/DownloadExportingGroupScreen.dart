@@ -74,7 +74,7 @@ class _DownloadExportingGroupScreenState
       var rename = await inputString(
         context,
         "请输入保存后的名称",
-        defaultValue: "${DateTime.now().millisecondsSinceEpoch}.pkz",
+        defaultValue: "${DateTime.now().millisecondsSinceEpoch}",
       );
       if (rename != null && rename.isNotEmpty) {
         name = rename;

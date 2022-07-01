@@ -547,6 +547,15 @@ class Method {
     });
   }
 
+  /// 导出下载的漫画到pki
+  Future<dynamic> exportComicDownloadToPki(String comicId, String dir, String name) {
+    return _flatInvoke("exportComicDownloadToPki", {
+      "comicId": comicId,
+      "dir": dir,
+      "name": name,
+    });
+  }
+
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToJPG(
     String comicId,
@@ -586,6 +595,11 @@ class Method {
   /// 从zip导入漫画
   Future<dynamic> importComicDownload(String zipPath) {
     return _flatInvoke("importComicDownload", zipPath);
+  }
+
+  /// 从pki导入漫画
+  Future<dynamic> importComicDownloadPki(String zipPath) {
+    return _flatInvoke("importComicDownloadPki", zipPath);
   }
 
   /// 从网络接收漫画

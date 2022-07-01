@@ -40,10 +40,14 @@
                 <key>public.filename-extension</key>
                 <array>
                     <string>pkz</string>
+                    <string>pki</string>
+                    <string>zip</string>
                 </array>
                 <key>public.mime-type</key>
                 <array>
                  <string>text/vnd.niuhuan.pkz</string>
+                 <string>text/vnd.niuhuan.pki</string>
+                 <string>text/vnd.niuhuan.zip</string>
                 </array>
             </dict>
         </dict>

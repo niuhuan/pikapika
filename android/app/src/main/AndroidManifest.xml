@@ -52,6 +52,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                         android:mimeType="*/*"
                         android:pathPattern=".*\\.pkz"
@@ -60,6 +61,25 @@
                         android:mimeType="*/*"
                         android:pathPattern=".*\\.pkz"
                         android:scheme="file" />
+
+                <data
+                        android:mimeType="*/*"
+                        android:pathPattern=".*\\.pki"
+                        android:scheme="content" />
+                <data
+                        android:mimeType="*/*"
+                        android:pathPattern=".*\\.pki"
+                        android:scheme="file" />
+
+                <data
+                        android:mimeType="*/*"
+                        android:pathPattern=".*\\.zip"
+                        android:scheme="content" />
+                <data
+                        android:mimeType="*/*"
+                        android:pathPattern=".*\\.zip"
+                        android:scheme="file" />
+
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -50,6 +50,7 @@ dependencies:
   path: ^1.8.0
   uri_to_file: ^0.2.0
   uni_links: ^0.5.1
+  filesystem_picker: ^2.0.1
 
 dev_dependencies:
   flutter_test:

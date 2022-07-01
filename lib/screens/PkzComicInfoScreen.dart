@@ -9,6 +9,7 @@ import 'package:pikapika/screens/PkzReaderScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
+import '../basic/Common.dart';
 import '../basic/Navigator.dart';
 import 'PkzArchiveScreen.dart';
 import 'components/PkzComicInfoCard.dart';
@@ -37,19 +38,7 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
   @override
   void initState() {
     if (widget.holdPkz) {
-      // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
-      _linkSubscription = linkStream.listen((uri) async {
-        if (uri == null) return;
-        RegExp regExp = RegExp(r"^.*\.pkz$");
-        final matches = regExp.allMatches(uri);
-        if (matches.isNotEmpty) {
-          File file = await toFile(uri);
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                PkzArchiveScreen(pkzPath: file.path),
-          ));
-        }
-      });
+      _linkSubscription = linkSubscript(context);
     }
     _load();
     super.initState();

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -91,29 +92,46 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           defaultToast(context, "$e");
           return;
         }
-        var ls = await FilePicker.platform.pickFiles(
-          dialogTitle: '选择要导入的文件',
-          allowMultiple: false,
-          initialDirectory: chooseRoot,
-          type: FileType.custom,
-          allowedExtensions: ['pkz', 'zip'],
-          allowCompression: false,
-        );
-        String? path = ls != null && ls.count > 0 ? ls.paths[0] : null;
+        String? path;
+        if (Platform.isAndroid) {
+          path = await FilesystemPicker.open(
+            title: 'Open file',
+            context: context,
+            rootDirectory: Directory(chooseRoot),
+            fsType: FilesystemType.file,
+            folderIconColor: Colors.teal,
+            allowedExtensions: ['.pkz', '.zip', '.pki'],
+            fileTileSelectMode: FileTileSelectMode.wholeTile,
+          );
+        }else{
+          var ls = await FilePicker.platform.pickFiles(
+            dialogTitle: '选择要导入的文件',
+            allowMultiple: false,
+            initialDirectory: chooseRoot,
+            type: FileType.custom,
+            allowedExtensions: ['pkz', 'zip', 'pki'],
+            allowCompression: false,
+          );
+          path = ls != null && ls.count > 0 ? ls.paths[0] : null;
+        }
         if (path != null) {
           if (path.endsWith(".pkz")) {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    PkzArchiveScreen(pkzPath: path),
+                    PkzArchiveScreen(pkzPath: path!),
               ),
             );
-          } else if (path.endsWith(".zip")) {
+          } else if (path.endsWith(".zip") || path.endsWith(".pki")) {
             try {
               setState(() {
                 _importing = true;
               });
-              await method.importComicDownload(path);
+              if(path.endsWith(".zip")){
+                await method.importComicDownload(path);
+              } else if(path.endsWith(".pki")){
+                await method.importComicDownloadPki(path);
+              }
               setState(() {
                 _importMessage = "导入成功";
               });
@@ -130,7 +148,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
         }
       },
       child: const Text(
-        '选择zip文件进行导入\n选择pkz文件进行阅读',
+        '选择zip文件进行导入\n选择pki文件进行导入\n选择pkz文件进行阅读',
         style: TextStyle(),
         textAlign: TextAlign.center,
       ),

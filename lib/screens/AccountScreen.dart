@@ -36,19 +36,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   void initState() {
-    // todo 不必要cancel 随机监听就好了, APP关闭时销毁, 考虑移动到APP里
-    _linkSubscription = linkStream.listen((uri) async {
-      if (uri == null) return;
-      RegExp regExp = RegExp(r"^.*\.pkz$");
-      final matches = regExp.allMatches(uri.toString());
-      if (matches.isNotEmpty) {
-        File file = await toFile(uri.toString());
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              PkzArchiveScreen(pkzPath: file.path),
-        ));
-      }
-    });
+    _linkSubscription = linkSubscript(context);
 
     _loadProperties();
     super.initState();

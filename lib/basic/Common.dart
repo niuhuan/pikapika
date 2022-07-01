@@ -1,6 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
+import '../screens/DownloadOnlyImportScreen.dart';
+import '../screens/PkzArchiveScreen.dart';
 import 'config/TimeOffsetHour.dart';
 
 /// 默认的图片尺寸
@@ -145,7 +152,8 @@ Future<T?> chooseMapDialog<T>(
 
 /// 输入对话框1
 
-var _controller = TextEditingController.fromValue(const TextEditingValue(text: ''));
+var _controller =
+    TextEditingController.fromValue(const TextEditingValue(text: ''));
 
 Future<String?> displayTextInputDialog(BuildContext context,
     {String? title,
@@ -259,7 +267,7 @@ Future<String?> inputString(BuildContext context, String title,
                 Text(title),
                 TextField(
                   controller: _textEditController,
-                  decoration:  InputDecoration(
+                  decoration: InputDecoration(
                     labelText: hint,
                   ),
                 ),
@@ -284,4 +292,27 @@ Future<String?> inputString(BuildContext context, String title,
       );
     },
   );
+}
+
+StreamSubscription<String?> linkSubscript(BuildContext context) {
+  return linkStream.listen((uri) async {
+    if (uri == null) return;
+    if (RegExp(r"^.*\.pkz$").allMatches(uri).isNotEmpty) {
+      File file = await toFile(uri);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              PkzArchiveScreen(pkzPath: file.path),
+        ),
+      );
+    } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(uri).isNotEmpty) {
+      File file = await toFile(uri);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              DownloadOnlyImportScreen(path: file.path),
+        ),
+      );
+    }
+  });
 }

@@ -39,6 +39,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/ExportRename.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
+import 'DownloadOnlyImportScreen.dart';
 
 // 初始化界面
 class InitScreen extends StatefulWidget {
@@ -106,14 +107,21 @@ class _InitScreenState extends State<InitScreen> {
       }
     }
     if (initUrl != null) {
-      RegExp regExp = RegExp(r"^.*\.pkz$");
-      final matches = regExp.allMatches(initUrl!);
-      if (matches.isNotEmpty) {
+      if (RegExp(r"^.*\.pkz$").allMatches(initUrl!).isNotEmpty) {
         File file = await toFile(initUrl!);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
               PkzArchiveScreen(pkzPath: file.path, holdPkz: true),
         ));
+        return;
+      } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(initUrl!).isNotEmpty) {
+        File file = await toFile(initUrl!);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) =>
+                DownloadOnlyImportScreen(path: file.path, holdPkz: true),
+          ),
+        );
         return;
       }
     }
