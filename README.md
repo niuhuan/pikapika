@@ -1,8 +1,8 @@
 PIKAPIKA - 漫画客户端
 ===================
-[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE) 
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases) 
-[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases) 
+[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases)
+[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases)
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 此APP内容存在限制级别内容(例如 露骨/血腥/暴力/吸毒)，18岁以下的用户需在监护人陪同下使用，并请您在遵守当地法律法规。
@@ -49,9 +49,12 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
     - [x] 列表 / 详情 / 无广告下载
 - [x] 下载
     - [x] 导入导出 / 无线共享 / 移动设备与PC设备传输
+    - [x] 导出到加密的归档文件 / 直接观看加密的归档文件
 - [ ] 聊天室
-- [x] 缓存 / 清理
+- [x] 缓存 / 自动清理
 - [x] 设备支持
+    - [x] 移动端
+      - [x] 文件关联
     - [x] 安卓
         - [x] 高刷新频率屏幕适配 (90/120/144... Hz)
         - [x] 安卓10以上随系统进入深色/夜间模式
@@ -59,6 +62,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 ## 其他说明
 
 数据资料存储位置
+
 - ios/android : 程序自身数据目录中, 删除就会清理
 - windows : 程序同一目录中data文件夹下
 - macos : ~/Library/Application\ Support/pikapika
