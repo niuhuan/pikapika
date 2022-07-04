@@ -104,14 +104,17 @@ class _KnightLeaderBoard extends StatefulWidget {
 
 class _KnightLeaderBoardState extends State<_KnightLeaderBoard> {
   Future<List<Knight>> _future = method.leaderboardOfKnight();
+  Key _key = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
     return ContentBuilder(
+      key: _key,
       future: _future,
       onRefresh: () async {
         setState(() {
           _future = method.leaderboardOfKnight();
+          _key = UniqueKey();
         });
       },
       successBuilder: (

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -23,8 +25,10 @@ import 'components/RightClickPop.dart';
 // 漫画详情
 class ComicInfoScreen extends StatefulWidget {
   final String comicId;
+  final bool holdPkz;
 
-  const ComicInfoScreen({Key? key, required this.comicId}) : super(key: key);
+  const ComicInfoScreen({Key? key, required this.comicId, this.holdPkz = false})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicInfoScreenState();
@@ -36,6 +40,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   late Key _comicFutureKey = UniqueKey();
   late Future<ViewLog?> _viewFuture = _loadViewLog();
   late Future<List<Ep>> _epListFuture = _loadEps();
+  StreamSubscription<String?>? _linkSubscription;
 
   Future<ComicInfo> _loadComic() async {
     return await method.comicInfo(widget.comicId);
@@ -70,13 +75,22 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   }
 
   @override
+  void initState() {
+    if (widget.holdPkz) {
+      _linkSubscription = linkSubscript(context);
+    }
+    super.initState();
+  }
+
+  @override
   void dispose() {
+    _linkSubscription?.cancel();
     routeObserver.unsubscribe(this);
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,

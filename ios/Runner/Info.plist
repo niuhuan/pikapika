@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>pika</string>
+			</array>
+		</dict>
+	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -23,35 +32,35 @@
 		</dict>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
-    <array>
-        <dict>
-            <key>UTTypeIdentifier</key>
-            <string>niuhuan.pkz</string>
-            <key>UTTypeConformsTo</key>
-            <array>
-                <string>public.data</string>
-                <string>public.content</string>
-                <string>com.apple.package</string>
-            </array>
-            <key>UTTypeDescription</key>
-            <string>PKZ Archive</string>
-            <key>UTTypeTagSpecification</key>
-            <dict>
-                <key>public.filename-extension</key>
-                <array>
-                    <string>pkz</string>
-                    <string>pki</string>
-                    <string>zip</string>
-                </array>
-                <key>public.mime-type</key>
-                <array>
-                 <string>text/vnd.niuhuan.pkz</string>
-                 <string>text/vnd.niuhuan.pki</string>
-                 <string>text/vnd.niuhuan.zip</string>
-                </array>
-            </dict>
-        </dict>
-    </array>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>niuhuan.pkz</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PKZ Archive</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pkz</string>
+					<string>pki</string>
+					<string>zip</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>text/vnd.niuhuan.pkz</string>
+					<string>text/vnd.niuhuan.pki</string>
+					<string>text/vnd.niuhuan.zip</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

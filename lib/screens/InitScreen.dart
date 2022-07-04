@@ -33,6 +33,7 @@ import 'package:pikapika/basic/config/UsingRightClickPop.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
+import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
@@ -107,7 +108,14 @@ class _InitScreenState extends State<InitScreen> {
       }
     }
     if (initUrl != null) {
-      if (RegExp(r"^.*\.pkz$").allMatches(initUrl!).isNotEmpty) {
+      if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).isNotEmpty) {
+        String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).first.group(1)!;
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              ComicInfoScreen(comicId: comicId, holdPkz: true),
+        ));
+        return;
+      } else if (RegExp(r"^.*\.pkz$").allMatches(initUrl!).isNotEmpty) {
         File file = await toFile(initUrl!);
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>

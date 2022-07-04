@@ -53,6 +53,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="pika" />
+
                 <data
                         android:mimeType="*/*"
                         android:pathPattern=".*\\.pkz"

@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
+import '../screens/ComicInfoScreen.dart';
 import '../screens/DownloadOnlyImportScreen.dart';
 import '../screens/PkzArchiveScreen.dart';
 import 'config/TimeOffsetHour.dart';
@@ -297,7 +298,17 @@ Future<String?> inputString(BuildContext context, String title,
 StreamSubscription<String?> linkSubscript(BuildContext context) {
   return linkStream.listen((uri) async {
     if (uri == null) return;
-    if (RegExp(r"^.*\.pkz$").allMatches(uri).isNotEmpty) {
+    if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(uri).isNotEmpty) {
+      String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$")
+          .allMatches(uri)
+          .first
+          .group(1)!;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => ComicInfoScreen(comicId: comicId),
+        ),
+      );
+    } else if (RegExp(r"^.*\.pkz$").allMatches(uri).isNotEmpty) {
       File file = await toFile(uri);
       Navigator.of(context).push(
         MaterialPageRoute(

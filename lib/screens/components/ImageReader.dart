@@ -387,6 +387,15 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                       ],
                     ),
                   ),
+            widget.struct.fullScreen
+                ? Container()
+                : Container(
+                    color: const Color(0x88000000),
+                    child: SafeArea(
+                      top: false,
+                      child: Container(),
+                    ),
+                  ),
           ],
         );
       case ReaderSliderPosition.RIGHT:
@@ -1579,7 +1588,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
         if (item.pkzFile != null) {
           return PhotoViewGalleryPageOptions(
             imageProvider:
-            PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path),
+                PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path),
             errorBuilder: (b, e, s) {
               print("$e,$s");
               return LayoutBuilder(
