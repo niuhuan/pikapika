@@ -5,18 +5,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:uri_to_file/uri_to_file.dart';
 
-import '../basic/Navigator.dart';
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
-import 'PkzArchiveScreen.dart';
 import 'ThemeScreen.dart';
 import 'components/ContentLoading.dart';
 
@@ -186,6 +183,7 @@ class _AccountScreenState extends State<AccountScreen> {
     });
     try {
       await method.login();
+      await reloadIsPro();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const AppScreen()),

@@ -15,23 +15,12 @@ late String _version;
 String? _latestVersion;
 String? _latestVersionInfo;
 
-const _propertyName = "checkVersionPeriod";
-late int _period = -1;
-
 Future initVersion() async {
   // 当前版本
   try {
     _version = (await rootBundle.loadString(_versionAssets)).trim();
   } catch (e) {
     _version = "dirty";
-  }
-  // 检查周期
-  _period = int.parse(await method.loadProperty(_propertyName, "0"));
-  if (_period > 0) {
-    if (DateTime.now().millisecondsSinceEpoch > _period) {
-      await method.saveProperty(_propertyName, "0");
-      _period = 0;
-    }
   }
 }
 
@@ -50,10 +39,6 @@ String? latestVersionInfo() {
 }
 
 Future autoCheckNewVersion() {
-  if (_period != 0) {
-    // -1 不检查, >0 未到检查时间
-    return Future.value();
-  }
   return _versionCheck();
 }
 
@@ -85,76 +70,4 @@ Future _versionCheck() async {
     }
   } // else dirtyVersion
   versionEvent.broadcast();
-}
-
-String _periodText() {
-  if (_period < 0) {
-    return "自动检查更新已关闭";
-  }
-  if (_period == 0) {
-    return "自动检查更新已开启";
-  }
-  return "下次检查时间 : " +
-      formatDateTimeToDateTime(
-        DateTime.fromMillisecondsSinceEpoch(_period),
-      );
-}
-
-Future _choosePeriod(BuildContext context) async {
-  var result = await chooseListDialog(
-    context,
-    "自动检查更新",
-    ["开启", "一周后", "一个月后", "一年后", "关闭"],
-    tips: "重启后红点会消失",
-  );
-  switch (result) {
-    case "开启":
-      await method.saveProperty(_propertyName, "0");
-      _period = 0;
-      break;
-    case "一周后":
-      var time = DateTime.now().millisecondsSinceEpoch + (1000 * 3600 * 24 * 7);
-      await method.saveProperty(_propertyName, "$time");
-      _period = time;
-      break;
-    case "一个月后":
-      var time =
-          DateTime.now().millisecondsSinceEpoch + (1000 * 3600 * 24 * 30);
-      await method.saveProperty(_propertyName, "$time");
-      _period = time;
-      break;
-    case "一年后":
-      var time =
-          DateTime.now().millisecondsSinceEpoch + (1000 * 3600 * 24 * 365);
-      await method.saveProperty(_propertyName, "$time");
-      _period = time;
-      break;
-    case "关闭":
-      await method.saveProperty(_propertyName, "-1");
-      _period = -1;
-      break;
-  }
-}
-
-Widget autoUpdateCheckSetting() {
-  return StatefulBuilder(
-    builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
-        title: const Text("自动检查更新"),
-        subtitle: Text(_periodText()),
-        onTap: () async {
-          await _choosePeriod(context);
-          setState(() {});
-        },
-      );
-    },
-  );
-}
-
-String formatDateTimeToDateTime(DateTime c) {
-  try {
-    return "${add0(c.year, 4)}-${add0(c.month, 2)}-${add0(c.day, 2)} ${add0(c.hour, 2)}:${add0(c.minute, 2)}";
-  } catch (e) {
-    return "-";
-  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../Common.dart';
 import '../Method.dart';
+import 'IsPro.dart';
 
 const _propertyName = "exportRename";
 late bool _exportRename;
@@ -29,9 +30,18 @@ Widget exportRenameSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("导出时进行重命名"),
+        title: Text(
+          "导出时进行重命名" + (!isPro ? "(发电)" : ""),
+          style: TextStyle(
+            color: !isPro ? Colors.grey : null,
+          ),
+        ),
         subtitle: Text(_exportRename ? "是" : "否"),
         onTap: () async {
+          if (!isPro) {
+            defaultToast(context, "请先发电再使用");
+            return;
+          }
           await _chooseExportRename(context);
           setState(() {});
         },

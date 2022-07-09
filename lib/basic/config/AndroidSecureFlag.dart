@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../Common.dart';
 import '../Method.dart';
+import 'IsPro.dart';
 
 const _propertyName = "androidSecureFlag";
 
@@ -37,9 +38,20 @@ Widget androidSecureFlagSetting() {
     return StatefulBuilder(builder:
         (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-          title: const Text("禁止截图/禁止显示在任务视图"),
-          subtitle: Text(_androidSecureFlag ? "是" : "否"),
+          title: Text(
+            "禁止截图/禁止显示在任务视图" + (!isPro ? "(发电)" : ""),
+            style: TextStyle(
+              color: !isPro ? Colors.grey : null,
+            ),
+          ),
+          subtitle: Text(
+            _androidSecureFlag ? "是" : "否",
+          ),
           onTap: () async {
+            if (!isPro) {
+              defaultToast(context, "请先发电再使用");
+              return;
+            }
             await _chooseAndroidSecureFlag(context);
             setState(() {});
           });

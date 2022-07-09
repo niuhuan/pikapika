@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/ComicInfoCard.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
+import '../basic/Entities.dart';
 import 'ComicInfoScreen.dart';
 import 'components/Images.dart';
 
@@ -19,7 +23,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   static const _scrollPhysics = AlwaysScrollableScrollPhysics(); // 即使不足一页仍可滚动
 
   final _scrollController = ScrollController();
-  final _comicList = <ViewLogWrapEntity>[];
+  final _comicList = <ViewLog>[];
 
   var _isLoading = false; // 是否加载中
   var _scrollOvered = false; // 滚动到最后
@@ -70,8 +74,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
       if (page.isEmpty) {
         _scrollOvered = true;
       } else {
-        _comicList.addAll(page.map((e) =>
-            ViewLogWrapEntity(e.id, e.title, e.thumbFileServer, e.thumbPath)));
+        _comicList.addAll(page);
       }
       _offset += _pageSize;
     } finally {
@@ -106,25 +109,37 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var entries = _comicList.map((e) {
+      return InkWell(
+        onTap: () {
+          _chooseComic(e.id);
+        },
+        onLongPress: () {
+          _clearOnce(e.id);
+        },
+        child: ViewInfoCard(
+          fileServer: e.thumbFileServer,
+          author: e.author,
+          categories: _decodeCate(e.categories),
+          path: e.thumbPath,
+          title: e.title,
+        ),
+      );
+    });
+
     final screen = NotificationListener(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('浏览记录'),
           actions: [
-            IconButton(onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
+            IconButton(
+                onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
           ],
         ),
         body: ListView(
           physics: _scrollPhysics,
           controller: _scrollController,
-          children: [
-            Container(height: 10),
-            ViewLogWrap(
-              onTapComic: _chooseComic,
-              comics: _comicList,
-              onDelete: _clearOnce,
-            ),
-          ],
+          children: entries.toList(),
         ),
       ),
       onNotification: (scrollNotification) {
@@ -151,88 +166,90 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
       ),
     );
   }
+
+  List<String> _decodeCate(String categories) {
+    try {
+      var decode = jsonDecode(categories);
+      if (decode is List) {
+        return List.of(decode).cast();
+      }
+      return [decode];
+    } catch (e) {
+      return [categories];
+    }
+  }
 }
 
-class ViewLogWrap extends StatelessWidget {
-  final Function(String) onTapComic;
-  final List<ViewLogWrapEntity> comics;
-  final Function(String id) onDelete;
+class ViewInfoCard extends StatelessWidget {
+  final String fileServer;
+  final String path;
+  final String title;
+  final String author;
+  final List<String> categories;
 
-  const ViewLogWrap({
+  const ViewInfoCard({
     Key? key,
-    required this.onTapComic,
-    required this.comics,
-    required this.onDelete,
+    required this.fileServer,
+    required this.path,
+    required this.title,
+    required this.author,
+    required this.categories,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var min = size.width < size.height ? size.width : size.height;
-    var width = (min - 45) / 4;
-
-    var entries = comics.map((e) {
-      return InkWell(
-        key: e.key,
-        onTap: () {
-          onTapComic(e.id);
-        },
-        onLongPress: () {
-          onDelete(e.id);
-        },
-        child: Card(
-          child: SizedBox(
-            width: width,
-            child: Column(
+    var theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: theme.dividerColor,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(right: 10),
+            child: RemoteImage(
+              fileServer: fileServer,
+              path: path,
+              width: imageWidth,
+              height: imageHeight,
+            ),
+          ),
+          Expanded(
+            child: Row(
               children: [
-                LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  return RemoteImage(
-                      width: constraints.maxWidth,
-                      fileServer: e.fileServer,
-                      path: e.path);
-                }),
-                Text(
-                  e.title + '\n',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(height: 1.4),
-                  strutStyle: const StrutStyle(height: 1.4),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: titleStyle),
+                      Container(height: 5),
+                      Text(author, style: authorStyle),
+                      Container(height: 5),
+                      Text.rich(
+                        TextSpan(text: "分类 : ${categories.join(' ')}"),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .color!
+                              .withAlpha(0xCC),
+                        ),
+                      ),
+                      Container(height: 5),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ),
-      );
-    });
-
-    Map<int, List<Widget>> map = {};
-    for (var i = 0; i < entries.length; i++) {
-      late List<Widget> list;
-      if (i % 4 == 0) {
-        list = [];
-        map[i ~/ 4] = list;
-      } else {
-        list = map[i ~/ 4]!;
-      }
-      list.add(entries.elementAt(i));
-    }
-
-    return Column(
-      children: map.values.map((e) => Wrap(
-            alignment: WrapAlignment.spaceAround,
-            children: e,
-          )).toList(),
+        ],
+      ),
     );
   }
-}
-
-class ViewLogWrapEntity {
-  final Key key = UniqueKey();
-  final String id;
-  final String title;
-  final String fileServer;
-  final String path;
-
-  ViewLogWrapEntity(this.id, this.title, this.fileServer, this.path);
 }

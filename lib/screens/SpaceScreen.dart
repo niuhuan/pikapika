@@ -5,10 +5,12 @@ import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/AccountScreen.dart';
 import 'package:pikapika/screens/DownloadListScreen.dart';
 import 'package:pikapika/screens/FavouritePaperScreen.dart';
+import 'package:pikapika/screens/ProScreen.dart';
 import 'package:pikapika/screens/ThemeScreen.dart';
 import 'package:pikapika/screens/ViewLogsScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
+import '../basic/config/IsPro.dart';
 import '../basic/config/Themes.dart';
 import 'SettingsScreen.dart';
 import 'components/Badge.dart';
@@ -25,17 +27,19 @@ class SpaceScreen extends StatefulWidget {
 class _SpaceScreenState extends State<SpaceScreen> {
   @override
   void initState() {
-    versionEvent.subscribe(_onVersion);
+    versionEvent.subscribe(_onEvent);
+    proEvent.subscribe(_onEvent);
     super.initState();
   }
 
   @override
   void dispose() {
-    versionEvent.unsubscribe(_onVersion);
+    versionEvent.unsubscribe(_onEvent);
+    proEvent.unsubscribe(_onEvent);
     super.dispose();
   }
 
-  void _onVersion(dynamic a) {
+  void _onEvent(dynamic a) {
     setState(() {});
   }
 
@@ -71,6 +75,17 @@ class _SpaceScreenState extends State<SpaceScreen> {
             icon: Badged(
               child: const Icon(Icons.info_outline),
               badge: latestVersion() == null ? null : "1",
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return const ProScreen();
+              }));
+            },
+            icon: Icon(
+              isPro ? Icons.offline_bolt : Icons.offline_bolt_outlined,
             ),
           ),
           IconButton(

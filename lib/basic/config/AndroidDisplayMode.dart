@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
 import '../Common.dart';
+import 'IsPro.dart';
 
 const _propertyName = "androidDisplayMode";
 List<String> _modes = [];
@@ -27,7 +28,11 @@ Future<void> _chooseAndroidDisplayMode(BuildContext context) async {
   if (Platform.isAndroid) {
     List<String> list = [""];
     list.addAll(_modes);
-    String? result = await chooseListDialog<String>(context, "安卓屏幕刷新率", list);
+    String? result = await chooseListDialog<String>(
+      context,
+      "安卓屏幕刷新率 \n(省电模式下不会高刷)",
+      list,
+    );
     if (result != null) {
       await method.saveProperty(_propertyName, result);
       _androidDisplayMode = result;
@@ -41,9 +46,18 @@ Widget androidDisplayModeSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: const Text("屏幕刷新率(安卓)"),
+          title: Text(
+            "屏幕刷新率(安卓)" + (!isPro ? "(发电)" : ""),
+            style: TextStyle(
+              color: !isPro ? Colors.grey : null,
+            ),
+          ),
           subtitle: Text(_androidDisplayMode),
           onTap: () async {
+            if (!isPro) {
+              defaultToast(context, "请先发电再使用");
+              return;
+            }
             await _chooseAndroidDisplayMode(context);
             setState(() {});
           },

@@ -87,20 +87,24 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
         });
       }
     }
-    // 如果之前下载过就将EP加入下载
-    // 如果之前没有下载过就创建下载
-    if (_task != null) {
-      await method.addDownload(create, list);
-    } else {
-      await method.createDownload(create, list);
+    try {
+      // 如果之前下载过就将EP加入下载
+      // 如果之前没有下载过就创建下载
+      if (_task != null) {
+        await method.addDownload(create, list);
+      } else {
+        await method.createDownload(create, list);
+      }
+      // 退出
+      defaultToast(context, "已经加入下载列表");
+      Navigator.pop(context);
+    } catch (e, s) {
+      defaultToast(context, e.toString());
     }
-    // 退出
-    defaultToast(context, "已经加入下载列表");
-    Navigator.pop(context);
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,

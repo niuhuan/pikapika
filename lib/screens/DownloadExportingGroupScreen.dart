@@ -5,6 +5,7 @@ import '../basic/Channels.dart';
 import '../basic/Cross.dart';
 import '../basic/Method.dart';
 import '../basic/config/ExportRename.dart';
+import '../basic/config/IsPro.dart';
 import 'components/ContentLoading.dart';
 
 class DownloadExportingGroupScreen extends StatefulWidget {
@@ -51,17 +52,31 @@ class _DownloadExportingGroupScreenState
       return Center(child: Text("导出失败\n$e"));
     }
     if (exported) {
-      return Center(child: Text("导出成功"));
+      return const Center(child: Text("导出成功"));
     }
-    return Center(
-      child: MaterialButton(
-        onPressed: _export,
-        child: const Text("选择导出位置"),
-      ),
+    return ListView(
+      children: [
+        Container(height: 20),
+        MaterialButton(
+          onPressed: _exportPkz,
+          child: const Text("导出PKZ"),
+        ),
+        Container(height: 20),
+        MaterialButton(
+          onPressed: _exportPkis,
+          child: Text("分别导出PKI" + (!isPro ? "\n(发电后使用)" : "")),
+        ),
+        Container(height: 20),
+        MaterialButton(
+          onPressed: _exportZips,
+          child: Text("分别导出ZIP" + (!isPro ? "\n(发电后使用)" : "")),
+        ),
+        Container(height: 20),
+      ],
     );
   }
 
-  _export() async {
+  _exportPkz() async {
     late String? path;
     try {
       path = await chooseFolder(context);
@@ -92,6 +107,74 @@ class _DownloadExportingGroupScreenState
           widget.idList,
           path,
           name,
+        );
+        exported = true;
+      } catch (err) {
+        e = err;
+        exportFail = true;
+      } finally {
+        setState(() {
+          exporting = false;
+        });
+      }
+    }
+  }
+
+  _exportPkis() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    late String? path;
+    try {
+      path = await chooseFolder(context);
+    } catch (e) {
+      defaultToast(context, "$e");
+      return;
+    }
+    print("path $path");
+    if (path != null) {
+      try {
+        setState(() {
+          exporting = true;
+        });
+        await method.exportAnyComicDownloadsToPki(
+          widget.idList,
+          path,
+        );
+        exported = true;
+      } catch (err) {
+        e = err;
+        exportFail = true;
+      } finally {
+        setState(() {
+          exporting = false;
+        });
+      }
+    }
+  }
+
+  _exportZips() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    late String? path;
+    try {
+      path = await chooseFolder(context);
+    } catch (e) {
+      defaultToast(context, "$e");
+      return;
+    }
+    print("path $path");
+    if (path != null) {
+      try {
+        setState(() {
+          exporting = true;
+        });
+        await method.exportAnyComicDownloadsToZip(
+          widget.idList,
+          path,
         );
         exported = true;
       } catch (err) {

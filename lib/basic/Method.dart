@@ -548,7 +548,8 @@ class Method {
   }
 
   /// 导出下载的漫画到pki
-  Future<dynamic> exportComicDownloadToPki(String comicId, String dir, String name) {
+  Future<dynamic> exportComicDownloadToPki(
+      String comicId, String dir, String name) {
     return _flatInvoke("exportComicDownloadToPki", {
       "comicId": comicId,
       "dir": dir,
@@ -580,6 +581,35 @@ class Method {
       "dir": dir,
       "name": name,
     });
+  }
+
+  /// 导出zip
+  Future<dynamic> exportAnyComicDownloadsToZip(
+    List<String> comicIds,
+    String dir,
+  ) {
+    return _flatInvoke("exportAnyComicDownloadsToZip", {
+      "comicIds": comicIds,
+      "dir": dir,
+    });
+  }
+
+  /// 导出pki
+  Future<dynamic> exportAnyComicDownloadsToPki(
+    List<String> comicIds,
+    String dir,
+  ) {
+    return _flatInvoke("exportAnyComicDownloadsToPki", {
+      "comicIds": comicIds,
+      "dir": dir,
+    });
+  }
+
+  /// 导入文件夹所有的文件
+  Future<dynamic> importComicDownloadDir(
+    String dir,
+  ) {
+    return _flatInvoke("importComicDownloadDir", dir);
   }
 
   /// 使用网络将下载传输到其他设备
@@ -832,5 +862,17 @@ class Method {
     return List.of(jsonDecode(await _flatInvoke("leaderboardOfKnight", "")))
         .map((e) => Knight.fromJson(e))
         .toList();
+  }
+
+  Future<IsPro> isPro() async {
+    return IsPro.fromJson(jsonDecode(await _flatInvoke("isPro", "")));
+  }
+
+  Future reloadPro() {
+    return _flatInvoke("reloadPro", "");
+  }
+
+  Future inputCdKey(String cdKey) {
+    return _flatInvoke("inputCdKey", cdKey);
   }
 }

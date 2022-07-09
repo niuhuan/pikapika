@@ -1012,3 +1012,13 @@ class PkzComicViewLog {
     return _data;
   }
 }
+
+class IsPro {
+  late bool isPro;
+  late int expire;
+
+  IsPro.fromJson(Map<String, dynamic> json) {
+    this.isPro = json["isPro"];
+    this.expire = json["expire"];
+  }
+}

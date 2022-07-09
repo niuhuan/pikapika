@@ -8,6 +8,8 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 
+import '../basic/Cross.dart';
+import '../basic/config/IsPro.dart';
 import 'PkzArchiveScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/RightClickPop.dart';
@@ -64,6 +66,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
 
     actions.add(_fileImportButton());
     actions.add(_networkImportButton());
+    actions.add(_importDirFilesZipButton());
 
     return Scaffold(
       appBar: AppBar(
@@ -103,7 +106,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             allowedExtensions: ['.pkz', '.zip', '.pki'],
             fileTileSelectMode: FileTileSelectMode.wholeTile,
           );
-        }else{
+        } else {
           var ls = await FilePicker.platform.pickFiles(
             dialogTitle: '选择要导入的文件',
             allowMultiple: false,
@@ -127,9 +130,9 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
               setState(() {
                 _importing = true;
               });
-              if(path.endsWith(".zip")){
+              if (path.endsWith(".zip")) {
                 await method.importComicDownload(path);
-              } else if(path.endsWith(".pki")){
+              } else if (path.endsWith(".pki")) {
                 await method.importComicDownloadPki(path);
               }
               setState(() {
@@ -182,6 +185,45 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
         }
       },
       child: const Text('从其他设备导入'),
+    );
+  }
+
+  Widget _importDirFilesZipButton() {
+    return MaterialButton(
+      height: 80,
+      onPressed: () async {
+        late String? path;
+        try {
+          path = await chooseFolder(context);
+        } catch (e) {
+          defaultToast(context, "$e");
+          return;
+        }
+        if (path != null) {
+          try {
+            setState(() {
+              _importing = true;
+            });
+            await method.importComicDownloadDir(path);
+            setState(() {
+              _importMessage = "导入成功";
+            });
+          } catch (e) {
+            setState(() {
+              _importMessage = "导入失败 $e";
+            });
+          } finally {
+            setState(() {
+              _importing = false;
+            });
+          }
+        }
+      },
+      child: Text(
+        '选择文件夹\n(导入里面所有的zip)' + (!isPro ? "\n(发电后使用)" : ""),
+        style: TextStyle(),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

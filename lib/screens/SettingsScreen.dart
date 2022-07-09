@@ -13,6 +13,7 @@ import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
@@ -113,8 +114,6 @@ class SettingsScreen extends StatelessWidget {
             const Divider(),
             migrate(context),
             const Divider(),
-            autoUpdateCheckSetting(),
-            const Divider(),
           ],
         ),
       );
@@ -122,9 +121,18 @@ class SettingsScreen extends StatelessWidget {
   Widget migrate(BuildContext context) {
     if (Platform.isAndroid) {
       return ListTile(
-        title: const Text("文件迁移"),
-        subtitle: const Text("更换您的数据文件夹"),
+        title: Text(
+          "文件迁移" + (!isPro ? "(发电)" : ""),
+          style: TextStyle(
+            color: !isPro ? Colors.grey : null,
+          ),
+        ),
+        subtitle: const Text("更换您的数据文件夹到内存卡"),
         onTap: () async {
+          if (!isPro) {
+            defaultToast(context, "请先发电再使用");
+            return;
+          }
           var f =
               await confirmDialog(context, "文件迁移", "此功能菜单保存后, 需要重启程序, 您确认吗");
           if (f) {

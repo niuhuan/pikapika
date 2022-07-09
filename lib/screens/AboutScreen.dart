@@ -98,8 +98,6 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
           ),
           const Divider(),
-          autoUpdateCheckSetting(),
-          const Divider(),
           Container(
             padding: const EdgeInsets.all(20),
             child: const SelectableText(

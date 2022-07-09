@@ -38,6 +38,7 @@ import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/ExportRename.dart';
+import '../basic/config/IsPro.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
 import 'DownloadOnlyImportScreen.dart';
@@ -94,6 +95,7 @@ class _InitScreenState extends State<InitScreen> {
     await initVersion();
     await initUsingRightClickPop();
     await initAuthentication();
+    await reloadIsPro();
     autoCheckNewVersion();
 
     String? initUrl;

@@ -253,6 +253,8 @@ class StreamComicPager extends StatefulWidget {
 }
 
 class _StreamComicPagerState extends State<StreamComicPager> {
+  final TextEditingController _textEditController =
+  TextEditingController(text: '');
   final _scrollController = ScrollController();
   late String _currentSort = SORT_DEFAULT;
   late int _currentPage = 1;
@@ -263,6 +265,12 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   late bool _error = false;
 
   // late Future<dynamic> _pageFuture;
+
+  _onSetOffset(int i) {
+    _list.clear();
+    _currentPage = i;
+    _load();
+  }
 
   void _onScroll() {
     if (_over || _error || _loading) {
@@ -317,6 +325,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _textEditController.dispose();
     super.dispose();
   }
 
@@ -367,7 +376,60 @@ class _StreamComicPagerState extends State<StreamComicPager> {
             ),
             Row(
               children: [
-                Text("已经加载 ${_currentPage - 1} / $_maxPage 页"),
+                InkWell(
+                  onTap: () {
+                    _textEditController.clear();
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Card(
+                            child: TextField(
+                              controller: _textEditController,
+                              decoration: const InputDecoration(
+                                labelText: "请输入页数：",
+                              ),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('取消'),
+                            ),
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                var text = _textEditController.text;
+                                if (text.isEmpty || text.length > 5) {
+                                  return;
+                                }
+                                var num = int.parse(text);
+                                if (num == 0 || num > _maxPage) {
+                                  return;
+                                }
+                                _currentPage = num;
+                                _onSetOffset(num);
+                              },
+                              child: const Text('确定'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Text("已经加载 ${_currentPage - 1} / $_maxPage 页"),
+                    ],
+                  ),
+                ),
+
               ],
             ),
           ],
