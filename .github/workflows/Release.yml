@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  go_version: '1.18'
+  go_version: '1.17'
   flutter_channel: 'stable'
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
