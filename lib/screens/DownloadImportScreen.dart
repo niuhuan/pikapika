@@ -220,7 +220,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
         }
       },
       child: Text(
-        '选择文件夹\n(导入里面所有的zip)' + (!isPro ? "\n(发电后使用)" : ""),
+        '选择文件夹\n(导入里面所有的zip/pki)' + (!isPro ? "\n(发电后使用)" : ""),
         style: TextStyle(),
         textAlign: TextAlign.center,
       ),

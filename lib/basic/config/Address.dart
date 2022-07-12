@@ -5,6 +5,7 @@
 // addr = "172.67.208.169:443"
 
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/Common.dart';
 
 import '../Method.dart';
 
@@ -57,6 +58,41 @@ Widget switchAddressSetting() {
         onTap: () async {
           await chooseAddress(context);
           setState(() {});
+        },
+      );
+    },
+  );
+}
+
+Widget reloadSwitchAddressSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return ListTile(
+        title: const Text("==== 分流 ===="),
+        onTap: () async {
+          String? choose = await chooseListDialog(context, "==== 分流 ====", [
+            "从服务器获取最新的分流地址",
+            "重制分流为默认值",
+          ]);
+          if (choose != null) {
+            if (choose == "从服务器获取最新的分流地址") {
+              try {
+                await method.reloadSwitchAddress();
+                defaultToast(context, "分流2/3已同步");
+              } catch (e, s) {
+                print("$e\$s");
+                defaultToast(context, "分流同步失败");
+              }
+            } else if (choose == "重制分流为默认值") {
+              try {
+                await method.resetSwitchAddress();
+                defaultToast(context, "分流2/3已重制为默认值");
+              } catch (e, s) {
+                print("$e\$s");
+                defaultToast(context, "分流重制失败");
+              }
+            }
+          }
         },
       );
     },

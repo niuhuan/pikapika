@@ -19,6 +19,7 @@ class GamesScreen extends StatefulWidget {
 class _GamesScreenState extends State<GamesScreen> {
   int _currentPage = 1;
   late Future<GamePage> _future = _loadPage();
+  late Key _key = UniqueKey();
 
   Future<GamePage> _loadPage() {
     return method.games(_currentPage);
@@ -28,11 +29,12 @@ class _GamesScreenState extends State<GamesScreen> {
     setState(() {
       _currentPage = number;
       _future = _loadPage();
+      _key = UniqueKey();
     });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -46,6 +48,7 @@ class _GamesScreenState extends State<GamesScreen> {
         title: const Text('游戏'),
       ),
       body: ContentBuilder(
+        key: _key,
         future: _future,
         onRefresh: _loadPage,
         successBuilder:

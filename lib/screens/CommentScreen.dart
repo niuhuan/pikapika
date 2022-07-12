@@ -40,6 +40,7 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   late int _currentPage = 1;
   late Future<_CommentChildPage> _future = _loadPage();
+  late Key _key = UniqueKey();
 
   Future<_CommentChildPage> _loadPage() async {
     switch (widget.mainType) {
@@ -60,6 +61,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   Widget _buildChildrenPager() {
     return ContentBuilder(
+      key: _key,
       future: _future,
       onRefresh: _loadPage,
       successBuilder:
@@ -78,7 +80,7 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -126,6 +128,7 @@ class _CommentScreenState extends State<CommentScreen> {
             }
             setState(() {
               _future = _loadPage();
+              _key = UniqueKey();
               widget.comment.commentsCount++;
             });
           } catch (e) {
@@ -163,6 +166,7 @@ class _CommentScreenState extends State<CommentScreen> {
           setState(() {
             _currentPage = page.page - 1;
             _future = _loadPage();
+            _key = UniqueKey();
           });
         },
         child: Container(
@@ -183,6 +187,7 @@ class _CommentScreenState extends State<CommentScreen> {
           setState(() {
             _currentPage = page.page + 1;
             _future = _loadPage();
+            _key = UniqueKey();
           });
         },
         child: Container(

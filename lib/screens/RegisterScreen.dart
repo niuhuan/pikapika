@@ -131,13 +131,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         children: [
           const Divider(),
           ListTile(
-            title: const Text("账号 (不一定是邮箱/登录使用)"),
+            title: const Text("账号 (小写字母+数字/登录使用)"),
             subtitle: Text(_email == "" ? "未设置" : _email),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _email,
-                title: '账号',
+                title: '账号 (小写字母+数字/登录使用)',
                 hint: '请输入账号',
               );
               if (input != null) {
@@ -148,13 +148,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("密码 (8位以上)"),
+            title: const Text("密码 (大小写字母+数字/8位以上)"),
             subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _password,
-                title: '密码',
+                title: '密码 (大小写字母+数字/8位以上)',
                 hint: '请输入密码',
                 isPasswd: true,
               );
@@ -166,7 +166,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("昵称 (2-50字)"),
+            title: const Text("昵称 (可使用中文/2-50字)"),
             subtitle: Text(_name == "" ? "未设置" : _name),
             onTap: () async {
               String? input = await displayTextInputDialog(

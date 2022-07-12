@@ -875,4 +875,13 @@ class Method {
   Future inputCdKey(String cdKey) {
     return _flatInvoke("inputCdKey", cdKey);
   }
+
+  Future reloadSwitchAddress() {
+    return _flatInvoke("reloadSwitchAddress", "");
+  }
+
+  Future resetSwitchAddress() {
+    return _flatInvoke("resetSwitchAddress", "");
+  }
+
 }

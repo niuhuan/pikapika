@@ -14,6 +14,7 @@ class NetworkSetting extends StatelessWidget {
         switchAddressSetting(),
         imageSwitchAddressSetting(),
         proxySetting(),
+        reloadSwitchAddressSetting(),
       ],
     );
   }

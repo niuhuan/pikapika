@@ -7,12 +7,12 @@ class ContentBuilder<T> extends StatelessWidget {
   final Future<dynamic> Function() onRefresh;
   final AsyncWidgetBuilder<T> successBuilder;
 
-  const ContentBuilder(
-      {Key? key,
-      required this.future,
-      required this.onRefresh,
-      required this.successBuilder})
-      : super(key: key);
+  const ContentBuilder({
+    required Key? key,
+    required this.future,
+    required this.onRefresh,
+    required this.successBuilder,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

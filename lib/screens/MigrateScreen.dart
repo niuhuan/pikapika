@@ -17,6 +17,7 @@ class MigrateScreen extends StatefulWidget {
 }
 
 class _MigrateScreenState extends State<MigrateScreen> {
+  late final Key _key = UniqueKey();
   late final Future _future = _load();
   late String _current;
   late List<String> paths;
@@ -47,6 +48,7 @@ class _MigrateScreenState extends State<MigrateScreen> {
         title: const Text('数据迁移'),
       ),
       body: ContentBuilder(
+        key: _key,
         future: _future,
         onRefresh: () async {},
         successBuilder:

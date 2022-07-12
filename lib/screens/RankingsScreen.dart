@@ -81,17 +81,9 @@ class _Leaderboard extends StatefulWidget {
 }
 
 class _LeaderboardState extends State<_Leaderboard> {
-  late Future<List<ComicSimple>> _future = method.leaderboard(widget.type);
-
-  Future<void> _reload() async {
-    setState(() {
-      _future = method.leaderboard(widget.type);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ComicListBuilder(_future, _reload);
+    return ComicListBuilder(() => method.leaderboard(widget.type));
   }
 }
 
@@ -205,7 +197,7 @@ class _KnightLeaderBoardState extends State<_KnightLeaderBoard> {
       onTap: () {
         navPushOrReplace(
           context,
-              (context) => ComicsScreen(
+          (context) => ComicsScreen(
             creatorId: e.id,
             creatorName: e.name,
           ),

@@ -57,6 +57,16 @@ class _ProScreenState extends State<ProScreen> {
             ),
           ),
           const Divider(),
+          const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              "发电小功能 \n"
+              "  多线程下载\n"
+              "  批量导入导出\n"
+              "  跳页",
+            ),
+          ),
+          const Divider(),
           ListTile(
             title: const Text("发电详情"),
             subtitle: Text(

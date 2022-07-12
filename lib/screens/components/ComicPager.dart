@@ -8,6 +8,8 @@ import 'package:pikapika/basic/enum/Sort.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/FitButton.dart';
+import '../../basic/Common.dart';
+import '../../basic/config/IsPro.dart';
 import 'ContentLoading.dart';
 
 // 漫画列页
@@ -180,6 +182,10 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                             if (num == 0 || num > comicsPage.pages) {
                               return;
                             }
+                            if (num > 50 && !isPro) {
+                              defaultToast(context, "发电以后才能看50页以后的内容");
+                              return;
+                            }
                             _currentPage = num;
                             _load();
                           },
@@ -212,6 +218,10 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                   minWidth: 0,
                   onPressed: () {
                     if (comicsPage.page < comicsPage.pages) {
+                      if (_currentPage >= 50 && !isPro) {
+                        defaultToast(context, "发电以后才能看50页以后的内容");
+                        return;
+                      }
                       _currentPage = comicsPage.page + 1;
                       _load();
                     }
@@ -230,6 +240,10 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
     if (comicsPage.page < comicsPage.pages) {
       return FitButton(
         onPressed: () {
+          if (_currentPage >= 50 && !isPro) {
+            defaultToast(context, "发电以后才能看50页以后的内容");
+            return;
+          }
           _currentPage = comicsPage.page + 1;
           _load();
         },
@@ -254,7 +268,7 @@ class StreamComicPager extends StatefulWidget {
 
 class _StreamComicPagerState extends State<StreamComicPager> {
   final TextEditingController _textEditController =
-  TextEditingController(text: '');
+      TextEditingController(text: '');
   final _scrollController = ScrollController();
   late String _currentSort = SORT_DEFAULT;
   late int _currentPage = 1;
@@ -263,6 +277,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   late bool _loading = false;
   late bool _over = false;
   late bool _error = false;
+  late bool _noPro = false;
 
   // late Future<dynamic> _pageFuture;
 
@@ -273,7 +288,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   }
 
   void _onScroll() {
-    if (_over || _error || _loading) {
+    if (_over || _error || _loading || _noPro) {
       return;
     }
     if (_scrollController.offset + MediaQuery.of(context).size.height / 2 <
@@ -302,6 +317,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
         _maxPage = page.pages;
         _list.addAll(page.docs);
         _over = page.page >= page.pages;
+        _noPro = _currentPage > 50 && !isPro;
       });
     } catch (e, s) {
       _error = true;
@@ -391,7 +407,8 @@ class _StreamComicPagerState extends State<StreamComicPager> {
                               ),
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'\d+')),
                               ],
                             ),
                           ),
@@ -413,6 +430,10 @@ class _StreamComicPagerState extends State<StreamComicPager> {
                                 if (num == 0 || num > _maxPage) {
                                   return;
                                 }
+                                if (_currentPage >= 50 && !isPro) {
+                                  defaultToast(context, "发电以后才能看50页以后的内容");
+                                  return;
+                                }
                                 _currentPage = num;
                                 _onSetOffset(num);
                               },
@@ -429,7 +450,6 @@ class _StreamComicPagerState extends State<StreamComicPager> {
                     ],
                   ),
                 ),
-
               ],
             ),
           ],
@@ -439,6 +459,9 @@ class _StreamComicPagerState extends State<StreamComicPager> {
   }
 
   Widget? _buildLoadingCell() {
+    if (_noPro) {
+      return FitButton(onPressed: () {}, text: '发电以后才能看50页以后的内容');
+    }
     if (_error) {
       return FitButton(
           onPressed: () {

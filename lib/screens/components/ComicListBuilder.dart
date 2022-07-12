@@ -7,17 +7,18 @@ import 'package:pikapika/screens/components/FitButton.dart';
 import 'ContentBuilder.dart';
 
 class ComicListBuilder extends StatefulWidget {
-  final Future<List<ComicSimple>> future;
-  final Future Function() reload;
+  final Future<List<ComicSimple>> Function() takeList;
 
-  const ComicListBuilder(this.future, this.reload, {Key? key})
-      : super(key: key);
+  const ComicListBuilder(this.takeList, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicListBuilderState();
 }
 
 class _ComicListBuilderState extends State<ComicListBuilder> {
+  late Future<List<ComicSimple>> _future = widget.takeList();
+  late Key _key = UniqueKey();
+
   @override
   void initState() {
     shadowCategoriesEvent.subscribe(_onShadowChange);
@@ -34,19 +35,27 @@ class _ComicListBuilderState extends State<ComicListBuilder> {
     setState(() {});
   }
 
+  Future _reload() async {
+    setState(() {
+      _future = widget.takeList();
+      _key = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ContentBuilder(
-      future: widget.future,
-      onRefresh: widget.reload,
+      key: _key,
+      future: _future,
+      onRefresh: _reload,
       successBuilder:
           (BuildContext context, AsyncSnapshot<List<ComicSimple>> snapshot) {
         return RefreshIndicator(
-          onRefresh: widget.reload,
+          onRefresh: _reload,
           child: ComicList(
             snapshot.data!,
             appendWidget: FitButton(
-              onPressed: widget.reload,
+              onPressed: _reload,
               text: '刷新',
             ),
           ),

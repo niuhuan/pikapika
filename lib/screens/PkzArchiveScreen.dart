@@ -33,6 +33,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
   Map<String, PkzComicViewLog> _logMap = {};
   late String _fileName;
   late Future _future;
+  late Key _key;
   late PkzArchive _info;
   StreamSubscription<String?>? _linkSubscription;
 
@@ -43,6 +44,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
     }
     _fileName = p.basename(widget.pkzPath);
     _future = _load();
+    _key = UniqueKey();
     super.initState();
   }
 
@@ -99,10 +101,12 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
         title: Text(_fileName),
       ),
       body: ContentBuilder(
+        key: _key,
         future: _future,
         onRefresh: () async {
           setState(() {
             _future = _load();
+            _key = UniqueKey();
           });
         },
         successBuilder: (

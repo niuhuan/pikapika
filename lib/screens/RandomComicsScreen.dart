@@ -16,13 +16,6 @@ class RandomComicsScreen extends StatefulWidget {
 }
 
 class _RandomComicsScreenState extends State<RandomComicsScreen> {
-  Future<List<ComicSimple>> _future = method.randomComics();
-
-  Future<void> _reload() async {
-    setState(() {
-      _future = method.randomComics();
-    });
-  }
 
   @override
   Widget build(BuildContext context){
@@ -42,7 +35,7 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
           chooseLayoutActionButton(context),
         ],
       ),
-      body: ComicListBuilder(_future, _reload),
+      body: ComicListBuilder(method.randomComics),
     );
   }
 }

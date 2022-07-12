@@ -16,6 +16,7 @@ class ComicCollectionsScreen extends StatefulWidget {
 
 class _ComicCollectionsScreenState extends State<ComicCollectionsScreen> {
   late Future<List<Collection>> _future;
+  late Key _key = UniqueKey();
 
   @override
   void initState() {
@@ -42,10 +43,12 @@ class _ComicCollectionsScreenState extends State<ComicCollectionsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("推荐")),
       body: ContentBuilder(
+        key: _key,
         future: _future,
         onRefresh: () async {
           setState(() {
             _future = method.collections();
+            _key = UniqueKey();
           });
         },
         successBuilder: (
