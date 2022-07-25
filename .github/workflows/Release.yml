@@ -141,6 +141,7 @@ jobs:
         with:
           channel: ${{ env.flutter_channel }}
           flutter-version: ${{ env.flutter_version }}
+          architecture: x64
 
       - name: Check core
         if: steps.check_asset.outputs.skip_build != 'true'
