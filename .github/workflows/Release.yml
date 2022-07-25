@@ -255,10 +255,14 @@ jobs:
           hover build linux-appimage
           mv go/build/outputs/linux-appimage-release/*.AppImage build/build.AppImage
 
-      - name: Build (ios)
+      - name: Append application-identifier (ios)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
         run: |
           /usr/libexec/PlistBuddy -c 'Add :application-identifier string niuhuan.pikapika' ios/Runner/Info.plist
+
+      - name: Build (ios)
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
+        run: |
           sh scripts/build-ipa.sh
 
       - name: Build (android-arm32)
