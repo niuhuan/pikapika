@@ -61,7 +61,7 @@ jobs:
             flutter_version: '2.10.3'
           - target: ios
             host: macos-latest
-            flutter_version: '3.0.4'
+            flutter_version: '3.1.0'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '2.10.5'
@@ -73,13 +73,13 @@ jobs:
             flutter_version: '2.10.5'
           - target: android-arm32
             host: ubuntu-latest
-            flutter_version: '3.0.4'
+            flutter_version: '3.1.0'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.0.4'
+            flutter_version: '3.1.0'
           - target: android-x86_64
             host: ubuntu-latest
-            flutter_version: '3.0.4'
+            flutter_version: '3.1.0'
 
     runs-on: ${{ matrix.config.host }}
 
