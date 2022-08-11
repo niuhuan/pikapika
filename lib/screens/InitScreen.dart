@@ -33,6 +33,7 @@ import 'package:pikapika/basic/config/UsingRightClickPop.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
+import 'package:pikapika/basic/config/WillPopNotice.dart';
 import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
@@ -97,6 +98,7 @@ class _InitScreenState extends State<InitScreen> {
     await initAuthentication();
     await reloadIsPro();
     autoCheckNewVersion();
+    await initWillPopNotice();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {

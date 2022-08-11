@@ -213,6 +213,7 @@ class ViewInfoCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(right: 10),
             child: RemoteImage(
+              key: Key("$fileServer:$path"),
               fileServer: fileServer,
               path: path,
               width: imageWidth,

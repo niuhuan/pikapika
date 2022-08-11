@@ -32,6 +32,7 @@ import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import '../basic/config/Authentication.dart';
 import '../basic/config/UsingRightClickPop.dart';
+import '../basic/config/WillPopNotice.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
@@ -88,6 +89,7 @@ class SettingsScreen extends StatelessWidget {
             noAnimationSetting(),
             const Divider(),
             fullScreenUISetting(),
+            willPopNoticeSetting(),
             timeZoneSetting(),
             const Divider(),
             autoCleanSecSetting(),
