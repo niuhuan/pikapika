@@ -25,6 +25,7 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/ShowCommentAtDownload.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
@@ -99,6 +100,7 @@ class _InitScreenState extends State<InitScreen> {
     await reloadIsPro();
     autoCheckNewVersion();
     await initWillPopNotice();
+    await initShowCommentAtDownload();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {

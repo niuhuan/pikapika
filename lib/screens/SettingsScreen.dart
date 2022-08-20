@@ -22,6 +22,7 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/ShowCommentAtDownload.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/Version.dart';
@@ -110,6 +111,7 @@ class SettingsScreen extends StatelessWidget {
             chooserRootSetting(),
             downloadThreadCountSetting(),
             downloadAndExportPathSetting(),
+            showCommentAtDownloadSetting(),
             exportRenameSetting(),
             fontSetting(),
             usingRightClickPopSetting(),

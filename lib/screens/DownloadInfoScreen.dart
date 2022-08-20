@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Navigator.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/ShowCommentAtDownload.dart';
 import 'ComicInfoScreen.dart';
 import 'DownloadExportToFileScreen.dart';
 import 'DownloadReaderScreen.dart';
 import 'components/ComicDescriptionCard.dart';
 import 'components/ComicTagsCard.dart';
+import 'components/CommentList.dart';
+import 'components/CommentMainType.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/Recommendation.dart';
 
 // 下载详情
 class DownloadInfoScreen extends StatefulWidget {
@@ -117,48 +121,98 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
           }
           List<dynamic> tagsDynamic = json.decode(_task.tags);
           List<String> tags = tagsDynamic.map((e) => "$e").toList();
-          return ListView(
+          var list = ListView(
             children: [
               DownloadInfoCard(task: _task, linkItem: true),
               ComicTagsCard(tags),
               ComicDescriptionCard(description: _task.description),
               Container(height: 5),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                alignment: WrapAlignment.spaceAround,
-                children: [
-                  ContinueReadButton(
-                    viewFuture: _viewFuture,
-                    onChoose: (int? epOrder, int? pictureRank) {
-                      if (epOrder != null && pictureRank != null) {
-                        for (var i in _epList) {
-                          if (i.epOrder == epOrder) {
-                            _push(_task, _epList, epOrder, pictureRank);
-                            return;
-                          }
-                        }
-                      } else {
-                        _push(_task, _epList, _epList.first.epOrder, null);
-                      }
-                    },
-                  ),
-                  ..._epList.map((e) {
-                    return MaterialButton(
-                      onPressed: () {
-                        _push(_task, _epList, e.epOrder, null);
-                      },
-                      color: Colors.white,
-                      child: Text(e.title,
-                          style: const TextStyle(color: Colors.black)),
-                    );
-                  }),
-                ],
-              ),
+              _bottom(),
             ],
           );
+          // todo only pika task
+          if (showCommentAtDownload()) {
+            return DefaultTabController(
+              length: 3,
+              child: list,
+            );
+          }
+          return list;
         },
       ),
+    );
+  }
+
+  var _tabIndex = 0;
+
+  Widget _bottom() {
+    // todo only pika task
+    if (showCommentAtDownload()) {
+      final theme = Theme.of(context);
+      var _tabs = <Widget>[
+        Tab(text: '章节 (${_epList.length})'),
+        const Tab(text: '评论'),
+        const Tab(text: '推荐'),
+      ];
+      var _views = <Widget>[
+        _chapters(),
+        CommentList(CommentMainType.COMIC, widget.comicId),
+        Recommendation(comicId: widget.comicId),
+      ];
+      return Column(children: [
+        Container(
+          height: 40,
+          color: theme.colorScheme.secondary.withOpacity(.025),
+          child: TabBar(
+            tabs: _tabs,
+            indicatorColor: theme.colorScheme.secondary,
+            labelColor: theme.colorScheme.secondary,
+            onTap: (val) async {
+              setState(() {
+                _tabIndex = val;
+              });
+            },
+          ),
+        ),
+        Container(height: 15),
+        _views[_tabIndex],
+        Container(height: 5),
+      ]);
+    }
+    return _chapters();
+  }
+
+  Widget _chapters() {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      alignment: WrapAlignment.spaceAround,
+      children: [
+        ContinueReadButton(
+          viewFuture: _viewFuture,
+          onChoose: (int? epOrder, int? pictureRank) {
+            if (epOrder != null && pictureRank != null) {
+              for (var i in _epList) {
+                if (i.epOrder == epOrder) {
+                  _push(_task, _epList, epOrder, pictureRank);
+                  return;
+                }
+              }
+            } else {
+              _push(_task, _epList, _epList.first.epOrder, null);
+            }
+          },
+        ),
+        ..._epList.map((e) {
+          return MaterialButton(
+            onPressed: () {
+              _push(_task, _epList, e.epOrder, null);
+            },
+            color: Colors.white,
+            child: Text(e.title, style: const TextStyle(color: Colors.black)),
+          );
+        }),
+      ],
     );
   }
 
