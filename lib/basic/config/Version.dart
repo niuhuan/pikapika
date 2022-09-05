@@ -71,3 +71,90 @@ Future _versionCheck() async {
   } // else dirtyVersion
   versionEvent.broadcast();
 }
+
+var _display = true;
+
+void versionPop(BuildContext context) {
+  if (latestVersion() != null && _display) {
+    _display = false;
+    TopConfirm.topConfirm(
+      context,
+      "发现新版本",
+      "发现新版本 ${latestVersion()} , 请到关于页面更新",
+    );
+  }
+}
+
+class TopConfirm {
+  static topConfirm(BuildContext context, String title, String message,
+      {Function()? afterIKnown}) {
+    late OverlayEntry overlayEntry;
+    overlayEntry = OverlayEntry(builder: (BuildContext context) {
+      return LayoutBuilder(
+        builder: (
+          BuildContext context,
+          BoxConstraints constraints,
+        ) {
+          var mq = MediaQuery.of(context).size.width - 30;
+          return Material(
+            color: Colors.transparent,
+            child: Container(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(.35),
+              ),
+              child: Column(
+                children: [
+                  Expanded(child: Container()),
+                  Container(
+                    width: mq,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Container(height: 30),
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 28,
+                          ),
+                        ),
+                        Container(height: 15),
+                        Text(
+                          message,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Container(height: 25),
+                        MaterialButton(
+                          elevation: 0,
+                          color: Colors.black.withOpacity(.1),
+                          onPressed: () {
+                            overlayEntry.remove();
+                          },
+                          child: const Text("朕知道了"),
+                        ),
+                        Container(height: 30),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
+    OverlayState? overlay = Overlay.of(context);
+    if (overlay != null) {
+      overlay.insert(overlayEntry);
+    }
+  }
+}

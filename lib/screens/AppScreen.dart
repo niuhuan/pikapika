@@ -29,6 +29,8 @@ class _AppScreenState extends State<AppScreen> {
   void initState() {
     versionEvent.subscribe(_onVersion);
     _linkSubscription = linkSubscript(context);
+    versionEvent.subscribe(_versionSub);
+    versionPop(context);
     super.initState();
   }
 
@@ -36,7 +38,12 @@ class _AppScreenState extends State<AppScreen> {
   void dispose() {
     versionEvent.unsubscribe(_onVersion);
     _linkSubscription.cancel();
+    versionEvent.unsubscribe(_versionSub);
     super.dispose();
+  }
+
+  _versionSub(_) {
+    versionPop(context);
   }
 
   void _onVersion(dynamic a) {

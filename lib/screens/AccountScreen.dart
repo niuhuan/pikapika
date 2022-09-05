@@ -12,6 +12,7 @@ import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
+import '../basic/config/Version.dart';
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
 import 'ThemeScreen.dart';
@@ -34,7 +35,8 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     _linkSubscription = linkSubscript(context);
-
+    versionEvent.subscribe(_versionSub);
+    versionPop(context);
     _loadProperties();
     super.initState();
   }
@@ -42,8 +44,14 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void dispose() {
     _linkSubscription.cancel();
+    versionEvent.unsubscribe(_versionSub);
     super.dispose();
   }
+
+  _versionSub(_) {
+    versionPop(context);
+  }
+
 
   Future _loadProperties() async {
     var username = await method.getUsername();

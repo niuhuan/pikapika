@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/config/IconLoading.dart';
 
 class ContentLoading extends StatelessWidget {
   final String label;
@@ -20,10 +21,12 @@ class ContentLoading extends StatelessWidget {
               SizedBox(
                 width: min / 2,
                 height: min / 2,
-                child: CircularProgressIndicator(
-                  color: theme.colorScheme.secondary,
-                  backgroundColor: Colors.grey[100],
-                ),
+                child: currentIconLoading()
+                    ? Icon(Icons.refresh, color: Colors.grey[100])
+                    : CircularProgressIndicator(
+                        color: theme.colorScheme.secondary,
+                        backgroundColor: Colors.grey[100],
+                      ),
               ),
               Container(height: min / 10),
               Text(label, style: TextStyle(fontSize: min / 15)),
