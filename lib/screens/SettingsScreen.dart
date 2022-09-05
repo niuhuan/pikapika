@@ -33,6 +33,7 @@ import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import '../basic/config/Authentication.dart';
+import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WillPopNotice.dart';
 import 'CleanScreen.dart';
@@ -90,6 +91,7 @@ class SettingsScreen extends StatelessWidget {
             keyboardControllerSetting(),
             noAnimationSetting(),
             iconLoadingSetting(),
+            categoriesColumnCountSetting(),
             const Divider(),
             fullScreenUISetting(),
             willPopNoticeSetting(),

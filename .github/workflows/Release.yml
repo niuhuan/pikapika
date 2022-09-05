@@ -61,7 +61,7 @@ jobs:
             flutter_version: '2.10.3'
           - target: ios
             host: macos-latest
-            flutter_version: '3.0.5'
+            flutter_version: '3.3.0'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '2.10.5'
@@ -73,13 +73,13 @@ jobs:
             flutter_version: '2.10.5'
           - target: android-arm32
             host: ubuntu-latest
-            flutter_version: '3.0.5'
+            flutter_version: '3.3.0'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.0.5'
+            flutter_version: '3.3.0'
           - target: android-x86_64
             host: ubuntu-latest
-            flutter_version: '3.0.5'
+            flutter_version: '3.3.0'
 
     runs-on: ${{ matrix.config.host }}
 
@@ -157,6 +157,24 @@ jobs:
         with:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.os }}-flutter
+
+      - name: Cache Flutter dependencies (Mac host)
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'ios' || matrix.config.target == 'macos' )
+        uses: actions/cache@v3
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.os }}-flutter
+
+      - name: Cache Gradle dependencies (Android)
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Setup java (Android)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )

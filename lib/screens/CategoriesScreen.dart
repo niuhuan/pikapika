@@ -11,6 +11,7 @@ import 'package:pikapika/screens/RankingsScreen.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/CategoriesColumnCount.dart';
 import 'ComicsScreen.dart';
 import 'GamesScreen.dart';
 import 'RandomComicsScreen.dart';
@@ -73,17 +74,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     shadowCategoriesEvent.subscribe(_onShadowChange);
+    categoriesColumnCountEvent.subscribe(_setState);
     super.initState();
   }
 
   @override
   void dispose() {
     shadowCategoriesEvent.unsubscribe(_onShadowChange);
+    categoriesColumnCountEvent.unsubscribe(_setState);
     super.dispose();
   }
 
   void _onShadowChange(EventArgs? args) {
     _reloadCategories();
+  }
+
+  _setState(_) {
+    setState(() {});
   }
 
   @override
@@ -140,11 +147,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   List<Widget> _buildCategories(List<Category> cList) {
-    var size = MediaQuery.of(context).size;
-    var min = size.width < size.height ? size.width : size.height;
-    var blockSize = min / 3;
-    var imageSize = blockSize - 15;
-    var imageRs = imageSize / 10;
+    late double blockSize;
+    late double imageSize;
+    late double imageRs;
+
+    if (categoriesColumnCount == 0) {
+      var size = MediaQuery.of(context).size;
+      var min = size.width < size.height ? size.width : size.height;
+      blockSize = min / 3;
+    } else {
+      var size = MediaQuery.of(context).size;
+      var min = size.width;
+      blockSize = min / categoriesColumnCount;
+    }
+
+    imageSize = blockSize - 15;
+    imageRs = imageSize / 10;
 
     List<Widget> list = [];
 
