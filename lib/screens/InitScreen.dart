@@ -8,6 +8,7 @@ import 'package:pikapika/basic/config/AndroidSecureFlag.dart';
 import 'package:pikapika/basic/config/Authentication.dart';
 import 'package:pikapika/basic/config/AutoClean.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
+import 'package:pikapika/basic/config/CategoriesColumnCount.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
@@ -84,6 +85,7 @@ class _InitScreenState extends State<InitScreen> {
     await initShadowCategories();
     await initFullScreenUI();
     await initIconLoading();
+    await initCategoriesColumnCount();
     switchFullScreenUI();
     await initContentFailedReloadAction();
     await initVolumeController();

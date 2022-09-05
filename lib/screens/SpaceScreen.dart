@@ -150,6 +150,28 @@ class _SpaceScreenState extends State<SpaceScreen> {
             title: const Text('我的下载'),
           ),
           const Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProScreen()),
+              );
+            },
+            title: const Text('发电'),
+          ),
+          const Divider(),
+          ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutScreen()),
+                );
+              },
+              title: Badged(
+                child: const Text('关于'),
+                badge: latestVersion() == null ? null : "1",
+              )),
+          const Divider(),
         ],
       ),
     );

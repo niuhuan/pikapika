@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
+import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
@@ -93,6 +94,18 @@ class _AccountScreenState extends State<AccountScreen> {
               );
             },
             icon: const Text('设置'),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutScreen(
+                  ),
+                ),
+              );
+            },
+            icon: const Text('关于'),
           ),
           IconButton(
             onPressed: () {
