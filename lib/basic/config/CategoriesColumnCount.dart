@@ -35,7 +35,7 @@ Widget categoriesColumnCountSetting() {
               },
               "选择首页分类列数");
           if (value != null) {
-            await method.saveProperty(_propertyName, "$categoriesColumnCount");
+            await method.saveProperty(_propertyName, "$value");
             categoriesColumnCount = value;
             setState(() {});
             categoriesColumnCountEvent.broadcast();
