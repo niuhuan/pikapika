@@ -245,11 +245,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   List<Widget> _buildChannels() {
-    var size = MediaQuery.of(context).size;
-    var min = size.width < size.height ? size.width : size.height;
-    var blockSize = min / 3;
-    var imageSize = blockSize - 15;
-    var imageRs = imageSize / 10;
+    late double blockSize;
+    late double imageSize;
+    late double imageRs;
+
+    if (categoriesColumnCount == 0) {
+      var size = MediaQuery.of(context).size;
+      var min = size.width < size.height ? size.width : size.height;
+      blockSize = min / 3;
+    } else {
+      var size = MediaQuery.of(context).size;
+      var min = size.width;
+      blockSize = min / categoriesColumnCount;
+    }
+
+    imageSize = blockSize - 15;
+    imageRs = imageSize / 10;
 
     List<Widget> list = [];
 

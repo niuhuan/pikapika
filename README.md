@@ -1,8 +1,6 @@
 PIKAPIKA - 漫画客户端
 ===================
-[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/pikapika/master/LICENSE)
 [![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases)
-[![downloads](https://img.shields.io/github/downloads/niuhuan/pikapika/total)](https://github.com/niuhuan/pikapika/releases)
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 此APP内容存在限制级别内容(例如 露骨/血腥/暴力/吸毒)，18岁以下的用户需在监护人陪同下使用，并请您在遵守当地法律法规。
@@ -93,15 +91,19 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 
 软件副本分发规则
 
-- 本软件仅供学习交流使用, 本软件或本软件的拓展, 个人或企业不可用于商业用途, 不可上架任何商店
-- 不要在任何其他 **二次元软件** 的 **聊天社区** 或 **开发社区** 内, 发布有关本软件的链接或信息
+- 本软件仅供学习交流使用, 本软件或本软件的拓展, 个人或企业不可用于商业用途, 不可上架任何商店, 在未经允许的情况下可以自用但不允许释放任何releases。
+- 不要在任何其他 **二次元软件** 的 **聊天社区** 或 **开发社区** 内, 发布有关本软件的链接或信息。
 - 不要发送本软件安装包到 **任何社区内** , 不要将APK/IPA/ZIP/DMG发送包括任何聊天软件内的群聊功能。 分享本软件时, 在社区中使用Github中提供的Releases页面的链接, 或使用私聊窗口发送。
 
 拓展包括但是不限于以下内容
 
 - 使用本软件进行继续开发形成的软件。
-- 引入本软件部分内容为依赖/参考本软件/使用本软件内代码的同时, 包含本软件内一致内容或功能的软件。
+- 引入本软件部分内容为依赖/使用本软件内代码的同时包含本软件内一致内容或功能。
 - 直接对本软件进行打包发布
+
+其他
+
+- 对本仓库的fork需要保留本仓库的链接, 以引导用户在主要仓库进行讨论。
 
 责任声明
 
