@@ -1034,9 +1034,8 @@ class _WebToonReaderState extends _ImageReaderContentState {
             } else {
               var maxHeight = constraints.maxHeight -
                   super._topBarHeight() -
-                  (widget.struct.fullScreen
-                      ? super._topBarHeight()
-                      : super._bottomBarHeight());
+                  super._bottomBarHeight() -
+                  MediaQuery.of(context).padding.bottom;
               renderSize = Size(
                 maxHeight *
                     _trueSizes[index]!.width /
@@ -1104,10 +1103,8 @@ class _WebToonReaderState extends _ImageReaderContentState {
             top: super._topBarHeight(),
             bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                 ? 130 // 纵向滚动 底部永远都是130的空白
-                : ( // 横向滚动
-                    widget.struct.fullScreen
-                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
-                        : super._bottomBarHeight())
+                : (super._bottomBarHeight() +
+                    MediaQuery.of(context).padding.bottom)
             // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
             ,
           ),
@@ -1381,9 +1378,8 @@ class _ListViewReaderState extends _ImageReaderContentState
             } else {
               var maxHeight = constraints.maxHeight -
                   super._topBarHeight() -
-                  (widget.struct.fullScreen
-                      ? super._topBarHeight()
-                      : super._bottomBarHeight());
+                  super._bottomBarHeight() -
+                  MediaQuery.of(context).padding.bottom;
               renderSize = Size(
                 maxHeight *
                     _trueSizes[index]!.width /
@@ -1450,10 +1446,8 @@ class _ListViewReaderState extends _ImageReaderContentState
             top: super._topBarHeight(),
             bottom: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                 ? 130 // 纵向滚动 底部永远都是130的空白
-                : ( // 横向滚动
-                    widget.struct.fullScreen
-                        ? super._topBarHeight() // 全屏时底部和顶部到屏幕边框距离一样保持美观
-                        : super._bottomBarHeight())
+                : (super._bottomBarHeight() +
+                    MediaQuery.of(context).padding.bottom)
             // 非全屏时, 顶部去掉顶部BAR的高度, 底部去掉底部BAR的高度, 形成看似填充的效果
             ,
           ),
