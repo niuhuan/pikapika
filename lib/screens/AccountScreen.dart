@@ -36,10 +36,12 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     _linkSubscription = linkSubscript(context);
-    versionEvent.subscribe(_versionSub);
-    versionPop(context);
     _loadProperties();
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      versionPop(context);
+      versionEvent.subscribe(_versionSub);
+    });
   }
 
   @override

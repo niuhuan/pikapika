@@ -140,7 +140,9 @@ class _DownloadExportToFileScreenState
         onPressed: () async {
           late String? path;
           try {
-            path = await chooseFolder(context);
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
           } catch (e) {
             defaultToast(context, "$e");
             return;
@@ -191,7 +193,9 @@ class _DownloadExportToFileScreenState
         onPressed: () async {
           late String? path;
           try {
-            path = await chooseFolder(context);
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
           } catch (e) {
             defaultToast(context, "$e");
             return;
@@ -244,7 +248,9 @@ class _DownloadExportToFileScreenState
         onPressed: () async {
           late String? path;
           try {
-            path = await chooseFolder(context);
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
           } catch (e) {
             defaultToast(context, "$e");
             return;
@@ -296,7 +302,9 @@ class _DownloadExportToFileScreenState
         onPressed: () async {
           late String? path;
           try {
-            path = await chooseFolder(context);
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
           } catch (e) {
             defaultToast(context, "$e");
             return;

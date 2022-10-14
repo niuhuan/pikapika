@@ -203,7 +203,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
             }
           },
         ),
-        ..._epList.map((e) {
+        ..._epList.reversed.map((e) {
           return MaterialButton(
             onPressed: () {
               _push(_task, _epList, e.epOrder, null);

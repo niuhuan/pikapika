@@ -884,4 +884,7 @@ class Method {
     return _flatInvoke("resetSwitchAddress", "");
   }
 
+  Future<String> iosGetDocumentDir() async {
+    return await _channel.invokeMethod('iosGetDocumentDir', '');
+  }
 }

@@ -29,9 +29,11 @@ class _AppScreenState extends State<AppScreen> {
   void initState() {
     versionEvent.subscribe(_onVersion);
     _linkSubscription = linkSubscript(context);
-    versionEvent.subscribe(_versionSub);
-    versionPop(context);
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      versionPop(context);
+      versionEvent.subscribe(_versionSub);
+    });
   }
 
   @override

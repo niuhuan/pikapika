@@ -12,8 +12,11 @@ import LocalAuthentication
     ) -> Bool {
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        
-        MobileInitApplication(documentsPath)
+        let applicationSupportsPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0]
+
+        MobileMigration(documentsPath, applicationSupportsPath)
+        MobileInitApplication(applicationSupportsPath)
+
         
         let controller = self.window.rootViewController as! FlutterViewController
         let channel = FlutterMethodChannel.init(name: "method", binaryMessenger: controller as! FlutterBinaryMessenger)
@@ -70,7 +73,9 @@ import LocalAuthentication
                         result(FlutterError(code: "", message: "params error", details: ""))
                     }
                 }
-                else{
+                else if call.method == "iosGetDocumentDir" {
+                    result(documentsPath)
+                } else {
                     result(FlutterMethodNotImplemented)
                 }
             }.start()

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 
@@ -79,7 +81,9 @@ class _DownloadExportingGroupScreenState
   _exportPkz() async {
     late String? path;
     try {
-      path = await chooseFolder(context);
+      path =  Platform.isIOS
+          ? await method.iosGetDocumentDir()
+          : await chooseFolder(context);
     } catch (e) {
       defaultToast(context, "$e");
       return;
@@ -127,7 +131,9 @@ class _DownloadExportingGroupScreenState
     }
     late String? path;
     try {
-      path = await chooseFolder(context);
+      path =  Platform.isIOS
+          ? await method.iosGetDocumentDir()
+          : await chooseFolder(context);
     } catch (e) {
       defaultToast(context, "$e");
       return;
@@ -161,7 +167,9 @@ class _DownloadExportingGroupScreenState
     }
     late String? path;
     try {
-      path = await chooseFolder(context);
+      path =  Platform.isIOS
+          ? await method.iosGetDocumentDir()
+          : await chooseFolder(context);
     } catch (e) {
       defaultToast(context, "$e");
       return;

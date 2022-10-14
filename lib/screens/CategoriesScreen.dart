@@ -154,11 +154,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     if (categoriesColumnCount == 0) {
       var size = MediaQuery.of(context).size;
       var min = size.width < size.height ? size.width : size.height;
-      blockSize = min / 3;
+      blockSize = (min ~/ 3).floorToDouble();
     } else {
       var size = MediaQuery.of(context).size;
       var min = size.width;
-      blockSize = min / categoriesColumnCount;
+      blockSize = (min ~/ categoriesColumnCount).floorToDouble();
     }
 
     imageSize = blockSize - 15;
@@ -252,11 +252,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     if (categoriesColumnCount == 0) {
       var size = MediaQuery.of(context).size;
       var min = size.width < size.height ? size.width : size.height;
-      blockSize = min / 3;
+      blockSize = (min ~/ 3).floorToDouble();
     } else {
       var size = MediaQuery.of(context).size;
       var min = size.width;
-      blockSize = min / categoriesColumnCount;
+      blockSize = (min ~/ categoriesColumnCount).floorToDouble();
     }
 
     imageSize = blockSize - 15;
