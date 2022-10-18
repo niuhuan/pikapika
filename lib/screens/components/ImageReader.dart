@@ -202,13 +202,8 @@ class _ImageReaderContent extends StatefulWidget {
 
   final ImageReaderStruct struct;
 
-  const _ImageReaderContent(
-    this.struct,
-    this.pagerDirection,
-    this.pagerType,
-    this.fullScreenAction,
-    this.readerSliderPosition,
-  );
+  const _ImageReaderContent(this.struct, this.pagerDirection, this.pagerType,
+      this.fullScreenAction, this.readerSliderPosition);
 
   @override
   State<StatefulWidget> createState() {
@@ -564,7 +559,41 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         !widget.struct.fullScreen) {
       return Container();
     }
-    return Align(
+    if (widget.readerSliderPosition == ReaderSliderPosition.RIGHT ) {
+      return SafeArea(
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  color: Color(0x88000000),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+                  },
+                  child: Icon(
+                    widget.struct.fullScreen
+                        ? Icons.fullscreen_exit
+                        : Icons.fullscreen_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ));
+    }
+    return SafeArea(
+        child: Align(
       alignment: Alignment.bottomLeft,
       child: Material(
         color: Colors.transparent,
@@ -593,7 +622,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Widget _buildTouchOnceControllerAction(Widget child) {
