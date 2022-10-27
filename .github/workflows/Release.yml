@@ -59,9 +59,12 @@ jobs:
           - target: macos
             host: macos-latest
             flutter_version: '2.10.3'
+          - target: linux
+            host: ubuntu-latest
+            flutter_version: '2.10.3'
           - target: ios
             host: macos-latest
-            flutter_version: '3.3.4'
+            flutter_version: '3.3.10'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '2.10.5'
@@ -73,13 +76,13 @@ jobs:
             flutter_version: '2.10.5'
           - target: android-arm32
             host: ubuntu-latest
-            flutter_version: '3.3.4'
+            flutter_version: '3.3.10'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.3.4'
+            flutter_version: '3.3.10'
           - target: android-x86_64
             host: ubuntu-latest
-            flutter_version: '3.3.4'
+            flutter_version: '3.3.10'
 
     runs-on: ${{ matrix.config.host }}
 
@@ -210,7 +213,7 @@ jobs:
           mv appimagetool-x86_64.AppImage ${GITHUB_WORKSPACE}/bin/appimagetool
           echo ::add-path::${GITHUB_WORKSPACE}/bin
           sudo apt-get update
-          sudo apt-get install -y libgl1-mesa-dev xorg-dev
+          sudo apt-get install -y libgl1-mesa-dev xorg-dev libfuse2
 
       - name: Install hover (desktop)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'linux' || matrix.config.target == 'windows' || matrix.config.target == 'macos')
@@ -235,6 +238,7 @@ jobs:
           sed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
           sed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: 2.0.0/g" pubspec.yaml
           sed -i "s/file_picker: ^5.2.1/file_picker: 4.6.1/g" pubspec.yaml
+          sed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
@@ -245,6 +249,7 @@ jobs:
           gsed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
           gsed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: 2.0.0/g" pubspec.yaml
           gsed -i "s/file_picker: ^5.2.1/file_picker: 4.6.1/g" pubspec.yaml
+          gsed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           flutter pub get
 
       - name: Build (windows)

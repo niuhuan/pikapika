@@ -182,8 +182,8 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                             if (num == 0 || num > comicsPage.pages) {
                               return;
                             }
-                            if (num > 50 && !isPro) {
-                              defaultToast(context, "发电以后才能看50页以后的内容");
+                            if (num > 10 && !isPro) {
+                              defaultToast(context, "发电以后才能看10页以后的内容");
                               return;
                             }
                             _currentPage = num;
@@ -218,8 +218,8 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
                   minWidth: 0,
                   onPressed: () {
                     if (comicsPage.page < comicsPage.pages) {
-                      if (_currentPage >= 50 && !isPro) {
-                        defaultToast(context, "发电以后才能看50页以后的内容");
+                      if (_currentPage >= 10 && !isPro) {
+                        defaultToast(context, "发电以后才能看10页以后的内容");
                         return;
                       }
                       _currentPage = comicsPage.page + 1;
@@ -240,8 +240,8 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
     if (comicsPage.page < comicsPage.pages) {
       return FitButton(
         onPressed: () {
-          if (_currentPage >= 50 && !isPro) {
-            defaultToast(context, "发电以后才能看50页以后的内容");
+          if (_currentPage >= 10 && !isPro) {
+            defaultToast(context, "发电以后才能看10页以后的内容");
             return;
           }
           _currentPage = comicsPage.page + 1;
@@ -317,7 +317,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
         _maxPage = page.pages;
         _list.addAll(page.docs);
         _over = page.page >= page.pages;
-        _noPro = _currentPage > 50 && !isPro;
+        _noPro = _currentPage > 10 && !isPro;
       });
     } catch (e, s) {
       _error = true;
@@ -430,8 +430,8 @@ class _StreamComicPagerState extends State<StreamComicPager> {
                                 if (num == 0 || num > _maxPage) {
                                   return;
                                 }
-                                if (_currentPage >= 50 && !isPro) {
-                                  defaultToast(context, "发电以后才能看50页以后的内容");
+                                if (_currentPage >= 10 && !isPro) {
+                                  defaultToast(context, "发电以后才能看10页以后的内容");
                                   return;
                                 }
                                 _currentPage = num;

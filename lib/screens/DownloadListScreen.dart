@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -22,9 +23,35 @@ class DownloadListScreen extends StatefulWidget {
 }
 
 class _DownloadListScreenState extends State<DownloadListScreen> {
+  String _search = "";
+  late final SearchBar _searchBar = SearchBar(
+    hintText: '搜索下载',
+    inBar: false,
+    setState: setState,
+    onSubmitted: (value) {
+      if (value.isNotEmpty) {
+        _search = value;
+        _f = method.allDownloads(_search);
+        _searchBar.controller.text = value;
+      }
+    },
+    buildDefaultAppBar: (BuildContext context) {
+      return AppBar(
+        title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
+        actions: [
+          _searchBar.getSearchAction(context),
+          exportButton(),
+          importButton(),
+          resetFailedButton(),
+          pauseButton(),
+        ],
+      );
+    },
+  );
+
   DownloadComic? _downloading;
   late bool _downloadRunning = false;
-  late Future<List<DownloadComic>> _f = method.allDownloads();
+  late Future<List<DownloadComic>> _f = method.allDownloads(_search);
 
   void _onMessageChange(String event) {
     print("EVENT");
@@ -57,15 +84,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   @override
   Widget build(BuildContext context) {
     final screen = Scaffold(
-      appBar: AppBar(
-        title: const Text('下载列表'),
-        actions: [
-          exportButton(),
-          importButton(),
-          resetFailedButton(),
-          pauseButton(),
-        ],
-      ),
+      appBar: _searchBar.build(context),
       body: FutureBuilder(
         future: _f,
         builder: (BuildContext context,
@@ -97,7 +116,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           return RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                _f = method.allDownloads();
+                _f = method.allDownloads(_search);
               });
             },
             child: ListView(
@@ -183,7 +202,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             ),
           );
           setState(() {
-            _f = method.allDownloads();
+            _f = method.allDownloads(_search);
           });
         },
         icon: Column(
@@ -262,7 +281,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         onPressed: () async {
           await method.resetFailed();
           setState(() {
-            _f = method.allDownloads();
+            _f = method.allDownloads(_search);
           });
           defaultToast(context, "所有失败的下载已经恢复");
         },

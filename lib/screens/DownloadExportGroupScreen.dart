@@ -15,7 +15,7 @@ class DownloadExportGroupScreen extends StatefulWidget {
 }
 
 class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
-  late Future<List<DownloadComic>> _f = method.allDownloads();
+  late Future<List<DownloadComic>> _f = method.allDownloads("");
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
             onRefresh: () async {
               setState(() {
                 selected.clear();
-                _f = method.allDownloads();
+                _f = method.allDownloads("");
               });
             },
             child: ListView(

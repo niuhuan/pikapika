@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import '../Method.dart';
 
 var _imageAddresses = {
-  "-1": "跟随api分流",
+  "-3": "CDN-3",
+  "-2": "CDN-2",
+  "-1": "CDN-1",
   "0": "不分流",
-  "1": "分流1 (推荐)",
+  "1": "分流1",
   "2": "分流2",
-  "3": "分流3",
 };
 
 late String _currentImageAddress;

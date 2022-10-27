@@ -504,8 +504,10 @@ class Method {
   }
 
   /// 所有下载
-  Future<List<DownloadComic>> allDownloads() async {
-    var data = await _flatInvoke("allDownloads", "");
+  Future<List<DownloadComic>> allDownloads(String search) async {
+    var data = await _flatInvoke("allDownloads", {
+      "search": search,
+    });
     data = jsonDecode(data);
     if (data == null) {
       return [];
@@ -721,6 +723,16 @@ class Method {
   /// 下载的同时导出-设置
   Future saveDownloadAndExportPath(String folder) {
     return _flatInvoke("saveDownloadAndExportPath", folder);
+  }
+
+  /// 使用下载缓存-配置获取
+  Future loadDownloadCachePath() {
+    return _flatInvoke("loadDownloadCachePath", "");
+  }
+
+  /// 使用下载缓存-设置
+  Future saveDownloadCachePath(String folder) {
+    return _flatInvoke("saveDownloadCachePath", folder);
   }
 
   /// 切换安全策略 (安卓禁止截图, 录屏, 不显示在任务视图)

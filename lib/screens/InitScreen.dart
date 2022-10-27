@@ -40,6 +40,7 @@ import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
+import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportRename.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
@@ -105,6 +106,7 @@ class _InitScreenState extends State<InitScreen> {
     autoCheckNewVersion();
     await initWillPopNotice();
     await initShowCommentAtDownload();
+    await initDownloadCachePath();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
