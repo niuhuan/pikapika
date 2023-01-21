@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/Proxy.dart';
+import 'package:pikapika/basic/config/UseApiLoadImage.dart';
 
 // 网络设置
 class NetworkSetting extends StatelessWidget {
@@ -13,6 +14,7 @@ class NetworkSetting extends StatelessWidget {
       children: [
         switchAddressSetting(),
         imageSwitchAddressSetting(),
+        useApiLoadImageSetting(),
         proxySetting(),
         reloadSwitchAddressSetting(),
       ],

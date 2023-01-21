@@ -59,6 +59,14 @@ class Method {
     return await _flatInvoke("setImageSwitchAddress", switchAddress);
   }
 
+  Future<String> getUseApiClientLoadImage() async {
+    return await _flatInvoke("getUseApiClientLoadImage", "");
+  }
+
+  Future<dynamic> setUseApiClientLoadImage(String switchAddress) async {
+    return await _flatInvoke("setUseApiClientLoadImage", switchAddress);
+  }
+
   /// 获取代理
   Future<String> getProxy() async {
     return await _flatInvoke("getProxy", "");
