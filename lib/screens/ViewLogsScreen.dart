@@ -7,6 +7,7 @@ import 'package:pikapika/screens/components/ComicInfoCard.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import '../basic/Entities.dart';
+import '../basic/config/IconLoading.dart';
 import 'ComicInfoScreen.dart';
 import 'components/Images.dart';
 
@@ -159,7 +160,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   void _chooseComic(String comicId) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => ComicInfoScreen(
           comicId: comicId,
         ),

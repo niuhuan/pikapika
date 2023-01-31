@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
+import '../../basic/config/IconLoading.dart';
 import 'ItemBuilder.dart';
 import 'Images.dart';
 
@@ -37,7 +38,7 @@ class _RecommendationState extends State<Recommendation> {
                       var i = 0;
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(
+                          mixRoute(
                               builder: (context) =>
                                   ComicInfoScreen(comicId: e.id)),
                           (route) => i++ < 10);

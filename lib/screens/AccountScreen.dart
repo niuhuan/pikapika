@@ -13,6 +13,7 @@ import 'package:pikapika/screens/RegisterScreen.dart';
 import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
+import '../basic/config/IconLoading.dart';
 import '../basic/config/Version.dart';
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
@@ -88,7 +89,7 @@ class _AccountScreenState extends State<AccountScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                   builder: (context) => const SettingsScreen(
                     hiddenAccountInfo: true,
                   ),
@@ -101,7 +102,7 @@ class _AccountScreenState extends State<AccountScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                   builder: (context) => const AboutScreen(
                   ),
                 ),
@@ -114,7 +115,7 @@ class _AccountScreenState extends State<AccountScreen> {
               if (androidNightModeDisplay) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ThemeScreen()),
+                  mixRoute(builder: (context) => const ThemeScreen()),
                 );
               } else {
                 chooseLightTheme(context);
@@ -186,7 +187,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.push(
                             context,
-                            MaterialPageRoute(
+                            mixRoute(
                                 builder: (BuildContext context) =>
                                     const RegisterScreen()),
                           ).then((value) => _loadProperties()),
@@ -209,7 +210,7 @@ class _AccountScreenState extends State<AccountScreen> {
       await reloadIsPro();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AppScreen()),
+        mixRoute(builder: (context) => const AppScreen()),
       );
     } catch (e, s) {
       print("$e\n$s");
@@ -239,7 +240,7 @@ class _AccountScreenState extends State<AccountScreen> {
   _toDownloadList() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const DownloadListScreen()),
+      mixRoute(builder: (context) => const DownloadListScreen()),
     );
   }
 }

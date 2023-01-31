@@ -9,6 +9,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 import '../screens/ComicInfoScreen.dart';
 import '../screens/DownloadOnlyImportScreen.dart';
 import '../screens/PkzArchiveScreen.dart';
+import 'config/IconLoading.dart';
 import 'config/TimeOffsetHour.dart';
 
 /// 默认的图片尺寸
@@ -304,14 +305,14 @@ StreamSubscription<String?> linkSubscript(BuildContext context) {
           .first
           .group(1)!;
       Navigator.of(context).push(
-        MaterialPageRoute(
+        mixRoute(
           builder: (BuildContext context) => ComicInfoScreen(comicId: comicId),
         ),
       );
     } else if (RegExp(r"^.*\.pkz$").allMatches(uri).isNotEmpty) {
       File file = await toFile(uri);
       Navigator.of(context).push(
-        MaterialPageRoute(
+        mixRoute(
           builder: (BuildContext context) =>
               PkzArchiveScreen(pkzPath: file.path),
         ),
@@ -319,7 +320,7 @@ StreamSubscription<String?> linkSubscript(BuildContext context) {
     } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(uri).isNotEmpty) {
       File file = await toFile(uri);
       Navigator.of(context).push(
-        MaterialPageRoute(
+        mixRoute(
           builder: (BuildContext context) =>
               DownloadOnlyImportScreen(path: file.path),
         ),

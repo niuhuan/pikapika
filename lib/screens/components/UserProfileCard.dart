@@ -13,6 +13,7 @@ import 'package:pikapika/screens/components/Avatar.dart';
 import 'package:pikapika/screens/components/Images.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 
+import '../../basic/config/IconLoading.dart';
 import 'DesktopCropper.dart';
 
 const double _cardHeight = 180;
@@ -216,7 +217,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
     );
     if (result != null) {
       List<int>? buff = await Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
+        mixRoute(builder: (BuildContext context) {
           return DesktopCropper(
             file: result.files.first.path!,
             aspectRatio: 1,

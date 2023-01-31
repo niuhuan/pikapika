@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Navigator.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/IconLoading.dart';
 import '../basic/config/ShowCommentAtDownload.dart';
 import 'ComicInfoScreen.dart';
 import 'DownloadExportToFileScreen.dart';
@@ -78,7 +79,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
             onPressed: () async {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                   builder: (context) => DownloadExportToFileScreen(
                     comicId: widget.comicId,
                     comicTitle: widget.comicTitle,
@@ -92,7 +93,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                   builder: (context) => ComicInfoScreen(
                     comicId: widget.comicId,
                   ),
@@ -224,7 +225,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
   ) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => DownloadReaderScreen(
           comicInfo: _task,
           epList: _epList,

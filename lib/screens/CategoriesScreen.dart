@@ -12,6 +12,7 @@ import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/config/CategoriesColumnCount.dart';
+import '../basic/config/IconLoading.dart';
 import 'ComicsScreen.dart';
 import 'GamesScreen.dart';
 import 'RandomComicsScreen.dart';
@@ -35,7 +36,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       if (value.isNotEmpty) {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) => SearchScreen(keyword: value),
           ),
         );
@@ -211,7 +212,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) => const ComicCollectionsScreen(),
           ),
         );
@@ -300,7 +301,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RankingsScreen()),
+          mixRoute(builder: (context) => const RankingsScreen()),
         );
       },
     );
@@ -312,7 +313,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RandomComicsScreen()),
+          mixRoute(builder: (context) => const RandomComicsScreen()),
         );
       },
     );
@@ -324,7 +325,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const GamesScreen()),
+          mixRoute(builder: (context) => const GamesScreen()),
         );
       },
     );
@@ -335,7 +336,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void _navigateToCategory(String? categoryTitle) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => ComicsScreen(category: categoryTitle),
       ),
     );

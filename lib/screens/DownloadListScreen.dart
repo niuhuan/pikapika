@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/DownloadExportGroupScreen.dart';
+import '../basic/config/IconLoading.dart';
 import 'DownloadImportScreen.dart';
 import 'DownloadInfoScreen.dart';
 import 'components/ContentLoading.dart';
@@ -143,7 +144,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         }
         Navigator.push(
           context,
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) => DownloadInfoScreen(
               comicId: e.id,
               comicTitle: e.title,
@@ -170,7 +171,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(
+            mixRoute(
               builder: (context) => const DownloadExportGroupScreen(),
             ),
           );
@@ -197,7 +198,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(
+            mixRoute(
               builder: (context) => const DownloadImportScreen(),
             ),
           );

@@ -23,6 +23,7 @@ import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../../basic/config/IconLoading.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
 
@@ -1680,7 +1681,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
             case '预览图片':
               try {
                 var file = await load();
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(mixRoute(
                   builder: (context) => FilePhotoViewScreen(file),
                 ));
               } catch (e) {

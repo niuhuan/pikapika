@@ -67,7 +67,7 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () async {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
+                        mixRoute(
                             builder: (context) => const ModifyPasswordScreen()),
                       );
                     },
@@ -103,7 +103,7 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CleanScreen()),
+                  mixRoute(builder: (context) => const CleanScreen()),
                 );
               },
               title: const Text('清除缓存'),
@@ -147,7 +147,7 @@ class SettingsScreen extends StatelessWidget {
               await confirmDialog(context, "文件迁移", "此功能菜单保存后, 需要重启程序, 您确认吗");
           if (f) {
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (BuildContext context) {
+              mixRoute(builder: (BuildContext context) {
                 return const MigrateScreen();
               }),
               (route) => false,

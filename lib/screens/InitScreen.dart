@@ -124,14 +124,14 @@ class _InitScreenState extends State<InitScreen> {
     if (initUrl != null) {
       if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).isNotEmpty) {
         String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).first.group(1)!;
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        Navigator.of(context).pushReplacement(mixRoute(
           builder: (BuildContext context) =>
               ComicInfoScreen(comicId: comicId, holdPkz: true),
         ));
         return;
       } else if (RegExp(r"^.*\.pkz$").allMatches(initUrl!).isNotEmpty) {
         File file = await toFile(initUrl!);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        Navigator.of(context).pushReplacement(mixRoute(
           builder: (BuildContext context) =>
               PkzArchiveScreen(pkzPath: file.path, holdPkz: true),
         ));
@@ -139,7 +139,7 @@ class _InitScreenState extends State<InitScreen> {
       } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(initUrl!).isNotEmpty) {
         File file = await toFile(initUrl!);
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
+          mixRoute(
             builder: (BuildContext context) =>
                 DownloadOnlyImportScreen(path: file.path, holdPkz: true),
           ),
@@ -197,13 +197,13 @@ class _InitScreenState extends State<InitScreen> {
       // 如果token或username+password有效则直接进入登录好的界面
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AppScreen()),
+        mixRoute(builder: (context) => const AppScreen()),
       );
     } else {
       // 否则跳转到登录页
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AccountScreen()),
+        mixRoute(builder: (context) => const AccountScreen()),
       );
     }
   }

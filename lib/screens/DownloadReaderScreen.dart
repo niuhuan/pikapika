@@ -10,6 +10,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/IconLoading.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ImageReader.dart';
@@ -87,7 +88,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
     if (orderMap.containsKey(epOrder)) {
       _replacement = true;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
+        mixRoute(
           builder: (context) => DownloadReaderScreen(
             comicInfo: widget.comicInfo,
             epList: widget.epList,
@@ -102,7 +103,7 @@ class _DownloadReaderScreenState extends State<DownloadReaderScreen> {
   FutureOr<dynamic> _onReloadEp() {
     _replacement = true;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => DownloadReaderScreen(
           comicInfo: widget.comicInfo,
           epList: widget.epList,

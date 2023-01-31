@@ -48,40 +48,38 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="pika" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="pika" />
-
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.pkz"
-                        android:scheme="content" />
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.pkz"
-                        android:scheme="file" />
-
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.pki"
-                        android:scheme="content" />
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.pki"
-                        android:scheme="file" />
-
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.zip"
-                        android:scheme="content" />
-                <data
-                        android:mimeType="*/*"
-                        android:pathPattern=".*\\.zip"
-                        android:scheme="file" />
-
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.pkz" />
+                <data android:host="*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.pki" />
+                <data android:host="*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.zip" />
+                <data android:host="*" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

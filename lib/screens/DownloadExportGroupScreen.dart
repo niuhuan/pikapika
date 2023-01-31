@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Common.dart';
 
 import '../basic/Entities.dart';
 import '../basic/Method.dart';
+import '../basic/config/IconLoading.dart';
 import 'DownloadExportingGroupScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
@@ -104,7 +105,10 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
               selected.contains(e.id)
                   ? Icons.check_circle_sharp
                   : Icons.circle_outlined,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
             ),
           ),
         ]),
@@ -151,10 +155,11 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
             return;
           }
           final exported = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DownloadExportingGroupScreen(
-                idList: selected,
-              ),
+            mixRoute(
+              builder: (context) =>
+                  DownloadExportingGroupScreen(
+                    idList: selected,
+                  ),
             ),
           );
         },

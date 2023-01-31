@@ -9,6 +9,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ChooserRoot.dart';
 
 import '../basic/Cross.dart';
+import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import 'PkzArchiveScreen.dart';
 import 'components/ContentLoading.dart';
@@ -120,7 +121,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
         if (path != null) {
           if (path.endsWith(".pkz")) {
             Navigator.of(context).push(
-              MaterialPageRoute(
+              mixRoute(
                 builder: (BuildContext context) =>
                     PkzArchiveScreen(pkzPath: path!),
               ),

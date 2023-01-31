@@ -6,6 +6,7 @@ import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'package:pikapika/screens/components/Images.dart';
 
+import '../basic/config/IconLoading.dart';
 import 'GameDownloadScreen.dart';
 import 'components/CommentList.dart';
 import 'components/GameTitleCard.dart';
@@ -97,7 +98,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              mixRoute(
                                 builder: (context) => GameDownloadScreen(info),
                               ),
                             );

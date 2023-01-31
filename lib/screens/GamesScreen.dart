@@ -4,6 +4,7 @@ import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
+import '../basic/config/IconLoading.dart';
 import 'GameInfoScreen.dart';
 import 'components/Images.dart';
 import 'components/RightClickPop.dart';
@@ -222,7 +223,7 @@ class GameCard extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                     builder: (context) => GameInfoScreen(info.id)),
               );
             },

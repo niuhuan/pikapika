@@ -11,6 +11,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 
 import '../basic/Common.dart';
 import '../basic/Navigator.dart';
+import '../basic/config/IconLoading.dart';
 import 'PkzArchiveScreen.dart';
 import 'components/PkzComicInfoCard.dart';
 
@@ -89,7 +90,7 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
       for (var chapter in volume.chapters) {
         chapterButtons.add(MaterialButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(context).push(mixRoute(
               builder: (BuildContext context) {
                 return PkzReaderScreen(
                   comicInfo: widget.pkzComic,
@@ -206,7 +207,7 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
               child: MaterialButton(
                 onPressed: () {
                   if (chapters.containsKey(_log?.lastViewEpId)) {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).push(mixRoute(
                       builder: (BuildContext context) {
                         return PkzReaderScreen(
                           comicInfo: widget.pkzComic,
@@ -218,7 +219,7 @@ class _PkzComicInfoScreenState extends State<PkzComicInfoScreen>
                     ));
                     return;
                   }
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).push(mixRoute(
                     builder: (BuildContext context) {
                       return PkzReaderScreen(
                         comicInfo: widget.pkzComic,

@@ -7,6 +7,7 @@ import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
+import '../basic/config/IconLoading.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';
 import 'components/RightClickPop.dart';
@@ -41,7 +42,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
       if (value.isNotEmpty) {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) =>
                 SearchScreen(keyword: value, category: widget.category),
           ),
@@ -84,7 +85,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
             if (category == categoryTitle(null)) {
               category = null;
             }
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(mixRoute(
               builder: (context) {
                 return ComicsScreen(
                   category: category,

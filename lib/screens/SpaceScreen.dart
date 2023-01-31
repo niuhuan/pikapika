@@ -10,6 +10,7 @@ import 'package:pikapika/screens/ThemeScreen.dart';
 import 'package:pikapika/screens/ViewLogsScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
+import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/Themes.dart';
 import 'SettingsScreen.dart';
@@ -58,7 +59,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 await method.setPassword("");
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
+                  mixRoute(
                       builder: (context) => const AccountScreen()),
                 );
               }
@@ -69,7 +70,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AboutScreen()),
+                mixRoute(builder: (context) => const AboutScreen()),
               );
             },
             icon: Badged(
@@ -80,7 +81,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
           IconButton(
             onPressed: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                  .push(mixRoute(builder: (BuildContext context) {
                 return const ProScreen();
               }));
             },
@@ -92,7 +93,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                mixRoute(builder: (context) => const SettingsScreen()),
               );
             },
             icon: const Icon(Icons.settings),
@@ -109,7 +110,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
               if (androidNightModeDisplay) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ThemeScreen()),
+                  mixRoute(builder: (context) => const ThemeScreen()),
                 );
               } else {
                 chooseLightTheme(context);
@@ -122,7 +123,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                     builder: (context) => const FavouritePaperScreen()),
               );
             },
@@ -133,7 +134,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ViewLogsScreen()),
+                mixRoute(builder: (context) => const ViewLogsScreen()),
               );
             },
             title: const Text('浏览记录'),
@@ -143,7 +144,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                mixRoute(
                     builder: (context) => const DownloadListScreen()),
               );
             },
@@ -154,7 +155,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ProScreen()),
+                mixRoute(builder: (context) => const ProScreen()),
               );
             },
             title: const Text('发电'),
@@ -164,7 +165,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AboutScreen()),
+                  mixRoute(builder: (context) => const AboutScreen()),
                 );
               },
               title: Badged(

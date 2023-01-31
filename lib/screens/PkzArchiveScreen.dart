@@ -13,6 +13,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 
 import '../basic/Common.dart';
 import '../basic/Navigator.dart';
+import '../basic/config/IconLoading.dart';
 import 'PkzComicInfoScreen.dart';
 
 class PkzArchiveScreen extends StatefulWidget {
@@ -80,7 +81,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
     }
     _info = await method.pkzInfo(widget.pkzPath);
     if (_info.comics.length == 1) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(mixRoute(
         builder: (BuildContext context) => PkzComicInfoScreen(
           pkzPath: widget.pkzPath,
           pkzComic: _info.comics.first,
@@ -118,7 +119,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
                 .map((e) => GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(mixRoute(
                           builder: (BuildContext context) {
                             return PkzComicInfoScreen(
                               pkzComic: e,

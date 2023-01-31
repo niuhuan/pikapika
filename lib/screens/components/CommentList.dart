@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Entities.dart' as e;
 import 'package:pikapika/screens/CommentScreen.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../../basic/config/IconLoading.dart';
 import 'CommentItem.dart';
 import 'CommentMainType.dart';
 
@@ -82,7 +83,7 @@ class _CommentListState extends State<CommentList> {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) =>
                 CommentScreen(widget.mainType, widget.mainId, comment),
           ),

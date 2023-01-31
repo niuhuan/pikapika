@@ -11,6 +11,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/screens/DownloadExportToSocketScreen.dart';
 
+import '../basic/config/IconLoading.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
@@ -111,7 +112,7 @@ class _DownloadExportToFileScreenState
               MaterialButton(
                 onPressed: () async {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    mixRoute(
                       builder: (context) => DownloadExportToSocketScreen(
                         task: _task,
                         comicId: widget.comicId,

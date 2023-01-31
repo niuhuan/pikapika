@@ -10,6 +10,7 @@ import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 
+import '../../basic/config/IconLoading.dart';
 import '../FilePhotoViewScreen.dart';
 
 // 从本地加载图片
@@ -343,7 +344,7 @@ Widget buildFile(String file, double? width, double? height,
       String? choose = await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
       switch (choose) {
         case '预览图片':
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(mixRoute(
             builder: (context) => FilePhotoViewScreen(file),
           ));
           break;

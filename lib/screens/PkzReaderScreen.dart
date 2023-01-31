@@ -11,6 +11,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/IconLoading.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ImageReader.dart';
@@ -127,7 +128,7 @@ class _PkzReaderScreenState extends State<PkzReaderScreen> {
     final ep = widget.epList[epOrder];
     _replacement = true;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => PkzReaderScreen(
           comicInfo: widget.comicInfo,
           pkzPath: widget.pkzPath,
@@ -141,7 +142,7 @@ class _PkzReaderScreenState extends State<PkzReaderScreen> {
   FutureOr<dynamic> _onReloadEp() {
     _replacement = true;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => PkzReaderScreen(
           comicInfo: widget.comicInfo,
           currentEpId: widget.currentEpId,

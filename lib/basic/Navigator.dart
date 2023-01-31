@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/config/IconLoading.dart';
 
 // 用于监听返回到当前页面的事件
 // (await Navigator.push 会在子页面pushReplacement时结束阻塞)
@@ -37,12 +38,12 @@ Future<dynamic> navPushOrReplace(
   if (_depth < _depthMax) {
     return Navigator.push(
       context,
-      MaterialPageRoute(builder: builder),
+      mixRoute(builder: builder),
     );
   } else {
     return Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: builder),
+      mixRoute(builder: builder),
     );
   }
 }

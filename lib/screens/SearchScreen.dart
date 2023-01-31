@@ -7,6 +7,7 @@ import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/Entities.dart';
+import '../basic/config/IconLoading.dart';
 import 'components/ComicPager.dart';
 
 // 搜索页面
@@ -36,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
       if (value.isNotEmpty) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
+          mixRoute(
             builder: (context) => SearchScreen(
               keyword: value,
               category: widget.category,
@@ -71,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
             if (category == categoryTitle(null)) {
               category = null;
             }
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(mixRoute(
               builder: (context) {
                 return SearchScreen(
                   category: category,

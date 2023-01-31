@@ -10,6 +10,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
+import '../basic/config/IconLoading.dart';
 import 'DownloadConfirmScreen.dart';
 import 'components/ImageReader.dart';
 import 'components/RightClickPop.dart';
@@ -86,7 +87,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     if (orderMap.containsKey(epOrder)) {
       _replacement = true;
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
+        mixRoute(
           builder: (context) => ComicReaderScreen(
             comicInfo: widget.comicInfo,
             epList: widget.epList,
@@ -100,7 +101,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
 
   FutureOr<dynamic> _onReloadEp() {
     _replacement = true;
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(context).pushReplacement(mixRoute(
       builder: (context) => ComicReaderScreen(
         comicInfo: widget.comicInfo,
         epList: widget.epList,
@@ -115,7 +116,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
   FutureOr<dynamic> _onDownload() {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => DownloadConfirmScreen(
           comicInfo: widget.comicInfo,
           epList: widget.epList.reversed.toList(),

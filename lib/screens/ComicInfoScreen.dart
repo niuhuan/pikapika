@@ -11,6 +11,7 @@ import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 import 'package:pikapika/screens/components/Recommendation.dart';
 
+import '../basic/config/IconLoading.dart';
 import 'ComicReaderScreen.dart';
 import 'DownloadConfirmScreen.dart';
 import 'components/ComicDescriptionCard.dart';
@@ -285,7 +286,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
           onPressed: () async {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              mixRoute(
                 builder: (context) => DownloadConfirmScreen(
                   comicInfo: _comicInfo,
                   epList: _epList.reversed.toList(),
@@ -356,7 +357,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   void _push(ComicInfo comicInfo, List<Ep> epList, int order, int? rank) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      mixRoute(
         builder: (context) => ComicReaderScreen(
           comicInfo: comicInfo,
           epList: epList,
