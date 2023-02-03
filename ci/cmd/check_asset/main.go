@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -34,19 +35,22 @@ func main() {
 	var releaseFileName string
 	switch target {
 	case "macos":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-macos-intel.dmg", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-macos-intel.dmg", version.Code)
 	case "ios":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-ios-nosign.ipa", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-ios-nosign.ipa", version.Code)
 	case "windows":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-windows-x86_64.zip", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-windows-x86_64.zip", version.Code)
 	case "linux":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-linux-x86_64.AppImage", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-linux-x86_64.AppImage", version.Code)
 	case "android-arm32":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm32.apk", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm32.apk", version.Code)
 	case "android-arm64":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-arm64.apk", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-android-arm64.apk", version.Code)
 	case "android-x86_64":
-		releaseFileName = fmt.Sprintf("pikapika-%v-flutter_%v-android-x86_64.apk", version.Code, flutterVersion)
+		releaseFileName = fmt.Sprintf("pikapika-%v-android-x86_64.apk", version.Code)
+	}
+	if strings.HasPrefix(flutterVersion, "2.") {
+		releaseFileName = "z-of-" + releaseFileName
 	}
 	// get version
 	getReleaseRequest, err := http.NewRequest(
