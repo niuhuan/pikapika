@@ -567,12 +567,25 @@ class Method {
     });
   }
 
+  /// 导出下载的图片到HTML+JPG (即使没有下载完成)
+  Future<dynamic> exportComicJpegsEvenNotFinish(
+      String comicId,
+      String dir,
+      String name,
+      ) {
+    return _flatInvoke("exportComicJpegsEvenNotFinish", {
+      "comicId": comicId,
+      "dir": dir,
+      "name": name,
+    });
+  }
+
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToJPG(
-    String comicId,
-    String dir,
-    String name,
-  ) {
+      String comicId,
+      String dir,
+      String name,
+      ) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,
       "dir": dir,

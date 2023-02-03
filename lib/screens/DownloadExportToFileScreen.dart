@@ -351,6 +351,59 @@ class _DownloadExportToFileScreenState
         child: _buildButtonInner('导出到HTML.zip\n(可从其他设备导入 / 解压后可阅读)'),
       ));
       widgets.add(Container(height: 10));
+      //////////////////////
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicJpegsEvenNotFinish(
+                widget.comicId,
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child: _buildButtonInner('导出到HTML+JPG\n(即使没有下载成功)'),
+      ));
+      widgets.add(Container(height: 10));
     }
     if (Platform.isIOS || Platform.isAndroid) {
       widgets.add(MaterialButton(
