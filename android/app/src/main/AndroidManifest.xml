@@ -18,7 +18,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="opensource.pikapika"
+        android:label="pikapika"
         android:requestLegacyExternalStorage="true">
         <!-- requestLegacyExternalStorage="true" api29 down -->
         <activity
