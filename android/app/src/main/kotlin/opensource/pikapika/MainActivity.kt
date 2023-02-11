@@ -1,7 +1,6 @@
-package niuhuan.pikapika
+package opensource.pikapika
 
 import android.content.ContentValues
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.hardware.biometrics.BiometricPrompt

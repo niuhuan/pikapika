@@ -26,7 +26,6 @@ import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ShowCommentAtDownload.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
-import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
@@ -40,13 +39,19 @@ import '../basic/config/WillPopNotice.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
+import 'ThemeScreen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   final bool hiddenAccountInfo;
 
   const SettingsScreen({Key? key, this.hiddenAccountInfo = false})
       : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return rightClickPop(
@@ -56,77 +61,152 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildScreen(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('设置')),
-        body: ListView(
-          children: [
-            const Divider(),
-            hiddenAccountInfo
-                ? Container()
-                : ListTile(
-                    onTap: () async {
-                      Navigator.push(
-                        context,
-                        mixRoute(
-                            builder: (context) => const ModifyPasswordScreen()),
-                      );
-                    },
-                    title: const Text('修改密码'),
-                  ),
-            const Divider(),
-            const NetworkSetting(),
-            const Divider(),
-            shadowCategoriesModeSetting(),
-            shadowCategoriesSetting(),
-            qualitySetting(),
-            const Divider(),
-            pagerActionSetting(),
-            contentFailedReloadActionSetting(),
-            const Divider(),
-            readerTypeSetting(),
-            readerDirectionSetting(),
-            readerSliderPositionSetting(),
-            autoFullScreenSetting(),
-            fullScreenActionSetting(),
-            volumeControllerSetting(),
-            keyboardControllerSetting(),
-            noAnimationSetting(),
-            iconLoadingSetting(),
-            categoriesColumnCountSetting(),
-            const Divider(),
-            fullScreenUISetting(),
-            willPopNoticeSetting(),
-            timeZoneSetting(),
-            const Divider(),
-            autoCleanSecSetting(),
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  mixRoute(builder: (context) => const CleanScreen()),
-                );
-              },
-              title: const Text('清除缓存'),
-            ),
-            const Divider(),
-            androidDisplayModeSetting(),
-            androidSecureFlagSetting(),
-            authenticationSetting(),
-            const Divider(),
-            chooserRootSetting(),
-            downloadThreadCountSetting(),
-            downloadAndExportPathSetting(),
-            showCommentAtDownloadSetting(),
-            downloadCachePathSetting(),
-            exportRenameSetting(),
-            fontSetting(),
-            usingRightClickPopSetting(),
-            const Divider(),
-            migrate(context),
-            const Divider(),
-          ],
+  late var _index = 0;
+
+  Widget buildScreen(BuildContext context) {
+    final List<_IconAndWidgets> iaws = [
+      _IconAndWidgets(Icons.lan, [
+        const Padding(padding: EdgeInsets.only(top: 15)),
+        const Divider(),
+        const ListTile(
+          subtitle: Text("网络&账户"),
         ),
-      );
+        const Divider(),
+        widget.hiddenAccountInfo
+            ? Container()
+            : ListTile(
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    mixRoute(
+                      builder: (context) => const ModifyPasswordScreen(),
+                    ),
+                  );
+                },
+                title: const Text('修改密码'),
+              ),
+        const Divider(),
+        const NetworkSetting(),
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+      ]),
+      _IconAndWidgets(Icons.ad_units, [
+        const Padding(padding: EdgeInsets.only(top: 15)),
+        const Divider(),
+        const ListTile(
+          subtitle: Text("系统&界面"),
+        ),
+        const Divider(),
+        ListTile(
+          onTap: () async {
+            if (androidNightModeDisplay) {
+              Navigator.push(
+                context,
+                mixRoute(builder: (context) => const ThemeScreen()),
+              );
+            } else {
+              chooseLightTheme(context);
+            }
+          },
+          title: const Text('主题'),
+        ),
+        fullScreenUISetting(),
+        noAnimationSetting(),
+        iconLoadingSetting(),
+        categoriesColumnCountSetting(),
+        willPopNoticeSetting(),
+        pagerActionSetting(),
+        contentFailedReloadActionSetting(),
+        timeZoneSetting(),
+        fontSetting(),
+        usingRightClickPopSetting(),
+        const Divider(),
+        androidDisplayModeSetting(),
+        androidSecureFlagSetting(),
+        authenticationSetting(),
+        const Divider(),
+        migrate(context),
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+      ]),
+      _IconAndWidgets(Icons.confirmation_num_rounded, [
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+        const Divider(),
+        const ListTile(
+          subtitle: Text("内容&阅读器"),
+        ),
+        const Divider(),
+        shadowCategoriesModeSetting(),
+        shadowCategoriesSetting(),
+        const Divider(),
+        qualitySetting(),
+        readerTypeSetting(),
+        readerDirectionSetting(),
+        readerSliderPositionSetting(),
+        autoFullScreenSetting(),
+        fullScreenActionSetting(),
+        volumeControllerSetting(),
+        keyboardControllerSetting(),
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+      ]),
+      _IconAndWidgets(Icons.download, [
+        const Padding(padding: EdgeInsets.only(top: 15)),
+        const Divider(),
+        const ListTile(
+          subtitle: Text("下载&缓存"),
+        ),
+        const Divider(),
+        autoCleanSecSetting(),
+        ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              mixRoute(builder: (context) => const CleanScreen()),
+            );
+          },
+          title: const Text('清除缓存'),
+        ),
+        const Divider(),
+        chooserRootSetting(),
+        downloadThreadCountSetting(),
+        downloadAndExportPathSetting(),
+        showCommentAtDownloadSetting(),
+        downloadCachePathSetting(),
+        exportRenameSetting(),
+        const Divider(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+      ]),
+    ];
+    var i = 0;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('设置'),
+        actions: [
+          ...iaws.map(
+            (e) {
+              final idx = i;
+              return Opacity(
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _index = idx;
+                    });
+                  },
+                  icon: Icon(e.icon),
+                ),
+                opacity: i++ == _index ? 1 : .75,
+              );
+            },
+          )
+        ],
+      ),
+      body: ListView(
+        children: iaws[_index].widgets,
+      ),
+    );
+  }
 
   Widget migrate(BuildContext context) {
     if (Platform.isAndroid) {
@@ -158,4 +238,11 @@ class SettingsScreen extends StatelessWidget {
     }
     return Container();
   }
+}
+
+class _IconAndWidgets {
+  final IconData icon;
+  final List<Widget> widgets;
+
+  _IconAndWidgets(this.icon, this.widgets);
 }

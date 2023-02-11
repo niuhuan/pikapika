@@ -21,7 +21,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>niuhuan.pkz</string>
+				<string>opensource.pkz</string>
 				<string>pkz</string>
 			</array>
 		</dict>
@@ -90,7 +90,7 @@
 			<key>UTTypeDescription</key>
 			<string>PKZ Archive</string>
 			<key>UTTypeIdentifier</key>
-			<string>niuhuan.pkz</string>
+			<string>opensource.pkz</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -101,12 +101,14 @@
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>text/vnd.niuhuan.pkz</string>
-					<string>text/vnd.niuhuan.pki</string>
-					<string>text/vnd.niuhuan.zip</string>
+					<string>text/vnd.opensource.pkz</string>
+					<string>text/vnd.opensource.pki</string>
+					<string>text/vnd.opensource.zip</string>
 				</array>
 			</dict>
 		</dict>
 	</array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

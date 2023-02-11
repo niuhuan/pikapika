@@ -111,19 +111,6 @@ class _AccountScreenState extends State<AccountScreen> {
             icon: const Text('关于'),
           ),
           IconButton(
-            onPressed: () {
-              if (androidNightModeDisplay) {
-                Navigator.push(
-                  context,
-                  mixRoute(builder: (context) => const ThemeScreen()),
-                );
-              } else {
-                chooseLightTheme(context);
-              }
-            },
-            icon: const Text('主题'),
-          ),
-          IconButton(
             onPressed: _toDownloadList,
             icon: const Icon(Icons.download_rounded),
           ),

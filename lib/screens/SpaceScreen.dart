@@ -53,7 +53,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
           IconButton(
             onPressed: () async {
               bool result =
-                  await confirmDialog(context, '退出登录', '您确认要退出当前账号吗?');
+              await confirmDialog(context, '退出登录', '您确认要退出当前账号吗?');
               if (result) {
                 await method.clearToken();
                 await method.setPassword("");
@@ -106,20 +106,6 @@ class _SpaceScreenState extends State<SpaceScreen> {
           const UserProfileCard(),
           const Divider(),
           ListTile(
-            onTap: () async {
-              if (androidNightModeDisplay) {
-                Navigator.push(
-                  context,
-                  mixRoute(builder: (context) => const ThemeScreen()),
-                );
-              } else {
-                chooseLightTheme(context);
-              }
-            },
-            title: const Text('主题'),
-          ),
-          const Divider(),
-          ListTile(
             onTap: () {
               Navigator.push(
                 context,
@@ -150,28 +136,6 @@ class _SpaceScreenState extends State<SpaceScreen> {
             },
             title: const Text('我的下载'),
           ),
-          const Divider(),
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                mixRoute(builder: (context) => const ProScreen()),
-              );
-            },
-            title: const Text('发电'),
-          ),
-          const Divider(),
-          ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  mixRoute(builder: (context) => const AboutScreen()),
-                );
-              },
-              title: Badged(
-                child: const Text('关于'),
-                badge: latestVersion() == null ? null : "1",
-              )),
           const Divider(),
         ],
       ),
