@@ -35,6 +35,7 @@ import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/UsingRightClickPop.dart';
+import '../basic/config/WebDav.dart';
 import '../basic/config/WillPopNotice.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
@@ -87,6 +88,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
         const Divider(),
         const NetworkSetting(),
+        const Padding(padding: EdgeInsets.only(top: 15)),
+        const Divider(),
+        const ListTile(
+          subtitle: Text("同步"),
+        ),
+        ...webDavSettings(context),
         const Divider(),
         const Padding(padding: EdgeInsets.only(top: 15)),
       ]),

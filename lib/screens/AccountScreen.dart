@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/IsPro.dart';
-import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
 import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
@@ -17,7 +15,7 @@ import '../basic/config/IconLoading.dart';
 import '../basic/config/Version.dart';
 import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
-import 'ThemeScreen.dart';
+import 'ForgotPasswordScreen.dart';
 import 'components/ContentLoading.dart';
 
 // 账户设置
@@ -55,7 +53,6 @@ class _AccountScreenState extends State<AccountScreen> {
   _versionSub(_) {
     versionPop(context);
   }
-
 
   Future _loadProperties() async {
     var username = await method.getUsername();
@@ -103,8 +100,7 @@ class _AccountScreenState extends State<AccountScreen> {
               Navigator.push(
                 context,
                 mixRoute(
-                  builder: (context) => const AboutScreen(
-                  ),
+                  builder: (context) => const AboutScreen(),
                 ),
               );
             },
@@ -160,28 +156,39 @@ class _AccountScreenState extends State<AccountScreen> {
             },
           ),
           const NetworkSetting(),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Text.rich(TextSpan(
-                    text: '没有账号,我要注册',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      decoration: TextDecoration.underline,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => Navigator.push(
-                            context,
-                            mixRoute(
-                                builder: (BuildContext context) =>
-                                    const RegisterScreen()),
-                          ).then((value) => _loadProperties()),
-                  )),
-                ),
+          Container(
+            padding: const EdgeInsets.all(15),
+            child: Text.rich(TextSpan(
+              text: '没有账号,我要注册',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+                decoration: TextDecoration.underline,
               ),
-            ],
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Navigator.push(
+                      context,
+                      mixRoute(
+                          builder: (BuildContext context) =>
+                              const RegisterScreen()),
+                    ).then((value) => _loadProperties()),
+            )),
+          ),
+          Container(
+            padding: const EdgeInsets.all(15),
+            child: Text.rich(TextSpan(
+              text: '密码找回',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+                decoration: TextDecoration.underline,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Navigator.push(
+                      context,
+                      mixRoute(
+                          builder: (BuildContext context) =>
+                              const ForgotPasswordScreen()),
+                    ).then((value) => _loadProperties()),
+            )),
           ),
         ],
       ),

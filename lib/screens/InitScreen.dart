@@ -45,6 +45,7 @@ import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportRename.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
+import '../basic/config/WebDav.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
 import 'DownloadOnlyImportScreen.dart';
@@ -109,6 +110,7 @@ class _InitScreenState extends State<InitScreen> {
     await initShowCommentAtDownload();
     await initDownloadCachePath();
     await initUseApiLoadImage();
+    await initWebDav();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
@@ -154,6 +156,7 @@ class _InitScreenState extends State<InitScreen> {
     if (_authenticating) {
       _goAuthentication();
     } else {
+      syncWebDavIfAuto(context);
       _goApplication();
     }
   }

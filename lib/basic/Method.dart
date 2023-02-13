@@ -569,10 +569,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG (即使没有下载完成)
   Future<dynamic> exportComicJpegsEvenNotFinish(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicJpegsEvenNotFinish", {
       "comicId": comicId,
       "dir": dir,
@@ -582,10 +582,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToJPG(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,
       "dir": dir,
@@ -919,5 +919,39 @@ class Method {
 
   Future<String> iosGetDocumentDir() async {
     return await _channel.invokeMethod('iosGetDocumentDir', '');
+  }
+
+  /// 找回密码1
+  Future<ForgotPasswordResult> forgotPassword(email) async {
+    String data = await _flatInvoke("forgotPassword", email);
+    return ForgotPasswordResult.fromJson(jsonDecode(data));
+  }
+
+  /// 找回密码2
+  Future<ResetPasswordResult> resetPassword(
+    String email,
+    int questionNo,
+    String answer,
+  ) async {
+    String data = await _flatInvoke("resetPassword", {
+      "email": email,
+      "questionNo": questionNo,
+      "answer": answer,
+    });
+    return ResetPasswordResult.fromJson(jsonDecode(data));
+  }
+
+  Future mergeHistoriesFromWebDav(
+    String root,
+    String username,
+    String password,
+    String file,
+  ) {
+    return _flatInvoke("mergeHistoriesFromWebDav", {
+      "root": root,
+      "username": username,
+      "password": password,
+      "file": file,
+    });
   }
 }

@@ -979,6 +979,7 @@ class PkzComicViewLog {
     required this.lastViewPictureRank,
     required this.lastViewTime,
   });
+
   late final String fileName;
   late final String lastViewComicId;
   late final String filePath;
@@ -988,7 +989,7 @@ class PkzComicViewLog {
   late final int lastViewPictureRank;
   late final String lastViewTime;
 
-  PkzComicViewLog.fromJson(Map<String, dynamic> json){
+  PkzComicViewLog.fromJson(Map<String, dynamic> json) {
     fileName = json['fileName'];
     lastViewComicId = json['lastViewComicId'];
     filePath = json['filePath'];
@@ -1020,5 +1021,49 @@ class IsPro {
   IsPro.fromJson(Map<String, dynamic> json) {
     this.isPro = json["isPro"];
     this.expire = json["expire"];
+  }
+}
+
+class ForgotPasswordResult {
+  ForgotPasswordResult({
+    required this.question1,
+    required this.question2,
+    required this.question3,
+  });
+
+  late final String question1;
+  late final String question2;
+  late final String question3;
+
+  ForgotPasswordResult.fromJson(Map<String, dynamic> json) {
+    question1 = json['question1'];
+    question2 = json['question2'];
+    question3 = json['question3'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['question1'] = question1;
+    _data['question2'] = question2;
+    _data['question3'] = question3;
+    return _data;
+  }
+}
+
+class ResetPasswordResult {
+  ResetPasswordResult({
+    required this.password,
+  });
+
+  late final String password;
+
+  ResetPasswordResult.fromJson(Map<String, dynamic> json) {
+    password = json['password'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['password'] = password;
+    return _data;
   }
 }
