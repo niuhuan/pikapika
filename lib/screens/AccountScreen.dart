@@ -221,7 +221,7 @@ class _AccountScreenState extends State<AccountScreen> {
           break;
       }
       if ("$e".contains("email") && "$e".contains("password")) {
-        message = "请检查账号密码";
+        message = "账号或密码错误";
       }
       alertDialog(
         context,

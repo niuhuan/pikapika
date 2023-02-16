@@ -16,7 +16,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   late bool _registering = false;
   late bool _registerOver = false;
 
@@ -78,6 +77,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       String message = "$e";
       if (message.contains("email is already exist")) {
         message = "账号已存在";
+      } else if (message.contains("name is already exist")) {
+        message = "昵称已存在";
       }
       alertDialog(context, "注册失败", message);
     } finally {
@@ -123,10 +124,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('注册'), actions: [
-        IconButton(
-          onPressed: () => _register(), icon: const Icon(Icons.check),),
-      ],),
+      appBar: AppBar(
+        title: const Text('注册'),
+        actions: [
+          IconButton(
+            onPressed: () => _register(),
+            icon: const Icon(Icons.check),
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           const Divider(),
@@ -157,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 src: _password,
                 title: '密码',
                 hint: '请输入密码',
-                desc: '(大小写字母+数字/8位以上)',
+                desc: '(大小写字母+数字/8位或以上)',
                 isPasswd: true,
               );
               if (input != null) {
@@ -229,16 +235,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             title: const Text("生日"),
             subtitle: Text(_birthday),
             onTap: () async {
-              DatePicker.showDatePicker(
-                  context,
+              DatePicker.showDatePicker(context,
                   locale: LocaleType.zh,
-                  currentTime: DateTime.parse(_birthday),
-                  onConfirm: (date) {
-                    setState(() {
-                      _birthday = formatTimeToDate(date.toString());
-                    });
-                  }
-              );
+                  currentTime: DateTime.parse(_birthday), onConfirm: (date) {
+                setState(() {
+                  _birthday = formatTimeToDate(date.toString());
+                });
+              });
             },
           ),
           const Divider(),
@@ -364,5 +367,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return "";
     }
   }
-
 }
