@@ -79,3 +79,5 @@ Widget shadowCategoriesSetting() {
     },
   );
 }
+
+const chooseShadowCategories = _chooseShadowCategories;

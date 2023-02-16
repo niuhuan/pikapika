@@ -73,9 +73,9 @@ Widget reloadSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("==== 分流 ===="),
+        title: const Text("分流同步"),
         onTap: () async {
-          String? choose = await chooseListDialog(context, "==== 分流 ====", [
+          String? choose = await chooseListDialog(context, "分流同步", [
             "从服务器获取最新的分流地址",
             "重制分流为默认值",
           ]);

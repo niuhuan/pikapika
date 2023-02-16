@@ -71,3 +71,14 @@ Widget shadowCategoriesModeSetting() {
     },
   );
 }
+
+Widget shadowSwitchActionButton(BuildContext context) {
+  return IconButton(
+    onPressed: () {
+      _chooseShadowCategoriesMode(context);
+    },
+    icon: const Icon(Icons.do_not_disturb_on_outlined),
+  );
+}
+
+const chooseShadowCategoriesMode = _chooseShadowCategoriesMode;

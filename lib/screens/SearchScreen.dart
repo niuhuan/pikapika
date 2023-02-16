@@ -3,12 +3,12 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/store/Categories.dart';
-import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/Entities.dart';
 import '../basic/config/IconLoading.dart';
 import 'components/ComicPager.dart';
+import 'components/Common.dart';
 
 // 搜索页面
 class SearchScreen extends StatefulWidget {
@@ -50,8 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
       return AppBar(
         title: Text("${categoryTitle(widget.category)} ${widget.keyword}"),
         actions: [
-          shadowCategoriesActionButton(context),
-          chooseLayoutActionButton(context),
+          aPopMenu(context),
           _chooseCategoryAction(),
           _searchBar.getSearchAction(context),
         ],

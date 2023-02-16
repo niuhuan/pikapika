@@ -10,6 +10,7 @@ import '../basic/Entities.dart';
 import '../basic/config/IconLoading.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';
+import 'components/Common.dart';
 import 'components/RightClickPop.dart';
 
 // 漫画列表
@@ -53,8 +54,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
       return AppBar(
         title: Text(categoryTitle(widget.category)),
         actions: [
-          shadowCategoriesActionButton(context),
-          chooseLayoutActionButton(context),
+          aPopMenu(context),
           _chooseCategoryAction(),
           _categorySearchBar.getSearchAction(context),
         ],

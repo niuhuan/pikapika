@@ -16,6 +16,7 @@ import '../basic/config/IconLoading.dart';
 import 'ComicsScreen.dart';
 import 'GamesScreen.dart';
 import 'RandomComicsScreen.dart';
+import 'components/Common.dart';
 import 'components/ContentLoading.dart';
 import 'components/Images.dart';
 
@@ -46,7 +47,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       return AppBar(
         title: const Text('分类'),
         actions: [
-          shadowCategoriesActionButton(context),
+          aPopMenu(context),
           _searchBar.getSearchAction(context),
         ],
       );

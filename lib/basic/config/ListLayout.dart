@@ -53,3 +53,5 @@ IconButton chooseLayoutActionButton(BuildContext context) => IconButton(
       },
       icon: const Icon(Icons.view_quilt),
     );
+
+const chooseListLayout = _chooseListLayout;
