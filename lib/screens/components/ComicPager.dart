@@ -460,7 +460,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
 
   Widget? _buildLoadingCell() {
     if (_noPro) {
-      return FitButton(onPressed: () {}, text: '发电以后才能看50页以后的内容');
+      return FitButton(onPressed: () {}, text: '发电以后才能看10页以后的内容');
     }
     if (_error) {
       return FitButton(
