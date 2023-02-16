@@ -6,6 +6,7 @@ import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/Entities.dart';
+import '../basic/config/Address.dart';
 import '../basic/config/IconLoading.dart';
 import 'components/ComicPager.dart';
 import 'components/Common.dart';
@@ -51,6 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
         title: Text("${categoryTitle(widget.category)} ${widget.keyword}"),
         actions: [
           aPopMenu(context),
+          addressActionButton(context),
           _chooseCategoryAction(),
           _searchBar.getSearchAction(context),
         ],

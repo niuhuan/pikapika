@@ -7,6 +7,7 @@ import 'package:pikapika/basic/store/Categories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
+import '../basic/config/Address.dart';
 import '../basic/config/IconLoading.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';
@@ -55,6 +56,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
         title: Text(categoryTitle(widget.category)),
         actions: [
           aPopMenu(context),
+          addressActionButton(context),
           _chooseCategoryAction(),
           _categorySearchBar.getSearchAction(context),
         ],
@@ -145,8 +147,8 @@ class _ComicsScreenState extends State<ComicsScreen> {
       appBar = AppBar(
         title: Text(title),
         actions: [
-          shadowCategoriesActionButton(context),
-          chooseLayoutActionButton(context),
+          aPopMenu(context),
+          addressActionButton(context),
           _chooseCategoryAction(),
         ],
       );

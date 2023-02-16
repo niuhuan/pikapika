@@ -85,7 +85,7 @@ Widget reloadSwitchAddressSetting() {
                 await method.reloadSwitchAddress();
                 defaultToast(context, "分流2/3已同步");
               } catch (e, s) {
-                print("$e\$s");
+                print("$e\n$s");
                 defaultToast(context, "分流同步失败");
               }
             } else if (choose == "重制分流为默认值") {
@@ -93,7 +93,7 @@ Widget reloadSwitchAddressSetting() {
                 await method.resetSwitchAddress();
                 defaultToast(context, "分流2/3已重制为默认值");
               } catch (e, s) {
-                print("$e\$s");
+                print("$e\n$s");
                 defaultToast(context, "分流重制失败");
               }
             }
@@ -101,5 +101,55 @@ Widget reloadSwitchAddressSetting() {
         },
       );
     },
+  );
+}
+
+Future chooseAddressAndSwitch(BuildContext context) async {
+  String? choose = await showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        title: const Text('选择分流'),
+        children: <Widget>[
+          ..._addresses.entries.map(
+            (e) => SimpleDialogOption(
+              child: Text(e.value),
+              onPressed: () {
+                Navigator.of(context).pop(e.key);
+              },
+            ),
+          ),
+          SimpleDialogOption(
+            child: const Text("分流同步"),
+            onPressed: () {
+              Navigator.of(context).pop("分流同步");
+            },
+          )
+        ],
+      );
+    },
+  );
+  if (choose != null) {
+    if ("分流同步" == choose) {
+      try {
+        await method.reloadSwitchAddress();
+        defaultToast(context, "分流2/3已同步");
+      } catch (e, s) {
+        print("$e\n$s");
+        defaultToast(context, "分流同步失败");
+      }
+      return;
+    }
+    await method.setSwitchAddress(choose);
+    _currentAddress = choose;
+  }
+}
+
+Widget addressActionButton(BuildContext context) {
+  return IconButton(
+    onPressed: () {
+      chooseAddressAndSwitch(context);
+    },
+    icon: const Icon(Icons.network_ping),
   );
 }

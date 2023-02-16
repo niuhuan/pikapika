@@ -11,6 +11,7 @@ import 'package:pikapika/screens/RankingsScreen.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/basic/Method.dart';
+import '../basic/config/Address.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/IconLoading.dart';
 import 'ComicsScreen.dart';
@@ -48,6 +49,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: const Text('分类'),
         actions: [
           aPopMenu(context),
+          addressActionButton(context),
           _searchBar.getSearchAction(context),
         ],
       );

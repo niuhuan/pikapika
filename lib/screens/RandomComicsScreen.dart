@@ -4,7 +4,9 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 
+import '../basic/config/Address.dart';
 import 'components/ComicListBuilder.dart';
+import 'components/Common.dart';
 import 'components/RightClickPop.dart';
 
 // 随机漫画页面
@@ -31,8 +33,8 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
       appBar: AppBar(
         title: const Text('随机本子'),
         actions: [
-          shadowCategoriesActionButton(context),
-          chooseLayoutActionButton(context),
+          aPopMenu(context),
+          addressActionButton(context),
         ],
       ),
       body: ComicListBuilder(method.randomComics),

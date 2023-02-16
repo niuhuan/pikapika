@@ -8,8 +8,10 @@ import 'package:pikapika/screens/components/ContentBuilder.dart';
 
 import '../basic/Cross.dart';
 import '../basic/Navigator.dart';
+import '../basic/config/Address.dart';
 import 'ComicsScreen.dart';
 import 'components/ComicListBuilder.dart';
+import 'components/Common.dart';
 import 'components/FitButton.dart';
 import 'components/RightClickPop.dart';
 
@@ -32,8 +34,8 @@ class RankingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('排行榜'),
         actions: [
-          shadowCategoriesActionButton(context),
-          chooseLayoutActionButton(context),
+          aPopMenu(context),
+          addressActionButton(context),
         ],
       ),
       body: DefaultTabController(
