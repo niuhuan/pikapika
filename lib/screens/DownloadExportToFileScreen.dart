@@ -453,6 +453,328 @@ class _DownloadExportToFileScreenState
     return widgets;
   }
 
+  List<Widget> _buildExportToJpegZipButtons() {
+    List<Widget> widgets = [];
+    if (Platform.isWindows ||
+        Platform.isMacOS ||
+        Platform.isLinux ||
+        Platform.isAndroid) {
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownloadJpegZip(
+                widget.comicId,
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child: _buildButtonInner('导出阅读器用JPGS.zip\n(不可再导入)'),
+      ));
+      widgets.add(Container(height: 10));
+      /////////////////////
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownloadToPkz(
+                [widget.comicId],
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child:
+        _buildButtonInner('导出到xxx.pkz\n(可直接打开观看的格式,不支持导入)\n(可以躲避网盘或者聊天软件的扫描)'),
+      ));
+      widgets.add(Container(height: 10));
+      /////////////////////
+      /////////////////////
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownloadToPki(
+                widget.comicId,
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child:
+        _buildButtonInner('导出到xxx.pki\n(只支持导入, 不支持直接阅读)\n(可以躲避网盘或者聊天软件的扫描)\n(后期版本可能支持直接阅读)'),
+      ));
+      widgets.add(Container(height: 10));
+      /////////////////////
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicDownload(
+                widget.comicId,
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child: _buildButtonInner('导出到HTML.zip\n(可从其他设备导入 / 解压后可阅读)'),
+      ));
+      widgets.add(Container(height: 10));
+      //////////////////////
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          late String? path;
+          try {
+            path =  Platform.isIOS
+                ? await method.iosGetDocumentDir()
+                : await chooseFolder(context);
+          } catch (e) {
+            defaultToast(context, "$e");
+            return;
+          }
+          var name = "";
+          if (currentExportRename()) {
+            var rename = await inputString(
+              context,
+              "请输入保存后的名称",
+              defaultValue: _task.title,
+            );
+            if (rename != null && rename.isNotEmpty) {
+              name = rename;
+            } else {
+              return;
+            }
+          }
+          print("path $path");
+          if (path != null) {
+            try {
+              setState(() {
+                exporting = true;
+              });
+              await method.exportComicJpegsEvenNotFinish(
+                widget.comicId,
+                path,
+                name,
+              );
+              setState(() {
+                exportResult = "导出成功";
+              });
+            } catch (e) {
+              setState(() {
+                exportResult = "导出失败 $e";
+              });
+            } finally {
+              setState(() {
+                exporting = false;
+              });
+            }
+          }
+        },
+        child: _buildButtonInner('导出到HTML+JPG\n(即使没有下载成功)'),
+      ));
+      widgets.add(Container(height: 10));
+    }
+    if (Platform.isIOS || Platform.isAndroid) {
+      widgets.add(MaterialButton(
+        onPressed: () async {
+          if (!(await confirmDialog(context, "导出确认", "将本漫画所有图片到相册？"))) {
+            return;
+          }
+          if (!(await Permission.storage.request()).isGranted) {
+            return;
+          }
+          try {
+            setState(() {
+              exporting = true;
+            });
+            // 导出所有图片数据
+            var count = 0;
+            List<DownloadEp> eps = await method.downloadEpList(widget.comicId);
+            for (var i = 0; i < eps.length; i++) {
+              var pics = await method.downloadPicturesByEpId(eps[i].id);
+              for (var j = 0; j < pics.length; j++) {
+                setState(() {
+                  exportMessage = "导出图片 ${count++} 张";
+                });
+                await saveImageQuiet(
+                  await method.downloadImagePath(pics[j].localPath),
+                  context,
+                );
+              }
+            }
+            setState(() {
+              exportResult = "导出成功";
+            });
+          } catch (e) {
+            setState(() {
+              exportResult = "导出失败 $e";
+            });
+          } finally {
+            setState(() {
+              exporting = false;
+            });
+          }
+        },
+        child: _buildButtonInner('将所有图片导出到手机相册'),
+      ));
+      widgets.add(Container(height: 10));
+    }
+    return widgets;
+  }
+
   Widget _buildButtonInner(String text) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
