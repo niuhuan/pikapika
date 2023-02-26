@@ -6,9 +6,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/enum/ErrorTypes.dart';
-import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/RegisterScreen.dart';
-import 'package:pikapika/screens/SettingsScreen.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
 import '../basic/config/IconLoading.dart';
@@ -31,6 +29,7 @@ class _AccountScreenState extends State<AccountScreen> {
   late String _username = "";
   late String _password = "";
   late StreamSubscription<String?> _linkSubscription;
+  late int _versionClick = 0;
 
   @override
   void initState() {
@@ -80,32 +79,40 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget _buildGui() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('配置选项'),
+        title: const Text('配置'),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                mixRoute(
-                  builder: (context) => const SettingsScreen(
-                    hiddenAccountInfo: true,
-                  ),
-                ),
-              );
+              setState(() {
+                _versionClick++;
+              });
             },
-            icon: const Text('设置'),
+            icon: Text(currentVersion()),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                mixRoute(
-                  builder: (context) => const AboutScreen(),
-                ),
-              );
-            },
-            icon: const Text('关于'),
-          ),
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       mixRoute(
+          //         builder: (context) => const SettingsScreen(
+          //           hiddenAccountInfo: true,
+          //         ),
+          //       ),
+          //     );
+          //   },
+          //   icon: const Text('设置'),
+          // ),
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       mixRoute(
+          //         builder: (context) => const AboutScreen(),
+          //       ),
+          //     );
+          //   },
+          //   icon: const Text('关于'),
+          // ),
           IconButton(
             onPressed: _toDownloadList,
             icon: const Icon(Icons.download_rounded),
@@ -156,23 +163,27 @@ class _AccountScreenState extends State<AccountScreen> {
             },
           ),
           const NetworkSetting(),
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: Text.rich(TextSpan(
-              text: '没有账号,我要注册',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                decoration: TextDecoration.underline,
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => Navigator.push(
-                      context,
-                      mixRoute(
-                          builder: (BuildContext context) =>
-                              const RegisterScreen()),
-                    ).then((value) => _loadProperties()),
-            )),
-          ),
+          ..._versionClick >= 7
+              ? [
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    child: Text.rich(TextSpan(
+                      text: '没有账号,我要注册',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Navigator.push(
+                              context,
+                              mixRoute(
+                                  builder: (BuildContext context) =>
+                                      const RegisterScreen()),
+                            ).then((value) => _loadProperties()),
+                    )),
+                  ),
+                ]
+              : [],
           Container(
             padding: const EdgeInsets.all(15),
             child: Text.rich(TextSpan(
