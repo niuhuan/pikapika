@@ -972,4 +972,8 @@ class Method {
     String ms = await _flatInvoke("ping", idx);
     return int.parse(ms);
   }
+
+  Future<String> androidStorageRoot() async {
+    return await _channel.invokeMethod("androidStorageRoot");
+  }
 }

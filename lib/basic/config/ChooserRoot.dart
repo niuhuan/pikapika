@@ -7,13 +7,16 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../Common.dart';
 import '../Method.dart';
-import 'Platform.dart';
 
 const _propertyName = "chooserRoot";
 late String _chooserRoot;
+late String _androidDefaultRoot;
 
 Future<dynamic> initChooserRoot() async {
   _chooserRoot = await method.loadProperty(_propertyName, "");
+  if (Platform.isAndroid) {
+    _androidDefaultRoot = await method.androidStorageRoot();
+  }
 }
 
 String _currentChooserRoot() {
@@ -25,7 +28,7 @@ String _currentChooserRoot() {
     } else if (Platform.isLinux) {
       return '/';
     } else if (Platform.isAndroid) {
-      return '/storage/emulated/0';
+      return _androidDefaultRoot;
     } else {
       return '';
     }
@@ -35,14 +38,8 @@ String _currentChooserRoot() {
 
 Future<String> currentChooserRoot() async {
   if (Platform.isAndroid) {
-    if (androidVersion >= 30) {
-      if (!(await Permission.manageExternalStorage.request()).isGranted) {
-        throw Exception("申请权限被拒绝");
-      }
-    } else {
-      if (!(await Permission.storage.request()).isGranted) {
-        throw Exception("申请权限被拒绝");
-      }
+    if (!(await Permission.storage.request()).isGranted) {
+      throw Exception("申请权限被拒绝");
     }
   }
   return _currentChooserRoot();

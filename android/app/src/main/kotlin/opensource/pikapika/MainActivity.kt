@@ -102,6 +102,7 @@ class MainActivity : FlutterActivity() {
                     "androidGetExtendDirs" -> androidGetExtendDirs()
                     "androidSecureFlag" -> androidSecureFlag(call.argument("flag")!!)
                     "verifyAuthentication" -> auth()
+                    "androidStorageRoot" -> storageRoot()
                     else -> {
                         notImplementedToken
                     }
@@ -404,5 +405,7 @@ class MainActivity : FlutterActivity() {
         return queue.poll(5, TimeUnit.MINUTES) ?: false
     }
 
-
+    fun storageRoot(): String {
+        return Environment.getExternalStorageDirectory().absolutePath
+    }
 }
