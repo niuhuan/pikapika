@@ -299,6 +299,7 @@ Future<String?> inputString(BuildContext context, String title,
 StreamSubscription<String?> linkSubscript(BuildContext context) {
   return linkStream.listen((uri) async {
     if (uri == null) return;
+    var parsed = Uri.parse(uri);
     if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(uri).isNotEmpty) {
       String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$")
           .allMatches(uri)
@@ -309,7 +310,17 @@ StreamSubscription<String?> linkSubscript(BuildContext context) {
           builder: (BuildContext context) => ComicInfoScreen(comicId: comicId),
         ),
       );
-    } else if (RegExp(r"^.*\.pkz$").allMatches(uri).isNotEmpty) {
+    } else if (RegExp(r"^https?://pika/comic/([0-9A-z]+)/$").allMatches(uri).isNotEmpty) {
+      String comicId = RegExp(r"^https?://pika/comic/([0-9A-z]+)/$")
+          .allMatches(uri)
+          .first
+          .group(1)!;
+      Navigator.of(context).push(
+        mixRoute(
+          builder: (BuildContext context) => ComicInfoScreen(comicId: comicId),
+        ),
+      );
+    } else if (RegExp(r"^.*\.pkz$").allMatches(parsed.path).isNotEmpty) {
       File file = await toFile(uri);
       Navigator.of(context).push(
         mixRoute(
@@ -317,7 +328,7 @@ StreamSubscription<String?> linkSubscript(BuildContext context) {
               PkzArchiveScreen(pkzPath: file.path),
         ),
       );
-    } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(uri).isNotEmpty) {
+    } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(parsed.path).isNotEmpty) {
       File file = await toFile(uri);
       Navigator.of(context).push(
         mixRoute(

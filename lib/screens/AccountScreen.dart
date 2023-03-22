@@ -81,38 +81,17 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         title: const Text('配置'),
         actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _versionClick++;
-              });
-            },
-            icon: Text(currentVersion()),
+          SizedBox(
+            width: 80,
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  _versionClick++;
+                });
+              },
+              icon: Text(currentVersion()),
+            ),
           ),
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       mixRoute(
-          //         builder: (context) => const SettingsScreen(
-          //           hiddenAccountInfo: true,
-          //         ),
-          //       ),
-          //     );
-          //   },
-          //   icon: const Text('设置'),
-          // ),
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       mixRoute(
-          //         builder: (context) => const AboutScreen(),
-          //       ),
-          //     );
-          //   },
-          //   icon: const Text('关于'),
-          // ),
           IconButton(
             onPressed: _toDownloadList,
             icon: const Icon(Icons.download_rounded),

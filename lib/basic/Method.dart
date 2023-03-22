@@ -582,10 +582,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToJPG(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,
       "dir": dir,
@@ -595,10 +595,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadJpegZip(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadJpegZip", {
       "comicId": comicId,
       "dir": dir,
@@ -966,5 +966,10 @@ class Method {
       "password": password,
       "file": file,
     });
+  }
+
+  Future<int> ping(String idx) async {
+    String ms = await _flatInvoke("ping", idx);
+    return int.parse(ms);
   }
 }
