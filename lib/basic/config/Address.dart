@@ -13,7 +13,7 @@ var _addresses = {
   "0": "不分流",
   "1": "分流1",
   "2": "分流2",
-  "3": "分流3 (推荐)",
+  "3": "分流3",
   "4": "分流4",
   "5": "分流5",
   "6": "分流6",
@@ -27,6 +27,8 @@ Future<void> initAddress() async {
   _currentAddress = await method.getSwitchAddress();
 }
 
+String currentAddress() => _currentAddress;
+
 String currentAddressName() => _addresses[_currentAddress] ?? "";
 
 Future<void> chooseAddress(BuildContext context) async {
@@ -38,7 +40,11 @@ Future<void> chooseAddress(BuildContext context) async {
         children: <Widget>[
           ..._addresses.entries.map(
             (e) => SimpleDialogOption(
-              child: Text(e.value),
+              child: ApiOptionRow(
+                e.value,
+                e.key,
+                key: Key("API:${e.key}"),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(e.key);
               },
@@ -152,4 +158,93 @@ Widget addressActionButton(BuildContext context) {
     },
     icon: const Icon(Icons.network_ping),
   );
+}
+
+class ApiOptionRow extends StatefulWidget {
+  final String title;
+  final String value;
+
+  const ApiOptionRow(this.title, this.value, {Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _ApiOptionRowState();
+}
+
+class _ApiOptionRowState extends State<ApiOptionRow> {
+  late Future<int> _feature;
+
+  @override
+  void initState() {
+    super.initState();
+    _feature = method.ping(widget.value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(widget.title),
+        Expanded(child: Container()),
+        FutureBuilder(
+          future: _feature,
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<int> snapshot,
+          ) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const PingStatus(
+                "测速中",
+                Colors.blue,
+              );
+            }
+            if (snapshot.hasError) {
+              return const PingStatus(
+                "失败",
+                Colors.red,
+              );
+            }
+            int ping = snapshot.requireData;
+            if (ping <= 200) {
+              return PingStatus(
+                "${ping}ms",
+                Colors.green,
+              );
+            }
+            if (ping <= 500) {
+              return PingStatus(
+                "${ping}ms",
+                Colors.yellow,
+              );
+            }
+            return PingStatus(
+              "${ping}ms",
+              Colors.orange,
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class PingStatus extends StatelessWidget {
+  final String title;
+  final Color color;
+
+  const PingStatus(this.title, this.color, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          '\u2022',
+          style: TextStyle(
+            color: color,
+          ),
+        ),
+        Text(" $title"),
+      ],
+    );
+  }
 }

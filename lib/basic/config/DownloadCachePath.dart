@@ -1,5 +1,6 @@
 /// 下载的同时导出到文件系统
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ Widget downloadCachePathSetting() {
               bool b = await confirmDialog(
                 context,
                 "使用其他软件的下载内容加速",
-                "您即将选择一个目录, 作为下载加速使用, 这个目录名字通常叫files",
+                "您即将选择一个目录, 这个目录拷贝自 ${base64Decode("L0FuZHJvaWQvZGF0YS9jb20ucGljYWNvbWljLmZyZWdhdGEvZmlsZXMv")}",
               );
               if (b) {
                 late String? folder;

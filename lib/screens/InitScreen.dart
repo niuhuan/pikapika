@@ -77,6 +77,7 @@ class _InitScreenState extends State<InitScreen> {
     await initQuality();
     await initFont();
     await initTheme();
+    await initFullScreenUI();
     await initListLayout();
     await initReaderType();
     await initReaderDirection();
@@ -86,10 +87,8 @@ class _InitScreenState extends State<InitScreen> {
     await initPagerAction();
     await initShadowCategoriesMode();
     await initShadowCategories();
-    await initFullScreenUI();
     await initIconLoading();
     await initCategoriesColumnCount();
-    switchFullScreenUI();
     await initContentFailedReloadAction();
     await initVolumeController();
     await initKeyboardController();

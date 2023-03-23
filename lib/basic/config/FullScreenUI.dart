@@ -22,6 +22,15 @@ Future<void> initFullScreenUI() async {
     _propertyName,
     FullScreenUI.NO.toString(),
   ));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemStatusBarContrastEnforced: true,
+    systemNavigationBarContrastEnforced: true,
+  ));
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+    overlays: SystemUiOverlay.values,
+  );
+  switchFullScreenUI();
 }
 
 FullScreenUI _fullScreenUIFromString(String string) {
@@ -62,17 +71,27 @@ void switchFullScreenUI() {
   List<SystemUiOverlay> list = [...SystemUiOverlay.values];
   switch (fullScreenUI) {
     case FullScreenUI.HIDDEN_BOTTOM:
-      list.remove(SystemUiOverlay.bottom);
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top],
+      );
       break;
     case FullScreenUI.ALL:
-      list.clear();
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: [],
+      );
       break;
     case FullScreenUI.NO:
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.edgeToEdge,
+        overlays: SystemUiOverlay.values,
+      );
       break;
   }
   if (Platform.isAndroid || Platform.isIOS) {
     SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
+      SystemUiMode.edgeToEdge,
       overlays: list,
     );
   }
