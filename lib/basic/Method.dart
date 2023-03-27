@@ -981,4 +981,8 @@ class Method {
   Future<String> androidStorageRoot() async {
     return await _channel.invokeMethod("androidStorageRoot");
   }
+
+  Future importComicViewFormOff(String dbPath) {
+    return _flatInvoke("importComicViewFormOff", dbPath);
+  }
 }
