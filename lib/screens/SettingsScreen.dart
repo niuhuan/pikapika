@@ -41,6 +41,7 @@ import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
 import 'ThemeScreen.dart';
+import 'WebServerScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   final bool hiddenAccountInfo;
@@ -163,6 +164,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
         const Divider(),
         const ListTile(
           subtitle: Text("下载&缓存"),
+        ),
+        const Divider(),
+        ListTile(
+          title: const Text("启动Web服务器"),
+          subtitle: const Text("让局域网内的设备通过浏览器看下载的漫画"),
+          onTap: (){
+            Navigator.of(context).push(
+              mixRoute(
+                builder: (BuildContext context) =>
+                    const WebServerScreen(),
+              ),
+            );
+
+          },
         ),
         const Divider(),
         autoCleanSecSetting(),

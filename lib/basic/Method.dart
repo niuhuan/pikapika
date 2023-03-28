@@ -985,4 +985,12 @@ class Method {
   Future importComicViewFormOff(String dbPath) {
     return _flatInvoke("importComicViewFormOff", dbPath);
   }
+
+  Future startWebServer() {
+    return _flatInvoke("startWebServer", "");
+  }
+
+  Future stopWebServer() {
+    return _flatInvoke("stopWebServer", "");
+  }
 }
