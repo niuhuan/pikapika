@@ -31,35 +31,6 @@ String currentAddress() => _currentAddress;
 
 String currentAddressName() => _addresses[_currentAddress] ?? "";
 
-Future<void> chooseAddress(BuildContext context) async {
-  String? choose = await showDialog<String>(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        title: const Text('选择分流'),
-        children: <Widget>[
-          ..._addresses.entries.map(
-            (e) => SimpleDialogOption(
-              child: ApiOptionRow(
-                e.value,
-                e.key,
-                key: Key("API:${e.key}"),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop(e.key);
-              },
-            ),
-          ),
-        ],
-      );
-    },
-  );
-  if (choose != null) {
-    await method.setSwitchAddress(choose);
-    _currentAddress = choose;
-  }
-}
-
 Widget switchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
@@ -67,7 +38,7 @@ Widget switchAddressSetting() {
         title: const Text("分流"),
         subtitle: Text(currentAddressName()),
         onTap: () async {
-          await chooseAddress(context);
+          await chooseAddressAndSwitch(context);
           setState(() {});
         },
       );
@@ -118,8 +89,12 @@ Future chooseAddressAndSwitch(BuildContext context) async {
         title: const Text('选择分流'),
         children: <Widget>[
           ..._addresses.entries.map(
-            (e) => SimpleDialogOption(
-              child: Text(e.value),
+                (e) => SimpleDialogOption(
+              child: ApiOptionRow(
+                e.value,
+                e.key,
+                key: Key("API:${e.key}"),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(e.key);
               },

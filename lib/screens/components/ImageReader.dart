@@ -906,7 +906,7 @@ class _SettingPanelState extends State<_SettingPanel> {
               icon: Icons.shuffle,
               title: currentAddressName(),
               onPressed: () async {
-                await chooseAddress(context);
+                await chooseAddressAndSwitch(context);
                 setState(() {});
               },
             ),

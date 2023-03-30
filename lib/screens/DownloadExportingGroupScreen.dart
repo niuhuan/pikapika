@@ -6,6 +6,7 @@ import 'package:pikapika/basic/Common.dart';
 import '../basic/Channels.dart';
 import '../basic/Cross.dart';
 import '../basic/Method.dart';
+import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
 import '../basic/config/IsPro.dart';
 import 'components/ContentLoading.dart';
@@ -59,19 +60,38 @@ class _DownloadExportingGroupScreenState
     return ListView(
       children: [
         Container(height: 20),
+        displayExportPathInfo(),
+        Container(height: 20),
         MaterialButton(
           onPressed: _exportPkz,
-          child: const Text("导出PKZ"),
+          child: _buildButtonInner("导出成一个PKZ\n(加密模式,防止网盘检测,能用pikapika打开观看)"),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkis,
-          child: Text("分别导出PKI" + (!isPro ? "\n(发电后使用)" : "")),
+          child: _buildButtonInner("每部漫画都打包一个PKI\n(加密模式,防止网盘检测,能用pikapika导入)"),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportZips,
-          child: Text("分别导出ZIP" + (!isPro ? "\n(发电后使用)" : "")),
+          child: _buildButtonInner(
+              "每部漫画都打包一个ZIP\n(不加密模式,能用pikapika导入或网页浏览器观看)" +
+                  (!isPro ? "\n(发电后使用)" : "")),
+        ),
+        Container(height: 20),
+        MaterialButton(
+          onPressed: _exportToJPEGSZips,
+          child: _buildButtonInner(
+            "每部漫画都打包一个ZIP+JPEG\n(能直接使用其他阅读器看,不可再导入)" +
+                (!isPro ? "\n(发电后使用)" : ""),
+          ),
+        ),
+        Container(height: 20),
+        MaterialButton(
+          onPressed: _exportToJPEGSFolders,
+          child: _buildButtonInner(
+            "每部漫画都导出成文件夹+JPEG" + (!isPro ? "\n(发电后使用)" : ""),
+          ),
         ),
         Container(height: 20),
       ],
@@ -79,15 +99,6 @@ class _DownloadExportingGroupScreenState
   }
 
   _exportPkz() async {
-    late String? path;
-    try {
-      path =  Platform.isIOS
-          ? await method.iosGetDocumentDir()
-          : await chooseFolder(context);
-    } catch (e) {
-      defaultToast(context, "$e");
-      return;
-    }
     var name = "";
     if (currentExportRename()) {
       var rename = await inputString(
@@ -100,63 +111,53 @@ class _DownloadExportingGroupScreenState
       } else {
         return;
       }
-    }
-    print("path $path");
-    if (path != null) {
-      try {
-        setState(() {
-          exporting = true;
-        });
-        await method.exportComicDownloadToPkz(
-          widget.idList,
-          path,
-          name,
-        );
-        exported = true;
-      } catch (err) {
-        e = err;
-        exportFail = true;
-      } finally {
-        setState(() {
-          exporting = false;
-        });
+    } else {
+      if (!await confirmDialog(
+          context, "导出确认", "将导出您所选的漫画为一个PKZ${showExportPath()}")) {
+        return;
       }
+    }
+    try {
+      setState(() {
+        exporting = true;
+      });
+      await method.exportComicDownloadToPkz(
+        widget.idList,
+        await attachExportPath(),
+        name,
+      );
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
     }
   }
 
   _exportPkis() async {
-    if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出成单独的PKI${showExportPath()}")) {
       return;
     }
-    late String? path;
     try {
-      path =  Platform.isIOS
-          ? await method.iosGetDocumentDir()
-          : await chooseFolder(context);
-    } catch (e) {
-      defaultToast(context, "$e");
-      return;
-    }
-    print("path $path");
-    if (path != null) {
-      try {
-        setState(() {
-          exporting = true;
-        });
-        await method.exportAnyComicDownloadsToPki(
-          widget.idList,
-          path,
-        );
-        exported = true;
-      } catch (err) {
-        e = err;
-        exportFail = true;
-      } finally {
-        setState(() {
-          exporting = false;
-        });
-      }
+      setState(() {
+        exporting = true;
+      });
+      await method.exportAnyComicDownloadsToPki(
+        widget.idList,
+        await attachExportPath(),
+      );
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
     }
   }
 
@@ -165,34 +166,90 @@ class _DownloadExportingGroupScreenState
       defaultToast(context, "请先发电鸭");
       return;
     }
-    late String? path;
-    try {
-      path =  Platform.isIOS
-          ? await method.iosGetDocumentDir()
-          : await chooseFolder(context);
-    } catch (e) {
-      defaultToast(context, "$e");
+    if (!await confirmDialog(
+        context, "导出确认", "将导出您所选的漫画分别导出ZIP${showExportPath()}")) {
       return;
     }
-    print("path $path");
-    if (path != null) {
-      try {
-        setState(() {
-          exporting = true;
-        });
-        await method.exportAnyComicDownloadsToZip(
-          widget.idList,
+    try {
+      setState(() {
+        exporting = true;
+      });
+      await method.exportAnyComicDownloadsToZip(
+        widget.idList,
+        await attachExportPath(),
+      );
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
+    }
+  }
+
+  _exportToJPEGSZips() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出ZIP+JPEG${showExportPath()}")) {
+      return;
+    }
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var id in widget.idList) {
+        await method.exportComicDownloadJpegZip(
+          id,
           path,
+          "",
         );
-        exported = true;
-      } catch (err) {
-        e = err;
-        exportFail = true;
-      } finally {
-        setState(() {
-          exporting = false;
-        });
       }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
+    }
+  }
+
+  _exportToJPEGSFolders() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出文件夹+JPEG${showExportPath()}")) {
+      return;
+    }
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var id in widget.idList) {
+        await method.exportComicDownloadToJPG(
+          id,
+          path,
+          "",
+        );
+      }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
     }
   }
 
@@ -211,6 +268,23 @@ class _DownloadExportingGroupScreenState
           return false;
         }
         return true;
+      },
+    );
+  }
+
+  Widget _buildButtonInner(String text) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+          width: constraints.maxWidth,
+          padding: const EdgeInsets.all(15),
+          color: (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
+              .withOpacity(.05),
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+          ),
+        );
       },
     );
   }

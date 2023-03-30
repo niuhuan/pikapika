@@ -103,6 +103,10 @@ class MainActivity : FlutterActivity() {
                     "androidSecureFlag" -> androidSecureFlag(call.argument("flag")!!)
                     "verifyAuthentication" -> auth()
                     "androidStorageRoot" -> storageRoot()
+                    "androidDefaultExportsDir" -> androidDefaultExportsDir().absolutePath
+                    "androidMkdirs" -> androidMkdirs(
+                        call.arguments<String>() ?: throw Exception("need arg")
+                    )
                     else -> {
                         notImplementedToken
                     }
@@ -407,5 +411,25 @@ class MainActivity : FlutterActivity() {
 
     fun storageRoot(): String {
         return Environment.getExternalStorageDirectory().absolutePath
+    }
+
+    private fun downloadsDir(): File {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            ?: throw java.lang.IllegalStateException()
+    }
+
+    private fun defaultPikapikaDir(): File {
+        return File(downloadsDir(), "pikapika")
+    }
+
+    private fun androidDefaultExportsDir(): File {
+        return File(defaultPikapikaDir(), "exports")
+    }
+
+    private fun androidMkdirs(path: String) {
+        val dir = File(path)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
     }
 }

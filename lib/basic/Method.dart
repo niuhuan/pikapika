@@ -993,4 +993,20 @@ class Method {
   Future stopWebServer() {
     return _flatInvoke("stopWebServer", "");
   }
+
+  Future<String> androidDefaultExportsDir() async {
+    return await _channel.invokeMethod("androidDefaultExportsDir");
+  }
+
+  Future getHomeDir() {
+    return _flatInvoke("getHomeDir", "");
+  }
+
+  Future mkdirs(String path) {
+    return _flatInvoke("mkdirs", path);
+  }
+
+  Future androidMkdirs(String path) async {
+    return await _channel.invokeMethod("androidMkdirs", path);
+  }
 }

@@ -30,11 +30,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     inBar: false,
     setState: setState,
     onSubmitted: (value) {
-      if (value.isNotEmpty) {
-        _search = value;
-        _f = method.allDownloads(_search);
-        _searchBar.controller.text = value;
-      }
+      _search = value;
+      _f = method.allDownloads(_search);
+      _searchBar.controller.text = value;
     },
     buildDefaultAppBar: (BuildContext context) {
       return AppBar(
