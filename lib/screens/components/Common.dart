@@ -4,7 +4,7 @@ import '../../basic/config/ListLayout.dart';
 import '../../basic/config/ShadowCategories.dart';
 import '../../basic/config/ShadowCategoriesMode.dart';
 
-Widget aPopMenu(BuildContext context) {
+Widget commonPopMenu(BuildContext context) {
   return PopupMenuButton<int>(
     itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
       const PopupMenuItem<int>(

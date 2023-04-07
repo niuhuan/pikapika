@@ -48,8 +48,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       return AppBar(
         title: const Text('分类'),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
           _searchBar.getSearchAction(context),
         ],
       );

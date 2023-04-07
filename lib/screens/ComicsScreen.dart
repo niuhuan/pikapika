@@ -55,8 +55,8 @@ class _ComicsScreenState extends State<ComicsScreen> {
       return AppBar(
         title: Text(categoryTitle(widget.category)),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
           _chooseCategoryAction(),
           _categorySearchBar.getSearchAction(context),
         ],
@@ -147,8 +147,8 @@ class _ComicsScreenState extends State<ComicsScreen> {
       appBar = AppBar(
         title: Text(title),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
           _chooseCategoryAction(),
         ],
       );

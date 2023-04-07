@@ -33,8 +33,8 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
       appBar: AppBar(
         title: const Text('随机本子'),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
         ],
       ),
       body: ComicListBuilder(method.randomComics),

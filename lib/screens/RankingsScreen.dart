@@ -34,8 +34,8 @@ class RankingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('排行榜'),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
         ],
       ),
       body: DefaultTabController(

@@ -6,6 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/ImageAddress.dart';
+import 'package:pikapika/basic/config/UseApiLoadImage.dart';
 
 import '../Method.dart';
 
@@ -89,7 +91,7 @@ Future chooseAddressAndSwitch(BuildContext context) async {
         title: const Text('选择分流'),
         children: <Widget>[
           ..._addresses.entries.map(
-                (e) => SimpleDialogOption(
+            (e) => SimpleDialogOption(
               child: ApiOptionRow(
                 e.value,
                 e.key,
@@ -126,12 +128,45 @@ Future chooseAddressAndSwitch(BuildContext context) async {
   }
 }
 
-Widget addressActionButton(BuildContext context) {
-  return IconButton(
-    onPressed: () {
-      chooseAddressAndSwitch(context);
+Widget addressPopMenu(BuildContext context) {
+  return PopupMenuButton<int>(
+    icon: const Icon(Icons.webhook),
+    itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+      PopupMenuItem<int>(
+        value: 0,
+        child: ListTile(
+          leading: const Icon(Icons.share),
+          title: Text("分流 (${currentAddressName()})"),
+        ),
+      ),
+      PopupMenuItem<int>(
+        value: 1,
+        child: ListTile(
+          leading: const Icon(Icons.image_search),
+          title: Text("图片分流 (${currentImageAddressName()})"),
+        ),
+      ),
+       PopupMenuItem<int>(
+        value: 2,
+        child: ListTile(
+          leading: const Icon(Icons.network_ping),
+          title: Text("用API加载图片 (${currentUseApiLoadImageName()})"),
+        ),
+      ),
+    ],
+    onSelected: (int value) {
+      switch (value) {
+        case 0:
+          chooseAddressAndSwitch(context);
+          break;
+        case 1:
+          chooseImageAddress(context);
+          break;
+        case 2:
+          chooseUseApiLoadImage(context);
+          break;
+      }
     },
-    icon: const Icon(Icons.network_ping),
   );
 }
 

@@ -51,8 +51,8 @@ class _SearchScreenState extends State<SearchScreen> {
       return AppBar(
         title: Text("${categoryTitle(widget.category)} ${widget.keyword}"),
         actions: [
-          aPopMenu(context),
-          addressActionButton(context),
+          commonPopMenu(context),
+          addressPopMenu(context),
           _chooseCategoryAction(),
           _searchBar.getSearchAction(context),
         ],

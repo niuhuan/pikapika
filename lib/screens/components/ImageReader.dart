@@ -24,6 +24,7 @@ import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../basic/config/IconLoading.dart';
+import '../../basic/config/UseApiLoadImage.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
 
@@ -560,38 +561,38 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         !widget.struct.fullScreen) {
       return Container();
     }
-    if (widget.readerSliderPosition == ReaderSliderPosition.RIGHT ) {
+    if (widget.readerSliderPosition == ReaderSliderPosition.RIGHT) {
       return SafeArea(
           child: Align(
-            alignment: Alignment.bottomRight,
-            child: Material(
-              color: Colors.transparent,
-              child: Container(
-                padding:
+        alignment: Alignment.bottomRight,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-                margin: const EdgeInsets.only(bottom: 10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                  color: Color(0x88000000),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    widget.struct.onFullScreenChange(!widget.struct.fullScreen);
-                  },
-                  child: Icon(
-                    widget.struct.fullScreen
-                        ? Icons.fullscreen_exit
-                        : Icons.fullscreen_outlined,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                ),
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
+              color: Color(0x88000000),
+            ),
+            child: GestureDetector(
+              onTap: () {
+                widget.struct.onFullScreenChange(!widget.struct.fullScreen);
+              },
+              child: Icon(
+                widget.struct.fullScreen
+                    ? Icons.fullscreen_exit
+                    : Icons.fullscreen_outlined,
+                size: 30,
+                color: Colors.white,
               ),
             ),
-          ));
+          ),
+        ),
+      ));
     }
     return SafeArea(
         child: Align(
@@ -903,7 +904,7 @@ class _SettingPanelState extends State<_SettingPanel> {
         Row(
           children: [
             _bottomIcon(
-              icon: Icons.shuffle,
+              icon: Icons.share,
               title: currentAddressName(),
               onPressed: () async {
                 await chooseAddressAndSwitch(context);
@@ -911,11 +912,18 @@ class _SettingPanelState extends State<_SettingPanel> {
               },
             ),
             _bottomIcon(
-              icon: Icons.repeat_one,
+              icon: Icons.image_search,
               title: currentImageAddressName(),
               onPressed: () async {
                 await chooseImageAddress(context);
                 setState(() {});
+              },
+            ),
+            _bottomIcon(
+              icon: Icons.network_ping,
+              title: currentUseApiLoadImageName(),
+              onPressed: () {
+                chooseUseApiLoadImage(context);
               },
             ),
             _bottomIcon(
@@ -926,11 +934,11 @@ class _SettingPanelState extends State<_SettingPanel> {
                 widget.onReloadEp();
               },
             ),
-            _bottomIcon(
-              icon: Icons.file_download,
-              title: "下载本作",
-              onPressed: widget.onDownload,
-            ),
+            // _bottomIcon(
+            //   icon: Icons.file_download,
+            //   title: "下载本作",
+            //   onPressed: widget.onDownload,
+            // ),
           ],
         ),
       ],
