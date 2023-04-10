@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
-import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/screens/components/ComicList.dart';
 import '../basic/Entities.dart';
 import '../basic/config/Address.dart';
 import '../basic/config/IconLoading.dart';
 import 'SearchScreen.dart';
 import 'components/ComicPager.dart';
 import 'components/Common.dart';
+import 'components/GoDownloadSelect.dart';
 import 'components/RightClickPop.dart';
 
 // 漫画列表
@@ -36,6 +38,7 @@ class ComicsScreen extends StatefulWidget {
 }
 
 class _ComicsScreenState extends State<ComicsScreen> {
+  late final _comicListController = ComicListController();
   late final SearchBar _categorySearchBar = SearchBar(
     hintText: '搜索分类 - ${categoryTitle(widget.category)}',
     inBar: false,
@@ -55,7 +58,11 @@ class _ComicsScreenState extends State<ComicsScreen> {
       return AppBar(
         title: Text(categoryTitle(widget.category)),
         actions: [
-          commonPopMenu(context),
+          commonPopMenu(
+            context,
+            setState: setState,
+            comicListController: _comicListController,
+          ),
           addressPopMenu(context),
           _chooseCategoryAction(),
           _categorySearchBar.getSearchAction(context),
@@ -104,6 +111,12 @@ class _ComicsScreenState extends State<ComicsScreen> {
       );
 
   Future<ComicsPage> _load(String _currentSort, int _currentPage) {
+    if (currentPagerAction() == PagerAction.CONTROLLER &&
+        _comicListController.selecting) {
+      setState(() {
+        _comicListController.selecting = false;
+      });
+    }
     return method.comics(
       _currentSort,
       _currentPage,
@@ -115,7 +128,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -154,10 +167,15 @@ class _ComicsScreenState extends State<ComicsScreen> {
       );
     }
 
+    if (_comicListController.selecting) {
+      appBar = downAppBar(context, _comicListController, setState);
+    }
+
     return Scaffold(
       appBar: appBar,
       body: ComicPager(
         fetchPage: _load,
+        comicListController: _comicListController,
       ),
     );
   }

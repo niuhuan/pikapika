@@ -1014,13 +1014,86 @@ class PkzComicViewLog {
   }
 }
 
-class IsPro {
-  late bool isPro;
-  late int expire;
+class ProInfoAll {
+  ProInfoAll({
+    required this.proInfoAf,
+    required this.proInfoPat,
+  });
+  late final ProInfoAf proInfoAf;
+  late final ProInfoPat proInfoPat;
 
-  IsPro.fromJson(Map<String, dynamic> json) {
-    this.isPro = json["isPro"];
-    this.expire = json["expire"];
+  ProInfoAll.fromJson(Map<String, dynamic> json){
+    proInfoAf = ProInfoAf.fromJson(json['pro_info_af']);
+    proInfoPat = ProInfoPat.fromJson(json['pro_info_pat']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['pro_info_normal'] = proInfoAf.toJson();
+    _data['pro_info_pat'] = proInfoPat.toJson();
+    return _data;
+  }
+}
+
+class ProInfoAf {
+  ProInfoAf({
+    required this.isPro,
+    required this.expire,
+  });
+  late final bool isPro;
+  late final int expire;
+
+  ProInfoAf.fromJson(Map<String, dynamic> json){
+    isPro = json['is_pro'];
+    expire = json['expire'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['is_pro'] = isPro;
+    _data['expire'] = expire;
+    return _data;
+  }
+}
+
+class ProInfoPat {
+  ProInfoPat({
+    required this.isPro,
+    required this.patId,
+    required this.bindUid,
+    required this.requestDelete,
+    required this.reBind,
+    required this.errorType,
+    required this.errorMsg,
+  });
+  late final bool isPro;
+  late final String patId;
+  late final String bindUid;
+  late final int requestDelete;
+  late final int reBind;
+  late final int errorType;
+  late final String errorMsg;
+
+  ProInfoPat.fromJson(Map<String, dynamic> json){
+    isPro = json['is_pro'];
+    patId = json['pat_id'];
+    bindUid = json['bind_uid'];
+    requestDelete = json['request_delete'];
+    reBind = json['re_bind'];
+    errorType = json['error_type'];
+    errorMsg = json['error_msg'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['is_pro'] = isPro;
+    _data['pat_id'] = patId;
+    _data['bind_uid'] = bindUid;
+    _data['request_delete'] = requestDelete;
+    _data['re_bind'] = reBind;
+    _data['error_type'] = errorType;
+    _data['error_msg'] = errorMsg;
+    return _data;
   }
 }
 

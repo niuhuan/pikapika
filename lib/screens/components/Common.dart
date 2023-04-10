@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pikapika/screens/components/ComicList.dart';
 
+import '../../basic/config/IsPro.dart';
 import '../../basic/config/ListLayout.dart';
 import '../../basic/config/ShadowCategories.dart';
 import '../../basic/config/ShadowCategoriesMode.dart';
 
-Widget commonPopMenu(BuildContext context) {
+Widget commonPopMenu(
+  BuildContext context, {
+  ComicListController? comicListController,
+  void Function(VoidCallback fn)? setState,
+}) {
   return PopupMenuButton<int>(
     itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
       const PopupMenuItem<int>(
@@ -28,6 +34,22 @@ Widget commonPopMenu(BuildContext context) {
           title: Text("封印列表"),
         ),
       ),
+      ...comicListController != null && setState != null
+          ? [
+              PopupMenuItem<int>(
+                value: 3,
+                child: ListTile(
+                  leading: const Icon(Icons.download),
+                  title: Text(
+                    "下载" + (isPro ? "" : "Pro"),
+                    style: TextStyle(
+                      color: isPro ? null : Colors.grey,
+                    ),
+                  ),
+                ),
+              )
+            ]
+          : [],
     ],
     onSelected: (int value) {
       switch (value) {
@@ -39,6 +61,15 @@ Widget commonPopMenu(BuildContext context) {
           break;
         case 2:
           chooseShadowCategories(context);
+          break;
+        case 3:
+          if (setState != null) {
+            if (comicListController != null) {
+              setState(() {
+                comicListController.selecting = !comicListController.selecting;
+              });
+            }
+          }
           break;
       }
     },

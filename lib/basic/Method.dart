@@ -910,8 +910,8 @@ class Method {
         .toList();
   }
 
-  Future<IsPro> isPro() async {
-    return IsPro.fromJson(jsonDecode(await _flatInvoke("isPro", "")));
+  Future<ProInfoAll> proInfoAll() async {
+    return ProInfoAll.fromJson(jsonDecode(await _flatInvoke("proInfoAll", "")));
   }
 
   Future reloadPro() {
@@ -1008,5 +1008,9 @@ class Method {
 
   Future androidMkdirs(String path) async {
     return await _channel.invokeMethod("androidMkdirs", path);
+  }
+
+  Future downloadAll(List<String> comicIds) {
+    return _flatInvoke("downloadAll", comicIds);
   }
 }

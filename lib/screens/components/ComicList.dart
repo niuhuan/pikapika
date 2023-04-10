@@ -13,17 +13,34 @@ import 'ComicInfoCard.dart';
 import 'Images.dart';
 import 'LinkToComicInfo.dart';
 
+class ComicListController {
+  _ComicListState? _state;
+
+  bool get selecting => _state?._selecting ?? false;
+
+  set selecting(bool value) => _state?._setSelect(value);
+
+  List<String> get selected => _state?._selected ?? [];
+
+  selectAll() {
+    _state?._selectAll();
+  }
+}
+
 // 漫画列表页
 class ComicList extends StatefulWidget {
   final Widget? appendWidget;
   final List<ComicSimple> comicList;
-  final ScrollController? controller;
+  final ScrollController? scrollController;
+  final ComicListController? listController;
 
   const ComicList(
     this.comicList, {
     this.appendWidget,
-    this.controller,
+    this.scrollController,
     Key? key,
+    // required
+    this.listController,
   }) : super(key: key);
 
   @override
@@ -32,6 +49,25 @@ class ComicList extends StatefulWidget {
 
 class _ComicListState extends State<ComicList> {
   final List<String> viewedList = [];
+  bool _selecting = false;
+  List<String> _selected = [];
+
+  _selectAll() {
+    setState(() {
+      if (_selected.length == widget.comicList.length) {
+        _selected.clear();
+      } else {
+        _selected.addAll(widget.comicList.map((e) => e.id));
+      }
+    });
+  }
+
+  _setSelect(bool value) {
+    setState(() {
+      _selected.clear();
+      _selecting = value;
+    });
+  }
 
   Future _loadViewed() async {
     if (widget.comicList.isNotEmpty) {
@@ -43,6 +79,7 @@ class _ComicListState extends State<ComicList> {
 
   @override
   void initState() {
+    widget.listController?._state = this;
     _loadViewed();
     listLayoutEvent.subscribe(_onLayoutChange);
     super.initState();
@@ -50,6 +87,9 @@ class _ComicListState extends State<ComicList> {
 
   @override
   void dispose() {
+    if (widget.listController?._state == this) {
+      widget.listController?._state = null;
+    }
     listLayoutEvent.unsubscribe(_onLayoutChange);
     super.dispose();
   }
@@ -74,7 +114,7 @@ class _ComicListState extends State<ComicList> {
 
   Widget _buildInfoCardList() {
     return ListView(
-      controller: widget.controller,
+      controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         ...widget.comicList.map((e) {
@@ -120,6 +160,42 @@ class _ComicListState extends State<ComicList> {
                   ),
                 ),
               ),
+            );
+          }
+          if (_selecting) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (_selected.contains(e.id)) {
+                    _selected.remove(e.id);
+                  } else {
+                    _selected.add(e.id);
+                  }
+                });
+              },
+              child: Stack(children: [
+                AbsorbPointer(
+                  child: LinkToComicInfo(
+                    comicId: e.id,
+                    child: ComicInfoCard(
+                      e,
+                      viewed: viewedList.contains(e.id),
+                    ),
+                  ),
+                ),
+                Row(children: [
+                  Expanded(child: Container()),
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      _selected.contains(e.id)
+                          ? Icons.check_circle_sharp
+                          : Icons.circle_outlined,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ]),
+              ]),
             );
           }
           return LinkToComicInfo(
@@ -242,7 +318,7 @@ class _ComicListState extends State<ComicList> {
     }
     // 返回
     return ListView(
-      controller: widget.controller,
+      controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(top: gap, bottom: gap),
       children: wraps,
@@ -380,7 +456,7 @@ class _ComicListState extends State<ComicList> {
     }
     // 返回
     return ListView(
-      controller: widget.controller,
+      controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(top: gap, bottom: gap),
       children: wraps,

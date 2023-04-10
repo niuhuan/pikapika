@@ -14,9 +14,15 @@ import 'ContentLoading.dart';
 
 // 漫画列页
 class ComicPager extends StatefulWidget {
+  final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
-  const ComicPager({required this.fetchPage, Key? key}) : super(key: key);
+  const ComicPager({
+    required this.fetchPage,
+    Key? key,
+    // required
+    this.comicListController,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ComicPagerState();
@@ -43,9 +49,15 @@ class _ComicPagerState extends State<ComicPager> {
   Widget build(BuildContext context) {
     switch (currentPagerAction()) {
       case PagerAction.CONTROLLER:
-        return ControllerComicPager(fetchPage: widget.fetchPage);
+        return ControllerComicPager(
+          fetchPage: widget.fetchPage,
+          comicListController: widget.comicListController,
+        );
       case PagerAction.STREAM:
-        return StreamComicPager(fetchPage: widget.fetchPage);
+        return StreamComicPager(
+          fetchPage: widget.fetchPage,
+          comicListController: widget.comicListController,
+        );
       default:
         return Container();
     }
@@ -53,11 +65,13 @@ class _ComicPagerState extends State<ComicPager> {
 }
 
 class ControllerComicPager extends StatefulWidget {
+  final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
   const ControllerComicPager({
     Key? key,
     required this.fetchPage,
+    required this.comicListController,
   }) : super(key: key);
 
   @override
@@ -107,6 +121,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
           body: ComicList(
             comicsPage.docs,
             appendWidget: _buildNextButton(comicsPage),
+            listController: widget.comicListController,
           ),
         );
       },
@@ -255,11 +270,13 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
 }
 
 class StreamComicPager extends StatefulWidget {
+  final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
   const StreamComicPager({
     Key? key,
     required this.fetchPage,
+    required this.comicListController,
   }) : super(key: key);
 
   @override
@@ -351,8 +368,9 @@ class _StreamComicPagerState extends State<StreamComicPager> {
       appBar: _buildAppBar(context),
       body: ComicList(
         _list,
-        controller: _scrollController,
+        scrollController: _scrollController,
         appendWidget: _buildLoadingCell(),
+        listController: widget.comicListController,
       ),
     );
   }

@@ -68,13 +68,26 @@ class _ProScreenState extends State<ProScreen> {
           ),
           const Divider(),
           ListTile(
-            title: const Text("发电详情"),
+            title: const Text("签到或礼物卡"),
             subtitle: Text(
-              isPro
-                  ? "发电中 (${DateTime.fromMillisecondsSinceEpoch(1000 * isProEx).toString()})"
+              proInfoAf.isPro
+                  ? "发电中 (${DateTime.fromMillisecondsSinceEpoch(1000 * proInfoAf.expire).toString()})"
                   : "未发电",
             ),
           ),
+          ...(proInfoPat.patId.isNotEmpty ? [
+            ListTile(
+              onTap: () {
+                managementPat();
+              },
+              title: const Text("P站支持"),
+              subtitle: Text((
+                  proInfoPat.isPro
+                      ? "发电中"
+                      : "未发电") + ("(点击管理)"),
+              ),
+            ),
+          ] : []),
           const Divider(),
           ListTile(
             title: const Text("我曾经发过电"),
@@ -110,5 +123,9 @@ class _ProScreenState extends State<ProScreen> {
         ],
       ),
     );
+  }
+
+  void managementPat() {
+    // todo
   }
 }
