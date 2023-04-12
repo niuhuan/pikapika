@@ -8,8 +8,10 @@ import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/Entities.dart';
 import '../basic/config/Address.dart';
 import '../basic/config/IconLoading.dart';
+import 'components/ComicList.dart';
 import 'components/ComicPager.dart';
 import 'components/Common.dart';
+import 'components/GoDownloadSelect.dart';
 
 // 搜索页面
 class SearchScreen extends StatefulWidget {
@@ -27,6 +29,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  late final _comicListController = ComicListController();
   late final TextEditingController _textEditController =
       TextEditingController(text: widget.keyword);
   late final SearchBar _searchBar = SearchBar(
@@ -51,7 +54,11 @@ class _SearchScreenState extends State<SearchScreen> {
       return AppBar(
         title: Text("${categoryTitle(widget.category)} ${widget.keyword}"),
         actions: [
-          commonPopMenu(context),
+          commonPopMenu(
+            context,
+            setState: setState,
+            comicListController: _comicListController,
+          ),
           addressPopMenu(context),
           _chooseCategoryAction(),
           _searchBar.getSearchAction(context),
@@ -66,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
             categoryTitle(null),
             ...filteredList(
               storedCategories,
-                  (c) => !shadowCategories.contains(c),
+              (c) => !shadowCategories.contains(c),
             ),
           ]);
           if (category != null) {
@@ -100,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -110,7 +117,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget buildScreen(BuildContext context) {
     return Scaffold(
-      appBar: _searchBar.build(context),
+      appBar: _comicListController.selecting
+          ? downAppBar(context, _comicListController, setState)
+          : _searchBar.build(context),
       body: ComicPager(
         fetchPage: _fetch,
       ),

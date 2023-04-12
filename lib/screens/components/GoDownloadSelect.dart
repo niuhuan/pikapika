@@ -58,13 +58,15 @@ AppBar downAppBar(
       MaterialButton(
         minWidth: 0,
         onPressed: () async {
-          // todo
-          final list = _comicListController.selected;
+          var list = _comicListController.selected;
           if (list.isEmpty) {
             defaultToast(context, "请选择漫画");
             return;
           }
-          _comicListController.selecting = false;
+          list = list.toList();
+          setState((){
+            _comicListController.selecting = false;
+          });
           Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) {
               return DownloadComicsScreen(list);

@@ -1065,6 +1065,7 @@ class ProInfoPat {
     required this.reBind,
     required this.errorType,
     required this.errorMsg,
+    required this.accessKey,
   });
   late final bool isPro;
   late final String patId;
@@ -1073,6 +1074,7 @@ class ProInfoPat {
   late final int reBind;
   late final int errorType;
   late final String errorMsg;
+  late final String accessKey;
 
   ProInfoPat.fromJson(Map<String, dynamic> json){
     isPro = json['is_pro'];
@@ -1082,6 +1084,7 @@ class ProInfoPat {
     reBind = json['re_bind'];
     errorType = json['error_type'];
     errorMsg = json['error_msg'];
+    accessKey = json['access_key'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1093,6 +1096,7 @@ class ProInfoPat {
     _data['re_bind'] = reBind;
     _data['error_type'] = errorType;
     _data['error_msg'] = errorMsg;
+    _data['access_key'] = accessKey;
     return _data;
   }
 }

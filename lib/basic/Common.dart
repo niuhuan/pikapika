@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:pikapika/screens/AccessKeyReplaceScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 
@@ -300,7 +301,17 @@ StreamSubscription<String?> linkSubscript(BuildContext context) {
   return linkStream.listen((uri) async {
     if (uri == null) return;
     var parsed = Uri.parse(uri);
-    if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(uri).isNotEmpty) {
+    if (RegExp(r"^pika://access_key/([0-9A-z:\-]+)/$").allMatches(uri).isNotEmpty) {
+      String accessKey = RegExp(r"^pika://access_key/([0-9A-z:\-]+)/$")
+          .allMatches(uri)
+          .first
+          .group(1)!;
+      Navigator.of(context).push(
+        mixRoute(
+          builder: (BuildContext context) => AccessKeyReplaceScreen(accessKey: accessKey),
+        ),
+      );
+    } else if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(uri).isNotEmpty) {
       String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$")
           .allMatches(uri)
           .first

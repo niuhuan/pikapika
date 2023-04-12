@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
 
 import '../../basic/config/IsPro.dart';
@@ -39,9 +40,12 @@ Widget commonPopMenu(
               PopupMenuItem<int>(
                 value: 3,
                 child: ListTile(
-                  leading: const Icon(Icons.download),
+                  leading: Icon(
+                    Icons.download,
+                    color: isPro ? null : Colors.grey,
+                  ),
                   title: Text(
-                    "下载" + (isPro ? "" : "Pro"),
+                    "批量下载" + (isPro ? "" : "(发电)"),
                     style: TextStyle(
                       color: isPro ? null : Colors.grey,
                     ),
@@ -63,6 +67,10 @@ Widget commonPopMenu(
           chooseShadowCategories(context);
           break;
         case 3:
+          if (!isPro) {
+            defaultToast(context, "请先发电呀");
+            return;
+          }
           if (setState != null) {
             if (comicListController != null) {
               setState(() {

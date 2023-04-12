@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../Cross.dart';
 import '../Method.dart';
+import 'Platform.dart';
 
 const _propertyName = "exportPath";
 late String _exportPath;
@@ -35,7 +36,13 @@ Future<String> attachExportPath() async {
     path = await method.iosGetDocumentDir();
   } else {
     if (Platform.isAndroid) {
-      if (!(await Permission.storage.request()).isGranted) {
+      late bool g;
+      if (androidVersion < 30) {
+        g = await Permission.storage.request().isGranted;
+      }else{
+        g = await Permission.manageExternalStorage.request().isGranted;
+      }
+      if (!g) {
         throw Exception("申请权限被拒绝");
       }
     }

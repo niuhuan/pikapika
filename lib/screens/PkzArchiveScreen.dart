@@ -14,6 +14,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/Common.dart';
 import '../basic/Navigator.dart';
 import '../basic/config/IconLoading.dart';
+import '../basic/config/Platform.dart';
 import 'PkzComicInfoScreen.dart';
 
 class PkzArchiveScreen extends StatefulWidget {
@@ -75,9 +76,16 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
 
   Future _load() async {
     await method.viewPkz(_fileName, widget.pkzPath);
-    var p = await Permission.storage.request();
-    if (!p.isGranted) {
-      throw 'error permission';
+    if (Platform.isAndroid) {
+      late bool g;
+      if (androidVersion < 30) {
+        g = await Permission.storage.request().isGranted;
+      }else{
+        g = await Permission.manageExternalStorage.request().isGranted;
+      }
+      if (!g) {
+        throw 'error permission';
+      }
     }
     _info = await method.pkzInfo(widget.pkzPath);
     if (_info.comics.length == 1) {

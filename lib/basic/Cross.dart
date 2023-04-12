@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/Platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'Method.dart';
@@ -68,8 +69,13 @@ Future<dynamic> saveImageQuiet(String path, BuildContext context) async {
 }
 
 Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
-  var p = await Permission.storage.request();
-  if (!p.isGranted) {
+  late bool g;
+  if (androidVersion < 30) {
+    g = await Permission.storage.request().isGranted;
+  }else{
+    g = await Permission.manageExternalStorage.request().isGranted;
+  }
+  if (!g) {
     return;
   }
   return method.androidSaveFileToImage(path);

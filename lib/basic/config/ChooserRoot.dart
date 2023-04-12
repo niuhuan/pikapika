@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../Common.dart';
 import '../Method.dart';
+import 'Platform.dart';
 
 const _propertyName = "chooserRoot";
 late String _chooserRoot;
@@ -30,7 +31,13 @@ Future<dynamic> initChooserRoot() async {
 
 Future<String> currentChooserRoot() async {
   if (Platform.isAndroid) {
-    if (!(await Permission.storage.request()).isGranted) {
+    late bool g;
+    if (androidVersion < 30) {
+      g = await Permission.storage.request().isGranted;
+    }else{
+      g = await Permission.manageExternalStorage.request().isGranted;
+    }
+    if (!g) {
       throw Exception("申请权限被拒绝");
     }
   }

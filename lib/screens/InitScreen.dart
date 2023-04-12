@@ -37,6 +37,7 @@ import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/basic/config/WillPopNotice.dart';
+import 'package:pikapika/screens/AccessKeyReplaceScreen.dart';
 import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
@@ -126,15 +127,37 @@ class _InitScreenState extends State<InitScreen> {
     }
     if (initUrl != null) {
       var parsed = Uri.parse(initUrl!);
-      if (RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).isNotEmpty) {
-        String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$").allMatches(initUrl!).first.group(1)!;
+      if (RegExp(r"^pika://access_key/([0-9A-z:\-]+)/$")
+          .allMatches(initUrl!)
+          .isNotEmpty) {
+        String accessKey = RegExp(r"^pika://access_key/([0-9A-z:\-]+)/$")
+            .allMatches(initUrl!)
+            .first
+            .group(1)!;
+        Navigator.of(context).pushReplacement(mixRoute(
+          builder: (BuildContext context) =>
+              AccessKeyReplaceScreen(accessKey: accessKey),
+        ));
+        return;
+      } else if (RegExp(r"^pika://comic/([0-9A-z]+)/$")
+          .allMatches(initUrl!)
+          .isNotEmpty) {
+        String comicId = RegExp(r"^pika://comic/([0-9A-z]+)/$")
+            .allMatches(initUrl!)
+            .first
+            .group(1)!;
         Navigator.of(context).pushReplacement(mixRoute(
           builder: (BuildContext context) =>
               ComicInfoScreen(comicId: comicId, holdPkz: true),
         ));
         return;
-      } if (RegExp(r"^https?://pika/comic/([0-9A-z]+)/$").allMatches(initUrl!).isNotEmpty) {
-        String comicId = RegExp(r"^https?://pika/comic/([0-9A-z]+)/$").allMatches(initUrl!).first.group(1)!;
+      } else if (RegExp(r"^https?://pika/comic/([0-9A-z]+)/$")
+          .allMatches(initUrl!)
+          .isNotEmpty) {
+        String comicId = RegExp(r"^https?://pika/comic/([0-9A-z]+)/$")
+            .allMatches(initUrl!)
+            .first
+            .group(1)!;
         Navigator.of(context).pushReplacement(mixRoute(
           builder: (BuildContext context) =>
               ComicInfoScreen(comicId: comicId, holdPkz: true),
@@ -147,7 +170,9 @@ class _InitScreenState extends State<InitScreen> {
               PkzArchiveScreen(pkzPath: file.path, holdPkz: true),
         ));
         return;
-      } else if (RegExp(r"^.*\.((pki)|(zip))$").allMatches(parsed.path).isNotEmpty) {
+      } else if (RegExp(r"^.*\.((pki)|(zip))$")
+          .allMatches(parsed.path)
+          .isNotEmpty) {
         File file = await toFile(initUrl!);
         Navigator.of(context).pushReplacement(
           mixRoute(

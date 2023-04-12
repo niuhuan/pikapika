@@ -1013,4 +1013,20 @@ class Method {
   Future downloadAll(List<String> comicIds) {
     return _flatInvoke("downloadAll", comicIds);
   }
+
+  Future setPatAccessKey(String accessKey) {
+    return _flatInvoke("setPatAccessKey", accessKey);
+  }
+
+  Future reloadPatAccount() {
+    return _flatInvoke("reloadPatAccount", "");
+  }
+
+  Future bindThisAccount() {
+    return _flatInvoke("bindThisAccount", "");
+  }
+
+  Future clearPat() {
+    return _flatInvoke("clearPat", "");
+  }
 }

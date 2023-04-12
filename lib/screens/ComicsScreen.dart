@@ -160,7 +160,11 @@ class _ComicsScreenState extends State<ComicsScreen> {
       appBar = AppBar(
         title: Text(title),
         actions: [
-          commonPopMenu(context),
+          commonPopMenu(
+            context,
+            setState: setState,
+            comicListController: _comicListController,
+          ),
           addressPopMenu(context),
           _chooseCategoryAction(),
         ],
