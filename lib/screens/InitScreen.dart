@@ -45,6 +45,7 @@ import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
+import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/WebDav.dart';
@@ -109,6 +110,7 @@ class _InitScreenState extends State<InitScreen> {
     await reloadIsPro();
     autoCheckNewVersion();
     await initWillPopNotice();
+    await initHiddenFdIcon();
     await initShowCommentAtDownload();
     await initDownloadCachePath();
     await initUseApiLoadImage();

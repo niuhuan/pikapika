@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/HiddenFdIcon.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/AboutScreen.dart';
 import 'package:pikapika/screens/AccountScreen.dart';
@@ -30,6 +31,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
   void initState() {
     versionEvent.subscribe(_onEvent);
     proEvent.subscribe(_onEvent);
+    hiddenFdIconEvent.subscribe(_onEvent);
     super.initState();
   }
 
@@ -37,6 +39,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
   void dispose() {
     versionEvent.unsubscribe(_onEvent);
     proEvent.unsubscribe(_onEvent);
+    hiddenFdIconEvent.unsubscribe(_onEvent);
     super.dispose();
   }
 
@@ -53,14 +56,13 @@ class _SpaceScreenState extends State<SpaceScreen> {
           IconButton(
             onPressed: () async {
               bool result =
-              await confirmDialog(context, '退出登录', '您确认要退出当前账号吗?');
+                  await confirmDialog(context, '退出登录', '您确认要退出当前账号吗?');
               if (result) {
                 await method.clearToken();
                 await method.setPassword("");
                 Navigator.pushReplacement(
                   context,
-                  mixRoute(
-                      builder: (context) => const AccountScreen()),
+                  mixRoute(builder: (context) => const AccountScreen()),
                 );
               }
             },
@@ -78,17 +80,21 @@ class _SpaceScreenState extends State<SpaceScreen> {
               badge: latestVersion() == null ? null : "1",
             ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .push(mixRoute(builder: (BuildContext context) {
-                return const ProScreen();
-              }));
-            },
-            icon: Icon(
-              isPro ? Icons.offline_bolt : Icons.offline_bolt_outlined,
-            ),
-          ),
+          ...hiddenFdIcon
+              ? []
+              : [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(mixRoute(builder: (BuildContext context) {
+                        return const ProScreen();
+                      }));
+                    },
+                    icon: Icon(
+                      isPro ? Icons.offline_bolt : Icons.offline_bolt_outlined,
+                    ),
+                  ),
+                ],
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -109,8 +115,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                mixRoute(
-                    builder: (context) => const FavouritePaperScreen()),
+                mixRoute(builder: (context) => const FavouritePaperScreen()),
               );
             },
             title: const Text('我的收藏'),
@@ -130,8 +135,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
             onTap: () {
               Navigator.push(
                 context,
-                mixRoute(
-                    builder: (context) => const DownloadListScreen()),
+                mixRoute(builder: (context) => const DownloadListScreen()),
               );
             },
             title: const Text('我的下载'),
