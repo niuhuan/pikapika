@@ -25,6 +25,7 @@ import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../basic/config/IconLoading.dart';
+import '../../basic/config/ReaderBackgroundColor.dart';
 import '../../basic/config/UseApiLoadImage.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
@@ -1052,8 +1053,8 @@ class _WebToonReaderState extends _ImageReaderContentState {
   @override
   Widget _buildViewer() {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.black,
+      decoration: BoxDecoration(
+        color: readerBackgroundColorObj,
       ),
       child: _buildList(),
     );
@@ -1180,7 +1181,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
             Navigator.of(context).pop();
           }
         },
-        textColor: Colors.white,
+        textColor: invertColor(readerBackgroundColorObj),
         child: Container(
           padding: const EdgeInsets.only(top: 40, bottom: 40),
           child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
@@ -1396,8 +1397,8 @@ class _ListViewReaderState extends _ImageReaderContentState
   @override
   Widget _buildViewer() {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.black,
+      decoration: BoxDecoration(
+        color: readerBackgroundColorObj,
       ),
       child: _buildList(),
     );
@@ -1531,7 +1532,7 @@ class _ListViewReaderState extends _ImageReaderContentState
             Navigator.of(context).pop();
           }
         },
-        textColor: Colors.white,
+        textColor: invertColor(readerBackgroundColorObj),
         child: Container(
           padding: const EdgeInsets.only(top: 40, bottom: 40),
           child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
@@ -1611,7 +1612,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
           ? Axis.vertical
           : Axis.horizontal,
       reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-      backgroundDecoration: const BoxDecoration(color: Colors.black),
+      backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
       loadingBuilder: (context, event) => LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return buildLoading(constraints.maxWidth, constraints.maxHeight);
@@ -1754,13 +1755,24 @@ class _GalleryReaderState extends _ImageReaderContentState {
                 Navigator.of(context).pop();
               }
             },
-            child: Text(_hasNextEp() ? '下一章' : '结束阅读',
-                style: const TextStyle(color: Colors.white)),
+            child: Text(
+              _hasNextEp() ? '下一章' : '结束阅读',
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+Color invertColor(Color color) {
+  return Color.fromRGBO(
+    255 - color.red,
+    255 - color.green,
+    255 - color.blue,
+    1.0,
+  );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -49,6 +49,7 @@ import '../basic/config/ExportRename.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
+import '../basic/config/ReaderBackgroundColor.dart';
 import '../basic/config/WebDav.dart';
 import 'AccountScreen.dart';
 import 'AppScreen.dart';
@@ -117,6 +118,7 @@ class _InitScreenState extends State<InitScreen> {
     await initUseApiLoadImage();
     await initWebDav();
     await initImageFilter();
+    await initReaderBackgroundColor();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {

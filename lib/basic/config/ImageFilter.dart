@@ -84,7 +84,7 @@ Future<void> chooseImageFilter(BuildContext context) async {
   ImageFilter? result = await chooseMapDialog<ImageFilter>(
     context,
     map,
-    "选择全屏UI",
+    "选择阅读器图片滤镜",
   );
   if (result != null) {
     await method.saveProperty(_propertyName, result.name);
@@ -96,7 +96,7 @@ Widget imageFilterSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("阅读器滤镜"),
+        title: const Text("阅读器图片滤镜"),
         subtitle: Text(imageFilter.name),
         onTap: () async {
           await chooseImageFilter(context);

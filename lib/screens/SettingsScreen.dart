@@ -19,6 +19,7 @@ import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/Quality.dart';
+import 'package:pikapika/basic/config/ReaderBackgroundColor.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
@@ -161,6 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         keyboardControllerSetting(),
         const Divider(),
         imageFilterSetting(),
+        readerBackgroundColorSetting(),
         const Divider(),
         const Padding(padding: EdgeInsets.only(top: 15)),
       ]),
