@@ -14,6 +14,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
+import 'package:pikapika/basic/config/ImageFilter.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/Quality.dart';
@@ -228,6 +229,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   // 阅读器
   Widget _buildViewer();
 
+  Widget _buildViewerProcess() => processImageFilter(_buildViewer());
+
   // 键盘, 音量键 等事件
   void _needJumpTo(int index, bool animation);
 
@@ -308,35 +311,35 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       case FullScreenAction.CONTROLLER:
         return Stack(
           children: [
-            _buildViewer(),
+            _buildViewerProcess(),
             _buildBar(_buildFullScreenControllerStackItem()),
           ],
         );
       case FullScreenAction.TOUCH_ONCE:
         return Stack(
           children: [
-            _buildTouchOnceControllerAction(_buildViewer()),
+            _buildTouchOnceControllerAction(_buildViewerProcess()),
             _buildBar(Container()),
           ],
         );
       case FullScreenAction.TOUCH_DOUBLE:
         return Stack(
           children: [
-            _buildTouchDoubleControllerAction(_buildViewer()),
+            _buildTouchDoubleControllerAction(_buildViewerProcess()),
             _buildBar(Container()),
           ],
         );
       case FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT:
         return Stack(
           children: [
-            _buildTouchDoubleOnceNextControllerAction(_buildViewer()),
+            _buildTouchDoubleOnceNextControllerAction(_buildViewerProcess()),
             _buildBar(Container()),
           ],
         );
       case FullScreenAction.THREE_AREA:
         return Stack(
           children: [
-            _buildViewer(),
+            _buildViewerProcess(),
             _buildBar(_buildThreeAreaControllerAction()),
           ],
         );
@@ -934,13 +937,15 @@ class _SettingPanelState extends State<_SettingPanel> {
                 widget.onReloadEp();
               },
             ),
-            // _bottomIcon(
-            //   icon: Icons.file_download,
-            //   title: "下载本作",
-            //   onPressed: widget.onDownload,
-            // ),
           ],
         ),
+        // Row(children: [
+        //   _bottomIcon(
+        //     icon: Icons.file_download,
+        //     title: "下载本作",
+        //     onPressed: widget.onDownload,
+        //   ),
+        // ]),
       ],
     );
   }

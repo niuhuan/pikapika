@@ -35,6 +35,7 @@ import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/HiddenFdIcon.dart';
+import '../basic/config/ImageFilter.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
 import '../basic/config/WillPopNotice.dart';
@@ -158,6 +159,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         fullScreenActionSetting(),
         volumeControllerSetting(),
         keyboardControllerSetting(),
+        const Divider(),
+        imageFilterSetting(),
         const Divider(),
         const Padding(padding: EdgeInsets.only(top: 15)),
       ]),

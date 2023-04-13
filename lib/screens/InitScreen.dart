@@ -16,6 +16,7 @@ import 'package:pikapika/basic/config/DownloadThreadCount.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
+import 'package:pikapika/basic/config/ImageFilter.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
@@ -115,6 +116,7 @@ class _InitScreenState extends State<InitScreen> {
     await initDownloadCachePath();
     await initUseApiLoadImage();
     await initWebDav();
+    await initImageFilter();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
