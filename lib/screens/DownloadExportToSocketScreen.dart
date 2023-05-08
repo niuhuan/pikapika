@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 传输到其他设备
@@ -85,7 +86,7 @@ class _DownloadExportToSocketScreenState
           if (snapshot.connectionState != ConnectionState.done) {
             return const ContentLoading(label: '加载中');
           }
-          return ListView(
+          return PikaListView(
             children: [
               DownloadInfoCard(task: widget.task),
               Container(

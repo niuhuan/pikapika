@@ -19,29 +19,20 @@ bool currentUsingRightClickPop() {
   return _usingRightClickPop;
 }
 
-Future<void> _chooseUsingRightClickPop(BuildContext context) async {
-  String? result =
-      await chooseListDialog<String>(context, "鼠标右键返回上一页", ["是", "否"]);
-  if (result != null) {
-    var target = result == "是";
-    await method.saveProperty(_propertyName, "$target");
-    _usingRightClickPop = target;
-  }
-}
-
 Widget usingRightClickPopSetting() {
   if (!(Platform.isWindows || Platform.isMacOS || Platform.isLinux)) {
     return Container();
   }
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
+      return SwitchListTile(
         title: const Text("鼠标右键返回上一页"),
-        subtitle: Text(_usingRightClickPop ? "是" : "否"),
-        onTap: () async {
-          await _chooseUsingRightClickPop(context);
+        onChanged: (value) async {
+          await method.saveProperty(_propertyName, "${value ? "是" : "否"}");
+          _usingRightClickPop = value;
           setState(() {});
         },
+        value: _usingRightClickPop,
       );
     },
   );

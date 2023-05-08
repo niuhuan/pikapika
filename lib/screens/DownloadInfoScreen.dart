@@ -17,6 +17,7 @@ import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/ListView.dart';
 import 'components/Recommendation.dart';
 
 // 下载详情
@@ -122,7 +123,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
           }
           List<dynamic> tagsDynamic = json.decode(_task.tags);
           List<String> tags = tagsDynamic.map((e) => "$e").toList();
-          var list = ListView(
+          var list = PikaListView(
             children: [
               DownloadInfoCard(task: _task, linkItem: true),
               ComicTagsCard(tags),

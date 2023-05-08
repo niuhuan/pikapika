@@ -16,6 +16,7 @@ import '../basic/Navigator.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/Platform.dart';
 import 'PkzComicInfoScreen.dart';
+import 'components/ListView.dart';
 
 class PkzArchiveScreen extends StatefulWidget {
   final bool holdPkz;
@@ -122,7 +123,7 @@ class _PkzArchiveScreenState extends State<PkzArchiveScreen> with RouteAware {
           BuildContext context,
           AsyncSnapshot snapshot,
         ) {
-          return ListView(children: [
+          return PikaListView(children: [
             ..._info.comics
                 .map((e) => GestureDetector(
                       behavior: HitTestBehavior.opaque,

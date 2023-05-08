@@ -10,6 +10,8 @@ import 'package:pikapika/basic/config/ChooserRoot.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
+import 'package:pikapika/basic/config/EBookScrollingRange.dart';
+import 'package:pikapika/basic/config/EBookScrollingTrigger.dart';
 import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
@@ -24,17 +26,18 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
+import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/basic/config/ShowCommentAtDownload.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
-import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/DownloadCachePath.dart';
+import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/UsingRightClickPop.dart';
@@ -66,175 +69,158 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  late var _index = 0;
-
   Widget buildScreen(BuildContext context) {
-    final List<_IconAndWidgets> iaws = [
-      _IconAndWidgets(Icons.lan, [
-        const Padding(padding: EdgeInsets.only(top: 15)),
-        const Divider(),
-        const ListTile(
-          subtitle: Text("网络&账户"),
-        ),
-        const Divider(),
-        widget.hiddenAccountInfo
-            ? Container()
-            : ListTile(
-                onTap: () async {
-                  Navigator.push(
-                    context,
-                    mixRoute(
-                      builder: (context) => const ModifyPasswordScreen(),
-                    ),
-                  );
-                },
-                title: const Text('修改密码'),
-              ),
-        const Divider(),
-        const NetworkSetting(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-        const Divider(),
-        const ListTile(
-          subtitle: Text("同步"),
-        ),
-        ...webDavSettings(context),
-        const Divider(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-      ]),
-      _IconAndWidgets(Icons.ad_units, [
-        const Padding(padding: EdgeInsets.only(top: 15)),
-        const Divider(),
-        const ListTile(
-          subtitle: Text("系统&界面"),
-        ),
-        const Divider(),
-        ListTile(
-          onTap: () async {
-            if (androidNightModeDisplay) {
-              Navigator.push(
-                context,
-                mixRoute(builder: (context) => const ThemeScreen()),
-              );
-            } else {
-              chooseLightTheme(context);
-            }
-          },
-          title: const Text('主题'),
-        ),
-        fullScreenUISetting(),
-        noAnimationSetting(),
-        iconLoadingSetting(),
-        categoriesColumnCountSetting(),
-        willPopNoticeSetting(),
-        hiddenFdIconSetting(),
-        pagerActionSetting(),
-        contentFailedReloadActionSetting(),
-        timeZoneSetting(),
-        fontSetting(),
-        usingRightClickPopSetting(),
-        const Divider(),
-        androidDisplayModeSetting(),
-        androidSecureFlagSetting(),
-        authenticationSetting(),
-        const Divider(),
-        migrate(context),
-        const Divider(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-      ]),
-      _IconAndWidgets(Icons.confirmation_num_rounded, [
-        const Divider(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-        const Divider(),
-        const ListTile(
-          subtitle: Text("内容&阅读器"),
-        ),
-        const Divider(),
-        shadowCategoriesModeSetting(),
-        shadowCategoriesSetting(),
-        const Divider(),
-        qualitySetting(),
-        readerTypeSetting(),
-        readerDirectionSetting(),
-        readerSliderPositionSetting(),
-        autoFullScreenSetting(),
-        fullScreenActionSetting(),
-        volumeControllerSetting(),
-        keyboardControllerSetting(),
-        const Divider(),
-        imageFilterSetting(),
-        readerBackgroundColorSetting(),
-        const Divider(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-      ]),
-      _IconAndWidgets(Icons.download, [
-        const Padding(padding: EdgeInsets.only(top: 15)),
-        const Divider(),
-        const ListTile(
-          subtitle: Text("下载&缓存"),
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text("启动Web服务器"),
-          subtitle: const Text("让局域网内的设备通过浏览器看下载的漫画"),
-          onTap: (){
-            Navigator.of(context).push(
-              mixRoute(
-                builder: (BuildContext context) =>
-                    const WebServerScreen(),
-              ),
-            );
-
-          },
-        ),
-        const Divider(),
-        autoCleanSecSetting(),
-        ListTile(
-          onTap: () {
-            Navigator.push(
-              context,
-              mixRoute(builder: (context) => const CleanScreen()),
-            );
-          },
-          title: const Text('清除缓存'),
-        ),
-        const Divider(),
-        chooserRootSetting(),
-        downloadThreadCountSetting(),
-        downloadAndExportPathSetting(),
-        showCommentAtDownloadSetting(),
-        exportRenameSetting(),
-        const Divider(),
-        downloadCachePathSetting(),
-        importViewLogFromOff(),
-        const Divider(),
-        const Padding(padding: EdgeInsets.only(top: 15)),
-      ]),
-    ];
-    var i = 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('设置'),
-        actions: [
-          ...iaws.map(
-            (e) {
-              final idx = i;
-              return Opacity(
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _index = idx;
-                    });
-                  },
-                  icon: Icon(e.icon),
-                ),
-                opacity: i++ == _index ? 1 : .75,
-              );
-            },
-          )
-        ],
       ),
-      body: ListView(
-        children: iaws[_index].widgets,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            ExpansionTile(
+              leading: Icon(Icons.energy_savings_leaf),
+              title: Text('界面'),
+              children: [
+                const Divider(),
+                ...themeWidgets(context, setState),
+                const Divider(),
+                pagerActionSetting(),
+                contentFailedReloadActionSetting(),
+                willPopNoticeSetting(),
+                categoriesColumnCountSetting(),
+                const Divider(),
+                timeZoneSetting(),
+                fontSetting(),
+                fullScreenUISetting(),
+                usingRightClickPopSetting(),
+                hiddenFdIconSetting(),
+                const Divider(),
+                androidDisplayModeSetting(),
+                androidSecureFlagSetting(),
+                authenticationSetting(),
+                const Divider(),
+                iconLoadingSetting(),
+                eBookScrollingSetting(),
+                eBookScrollingRangeSetting(),
+                eBookScrollingTriggerSetting(),
+                const Divider(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.lan),
+              title: Text('网络'),
+              children: [
+                const Divider(),
+                const NetworkSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.backup),
+              title: Text('同步'),
+              children: [
+                const Divider(),
+                ...webDavSettings(context),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.manage_accounts),
+              title: Text('账户'),
+              children: [
+                const Divider(),
+                widget.hiddenAccountInfo
+                    ? Container()
+                    : ListTile(
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            mixRoute(
+                              builder: (context) =>
+                                  const ModifyPasswordScreen(),
+                            ),
+                          );
+                        },
+                        title: const Text('修改密码'),
+                      ),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.dangerous),
+              title: Text('封印'),
+              children: [
+                const Divider(),
+                shadowCategoriesModeSetting(),
+                shadowCategoriesSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.menu_book_outlined),
+              title: Text('阅读'),
+              children: [
+                const Divider(),
+                qualitySetting(),
+                readerTypeSetting(),
+                readerDirectionSetting(),
+                readerSliderPositionSetting(),
+                autoFullScreenSetting(),
+                fullScreenActionSetting(),
+                volumeControllerSetting(),
+                keyboardControllerSetting(),
+                const Divider(),
+                noAnimationSetting(),
+                imageFilterSetting(),
+                readerBackgroundColorSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.download),
+              title: Text('下载'),
+              children: [
+                const Divider(),
+                ListTile(
+                  title: const Text("启动Web服务器"),
+                  subtitle: const Text("让局域网内的设备通过浏览器看下载的漫画"),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      mixRoute(
+                        builder: (BuildContext context) =>
+                            const WebServerScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(),
+                chooserRootSetting(),
+                downloadThreadCountSetting(),
+                downloadAndExportPathSetting(),
+                showCommentAtDownloadSetting(),
+                exportRenameSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.ad_units),
+              title: Text('系统'),
+              children: [
+                const Divider(),
+                autoCleanSecSetting(),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      mixRoute(builder: (context) => const CleanScreen()),
+                    );
+                  },
+                  title: const Text('清除缓存'),
+                ),
+                const Divider(),
+                migrate(context),
+                const Divider(),
+                downloadCachePathSetting(),
+                importViewLogFromOff(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -20,6 +20,7 @@ import 'RandomComicsScreen.dart';
 import 'components/Common.dart';
 import 'components/ContentLoading.dart';
 import 'components/Images.dart';
+import 'components/ListView.dart';
 
 // 分类
 class CategoriesScreen extends StatefulWidget {
@@ -127,7 +128,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             if (snapshot.connectionState != ConnectionState.done) {
               return const ContentLoading(label: '加载中');
             }
-            return ListView(
+            return PikaListView(
               children: [
                 Container(height: 20),
                 Wrap(

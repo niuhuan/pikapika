@@ -6,6 +6,7 @@ import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 
 /// 注册页面
 class RegisterScreen extends StatefulWidget {
@@ -133,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ],
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           const Divider(),
           ListTile(

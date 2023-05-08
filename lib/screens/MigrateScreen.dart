@@ -6,6 +6,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 数据迁移页面
@@ -55,7 +56,7 @@ class _MigrateScreenState extends State<MigrateScreen> {
             (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (_migrate) {
             case 0:
-              return ListView(
+              return PikaListView(
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),

@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Method.dart';
 
 import '../basic/Channels.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 class ImportFromOffScreen extends StatefulWidget {
@@ -58,7 +59,7 @@ class _ImportFromOffScreenState extends State<ImportFromOffScreen> {
       appBar: AppBar(
         title: const Text('导入'),
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           Container(
             padding: const EdgeInsets.all(10),

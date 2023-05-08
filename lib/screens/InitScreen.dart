@@ -13,6 +13,9 @@ import 'package:pikapika/basic/config/ChooserRoot.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 import 'package:pikapika/basic/config/DownloadAndExportPath.dart';
 import 'package:pikapika/basic/config/DownloadThreadCount.dart';
+import 'package:pikapika/basic/config/EBookScrolling.dart';
+import 'package:pikapika/basic/config/EBookScrollingRange.dart';
+import 'package:pikapika/basic/config/EBookScrollingTrigger.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
@@ -119,6 +122,9 @@ class _InitScreenState extends State<InitScreen> {
     await initWebDav();
     await initImageFilter();
     await initReaderBackgroundColor();
+    await initEBookScrolling();
+    await initEBookScrollingRange();
+    await initEBookScrollingTrigger();
 
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {

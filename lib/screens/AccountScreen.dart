@@ -15,6 +15,7 @@ import 'AppScreen.dart';
 import 'DownloadListScreen.dart';
 import 'ForgotPasswordScreen.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 
 // 账户设置
 class AccountScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ],
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           ListTile(
             title: const Text("账号"),

@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
 
 import '../basic/Common.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 class ModifyPasswordScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _ModifyPasswordScreenState extends State<ModifyPasswordScreen> {
   }
 
   Widget _buildForm() {
-    return ListView(
+    return PikaListView(
       children: [
         const Divider(),
         ListTile(

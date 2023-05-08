@@ -7,6 +7,7 @@ import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'package:pikapika/basic/Method.dart';
 
 import 'components/ComicInfoCard.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 确认下载
@@ -128,7 +129,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
           if (snapshot.connectionState != ConnectionState.done) {
             return const ContentLoading(label: '加载中');
           }
-          return ListView(
+          return PikaListView(
             children: [
               ComicInfoCard(widget.comicInfo),
               _buildButtons(),

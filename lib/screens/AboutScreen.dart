@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/components/Badge.dart';
 
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 const _releasesUrl = "https://github.com/niuhuan/pikapika/releases";
@@ -54,7 +55,7 @@ class _AboutScreenState extends State<AboutScreen> {
       appBar: AppBar(
         title: const Text('关于'),
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           SizedBox(
             width: min / 2,

@@ -19,7 +19,6 @@ Widget hiddenFdIconSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
         title: const Text("隐藏个人空间的发电图标"),
-        subtitle: Text(_hiddenFdIcon ? "是" : "否"),
         value: _hiddenFdIcon,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

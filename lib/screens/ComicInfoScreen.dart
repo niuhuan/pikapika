@@ -21,6 +21,7 @@ import 'components/CommentList.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 漫画详情
@@ -146,7 +147,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                 _buildDownloadAction(_epListFuture, _comicInfo),
               ],
             ),
-            body: ListView(
+            body: PikaListView(
               children: [
                 ComicInfoCard(_comicInfo, linkItem: true),
                 ComicTagsCard(_comicInfo.tags),

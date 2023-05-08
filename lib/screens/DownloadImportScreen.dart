@@ -14,6 +14,7 @@ import '../basic/config/ImportNotice.dart';
 import '../basic/config/IsPro.dart';
 import 'PkzArchiveScreen.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 导入
@@ -68,7 +69,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
       appBar: AppBar(
         title: const Text('导入'),
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           Container(
             padding: const EdgeInsets.all(10),

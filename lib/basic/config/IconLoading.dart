@@ -31,7 +31,6 @@ Widget iconLoadingSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: const Text("尽量减少UI动画"),
-        subtitle: Text(_iconLoading ? "是" : "否"),
         onTap: () async {
           await _chooseIconLoading(context);
           setState(() {});

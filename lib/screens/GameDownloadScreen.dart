@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 
 import 'components/GameTitleCard.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 游戏下载地址列表页
@@ -35,7 +36,7 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
       appBar: AppBar(
         title: Text("下载 - ${widget.info.title}"),
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           GameTitleCard(widget.info),
           ItemBuilder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 class NetworkSettingsScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class NetworkSettingsScreen extends StatelessWidget {
 
   Widget buildScreen(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('网络设置')),
-        body: ListView(
+        body: PikaListView(
           children: const [
             NetworkSetting(),
           ],

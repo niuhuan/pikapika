@@ -4,6 +4,7 @@ import '../basic/Common.dart';
 import '../basic/Cross.dart';
 import '../basic/Method.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -50,7 +51,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Widget _inputEmailScreen() {
-    return ListView(children: [
+    return PikaListView(children: [
       ListTile(
         title: const Text("账号"),
         subtitle: Text(_email == "" ? "未设置" : _email),

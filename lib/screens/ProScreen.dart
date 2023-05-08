@@ -8,6 +8,7 @@ import 'package:pikapika/screens/AccessKeyReplaceScreen.dart';
 
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
+import 'components/ListView.dart';
 
 class ProScreen extends StatefulWidget {
   const ProScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _ProScreenState extends State<ProScreen> {
       appBar: AppBar(
         title: const Text("发电中心"),
       ),
-      body: ListView(
+      body: PikaListView(
         children: [
           SizedBox(
             width: min / 2,
@@ -100,13 +101,16 @@ class _ProScreenState extends State<ProScreen> {
           ListTile(
             title: const Text("我刚才发了电"),
             onTap: () async {
-              final code = await inputString(context, "输入代码");
-              if (code != null && code.isNotEmpty) {
-                try {
-                  await method.inputCdKey(code);
-                  defaultToast(context, "SUCCESS");
-                } catch (e, s) {
-                  defaultToast(context, "FAIL");
+              var code = await inputString(context, "输入代码");
+              if (code != null) {
+                code = code.trim();
+                if (code.isNotEmpty) {
+                  try {
+                    await method.inputCdKey(code);
+                    defaultToast(context, "SUCCESS");
+                  } catch (e, s) {
+                    defaultToast(context, "FAIL");
+                  }
                 }
               }
               await reloadIsPro();

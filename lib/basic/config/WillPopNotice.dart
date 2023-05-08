@@ -17,8 +17,7 @@ Widget willPopNoticeSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("退出APP的提示"),
-        subtitle: Text(_willPopNotice ? "是" : "否"),
+        title: const Text("在首页连续按两下返回键才能退出APP"),
         value: _willPopNotice,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

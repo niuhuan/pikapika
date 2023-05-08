@@ -1,15 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
-
 import '../basic/Channels.dart';
-import '../basic/Cross.dart';
 import '../basic/Method.dart';
 import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
 import '../basic/config/IsPro.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 
 class DownloadExportingGroupScreen extends StatefulWidget {
   final List<String> idList;
@@ -57,7 +54,7 @@ class _DownloadExportingGroupScreenState
     if (exported) {
       return const Center(child: Text("导出成功"));
     }
-    return ListView(
+    return PikaListView(
       children: [
         Container(height: 20),
         displayExportPathInfo(),

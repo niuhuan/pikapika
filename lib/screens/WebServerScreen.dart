@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../basic/Method.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 class WebServerScreen extends StatefulWidget {
@@ -52,7 +53,7 @@ class _WebServerScreenState extends State<WebServerScreen> {
           if (snapshot.connectionState != ConnectionState.done) {
             return const ContentLoading(label: '加载中');
           }
-          return ListView(
+          return PikaListView(
             children: [
               Container(
                 padding: const EdgeInsets.all(8),

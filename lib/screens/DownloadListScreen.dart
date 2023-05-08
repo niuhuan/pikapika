@@ -13,6 +13,7 @@ import 'DownloadImportScreen.dart';
 import 'DownloadInfoScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 // 下载列表
@@ -118,7 +119,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                 _f = method.allDownloads(_search);
               });
             },
-            child: ListView(
+            child: PikaListView(
               children: [
                 ...data.map(downloadWidget),
               ],

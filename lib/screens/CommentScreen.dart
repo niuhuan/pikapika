@@ -7,6 +7,7 @@ import 'package:pikapika/screens/components/CommentItem.dart';
 import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
+import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
 class _CommentChildPage extends e.Page {
@@ -67,7 +68,7 @@ class _CommentScreenState extends State<CommentScreen> {
       successBuilder:
           (BuildContext context, AsyncSnapshot<_CommentChildPage> snapshot) {
         var page = snapshot.data!;
-        return ListView(
+        return PikaListView(
           children: [
             _buildPrePage(page),
             ...page.docs.map((e) => _buildComment(e)),

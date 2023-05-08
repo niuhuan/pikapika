@@ -20,9 +20,10 @@ Widget categoriesColumnCountSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: const Text(
-          "首页分类列数",
+          "首页分类展示列数",
         ),
-        subtitle: Text("$categoriesColumnCount"),
+        subtitle:
+            Text(categoriesColumnCount == 0 ? "自动" : "$categoriesColumnCount"),
         onTap: () async {
           int? value = await chooseMapDialog(
               context,
@@ -33,7 +34,7 @@ Widget categoriesColumnCountSetting() {
                 "4": 4,
                 "5": 5,
               },
-              "选择首页分类列数");
+              "选择首页分类展示列数");
           if (value != null) {
             await method.saveProperty(_propertyName, "$value");
             categoriesColumnCount = value;

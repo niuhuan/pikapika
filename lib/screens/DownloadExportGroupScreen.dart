@@ -7,6 +7,7 @@ import '../basic/config/IconLoading.dart';
 import 'DownloadExportingGroupScreen.dart';
 import 'components/ContentLoading.dart';
 import 'components/DownloadInfoCard.dart';
+import 'components/ListView.dart';
 
 class DownloadExportGroupScreen extends StatefulWidget {
   const DownloadExportGroupScreen({Key? key}) : super(key: key);
@@ -72,7 +73,7 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
                 _f = method.allDownloads("");
               });
             },
-            child: ListView(
+            child: PikaListView(
               children: ws,
             ),
           ),

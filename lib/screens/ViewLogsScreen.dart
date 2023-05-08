@@ -10,6 +10,7 @@ import '../basic/Entities.dart';
 import '../basic/config/IconLoading.dart';
 import 'ComicInfoScreen.dart';
 import 'components/Images.dart';
+import 'components/ListView.dart';
 
 // 浏览记录
 class ViewLogsScreen extends StatefulWidget {
@@ -137,7 +138,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
                 onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
           ],
         ),
-        body: ListView(
+        body: PikaListView(
           physics: _scrollPhysics,
           controller: _scrollController,
           children: entries.toList(),

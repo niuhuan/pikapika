@@ -12,6 +12,7 @@ import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'ComicInfoCard.dart';
 import 'Images.dart';
 import 'LinkToComicInfo.dart';
+import 'ListView.dart';
 
 class ComicListController {
   _ComicListState? _state;
@@ -113,7 +114,7 @@ class _ComicListState extends State<ComicList> {
   }
 
   Widget _buildInfoCardList() {
-    return ListView(
+    return PikaListView(
       controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
@@ -229,19 +230,24 @@ class _ComicListState extends State<ComicList> {
     List<Widget> wraps = [];
     List<Widget> tmp = [];
     for (var e in widget.comicList) {
-      var shadow = e.categories.map(
-        (c) {
-          switch (currentShadowCategoriesMode()) {
-            case ShadowCategoriesMode.BLACK_LIST:
-              if (shadowCategories.contains(c)) return true;
-              break;
-            case ShadowCategoriesMode.WHITE_LIST:
-              if (!shadowCategories.contains(c)) return true;
-              break;
+      late bool shadow;
+      X:
+      switch (currentShadowCategoriesMode()) {
+        case ShadowCategoriesMode.BLACK_LIST:
+          shadow = e.categories
+              .map((c) => shadowCategories.contains(c))
+              .reduce((value, element) => value || element);
+          break;
+        case ShadowCategoriesMode.WHITE_LIST:
+          for (var c in e.categories) {
+            if (shadowCategories.contains(c)) {
+              shadow = false;
+              break X;
+            }
           }
-          return false;
-        },
-      ).reduce((value, element) => value || element);
+          shadow = true;
+          break;
+      }
       if (shadow) {
         tmp.add(
           Container(
@@ -317,7 +323,7 @@ class _ComicListState extends State<ComicList> {
       tmp = [];
     }
     // 返回
-    return ListView(
+    return PikaListView(
       controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(top: gap, bottom: gap),
@@ -338,19 +344,24 @@ class _ComicListState extends State<ComicList> {
     List<Widget> wraps = [];
     List<Widget> tmp = [];
     for (var e in widget.comicList) {
-      var shadow = e.categories.map(
-        (c) {
-          switch (currentShadowCategoriesMode()) {
-            case ShadowCategoriesMode.BLACK_LIST:
-              if (shadowCategories.contains(c)) return true;
-              break;
-            case ShadowCategoriesMode.WHITE_LIST:
-              if (!shadowCategories.contains(c)) return true;
-              break;
+      late bool shadow;
+      X:
+      switch (currentShadowCategoriesMode()) {
+        case ShadowCategoriesMode.BLACK_LIST:
+          shadow = e.categories
+              .map((c) => shadowCategories.contains(c))
+              .reduce((value, element) => value || element);
+          break;
+        case ShadowCategoriesMode.WHITE_LIST:
+          for (var c in e.categories) {
+            if (shadowCategories.contains(c)) {
+              shadow = false;
+              break X;
+            }
           }
-          return false;
-        },
-      ).reduce((value, element) => value || element);
+          shadow = true;
+          break;
+      }
       if (shadow) {
         tmp.add(
           Container(
@@ -455,7 +466,7 @@ class _ComicListState extends State<ComicList> {
       tmp = [];
     }
     // 返回
-    return ListView(
+    return PikaListView(
       controller: widget.scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(top: gap, bottom: gap),
