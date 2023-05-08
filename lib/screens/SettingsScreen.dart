@@ -75,12 +75,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('设置'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             ExpansionTile(
-              leading: Icon(Icons.energy_savings_leaf),
-              title: Text('界面'),
+              leading: const Icon(Icons.energy_savings_leaf),
+              title: const Text('界面'),
               children: [
                 const Divider(),
                 ...themeWidgets(context, setState),

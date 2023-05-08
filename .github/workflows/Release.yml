@@ -240,6 +240,7 @@ jobs:
           sed -i "s/file_picker: ^5.2.1/file_picker: 4.6.1/g" pubspec.yaml
           sed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           sed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
+          sed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
