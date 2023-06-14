@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 
+import '../../basic/Cross.dart';
 import 'Avatar.dart';
 import 'CommentMainType.dart';
 
@@ -174,7 +175,12 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
                   },
                 ),
                 Container(height: 5),
-                Text(comment.content, style: connectStyle),
+                GestureDetector(
+                  onLongPress: () {
+                    confirmCopy(context, comment.content);
+                  },
+                  child: Text(comment.content, style: connectStyle),
+                ),
               ],
             ),
           ),

@@ -1,17 +1,11 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/WillPopNotice.dart';
 import 'package:pikapika/screens/components/Badge.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:uri_to_file/uri_to_file.dart';
-
 import '../basic/Common.dart';
 import 'CategoriesScreen.dart';
-import 'PkzArchiveScreen.dart';
 import 'SpaceScreen.dart';
 
 // MAIN UI 底部导航栏

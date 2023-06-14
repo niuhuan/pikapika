@@ -248,6 +248,7 @@ class _ProScreenState extends State<ProScreen> {
     defaultToast(context, "请稍后");
     try {
       await method.bindThisAccount();
+      await method.reloadPatAccount();
       await reloadIsPro();
       defaultToast(context, "SUCCESS");
     } catch (e) {
