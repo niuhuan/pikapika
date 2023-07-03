@@ -1029,4 +1029,12 @@ class Method {
   Future clearPat() {
     return _flatInvoke("clearPat", "");
   }
+
+  Future<String> getProServerName() async {
+    return await _flatInvoke("getProServerName", "");
+  }
+
+  Future<dynamic> setProServerName(String serverName) {
+    return _flatInvoke("setProServerName", serverName);
+  }
 }

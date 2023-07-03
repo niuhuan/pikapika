@@ -118,6 +118,8 @@ class _ProScreenState extends State<ProScreen> {
             },
           ),
           const Divider(),
+          const ProServerNameWidget(),
+          const Divider(),
           ...patPro(),
           const Divider(),
           const Divider(),
@@ -260,5 +262,61 @@ class _ProScreenState extends State<ProScreen> {
     await method.clearPat();
     await reloadIsPro();
     defaultToast(context, "Success");
+  }
+}
+
+class ProServerNameWidget extends StatefulWidget {
+  const ProServerNameWidget({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _ProServerNameWidgetState();
+}
+
+class _ProServerNameWidgetState extends State<ProServerNameWidget> {
+  String _serverName = "";
+
+  @override
+  void initState() {
+    method.getProServerName().then((value) {
+      setState(() {
+        _serverName = value;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: const Text("发电方式"),
+      subtitle: Text(_loadServerName()),
+      onTap: () async {
+        final serverName = await chooseMapDialog(
+          context,
+          {
+            "风力发电": "HK",
+            "水力发电": "US",
+          },
+          "选择发电方式",
+        );
+        if (serverName != null && serverName.isNotEmpty) {
+          await method.setProServerName(serverName);
+          setState(() {
+            _serverName = serverName;
+          });
+        }
+      },
+    );
+  }
+
+  String _loadServerName() {
+    switch (_serverName) {
+      case "HK":
+        return "风力发电";
+      case "US":
+        return "水力发电";
+      default:
+        return "";
+    }
   }
 }
