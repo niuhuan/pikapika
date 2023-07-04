@@ -641,6 +641,15 @@ class Method {
     });
   }
 
+  /// 导出下载的漫画到cbzs.zip
+  Future<dynamic> exportComicDownloadToCbzsZip(String comicId, String dir, String name) {
+    return _flatInvoke("exportComicDownloadToCbzsZip", {
+      "comicId": comicId,
+      "dir": dir,
+      "name": name,
+    });
+  }
+
   /// 导入文件夹所有的文件
   Future<dynamic> importComicDownloadDir(
     String dir,

@@ -116,6 +116,8 @@ class _DownloadExportToFileScreenState
               Container(height: 10),
               _exportToHtmlJPEGNotDownOverButton(),
               Container(height: 10),
+              _exportComicDownloadToCbzsZipButton(),
+              Container(height: 10),
               MaterialButton(
                 onPressed: () async {
                   Navigator.of(context).push(
@@ -442,6 +444,59 @@ class _DownloadExportToFileScreenState
       },
       child: _buildButtonInner(
         '导出到HTML+JPG\n(即使没有下载成功)' + (!isPro ? "\n(发电后使用)" : ""),
+      ),
+    );
+  }
+
+  Widget _exportComicDownloadToCbzsZipButton() {
+    return MaterialButton(
+      onPressed: () async {
+        if (!isPro) {
+          defaultToast(context, "请先发电鸭");
+          return;
+        }
+        var name = "";
+        if (currentExportRename()) {
+          var rename = await inputString(
+            context,
+            "请输入保存后的名称",
+            defaultValue: _task.title,
+          );
+          if (rename != null && rename.isNotEmpty) {
+            name = rename;
+          } else {
+            return;
+          }
+        } else {
+          if (!await confirmDialog(
+              context, "导出确认", "将您所选的漫画导出cbk.zip${showExportPath()}")) {
+            return;
+          }
+        }
+        try {
+          setState(() {
+            exporting = true;
+          });
+          await method.exportComicDownloadToCbzsZip(
+            widget.comicId,
+            await attachExportPath(),
+            name,
+          );
+          setState(() {
+            exportResult = "导出成功";
+          });
+        } catch (e) {
+          setState(() {
+            exportResult = "导出失败 $e";
+          });
+        } finally {
+          setState(() {
+            exporting = false;
+          });
+        }
+      },
+      child: _buildButtonInner(
+        '导出阅读器用cbk.zip\n(暂时不能导入)' + (!isPro ? "\n(发电后使用)" : ""),
       ),
     );
   }
