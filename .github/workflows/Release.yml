@@ -4,15 +4,18 @@ on:
   workflow_dispatch:
 
 env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
   go_version: '1.17'
   flutter_channel: 'stable'
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  host_linux: ubuntu-latest
+  host_windows: windows-latest
+  host_macos: macos-latest
 
 jobs:
 
   ci-pass:
     name: CI is green
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.host_linux }}
     needs:
       - check_release
       - build_release_assets
@@ -22,7 +25,7 @@ jobs:
 
   check_release:
     name: Check release
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.host_linux }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,9 +40,9 @@ jobs:
           path: |
             ~/.cache/go-build
             ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ env.host_linux }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ env.host_linux }}-go-
       - name: Check release
         run: |
           cd ci
@@ -52,91 +55,106 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        sources:
+          - branch: master
+          - branch: resizeful
         config:
           - target: windows
-            host: windows-latest
+            host: ${{ env.host_windows }}
             flutter_version: '2.10.3'
           - target: macos
-            host: macos-latest
+            host: ${{ env.host_macos }}
             flutter_version: '2.10.3'
           - target: linux
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '2.10.3'
           - target: ios
-            host: macos-latest
+            host: ${{ env.host_macos }}
             flutter_version: '3.7.3'
           - target: android-arm32
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '2.10.5'
           - target: android-arm64
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '2.10.5'
           - target: android-x86_64
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '2.10.5'
           - target: android-arm32
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '3.7.3'
           - target: android-arm64
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '3.7.3'
           - target: android-x86_64
-            host: ubuntu-latest
+            host: ${{ env.host_linux }}
             flutter_version: '3.7.3'
 
     runs-on: ${{ matrix.config.host }}
 
     env:
       TARGET: ${{ matrix.config.target }}
-      flutter_version: ${{ matrix.config.flutter_version }}
+      FLUTTER_VERSION: ${{ matrix.config.flutter_version }}
+      BRANCH: ${{ matrix.sources.branch }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+
+      # Setup golang env and cache go module
 
       - name: Setup golang
         uses: actions/setup-go@v2
         with:
           go-version: ${{ env.go_version }}
 
-      - name: Cache go modules (Linux/Android)
-        if: matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' || matrix.config.target == 'linux'
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
-      - name: Cache go modules (macOS/ios)
-        if: matrix.config.target == 'macos' || matrix.config.target == 'ios'
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/Library/Caches/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
       - name: Cache go modules (Windows)
-        if: matrix.config.target == 'windows'
+        if: matrix.config.host == env.host_windows
         uses: actions/cache@v3
         with:
           path: |
             ~\AppData\Local\go-build
             ~\go\pkg\mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ matrix.config.host }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ matrix.config.host }}-go-
+
+      - name: Cache go modules (Linux)
+        if: matrix.config.host == env.host_linux
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ matrix.config.host }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ matrix.config.host }}-go-
+
+      - name: Cache go modules (macOS)
+        if: matrix.config.host == env.host_macos
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/Library/Caches/go-build
+            ~/go/pkg/mod
+          key: ${{ matrix.config.host }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ matrix.config.host }}-go-
+
+      # checkout
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ matrix.config.host }}
+
+      # check_access
 
       - id: check_asset
         name: Check asset
         run: |
           cd ci
           go run ./cmd/check_asset
+
+      # 
 
       - name: Setup flutter
         if: steps.check_asset.outputs.skip_build != 'true'
@@ -232,7 +250,7 @@ jobs:
           cp version.code.txt ../lib/assets/version.txt
 
       - name: Upgrade deps version (flutter2 non-mac)
-        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host != 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host != '${{ env.host_macos }}' && startsWith(matrix.config.flutter_version, '2')
         run: |
           sed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
           sed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
@@ -244,7 +262,7 @@ jobs:
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
-        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host == 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host == '${{ env.host_macos }}' && startsWith(matrix.config.flutter_version, '2')
         run: |
           brew install gnu-sed
           gsed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
@@ -331,7 +349,7 @@ jobs:
       - check_release
       - build_release_assets
     name: Send message to community
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.host_linux }}
     steps:
       - uses: actions/checkout@v3
         with:
