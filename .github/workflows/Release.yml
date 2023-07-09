@@ -107,7 +107,7 @@ jobs:
           go-version: ${{ env.go_version }}
 
       - name: Cache go modules (Windows)
-        if: matrix.config.host == "windows-latest"
+        if: matrix.config.host == 'windows-latest'
         uses: actions/cache@v3
         with:
           path: |
@@ -118,7 +118,7 @@ jobs:
             ${{ matrix.config.host }}-go-
 
       - name: Cache go modules (Linux)
-        if: matrix.config.host == "ubuntu-latest"
+        if: matrix.config.host == 'ubuntu-latest'
         uses: actions/cache@v3
         with:
           path: |
@@ -129,7 +129,7 @@ jobs:
             ${{ matrix.config.host }}-go-
 
       - name: Cache go modules (macOS)
-        if: matrix.config.host == "macos-latest"
+        if: matrix.config.host == 'macos-latest'
         uses: actions/cache@v3
         with:
           path: |
