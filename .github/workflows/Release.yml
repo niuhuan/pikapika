@@ -26,7 +26,7 @@ jobs:
 
   check_release:
     name: Check release
-    runs-on: ${{ env.host_linux }}
+    runs-on: ubuntu-latest # ${{ env.host_linux }}
     steps:
       - uses: actions/checkout@v3
         with:
