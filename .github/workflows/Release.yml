@@ -15,7 +15,8 @@ jobs:
 
   ci-pass:
     name: CI is green
-    runs-on: ${{ env.host_linux }}
+    # https://github.com/actions/runner/issues/2394
+    runs-on: ubuntu-latest # ${{ env.host_linux }}
     needs:
       - check_release
       - build_release_assets
