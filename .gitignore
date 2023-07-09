@@ -60,4 +60,5 @@ ios/build/
 
 # APP
 /lib/assets/version.txt
+go.work
 
