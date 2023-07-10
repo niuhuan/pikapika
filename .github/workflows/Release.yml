@@ -159,7 +159,7 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true'
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.flutter_version }}
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
 
       - name: Check core
