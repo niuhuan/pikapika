@@ -32,17 +32,17 @@ func AssetName(version Version, flutterVersion, target, branch string) string {
 	case "macos":
 		releaseFileName += "-macos-intel.dmg"
 	case "ios":
-		releaseFileName = "-ios-nosign.ipa"
+		releaseFileName += "-ios-nosign.ipa"
 	case "windows":
-		releaseFileName = "-windows-x86_64.zip"
+		releaseFileName += "-windows-x86_64.zip"
 	case "linux":
-		releaseFileName = "-linux-x86_64.AppImage"
+		releaseFileName += "-linux-x86_64.AppImage"
 	case "android-arm32":
-		releaseFileName = "-android-arm32.apk"
+		releaseFileName += "-android-arm32.apk"
 	case "android-arm64":
-		releaseFileName = "-android-arm64.apk"
+		releaseFileName += "-android-arm64.apk"
 	case "android-x86_64":
-		releaseFileName = "-android-x86_64.apk"
+		releaseFileName += "-android-x86_64.apk"
 	}
 	if branch != "master" && branch != "main" {
 		releaseFileName = branch + "-" + releaseFileName
