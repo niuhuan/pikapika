@@ -80,6 +80,7 @@ jobs:
           - target: android-arm64
             host: ubuntu-latest
             flutter_version: '2.10.5'
+            go_version: '1.18'
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '2.10.5'
