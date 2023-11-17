@@ -5,10 +5,6 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  go_version: '1.17'
-#  host_linux: ubuntu-latest
-#  host_windows: windows-latest
-#  host_macos: macos-latest
 
 jobs:
 
@@ -60,36 +56,46 @@ jobs:
           - target: windows
             host: windows-latest
             flutter_version: '2.10.3'
+            go_version: '1.17'
           - target: macos
             host: macos-latest
             flutter_version: '2.10.3'
+            go_version: '1.17'
           - target: linux
             host: ubuntu-latest
             flutter_version: '2.10.3'
+            go_version: '1.17'
           - target: ios
             host: macos-latest
             flutter_version: '2.10.5'
+            go_version: '1.18'
           - target: ios
             host: macos-latest
             flutter_version: '3.7.3'
+            go_version: '1.18'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '2.10.5'
+            go_version: '1.18'
           - target: android-arm64
             host: ubuntu-latest
             flutter_version: '2.10.5'
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '2.10.5'
+            go_version: '1.18'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '3.7.3'
+            go_version: '1.18'
           - target: android-arm64
             host: ubuntu-latest
             flutter_version: '3.7.3'
+            go_version: '1.18'
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '3.7.3'
+            go_version: '1.18'
 
     runs-on: ${{ matrix.config.host }}
 
@@ -97,6 +103,7 @@ jobs:
       TARGET: ${{ matrix.config.target }}
       FLUTTER_VERSION: ${{ matrix.config.flutter_version }}
       BRANCH: ${{ matrix.sources.branch }}
+      go_version: ${{ matrix.config.go_version }}
 
     steps:
 
