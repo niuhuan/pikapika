@@ -68,6 +68,9 @@ jobs:
             flutter_version: '2.10.3'
           - target: ios
             host: macos-latest
+            flutter_version: '2.10.5'
+          - target: ios
+            host: macos-latest
             flutter_version: '3.7.3'
           - target: android-arm32
             host: ubuntu-latest
