@@ -79,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           children: [
             ExpansionTile(
-              leading: const Icon(Icons.energy_savings_leaf),
+              leading: const Icon(Icons.ad_units),
               title: const Text('界面'),
               children: [
                 const Divider(),
