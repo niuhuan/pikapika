@@ -32,7 +32,7 @@ jobs:
       - name: need_build
         id: need_build
         run: |
-            if [ '${{ matrix.config.target }}' == 'android' ] && [ ${{ ${{ github.event.inputs.PACKAGE_IOS }}.PACKAGE_ANDROID }} == 'true' ]; then
+            if [ '${{ matrix.config.target }}' == 'android' ] && [ ${{ github.event.inputs.PACKAGE_ANDROID }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             elif [ ${{ matrix.config.target }} == 'ios' ] && [ ${{ env.PACKAGE_IOS }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
