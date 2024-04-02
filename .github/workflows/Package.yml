@@ -86,12 +86,13 @@ jobs:
         name: Setup java (Android)
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'temurin'
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Setup android tools (Android)
         uses: android-actions/setup-android@v3
         with:
+          cmdline-tools-version: 8512546
           packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Build (android-arm64)
