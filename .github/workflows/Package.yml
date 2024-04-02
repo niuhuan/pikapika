@@ -86,7 +86,7 @@ jobs:
         name: Setup java (Android)
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Setup android tools (Android)
