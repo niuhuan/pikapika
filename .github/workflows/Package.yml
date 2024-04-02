@@ -93,7 +93,6 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           packages: |
-            platform-tools
             platforms;android-32
             build-tools;30.0.2
             ndk;23.1.7779620
