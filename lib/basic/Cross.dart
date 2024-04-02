@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pikapika/basic/Common.dart';
+import 'package:pikapika/basic/config/CopySkipConfirm.dart';
 import 'package:pikapika/basic/config/Platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +17,11 @@ import 'config/ChooserRoot.dart';
 void copyToClipBoard(BuildContext context, String string) {
   FlutterClipboard.copy(string);
   defaultToast(context, "已复制到剪切板");
+}
+
+void copyToClipBoardTips(BuildContext context, String string) {
+  FlutterClipboard.copy(string);
+  defaultToast(context, "已复制到剪切板 :\n$string");
 }
 
 /// 打开web页面
@@ -72,7 +78,7 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
   late bool g;
   if (androidVersion < 30) {
     g = await Permission.storage.request().isGranted;
-  }else{
+  } else {
     g = await Permission.manageExternalStorage.request().isGranted;
   }
   if (!g) {
@@ -85,16 +91,18 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
 Future<String?> chooseFolder(BuildContext context) async {
   return FilePicker.platform.getDirectoryPath(
     dialogTitle: "选择一个文件夹, 将文件保存到这里",
-    initialDirectory: Directory
-        .fromUri(Uri.file(await currentChooserRoot()))
-        .absolute
-        .path,
+    initialDirectory:
+        Directory.fromUri(Uri.file(await currentChooserRoot())).absolute.path,
   );
 }
 
 /// 复制对话框
 void confirmCopy(BuildContext context, String content) async {
-  if (await confirmDialog(context, "复制", content)) {
-    copyToClipBoard(context, content);
+  if (copySkipConfirm()) {
+    copyToClipBoardTips(context, content);
+  } else {
+    if (await confirmDialog(context, "复制", content)) {
+      copyToClipBoard(context, content);
+    }
   }
 }
