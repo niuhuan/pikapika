@@ -216,10 +216,7 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )
         uses: android-actions/setup-android@v3
         with:
-          packages: |
-            platforms;android-32
-            build-tools;30.0.2
-            ndk;23.1.7779620
+          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
 
       - name: Setup msys2 (Windows)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'windows'

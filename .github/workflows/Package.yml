@@ -92,10 +92,7 @@ jobs:
         name: Setup android tools (Android)
         uses: android-actions/setup-android@v3
         with:
-          packages: |
-            platforms;android-32
-            build-tools;30.0.2
-            ndk;23.1.7779620
+          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Build (android-arm64)
         env:
