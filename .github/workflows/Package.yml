@@ -34,16 +34,11 @@ jobs:
         run: |
             if [ '${{ matrix.config.target }}' == 'android' ] && [ ${{ github.event.inputs.PACKAGE_ANDROID }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
-            elif [ ${{ matrix.config.target }} == 'ios' ] && [ ${{ env.PACKAGE_IOS }} == 'true' ]; then
+            elif [ ${{ matrix.config.target }} == 'ios' ] && [ ${{ github.event.inputs.PACKAGE_IOS }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             else
                 echo "::set-output name=need_build::false"
             fi
-      - if: steps.need_build.outputs.need_build == 'true'
-        name: Set-Version (All)
-        run: |
-          cd ci
-          cp version.code.txt ../lib/assets/version.txt
       - if: steps.need_build.outputs.need_build == 'true'
         name: Setup flutter
         uses: subosito/flutter-action@v2
@@ -74,6 +69,11 @@ jobs:
           repository: 'niuhuan/pikapika-go-core'
           token: ${{ secrets.GH_TOKEN }}
           path: 'go'
+      - if: steps.need_build.outputs.need_build == 'true'
+        name: Set-Version (All)
+        run: |
+          cd ci
+          cp version.code.txt ../lib/assets/version.txt
       - if: steps.need_build.outputs.need_build == 'true'
         name: Install go mobile (mobile)
         run: |
