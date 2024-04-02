@@ -78,8 +78,12 @@ jobs:
           sh scripts/build-ipa.sh
       - if: ${{ matrix.config.build == 'true' }} && matrix.config.target == 'android'
         name: Build (android-arm64)
+        env:
+          KEY_FILE_BASE64: ${{ secrets.KEY_FILE_BASE64 }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           sh scripts/build-apk-arm64.sh
+          sh scripts/sign-apk-github-actions.sh
       - if: ${{ matrix.config.build == 'true' }} && matrix.config.target == 'ios'
         name: 'Upload Artifact (ios)'
         uses: actions/upload-artifact@v4
