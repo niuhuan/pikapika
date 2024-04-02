@@ -31,6 +31,7 @@ import 'package:pikapika/basic/config/ShowCommentAtDownload.dart';
 import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
+import 'package:pikapika/basic/config/VolumeNextChapter.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
@@ -165,6 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 autoFullScreenSetting(),
                 fullScreenActionSetting(),
                 volumeControllerSetting(),
+                volumeNextChapterSetting(),
                 keyboardControllerSetting(),
                 const Divider(),
                 noAnimationSetting(),

@@ -5,6 +5,7 @@ import 'package:another_xlider/another_xlider.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -27,6 +28,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../basic/config/IconLoading.dart';
 import '../../basic/config/ReaderBackgroundColor.dart';
 import '../../basic/config/UseApiLoadImage.dart';
+import '../../basic/config/VolumeNextChapter.dart';
 import '../FilePhotoViewScreen.dart';
 import 'gesture_zoom_box.dart';
 
@@ -272,11 +274,47 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         case "DOWN":
           if (_current < widget.struct.images.length - 1) {
             _needJumpTo(_current + 1, true);
+          } else {
+            if (volumeNextChapter()) {
+              final now = DateTime.now().millisecondsSinceEpoch;
+              if (_noticeTime + 3000 > now) {
+                if (_hasNextEp()) {
+                  _onNextAction();
+                } else {
+                  showToast(
+                    "已经到头了",
+                    context: context,
+                    position: StyledToastPosition.center,
+                    animation: StyledToastAnimation.scale,
+                    reverseAnimation: StyledToastAnimation.fade,
+                    duration: const Duration(seconds: 3),
+                    animDuration: const Duration(milliseconds: 300),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear,
+                  );
+                }
+              } else {
+                _noticeTime = now;
+                showToast(
+                  "再次点击跳转到下一章",
+                  context: context,
+                  position: StyledToastPosition.center,
+                  animation: StyledToastAnimation.scale,
+                  reverseAnimation: StyledToastAnimation.fade,
+                  duration: const Duration(seconds: 3),
+                  animDuration: const Duration(milliseconds: 300),
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.linear,
+                );
+              }
+            }
           }
           break;
       }
     }
   }
+
+  int _noticeTime = 0;
 
   late int _startIndex;
   late int _current;
