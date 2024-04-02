@@ -83,6 +83,21 @@ jobs:
         run: |
           sh scripts/build-ipa.sh
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
+        name: Setup java (Android)
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
+        name: Setup android tools (Android)
+        uses: android-actions/setup-android@v3
+        with:
+          packages: |
+            platform-tools
+            platforms;android-32
+            build-tools;30.0.2
+            ndk;23.1.7779620
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Build (android-arm64)
         env:
           KEY_FILE_BASE64: ${{ secrets.KEY_FILE_BASE64 }}
