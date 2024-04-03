@@ -75,6 +75,11 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           path: 'go'
 
+      - if: steps.check_asset.outputs.skip_build != 'true'
+        name: Install go mobile (mobile)
+        run: |
+          go install golang.org/x/mobile/cmd/gomobile@latest
+
       - name: Build (ios)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
         run: |
