@@ -1,0 +1,94 @@
+name: Release-core
+on:
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  GO_VERSION: "1.18"
+
+jobs:
+  ci-pass:
+    name: CI is green
+    runs-on: ubuntu-latest
+    needs:
+      - build_release_assets
+    steps:
+      - run: exit 0
+
+  build_release_assets:
+    name: Build and upload assets
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - target: ios
+            host: macos-latest
+          - target: android
+            host: ubuntu-latest
+    runs-on: ${{ matrix.config.host }}
+    env:
+      TARGET: ${{ matrix.config.target }}
+    steps:
+      - name: Setup golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Cache go modules (Linux)
+        if: matrix.config.host == 'ubuntu-latest'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ matrix.config.host }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ matrix.config.host }}-go-
+
+      - name: Cache go modules (macOS)
+        if: matrix.config.host == 'macos-latest'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/Library/Caches/go-build
+            ~/go/pkg/mod
+          key: ${{ matrix.config.host }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ matrix.config.host }}-go-
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH }}
+
+      - id: check_asset
+        name: Check asset
+        run: |
+          cd ci
+          go run ./cmd/check_asset_core
+
+      - name: Checkout core
+        if: steps.check_asset.outputs.skip_build != 'true'
+        uses: actions/checkout@v3
+        with:
+          repository: 'niuhuan/pikapika-go-core'
+          token: ${{ secrets.GH_TOKEN }}
+          path: 'go'
+
+      - name: Build (ios)
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
+        run: |
+          sh scripts/bind-ios.sh
+
+      - name: Build (android)
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android'
+        run: |
+          sh scripts/bind-android-debug.sh
+
+      - name: Upload Asset (All)
+        if: steps.check_asset.outputs.skip_build != 'true'
+        run: |
+          zip -r core.zip go/mobile/lib
+          cd ci
+          go run ./cmd/upload_asset_core
+
