@@ -85,6 +85,13 @@ jobs:
         run: |
           sh scripts/bind-ios.sh
 
+      - name: Setup java (Android)
+        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
       - name: Setup android tools (Android)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android'
         uses: android-actions/setup-android@v3
