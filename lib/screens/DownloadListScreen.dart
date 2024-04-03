@@ -26,20 +26,34 @@ class DownloadListScreen extends StatefulWidget {
 
 class _DownloadListScreenState extends State<DownloadListScreen> {
   String _search = "";
+  bool _selecting = false;
+  List<String> _selectingList = [];
+
   late final SearchBar _searchBar = SearchBar(
     hintText: '搜索下载',
     inBar: false,
     setState: setState,
     onSubmitted: (value) {
       _search = value;
-      _f = method.allDownloads(_search);
+      _reloadList();
+      setState(() {});
       _searchBar.controller.text = value;
     },
     buildDefaultAppBar: (BuildContext context) {
+      if (_selecting) {
+        return AppBar(
+          title: const Text("删除下载"),
+          actions: [
+            _selectingCancelButton(),
+            _selectingDeleteButton(),
+          ],
+        );
+      }
       return AppBar(
         title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
         actions: [
           _searchBar.getSearchAction(context),
+          _toSelectingButton(),
           exportButton(),
           importButton(),
           resetFailedButton(),
@@ -51,7 +65,14 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
 
   DownloadComic? _downloading;
   late bool _downloadRunning = false;
-  late Future<List<DownloadComic>> _f = method.allDownloads(_search);
+  late Future<List<DownloadComic>> _f =
+      method.allDownloads(_search).then((value) {
+    setState(() {
+      _selecting = false;
+      _selectingList = [];
+    });
+    return value;
+  });
 
   void _onMessageChange(String event) {
     print("EVENT");
@@ -113,11 +134,18 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             }
           }
 
+          if (_selecting) {
+            return ListView(
+              children: [
+                ...data.map(selectingWidget),
+              ],
+            );
+          }
+
           return RefreshIndicator(
             onRefresh: () async {
-              setState(() {
-                _f = method.allDownloads(_search);
-              });
+              _reloadList();
+              setState(() {});
             },
             child: PikaListView(
               children: [
@@ -165,6 +193,41 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     );
   }
 
+  Widget selectingWidget(DownloadComic e) {
+    return InkWell(
+      onTap: () {
+        if (e.deleting) {
+          defaultToast(context, "该下载已经在删除队列中");
+          return;
+        } else {
+          if (_selectingList.contains(e.id)) {
+            setState(() {
+              _selectingList.remove(e.id);
+            });
+          } else {
+            setState(() {
+              _selectingList.add(e.id);
+            });
+          }
+        }
+      },
+      child: Stack(
+        children: [
+          DownloadInfoCard(
+            task: e,
+            downloading: _downloading != null && _downloading!.id == e.id,
+          ),
+          Icon(
+            _selectingList.contains(e.id)
+                ? Icons.check_circle
+                : Icons.radio_button_unchecked,
+            color: Colors.green,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget exportButton() {
     return IconButton(
         onPressed: () async {
@@ -201,9 +264,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
               builder: (context) => const DownloadImportScreen(),
             ),
           );
-          setState(() {
-            _f = method.allDownloads(_search);
-          });
+          _reloadList();
+          setState(() {});
         },
         icon: Column(
           children: [
@@ -280,9 +342,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     return IconButton(
         onPressed: () async {
           await method.resetFailed();
-          setState(() {
-            _f = method.allDownloads(_search);
-          });
+          _reloadList();
+          setState(() {});
           defaultToast(context, "所有失败的下载已经恢复");
         },
         icon: Column(
@@ -300,5 +361,60 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             Expanded(child: Container()),
           ],
         ));
+  }
+
+  void _reloadList() {
+    _f = method.allDownloads(_search).then((value) {
+      setState(() {
+        _selecting = false;
+        _selectingList = [];
+      });
+      return value;
+    });
+  }
+
+  Widget _selectingCancelButton() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _selecting = false;
+          _selectingList = [];
+        });
+      },
+      icon: const Icon(Icons.cancel),
+    );
+  }
+
+  Widget _selectingDeleteButton() {
+    return IconButton(
+      onPressed: () async {
+        var tmp = _selectingList;
+        _selecting = false;
+        _selectingList = [];
+        setState(() {});
+        if (tmp.isEmpty) {
+          defaultToast(context, "请选择要删除的下载");
+        } else {
+          for (var id in tmp) {
+            await method.deleteDownloadComic(id);
+          }
+          _reloadList();
+          setState(() {});
+        }
+      },
+      icon: const Icon(Icons.delete),
+    );
+  }
+
+  Widget _toSelectingButton() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _selecting = true;
+          _selectingList = [];
+        });
+      },
+      icon: const Icon(Icons.delete),
+    );
   }
 }
