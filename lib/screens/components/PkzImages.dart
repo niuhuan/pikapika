@@ -1,16 +1,7 @@
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pikapika/basic/Common.dart';
-import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Method.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:pikapika/basic/config/ImageAddress.dart';
-import 'dart:io';
 import 'dart:ui' as ui show Codec;
-
-import '../FilePhotoViewScreen.dart';
 import 'Images.dart';
 
 // 从本地加载图片
@@ -110,7 +101,6 @@ class _PkzImageState extends State<PkzImage> {
   }
 }
 
-
 // 远端图片
 class PkzLoadingImage extends StatefulWidget {
   final String pkzPath;
@@ -135,7 +125,6 @@ class PkzLoadingImage extends StatefulWidget {
 }
 
 class _PkzLoadingImageState extends State<PkzLoadingImage> {
-
   late bool _mock;
   late Future<Uint8List> data;
 
@@ -147,8 +136,12 @@ class _PkzLoadingImageState extends State<PkzLoadingImage> {
         final data = await method.loadPkzFile(widget.pkzPath, widget.path);
         if (widget.onTrueSize != null) {
           var decodedImage = await decodeImageFromList(data);
-          widget.onTrueSize!(Size(
-            decodedImage.width.toDouble(), decodedImage.height.toDouble(),),);
+          widget.onTrueSize!(
+            Size(
+              decodedImage.width.toDouble(),
+              decodedImage.height.toDouble(),
+            ),
+          );
         }
         return data;
       }();

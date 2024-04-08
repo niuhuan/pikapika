@@ -262,7 +262,7 @@ class _InitScreenState extends State<InitScreen> {
   }
 
   Future _goAuthentication() async {
-    if (await method.verifyAuthentication()) {
+    if (await verifyAuthentication(context)) {
       _goApplication();
     }
   }
