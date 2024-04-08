@@ -19,27 +19,37 @@ class _VerifyPasswordState extends State<VerifyPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          decoration: const InputDecoration(labelText: "当前密码"),
-          onChanged: (value) {
-            _password = value;
-          },
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            children: [
+              Expanded(child: Container()),
+              TextField(
+                decoration: const InputDecoration(labelText: "当前密码"),
+                onChanged: (value) {
+                  _password = value;
+                },
+              ),
+              Container(height: 10),
+              ElevatedButton(
+                onPressed: () async {
+                  String savedPassword = await method.loadProperty(_key, "");
+                  if (_password == savedPassword) {
+                    Navigator.of(context).pop(true);
+                  } else {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text("密码错误")));
+                  }
+                },
+                child: const Text("确定"),
+              ),
+              Expanded(child: Container()),
+            ],
+          ),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            String savedPassword = await method.loadProperty(_key, "");
-            if (_password == savedPassword) {
-              Navigator.of(context).pop(true);
-            } else {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("密码错误")));
-            }
-          },
-          child: const Text("确定"),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -57,64 +67,66 @@ class _SetPasswordState extends State<SetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Column(
-          children: [
-            const Text(
-              "密码初始化",
-              style: TextStyle(
-                height: 18,
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            children: [
+              const Text(
+                "密码初始化",
+                style: TextStyle(
+                  height: 18,
+                ),
               ),
-            ),
-            Container(
-              height: 10,
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: "密码"),
-              onChanged: (value) {
-                _password = value;
-              },
-            ),
-            Container(
-              height: 10,
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: "再次输入密码"),
-              onChanged: (value) {
-                _password2 = value;
-              },
-            ),
-            Container(
-              height: 10,
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: const Text("取消"),
-                ),
-                Container(width: 10),
-                Expanded(
-                  child: ElevatedButton(
+              Container(
+                height: 10,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: "密码"),
+                onChanged: (value) {
+                  _password = value;
+                },
+              ),
+              Container(
+                height: 10,
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: "再次输入密码"),
+                onChanged: (value) {
+                  _password2 = value;
+                },
+              ),
+              Container(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
                     onPressed: () async {
-                      if (_password != _password2) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("两次输入的密码不一致")));
-                        return;
-                      }
-                      await method.saveProperty(_key, _password);
-                      Navigator.of(context).pop(true);
+                      Navigator.of(context).pop(false);
                     },
-                    child: const Text("设置密码"),
+                    child: const Text("取消"),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Container(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_password != _password2) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("两次输入的密码不一致")));
+                          return;
+                        }
+                        await method.saveProperty(_key, _password);
+                        Navigator.of(context).pop(true);
+                      },
+                      child: const Text("设置密码"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
