@@ -21,6 +21,8 @@ var _addresses = {
   "6": "分流6",
   "7": "分流7",
   "8": "分流8",
+  "9": "分流9",
+  "10": "分流A",
 };
 
 late String _currentAddress;
