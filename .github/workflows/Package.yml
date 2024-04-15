@@ -15,7 +15,7 @@ on:
 
 env:
   FLUTTER_VERSION: '3.7.3'
-  GO_VERSION: '1.18'
+  GO_VERSION: "1.19"
 
 jobs:
   package:
