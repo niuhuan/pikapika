@@ -1,4 +1,4 @@
-name: Release-core
+name: Package-core
 on:
   workflow_dispatch:
 
