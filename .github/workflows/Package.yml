@@ -12,10 +12,10 @@ on:
         default: false
         description: 'Android version'
         required: true
-
-env:
-  FLUTTER_VERSION: '3.7.3'
-  GO_VERSION: "1.19"
+      PACKAGE_LINUX:
+        type: boolean
+        default: false
+        description: 'Linux version'
 
 jobs:
   package:
@@ -25,9 +25,20 @@ jobs:
         config:
           - target: ios
             host: macos-latest
+            go_version: '1.19'
+            flutter_version: '3.7.3'
           - target: android
             host: ubuntu-latest
+            go_version: '1.19'
+            flutter_version: '3.7.3'
+          - target: linux
+            host: ubuntu-latest
+            flutter_version: '2.10.3'
+            go_version: '1.17'
     runs-on: ${{ matrix.config.host }}
+    env:
+      GO_VERSION: ${{ matrix.config.go_version }}
+      FLUTTER_VERSION: ${{ matrix.config.flutter_version }}
     steps:
       - name: need_build
         id: need_build
@@ -35,6 +46,8 @@ jobs:
             if [ '${{ matrix.config.target }}' == 'android' ] && [ ${{ github.event.inputs.PACKAGE_ANDROID }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             elif [ ${{ matrix.config.target }} == 'ios' ] && [ ${{ github.event.inputs.PACKAGE_IOS }} == 'true' ]; then
+                echo "::set-output name=need_build::true"
+            elif [ ${{ matrix.config.target }} == 'linux' ] && [ ${{ github.event.inputs.PACKAGE_LINUX }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             else
                 echo "::set-output name=need_build::false"
@@ -74,10 +87,14 @@ jobs:
         run: |
           cd ci
           cp version.code.txt ../lib/assets/version.txt
-      - if: steps.need_build.outputs.need_build == 'true'
+      - if: steps.need_build.outputs.need_build == 'true' && (matrix.config.target == 'ios' || matrix.config.target == 'android')
         name: Install go mobile (mobile)
         run: |
           go install golang.org/x/mobile/cmd/gomobile@latest
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
+        name: Install hover
+        run: |
+          go install github.com/go-flutter-desktop/hover@latest
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'ios'
         name: Build (ios)
         run: |
@@ -102,6 +119,23 @@ jobs:
         run: |
           sh scripts/build-apk-arm64.sh
           sh scripts/sign-apk-github-actions.sh
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
+        name: Setup (linux)
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          curl -JOL https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod a+x appimagetool-x86_64.AppImage
+          mkdir -p ${GITHUB_WORKSPACE}/bin
+          mv appimagetool-x86_64.AppImage ${GITHUB_WORKSPACE}/bin/appimagetool
+          echo ::add-path::${GITHUB_WORKSPACE}/bin
+          sudo apt-get update
+          sudo apt-get install -y libgl1-mesa-dev xorg-dev libfuse2
+
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
+        name: Build (linux)
+        run: |
+          sh scripts/build-linux.sh
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'ios'
         name: 'Upload Artifact (ios)'
         uses: actions/upload-artifact@v4
