@@ -298,6 +298,8 @@ class _ProServerNameWidgetState extends State<ProServerNameWidget> {
           {
             "风力发电": "HK",
             "水力发电": "US",
+            "光伏发电": "SIG",
+            "核能发电": "JPOS",
           },
           "选择发电方式",
         );
@@ -317,6 +319,10 @@ class _ProServerNameWidgetState extends State<ProServerNameWidget> {
         return "风力发电";
       case "US":
         return "水力发电";
+    case "SIG":
+        return "光伏发电";
+    case "JPOS":
+        return "核能发电";
       default:
         return "";
     }
