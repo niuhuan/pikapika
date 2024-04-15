@@ -119,6 +119,17 @@ jobs:
         run: |
           sh scripts/build-apk-arm64.sh
           sh scripts/sign-apk-github-actions.sh
+      - name: Upgrade deps version (flutter2 non-mac)
+        if: steps.need_build.outputs.need_build == 'true' && matrix.config.host != 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
+        run: |
+          sed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
+          sed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
+          sed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: 2.0.0/g" pubspec.yaml
+          sed -i "s/file_picker: ^5.2.1/file_picker: 4.6.1/g" pubspec.yaml
+          sed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
+          sed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
+          sed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
+          flutter pub get
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
         name: Setup (linux)
         env:
@@ -131,7 +142,6 @@ jobs:
           echo ::add-path::${GITHUB_WORKSPACE}/bin
           sudo apt-get update
           sudo apt-get install -y libgl1-mesa-dev xorg-dev libfuse2
-
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
         name: Build (linux)
         run: |
@@ -149,6 +159,13 @@ jobs:
         with:
           name: 'app-release.apk'
           path: 'build/app/outputs/flutter-apk/app-release.apk'
+          retention-days: 3
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'linux'
+        name: 'Upload Artifact (ios)'
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'build.AppImage'
+          path: 'build/build.AppImage'
           retention-days: 3
 
 
