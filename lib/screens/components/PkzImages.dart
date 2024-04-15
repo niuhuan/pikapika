@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'dart:ui' as ui show Codec;
 import 'Images.dart';
+import 'dart:typed_data';
 
 // 从本地加载图片
 class PkzImageProvider extends ImageProvider<PkzImageProvider> {
