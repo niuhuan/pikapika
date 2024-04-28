@@ -128,19 +128,33 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             if (snapshot.connectionState != ConnectionState.done) {
               return const ContentLoading(label: '加载中');
             }
+            //
+            late double blockSize;
+            late double imageSize;
+            late double imageRs;
+            if (categoriesColumnCount == 0) {
+              var size = MediaQuery.of(context).size;
+              var min = size.width < size.height ? size.width : size.height;
+              blockSize = (min ~/ 3).floorToDouble();
+            } else {
+              var size = MediaQuery.of(context).size;
+              var min = size.width;
+              blockSize = (min ~/ categoriesColumnCount).floorToDouble();
+            }
+            imageSize = blockSize - 15;
+            imageRs = imageSize / 10;
+            List<CategoriesItem> items = [];
+            //
+            items.addAll(_buildChannels(imageSize));
+            items.addAll(_buildCategories(snapshot.data!, imageSize));
+            List<Widget> wrapItems = _wrapItems(items, blockSize, imageRs);
             return PikaListView(
               children: [
                 Container(height: 20),
                 Wrap(
                   runSpacing: 20,
                   alignment: WrapAlignment.spaceAround,
-                  children: _buildChannels(),
-                ),
-                const Divider(),
-                Wrap(
-                  runSpacing: 20,
-                  alignment: WrapAlignment.spaceAround,
-                  children: _buildCategories(snapshot.data!),
+                  children: wrapItems,
                 ),
                 Container(height: 20),
               ],
@@ -151,24 +165,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  List<Widget> _buildCategories(List<Category> cList) {
-    late double blockSize;
-    late double imageSize;
-    late double imageRs;
-
-    if (categoriesColumnCount == 0) {
-      var size = MediaQuery.of(context).size;
-      var min = size.width < size.height ? size.width : size.height;
-      blockSize = (min ~/ 3).floorToDouble();
-    } else {
-      var size = MediaQuery.of(context).size;
-      var min = size.width;
-      blockSize = (min ~/ categoriesColumnCount).floorToDouble();
-    }
-
-    imageSize = blockSize - 15;
-    imageRs = imageSize / 10;
-
+  List<Widget> _wrapItems(
+    List<CategoriesItem> items,
+    double blockSize,
+    double imageRs,
+  ) {
     List<Widget> list = [];
 
     append(Widget widget, String title, Function() onTap) {
@@ -200,13 +201,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       );
     }
 
-    append(
+    for (var value in items) {
+      append(value.icon, value.title, value.onTap);
+    }
+
+    return list;
+  }
+
+  List<CategoriesItem> _buildCategories(
+    List<Category> cList,
+    double imageSize,
+  ) {
+    List<CategoriesItem> items = [];
+
+    items.add(CategoriesItem(
       buildSvg('lib/assets/books.svg', imageSize, imageSize, margin: 20),
       "全分类",
       () => _navigateToCategory(null),
-    );
+    ));
 
-    append(
+    items.add(CategoriesItem(
       Icon(
         Icons.recommend_outlined,
         size: imageSize,
@@ -221,7 +235,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         );
       },
-    );
+    ));
 
     for (var i = 0; i < cList.length; i++) {
       var c = cList[i];
@@ -234,7 +248,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           if (!shadowCategories.contains(c.title)) continue;
           break;
       }
-      append(
+      items.add(CategoriesItem(
         RemoteImage(
           fileServer: c.thumb.fileServer,
           path: c.thumb.path,
@@ -243,62 +257,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
         c.title,
         () => _navigateToCategory(c.title),
-      );
+      ));
     }
 
-    return list;
+    return items;
   }
 
-  List<Widget> _buildChannels() {
-    late double blockSize;
-    late double imageSize;
-    late double imageRs;
+  List<CategoriesItem> _buildChannels(double imageSize) {
+    List<CategoriesItem> items = [];
 
-    if (categoriesColumnCount == 0) {
-      var size = MediaQuery.of(context).size;
-      var min = size.width < size.height ? size.width : size.height;
-      blockSize = (min ~/ 3).floorToDouble();
-    } else {
-      var size = MediaQuery.of(context).size;
-      var min = size.width;
-      blockSize = (min ~/ categoriesColumnCount).floorToDouble();
-    }
-
-    imageSize = blockSize - 15;
-    imageRs = imageSize / 10;
-
-    List<Widget> list = [];
-
-    append(Widget widget, String title, Function() onTap) {
-      list.add(
-        GestureDetector(
-          onTap: onTap,
-          child: SizedBox(
-            width: blockSize,
-            child: Column(
-              children: [
-                Card(
-                  elevation: .5,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(imageRs)),
-                    child: widget,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(imageRs)),
-                  ),
-                ),
-                Container(height: 5),
-                Center(
-                  child: Text(title),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    append(
+    items.add(CategoriesItem(
       buildSvg('lib/assets/rankings.svg', imageSize, imageSize,
           margin: 20, color: Colors.red.shade700),
       "排行榜",
@@ -308,9 +276,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           mixRoute(builder: (context) => const RankingsScreen()),
         );
       },
-    );
+    ));
 
-    append(
+    items.add(CategoriesItem(
       buildSvg('lib/assets/random.svg', imageSize, imageSize,
           margin: 20, color: Colors.orangeAccent.shade700),
       "随机本子",
@@ -320,9 +288,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           mixRoute(builder: (context) => const RandomComicsScreen()),
         );
       },
-    );
+    ));
 
-    append(
+    items.add(CategoriesItem(
       buildSvg('lib/assets/gamepad.svg', imageSize, imageSize,
           margin: 20, color: Colors.blue.shade500),
       "游戏专区",
@@ -332,9 +300,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           mixRoute(builder: (context) => const GamesScreen()),
         );
       },
-    );
+    ));
 
-    return list;
+    return items;
   }
 
   void _navigateToCategory(String? categoryTitle) {
@@ -345,4 +313,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+}
+
+class CategoriesItem {
+  final Widget icon;
+  final String title;
+  final Function() onTap;
+
+  const CategoriesItem(
+    this.icon,
+    this.title,
+    this.onTap,
+  );
 }
