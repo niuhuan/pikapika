@@ -13,6 +13,7 @@ import 'package:pikapika/screens/components/ContentError.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/config/Address.dart';
 import '../basic/config/CategoriesColumnCount.dart';
+import '../basic/config/CategoriesSort.dart';
 import '../basic/config/IconLoading.dart';
 import 'ComicsScreen.dart';
 import 'GamesScreen.dart';
@@ -80,6 +81,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     shadowCategoriesEvent.subscribe(_onShadowChange);
     categoriesColumnCountEvent.subscribe(_setState);
+    categoriesSortEvent.subscribe(_onShadowChange);
     super.initState();
   }
 
@@ -87,6 +89,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void dispose() {
     shadowCategoriesEvent.unsubscribe(_onShadowChange);
     categoriesColumnCountEvent.unsubscribe(_setState);
+    categoriesSortEvent.subscribe(_onShadowChange);
     super.dispose();
   }
 
@@ -147,6 +150,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             //
             items.addAll(_buildChannels(imageSize));
             items.addAll(_buildCategories(snapshot.data!, imageSize));
+            var names = items.map((e) => e.title).toList();
+            var sort = getCategoriesSort();
+            items.sort((a, b) {
+              var aIndex = sort.indexOf(a.title);
+              var bIndex = sort.indexOf(b.title);
+              if (aIndex == bIndex) {
+                aIndex = names.indexOf(a.title);
+                bIndex = names.indexOf(b.title);
+              }
+              if (aIndex == -1) {
+                return 1;
+              } else if (bIndex == -1) {
+                return -1;
+              } else {
+                return aIndex - bIndex ;
+              }
+            });
             List<Widget> wrapItems = _wrapItems(items, blockSize, imageRs);
             return PikaListView(
               children: [

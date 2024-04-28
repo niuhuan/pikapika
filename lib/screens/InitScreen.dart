@@ -47,6 +47,7 @@ import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
+import '../basic/config/CategoriesSort.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
@@ -129,7 +130,7 @@ class _InitScreenState extends State<InitScreen> {
     await initEBookScrollingTrigger();
     await initVolumeNextChapter();
     await initCopySkipConfirm();
-
+    await initCategoriesSort();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {
