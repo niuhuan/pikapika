@@ -128,6 +128,9 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('分类排序'),
+        actions: [
+          _saveIcon(),
+        ],
       ),
       body: PikaListView(
         children: [
@@ -283,5 +286,15 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
     ));
 
     return items;
+  }
+
+  Widget _saveIcon() {
+    return IconButton(
+      onPressed: () async {
+        await saveCategoriesSort(_categoriesSort);
+        Navigator.of(context).pop();
+      },
+      icon: const Icon(Icons.save),
+    );
   }
 }

@@ -89,7 +89,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void dispose() {
     shadowCategoriesEvent.unsubscribe(_onShadowChange);
     categoriesColumnCountEvent.unsubscribe(_setState);
-    categoriesSortEvent.subscribe(_onShadowChange);
+    categoriesSortEvent.unsubscribe(_onShadowChange);
     super.dispose();
   }
 
