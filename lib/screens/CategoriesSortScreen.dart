@@ -181,12 +181,14 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
                         width: imageSize,
                         height: imageSize,
                         color: Colors.black.withOpacity(.6),
+                        margin: const EdgeInsets.all(4.0),
                       ),
                     if (_categoriesSort.contains(title))
                       Container(
                         width: imageSize,
                         height: imageSize,
                         color: Colors.black.withOpacity(.2),
+                        margin: const EdgeInsets.all(4.0),
                       ),
                     if (_categoriesSort.contains(title))
                       Container(
