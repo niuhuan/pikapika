@@ -66,11 +66,11 @@ jobs:
             flutter_version: '2.10.3'
             go_version: '1.17'
           - target: ios
-            host: macos-latest
+            host: macos-12
             flutter_version: '2.10.5'
             go_version: '1.19'
           - target: ios
-            host: macos-latest
+            host: macos-12
             flutter_version: '3.7.3'
             go_version: '1.19'
           - target: android-arm32
