@@ -104,7 +104,7 @@ jobs:
             flutter_version: '3.22.3'
             go_version: '1.19'
           - target: android-arm64
-            host: macos-latest
+            host: ubuntu-latest
             flutter_version: '3.22.3'
             go_version: '1.19'
 
@@ -280,25 +280,24 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '2')
         run: |
           brew install gnu-sed
-          gsed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
-          gsed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
-          gsed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: 2.0.0/g" pubspec.yaml
-          gsed -i "s/file_picker: ^5.2.1/file_picker: 4.6.1/g" pubspec.yaml
-          gsed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
-          gsed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
-          gsed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
-          gsed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
+          find lib -type f -name "*.dart" -exec gsed -i "s/.bodyText1/.bodyMedium/g" {} \;
+          find lib -type f -name "*.dart" -exec gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
+          find lib -type f -name "*.dart" -exec gsed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
+          find lib -type f -name "*.dart" -exec gsed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" {} \;
+          find lib -type f -name "*.dart" -exec gsed -i "s/as ui show Codec/as ui/g" {} \;
+          flutter pub upgrade
           flutter pub get
 
       - name: Upgrade deps version (flutter2 non-mac)
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '3.22.3')
         run: |
           sed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
-          sed -i "s/.bodyText1/.bodyMedium/g" lib/**/*.dart
-          sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" lib/**/*.dart
-          sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" lib/**/*.dart
-          sed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" lib/**/*.dart
-          sed -i "s/as ui show Codec/as ui/g" lib/**/*.dart
+          find lib -type f -name "*.dart" -exec sed -i "s/.bodyText1/.bodyMedium/g" {} \;
+          find lib -type f -name "*.dart" -exec sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
+          find lib -type f -name "*.dart" -exec sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
+          find lib -type f -name "*.dart" -exec sed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" {} \;
+          find lib -type f -name "*.dart" -exec sed -i "s/as ui show Codec/as ui/g" {} \;
+          flutter pub upgrade
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
