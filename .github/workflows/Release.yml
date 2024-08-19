@@ -99,11 +99,11 @@ jobs:
             flutter_version: '3.7.3'
             go_version: '1.19'
 
-          - target: android-arm64
-            host: ubuntu-latest
+          - target: ios
+            host: macos-latest
             flutter_version: '3.22.3'
             go_version: '1.19'
-          - target: ios
+          - target: android-arm64
             host: macos-latest
             flutter_version: '3.22.3'
             go_version: '1.19'
