@@ -14,7 +14,10 @@ class PkzImageProvider extends ImageProvider<PkzImageProvider> {
   PkzImageProvider(this.pkzPath, this.path, {this.scale = 1.0});
 
   @override
-  ImageStreamCompleter load(PkzImageProvider key, DecoderCallback decode) {
+  ImageStreamCompleter load(
+    PkzImageProvider key,
+    DecoderCallback decode,
+  ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,

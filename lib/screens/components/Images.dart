@@ -23,7 +23,9 @@ class ResourceFileImageProvider
 
   @override
   ImageStreamCompleter load(
-      ResourceFileImageProvider key, DecoderCallback decode) {
+    ResourceFileImageProvider key,
+    DecoderCallback decode,
+  ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -70,7 +72,9 @@ class ResourceDownloadFileImageProvider
 
   @override
   ImageStreamCompleter load(
-      ResourceDownloadFileImageProvider key, DecoderCallback decode) {
+    ResourceDownloadFileImageProvider key,
+    DecoderCallback decode,
+  ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
@@ -117,7 +121,9 @@ class ResourceRemoteImageProvider
 
   @override
   ImageStreamCompleter load(
-      ResourceRemoteImageProvider key, DecoderCallback decode) {
+    ResourceRemoteImageProvider key,
+    DecoderCallback decode,
+  ) {
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key),
       scale: key.scale,
