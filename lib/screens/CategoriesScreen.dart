@@ -1,6 +1,6 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
@@ -32,7 +32,7 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  late final SearchBar _searchBar = SearchBar(
+  late final fsb.SearchBar _searchBar = fsb.SearchBar(
     hintText: '搜索',
     inBar: false,
     setState: setState,

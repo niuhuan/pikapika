@@ -38,8 +38,9 @@ class ResourceFileImageProvider
 
   Future<ui.Codec> _loadAsync(ResourceFileImageProvider key) async {
     assert(key == this);
-    return PaintingBinding.instance!
-        .instantiateImageCodec(await File(path).readAsBytes());
+    return PaintingBinding.instance!.instantiateImageCodec(
+      await File(path).readAsBytes(),
+    );
   }
 
   @override
@@ -132,8 +133,9 @@ class ResourceRemoteImageProvider
   Future<ui.Codec> _loadAsync(ResourceRemoteImageProvider key) async {
     assert(key == this);
     var downloadTo = await method.remoteImageData(fileServer, path);
-    return PaintingBinding.instance!
-        .instantiateImageCodec(await File(downloadTo.finalPath).readAsBytes());
+    return PaintingBinding.instance!.instantiateImageCodec(
+      await File(downloadTo.finalPath).readAsBytes(),
+    );
   }
 
   @override

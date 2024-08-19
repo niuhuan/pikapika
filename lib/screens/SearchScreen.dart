@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/store/Categories.dart';
@@ -32,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late final _comicListController = ComicListController();
   late final TextEditingController _textEditController =
       TextEditingController(text: widget.keyword);
-  late final SearchBar _searchBar = SearchBar(
+  late final fsb.SearchBar _searchBar = fsb.SearchBar(
     hintText: '搜索 ${categoryTitle(widget.category)}',
     controller: _textEditController,
     inBar: false,

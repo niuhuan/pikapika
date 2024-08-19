@@ -67,7 +67,7 @@ jobs:
             flutter_version: '2.10.3'
             go_version: '1.17'
           - target: ios
-            host: macos-latest
+            host: macos-12
             flutter_version: '2.10.5'
             go_version: '1.19'
           - target: ios
@@ -97,6 +97,15 @@ jobs:
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '3.7.3'
+            go_version: '1.19'
+
+          - target: android-arm64
+            host: ubuntu-latest
+            flutter_version: '3.22.3'
+            go_version: '1.19'
+          - target: ios
+            host: macos-latest
+            flutter_version: '3.22.3'
             go_version: '1.19'
 
     runs-on: ${{ matrix.config.host }}
@@ -256,7 +265,7 @@ jobs:
           cp version.code.txt ../lib/assets/version.txt
 
       - name: Upgrade deps version (flutter2 non-mac)
-        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host != 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
+        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '2')
         run: |
           sed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
           sed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: 2.0.0/g" pubspec.yaml
@@ -268,7 +277,7 @@ jobs:
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
-        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host == 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
+        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '2')
         run: |
           brew install gnu-sed
           gsed -i "s/another_xlider: ^1.0.1+2/another_xlider: 1.0.1+2/g" pubspec.yaml
@@ -279,6 +288,29 @@ jobs:
           gsed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           gsed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
           gsed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
+          flutter pub get
+
+      - name: Upgrade deps version (flutter2 non-mac)
+        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '3.22.3')
+        run: |
+          sed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
+          sed -i "s/.bodyText1/.bodyMedium/g" lib/**/*.dart
+          sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" lib/**/*.dart
+          sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" lib/**/*.dart
+          sed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" lib/**/*.dart
+          sed -i "s/as ui show Codec/as ui/g" lib/**/*.dart
+          flutter pub get
+
+      - name: Upgrade deps version (flutter2 mac)
+        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '3.22.3')
+        run: |
+          brew install gnu-sed
+          gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
+          gsed -i "s/.bodyText1/.bodyMedium/g" lib/**/*.dart
+          gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" lib/**/*.dart
+          gsed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" lib/**/*.dart
+          gsed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" lib/**/*.dart
+          gsed -i "s/as ui show Codec/as ui/g" lib/**/*.dart
           flutter pub get
 
       - name: Build (windows)

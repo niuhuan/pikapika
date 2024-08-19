@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
@@ -39,7 +39,7 @@ class ComicsScreen extends StatefulWidget {
 
 class _ComicsScreenState extends State<ComicsScreen> {
   late final _comicListController = ComicListController();
-  late final SearchBar _categorySearchBar = SearchBar(
+  late final fsb.SearchBar _categorySearchBar = fsb.SearchBar(
     hintText: '搜索分类 - ${categoryTitle(widget.category)}',
     inBar: false,
     setState: setState,
