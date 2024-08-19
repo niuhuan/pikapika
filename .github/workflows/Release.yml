@@ -345,7 +345,7 @@ jobs:
       - name: Append application-identifier (ios)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
         run: |
-          /usr/libexec/PlistBuddy -c 'Add :application-identifier string niuhuan.pikapika' ios/Runner/Info.plist
+          /usr/libexec/PlistBuddy -c 'Add :application-identifier string opensource.pikapika' ios/Runner/Info.plist
 
       - name: Build (ios)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
