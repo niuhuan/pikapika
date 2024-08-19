@@ -5,6 +5,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  ANDROID_NDK_VERSION: '27.0.12077973'
 
 jobs:
 
@@ -66,11 +67,11 @@ jobs:
             flutter_version: '2.10.3'
             go_version: '1.17'
           - target: ios
-            host: macos-12
+            host: macos-latest
             flutter_version: '2.10.5'
             go_version: '1.19'
           - target: ios
-            host: macos-12
+            host: macos-latest
             flutter_version: '3.7.3'
             go_version: '1.19'
           - target: android-arm32
@@ -217,7 +218,7 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 8512546
-          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
+          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;${{ env.ANDROID_NDK_VERSION }}'
 
       - name: Setup msys2 (Windows)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'windows'
