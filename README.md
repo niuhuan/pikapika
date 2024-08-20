@@ -17,20 +17,15 @@ VPN -> Proxy -> Traffic Diversion: If these three functions are set simultaneous
 
 ### Comic categories/search
 
-![categories](images/categories_screen.png) ![list](images/comic_list.png)
+Search comics in categories
 
 ### Comic reader/download/imports/exports
 
 You can export any completed downloads to a zip file and import it from another device. After extracting the exported zip, you can directly use the HTML files within for reading.
 
-![exporting](images/exporting.png)
-
-![exporting2](images/exporting2.png)
-
 ### Games
 
-![games](images/games.png)
-![game](images/game.png)
+You can download games without ads.
 
 ## Features
 
