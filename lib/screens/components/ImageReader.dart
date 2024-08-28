@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -222,6 +223,8 @@ class _ImageReaderContent extends StatefulWidget {
         return _GalleryReaderState();
       case ReaderType.WEB_TOON_FREE_ZOOM:
         return _ListViewReaderState();
+      case ReaderType.TWO_PAGE_GALLERY:
+        return _TwoPageGalleryReaderState();
       default:
         throw Exception("ERROR READER TYPE");
     }
@@ -1804,6 +1807,154 @@ class _GalleryReaderState extends _ImageReaderContentState {
   }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
+class _TwoPageGalleryReaderState extends _ImageReaderContentState {
+  late PageController _pageController;
+  var _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+  late final List<Size?> _trueSizes = [];
+  late PhotoViewGallery _view;
+
+  @override
+  void initState() {
+    // 需要先初始化 super._startIndex 才能使用, 所以在上面
+    for (var e in widget.struct.images) {
+      if (e.pkzFile != null &&
+          e.width != null &&
+          e.height != null &&
+          e.width! > 0 &&
+          e.height! > 0) {
+        _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
+      } else if (e.downloadLocalPath != null) {
+        _trueSizes.add(Size(e.width!.toDouble(), e.height!.toDouble()));
+      } else {
+        _trueSizes.add(null);
+      }
+    }
+    super.initState();
+    _pageController = PageController(initialPage: super._startIndex ~/ 2);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void _needJumpTo(int index, bool animation) {
+    if (noAnimation() || animation == false) {
+      _pageController.jumpToPage(
+        index ~/ 2,
+      );
+    } else {
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  @override
+  Widget _buildViewer() {
+    List<ImageProvider> ips = [];
+    for (var index = 0; index < widget.struct.images.length; index++) {
+      var item = widget.struct.images[index];
+      late ImageProvider ip;
+      if (item.pkzFile != null) {
+        ip = PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path);
+      } else if (item.downloadLocalPath != null) {
+        ip = ResourceDownloadFileImageProvider(item.downloadLocalPath!);
+      } else {
+        ip = ResourceRemoteImageProvider(item.fileServer, item.path);
+      }
+      ips.add(ip);
+    }
+    List<PhotoViewGalleryPageOptions> options = [];
+    for (var index = 0; index < ips.length; index += 2) {
+      // 两页
+      late ImageProvider leftIp = ips[index];
+      late ImageProvider rightIp = ips[index + 1];
+      if (index + 1 < ips.length) {
+        leftIp = ips[index];
+        rightIp = ips[index + 1];
+      } else {
+        leftIp = ips[index];
+        // ImageProvider by color black
+        rightIp = MemoryImage(Uint8List.fromList([0]));
+      }
+      //
+      final mq = MediaQuery.of(context);
+
+      options.add(
+        PhotoViewGalleryPageOptions.customChild(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Image(
+                        image: leftIp,
+                        fit: BoxFit.contain,
+                        // loadingBuilder: (context, child, event) => buildLoading(constraints.maxWidth, constraints.maxHeight),
+                        errorBuilder: (b, e, s) {
+                          print("$e,$s");
+                          return buildError(
+                            constraints.maxWidth / 2,
+                            constraints.maxHeight / 2,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image(
+                        image: rightIp,
+                        fit: BoxFit.contain,
+                        // loadingBuilder: (context, child, event) => buildLoading(constraints.maxWidth, constraints.maxHeight),
+                        errorBuilder: (b, e, s) {
+                          print("$e,$s");
+                          return buildError(
+                            constraints.maxWidth / 2,
+                            constraints.maxHeight / 2,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+    }
+    _view = PhotoViewGallery(
+      pageController: _pageController,
+      pageOptions: options,
+      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+          ? Axis.vertical
+          : Axis.horizontal,
+      onPageChanged: _onGalleryPageChange,
+    );
+    return _view;
+  }
+
+  void _onGalleryPageChange(int to) {
+    // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
+    if (to >= 0 && to < widget.struct.images.length) {
+      super._onCurrentChange(to * 2);
+    }
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 Color invertColor(Color color) {
   return Color.fromRGBO(
     255 - color.red,
@@ -1812,5 +1963,7 @@ Color invertColor(Color color) {
     1.0,
   );
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
