@@ -292,7 +292,11 @@ jobs:
       - name: Upgrade deps version (flutter3 non-mac)
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '3.22.3')
         run: |
+          sed -i "s/flutter_datetime_picker: ^1.5.1/flutter_datetime_picker_plus: ^2.2.0/g" pubspec.yaml
+          sed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: ^4.1.0/g" pubspec.yaml
+          sed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: ^2.2.1/g" pubspec.yaml
           sed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
+          sed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           find lib -type f -name "*.dart" -exec sed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
@@ -306,6 +310,10 @@ jobs:
         run: |
           brew install gnu-sed
           gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
+          gsed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: ^4.1.0/g" pubspec.yaml
+          gsed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: ^2.2.1/g" pubspec.yaml
+          gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
+          gsed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           find lib -type f -name "*.dart" -exec gsed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
