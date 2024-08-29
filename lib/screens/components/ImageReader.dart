@@ -1610,12 +1610,64 @@ class _ListViewReaderState extends _ImageReaderContentState
 
 class _GalleryReaderState extends _ImageReaderContentState {
   late PageController _pageController;
+  List<ImageProvider> ips = [];
+  List<PhotoViewGalleryPageOptions> options = [];
+  late Widget gallery;
 
   @override
   void initState() {
     super.initState();
     // 需要先初始化 super._startIndex 才能使用, 所以在上面
     _pageController = PageController(initialPage: super._startIndex);
+    for (var index = 0; index < widget.struct.images.length; index++) {
+      var item = widget.struct.images[index];
+      late ImageProvider ip;
+      if (item.pkzFile != null) {
+        ip = PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path);
+      } else if (item.downloadLocalPath != null) {
+        ip = ResourceDownloadFileImageProvider(item.downloadLocalPath!);
+      } else {
+        ip = ResourceRemoteImageProvider(item.fileServer, item.path);
+      }
+      ips.add(ip);
+    }
+    for (var ip in ips) {
+      options.add(PhotoViewGalleryPageOptions(
+        imageProvider: ip,
+        errorBuilder: (b, e, s) {
+          print("$e,$s");
+          return LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return buildError(constraints.maxWidth, constraints.maxHeight);
+            },
+          );
+        },
+        filterQuality: FilterQuality.high,
+      ));
+    }
+    gallery = PhotoViewGallery.builder(
+      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+          ? Axis.vertical
+          : Axis.horizontal,
+      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
+      backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
+      loadingBuilder: (context, event) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return buildLoading(constraints.maxWidth, constraints.maxHeight);
+        },
+      ),
+      pageController: _pageController,
+      onPageChanged: _onGalleryPageChange,
+      itemCount: widget.struct.images.length,
+      builder: (BuildContext context, int index) {
+        return options[index];
+      },
+      allowImplicitScrolling: true,
+    );
+    gallery = GestureDetector(
+      child: gallery,
+      onLongPress: _onLongPress,
+    );
   }
 
   @override
@@ -1639,6 +1691,45 @@ class _GalleryReaderState extends _ImageReaderContentState {
     }
   }
 
+  Future _onLongPress() async {
+    if (_current >= 0 && _current < widget.struct.images.length) {
+      var item = widget.struct.images[_current];
+      if (item.pkzFile != null) {
+        return;
+      }
+      Future<String> load() async {
+        var item = widget.struct.images[_current];
+        if (item.downloadLocalPath != null) {
+          return method.downloadImagePath(item.downloadLocalPath!);
+        }
+        var data = await method.remoteImageData(item.fileServer, item.path);
+        return data.finalPath;
+      }
+
+      String? choose = await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
+      switch (choose) {
+        case '预览图片':
+          try {
+            var file = await load();
+            Navigator.of(context).push(mixRoute(
+              builder: (context) => FilePhotoViewScreen(file),
+            ));
+          } catch (e) {
+            defaultToast(context, "图片加载失败");
+          }
+          break;
+        case '保存图片':
+          try {
+            var file = await load();
+            saveImage(file, context);
+          } catch (e) {
+            defaultToast(context, "图片加载失败");
+          }
+          break;
+      }
+    }
+  }
+
   void _onGalleryPageChange(int to) {
     // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
     if (to >= 0 && to < widget.struct.images.length) {
@@ -1648,113 +1739,6 @@ class _GalleryReaderState extends _ImageReaderContentState {
 
   @override
   Widget _buildViewer() {
-    Widget gallery = PhotoViewGallery.builder(
-      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-          ? Axis.vertical
-          : Axis.horizontal,
-      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-      backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
-      loadingBuilder: (context, event) => LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return buildLoading(constraints.maxWidth, constraints.maxHeight);
-        },
-      ),
-      pageController: _pageController,
-      onPageChanged: _onGalleryPageChange,
-      itemCount: widget.struct.images.length,
-      builder: (BuildContext context, int index) {
-        var item = widget.struct.images[index];
-        if (item.pkzFile != null) {
-          return PhotoViewGalleryPageOptions(
-            imageProvider:
-                PkzImageProvider(item.pkzFile!.pkzPath, item.pkzFile!.path),
-            errorBuilder: (b, e, s) {
-              print("$e,$s");
-              return LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return buildError(
-                      constraints.maxWidth, constraints.maxHeight);
-                },
-              );
-            },
-            filterQuality: FilterQuality.high,
-          );
-        }
-        if (item.downloadLocalPath != null) {
-          return PhotoViewGalleryPageOptions(
-            imageProvider:
-                ResourceDownloadFileImageProvider(item.downloadLocalPath!),
-            errorBuilder: (b, e, s) {
-              print("$e,$s");
-              return LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return buildError(
-                      constraints.maxWidth, constraints.maxHeight);
-                },
-              );
-            },
-            filterQuality: FilterQuality.high,
-          );
-        }
-        return PhotoViewGalleryPageOptions(
-          imageProvider:
-              ResourceRemoteImageProvider(item.fileServer, item.path),
-          errorBuilder: (b, e, s) {
-            print("$e,$s");
-            return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                return buildError(constraints.maxWidth, constraints.maxHeight);
-              },
-            );
-          },
-          filterQuality: FilterQuality.high,
-        );
-      },
-      allowImplicitScrolling: true,
-    );
-    gallery = GestureDetector(
-      child: gallery,
-      onLongPress: () async {
-        if (_current >= 0 && _current < widget.struct.images.length) {
-          var item = widget.struct.images[_current];
-          if (item.pkzFile != null) {
-            return;
-          }
-
-          Future<String> load() async {
-            var item = widget.struct.images[_current];
-            if (item.downloadLocalPath != null) {
-              return method.downloadImagePath(item.downloadLocalPath!);
-            }
-            var data = await method.remoteImageData(item.fileServer, item.path);
-            return data.finalPath;
-          }
-
-          String? choose =
-              await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
-          switch (choose) {
-            case '预览图片':
-              try {
-                var file = await load();
-                Navigator.of(context).push(mixRoute(
-                  builder: (context) => FilePhotoViewScreen(file),
-                ));
-              } catch (e) {
-                defaultToast(context, "图片加载失败");
-              }
-              break;
-            case '保存图片':
-              try {
-                var file = await load();
-                saveImage(file, context);
-              } catch (e) {
-                defaultToast(context, "图片加载失败");
-              }
-              break;
-          }
-        }
-      },
-    );
     gallery = Container(
       padding: EdgeInsets.only(
         top: widget.struct.fullScreen ? 0 : super._topBarHeight(),
@@ -1762,12 +1746,13 @@ class _GalleryReaderState extends _ImageReaderContentState {
       ),
       child: gallery,
     );
-    return Stack(
+    gallery = Stack(
       children: [
         gallery,
         _buildNextEpController(),
       ],
     );
+    return gallery;
   }
 
   Widget _buildNextEpController() {
@@ -1813,6 +1798,8 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
   late PageController _pageController;
   var _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
   late final List<Size?> _trueSizes = [];
+  List<ImageProvider> ips = [];
+  List<PhotoViewGalleryPageOptions> options = [];
   late PhotoViewGallery _view;
 
   @override
@@ -1833,32 +1820,6 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
     }
     super.initState();
     _pageController = PageController(initialPage: super._startIndex ~/ 2);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void _needJumpTo(int index, bool animation) {
-    if (noAnimation() || animation == false) {
-      _pageController.jumpToPage(
-        index ~/ 2,
-      );
-    } else {
-      _pageController.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.ease,
-      );
-    }
-  }
-
-  @override
-  Widget _buildViewer() {
-    List<ImageProvider> ips = [];
     for (var index = 0; index < widget.struct.images.length; index++) {
       var item = widget.struct.images[index];
       late ImageProvider ip;
@@ -1871,7 +1832,6 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       }
       ips.add(ip);
     }
-    List<PhotoViewGalleryPageOptions> options = [];
     for (var index = 0; index < ips.length; index += 2) {
       // 两页
       late ImageProvider leftIp = ips[index];
@@ -1884,9 +1844,6 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         // ImageProvider by color black
         rightIp = MemoryImage(Uint8List.fromList([0]));
       }
-      //
-      final mq = MediaQuery.of(context);
-
       options.add(
         PhotoViewGalleryPageOptions.customChild(
           child: LayoutBuilder(
@@ -1942,13 +1899,44 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
           : Axis.horizontal,
       onPageChanged: _onGalleryPageChange,
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void _needJumpTo(int index, bool animation) {
+    if (noAnimation() || animation == false) {
+      _pageController.jumpToPage(
+        index ~/ 2,
+      );
+    } else {
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  @override
+  Widget _buildViewer() {
     return _view;
   }
 
   void _onGalleryPageChange(int to) {
+    var toIndex = to * 2;
+    // 提前加载
+    for (var i = toIndex + 2; i < toIndex + 5 && i < ips.length; i++) {
+      final ip = ips[i];
+      precacheImage(ip, context);
+    }
     // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
     if (to >= 0 && to < widget.struct.images.length) {
-      super._onCurrentChange(to * 2);
+      super._onCurrentChange(toIndex);
     }
   }
 }
