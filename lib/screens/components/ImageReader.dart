@@ -1645,29 +1645,6 @@ class _GalleryReaderState extends _ImageReaderContentState {
         filterQuality: FilterQuality.high,
       ));
     }
-    gallery = PhotoViewGallery.builder(
-      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
-          ? Axis.vertical
-          : Axis.horizontal,
-      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
-      backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
-      loadingBuilder: (context, event) => LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return buildLoading(constraints.maxWidth, constraints.maxHeight);
-        },
-      ),
-      pageController: _pageController,
-      onPageChanged: _onGalleryPageChange,
-      itemCount: widget.struct.images.length,
-      builder: (BuildContext context, int index) {
-        return options[index];
-      },
-      allowImplicitScrolling: true,
-    );
-    gallery = GestureDetector(
-      child: gallery,
-      onLongPress: _onLongPress,
-    );
   }
 
   @override
@@ -1743,6 +1720,29 @@ class _GalleryReaderState extends _ImageReaderContentState {
 
   @override
   Widget _buildViewer() {
+    gallery = PhotoViewGallery.builder(
+      scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
+          ? Axis.vertical
+          : Axis.horizontal,
+      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
+      backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
+      loadingBuilder: (context, event) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return buildLoading(constraints.maxWidth, constraints.maxHeight);
+        },
+      ),
+      pageController: _pageController,
+      onPageChanged: _onGalleryPageChange,
+      itemCount: widget.struct.images.length,
+      builder: (BuildContext context, int index) {
+        return options[index];
+      },
+      allowImplicitScrolling: true,
+    );
+    gallery = GestureDetector(
+      child: gallery,
+      onLongPress: _onLongPress,
+    );
     gallery = Container(
       padding: EdgeInsets.only(
         top: widget.struct.fullScreen ? 0 : super._topBarHeight(),
@@ -1928,7 +1928,12 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
 
   @override
   Widget _buildViewer() {
-    return _view;
+    return Stack(
+      children: [
+        _view,
+        _buildNextEpController(),
+      ],
+    );
   }
 
   void _onGalleryPageChange(int to) {
@@ -1942,6 +1947,42 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
     if (to >= 0 && to < widget.struct.images.length) {
       super._onCurrentChange(toIndex);
     }
+  }
+
+  Widget _buildNextEpController() {
+    if (super._fullscreenController() ||
+        _current < widget.struct.images.length - 2) return Container();
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          padding:
+          const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+            ),
+            color: Color(0x88000000),
+          ),
+          child: GestureDetector(
+            onTap: () {
+              if (_hasNextEp()) {
+                _onNextAction();
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
+            child: Text(
+              _hasNextEp() ? '下一章' : '结束阅读',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
