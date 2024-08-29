@@ -21,9 +21,9 @@ Future initLocalHistorySync() async {
     "",
   );
   _localHistorySyncAuto = await method.loadProperty(
-    _autoSavePropertyName,
-    "false",
-  ) ==
+        _autoSavePropertyName,
+        "false",
+      ) ==
       "true";
   if (_localHistorySyncAuto) {
     localSync();
@@ -40,8 +40,7 @@ Future localSync() async {
   ));
 }
 
-List<Widget> localHistorySyncTiles() =>
-    [
+List<Widget> localHistorySyncTiles() => [
       localHistorySyncPathTile(),
       localHistorySyncManualTile(),
       localHistorySyncAutoTile(),
@@ -51,6 +50,37 @@ Widget localHistorySyncPathTile() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
+        onLongPress: () async {
+          bool? clean = await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("清空本地同步路径"),
+                content: const Text("确定要清空本地同步路径吗?"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text("取消"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    child: const Text("确定"),
+                  ),
+                ],
+              );
+            },
+          );
+          if (clean != null && clean == true) {
+            await method.saveProperty(_dirPathPropertyName, "");
+            setState(() {
+              _localHistorySyncRoot = "";
+            });
+          }
+        },
         onTap: () async {
           if (Platform.isAndroid) {
             final pState = await Permission.manageExternalStorage.request();
@@ -61,10 +91,9 @@ Widget localHistorySyncPathTile() {
           var dir = await FilePicker.platform.getDirectoryPath(
             dialogTitle: "选择一个文件夹, 将历史记录文件保存到这里",
             initialDirectory:
-            Directory
-                .fromUri(Uri.file(await currentChooserRoot()))
-                .absolute
-                .path,
+                Directory.fromUri(Uri.file(await currentChooserRoot()))
+                    .absolute
+                    .path,
           );
           if (dir != null) {
             await method.saveProperty(_dirPathPropertyName, dir);
@@ -77,7 +106,7 @@ Widget localHistorySyncPathTile() {
           "同步历史记录到本地路径",
         ),
         subtitle:
-        Text(_localHistorySyncRoot.isEmpty ? "未设置" : _localHistorySyncRoot),
+            Text(_localHistorySyncRoot.isEmpty ? "未设置" : _localHistorySyncRoot),
       );
     },
   );
@@ -88,6 +117,10 @@ Widget localHistorySyncManualTile() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         onTap: () async {
+          if (_localHistorySyncRoot.isEmpty) {
+            defaultToast(context, "未设置同步路径");
+            return;
+          }
           try {
             await localSync();
             defaultToast(context, "同步成功");
