@@ -178,7 +178,7 @@ List<Widget> webDavSettings(BuildContext context) {
     ),
     //
     ListTile(
-        title: const Text("立即同步浏览记录"),
+        title: const Text("立即同步浏览记录到WebDAV"),
         onTap: () async {
           await syncHistoryToWebdav(context);
         }),

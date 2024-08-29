@@ -7,7 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../Common.dart';
 import '../Method.dart';
 import 'ChooserRoot.dart';
-import 'IsPro.dart';
 
 const _dirPathPropertyName = "localHistorySyncRoot";
 const _autoSavePropertyName = "localHistorySyncAuto";
@@ -42,8 +41,8 @@ Future localSync() async {
 
 List<Widget> localHistorySyncTiles() => [
       localHistorySyncPathTile(),
-      localHistorySyncManualTile(),
       localHistorySyncAutoTile(),
+      localHistorySyncManualTile(),
     ];
 
 Widget localHistorySyncPathTile() {
