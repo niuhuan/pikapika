@@ -52,22 +52,25 @@ Widget localHistorySyncPathTile() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         onTap: () async {
-          final pState = await Permission.manageExternalStorage.request();
-          if (pState.isGranted) {
-            var dir = await FilePicker.platform.getDirectoryPath(
-              dialogTitle: "选择一个文件夹, 将历史记录文件保存到这里",
-              initialDirectory:
-              Directory
-                  .fromUri(Uri.file(await currentChooserRoot()))
-                  .absolute
-                  .path,
-            );
-            if (dir != null) {
-              await method.saveProperty(_dirPathPropertyName, dir);
-              setState(() {
-                _localHistorySyncRoot = dir;
-              });
+          if (Platform.isAndroid) {
+            final pState = await Permission.manageExternalStorage.request();
+            if (!pState.isGranted) {
+              return;
             }
+          }
+          var dir = await FilePicker.platform.getDirectoryPath(
+            dialogTitle: "选择一个文件夹, 将历史记录文件保存到这里",
+            initialDirectory:
+            Directory
+                .fromUri(Uri.file(await currentChooserRoot()))
+                .absolute
+                .path,
+          );
+          if (dir != null) {
+            await method.saveProperty(_dirPathPropertyName, dir);
+            setState(() {
+              _localHistorySyncRoot = dir;
+            });
           }
         },
         title: const Text(
