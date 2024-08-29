@@ -16,6 +16,10 @@ on:
         type: boolean
         default: false
         description: 'Linux version'
+      PACKAGE_MACOS:
+        type: boolean
+        default: false
+        description: 'MacOS version'
 
 jobs:
   package:
@@ -35,6 +39,10 @@ jobs:
             host: ubuntu-latest
             flutter_version: '2.10.3'
             go_version: '1.17'
+          - target: macos
+            host: macos-latest
+            flutter_version: '2.10.3'
+            go_version: '1.17'
     runs-on: ${{ matrix.config.host }}
     env:
       GO_VERSION: ${{ matrix.config.go_version }}
@@ -48,6 +56,8 @@ jobs:
             elif [ ${{ matrix.config.target }} == 'ios' ] && [ ${{ github.event.inputs.PACKAGE_IOS }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             elif [ ${{ matrix.config.target }} == 'linux' ] && [ ${{ github.event.inputs.PACKAGE_LINUX }} == 'true' ]; then
+                echo "::set-output name=need_build::true"
+            elif [ ${{ matrix.config.target }} == 'macos' ] && [ ${{ github.event.inputs.PACKAGE_MACOS }} == 'true' ]; then
                 echo "::set-output name=need_build::true"
             else
                 echo "::set-output name=need_build::false"
@@ -69,9 +79,9 @@ jobs:
           path: |
             ~/.cache/go-build
             ~/go/pkg/mod
-          key: ubuntu-latest-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
-            ubuntu-latest-go-
+            ${{ runner.os }}-go-
       - if: steps.need_build.outputs.need_build == 'true'
         name: checkout
         uses: actions/checkout@v3
@@ -146,6 +156,10 @@ jobs:
         name: Build (linux)
         run: |
           sh scripts/build-linux.sh
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'macos'
+        name: Build (macos)
+        run: |
+          sh scripts/build-macos-dmg.sh
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'ios'
         name: 'Upload Artifact (iOS)'
         uses: actions/upload-artifact@v4
@@ -167,5 +181,10 @@ jobs:
           name: 'build.AppImage'
           path: 'build/build.AppImage'
           retention-days: 3
-
+      - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'macos'
+        name: 'Upload Artifact (MacOS)'
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'build.dmg'
+          path: 'build/build.dmg'
 
