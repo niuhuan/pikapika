@@ -172,6 +172,7 @@ jobs:
         name: Build (macos)
         run: |
           sh scripts/build-macos-dmg.sh
+          mv go/build/outputs/darwin-dmg-release/*.dmg build/build.dmg
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'ios'
         name: 'Upload Artifact (iOS)'
         uses: actions/upload-artifact@v4
