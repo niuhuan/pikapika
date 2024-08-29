@@ -22,6 +22,7 @@ import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/ImageFilter.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
+import 'package:pikapika/basic/config/LocalHistorySync.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/PagerAction.dart';
 import 'package:pikapika/basic/config/Platform.dart';
@@ -131,6 +132,7 @@ class _InitScreenState extends State<InitScreen> {
     await initVolumeNextChapter();
     await initCopySkipConfirm();
     await initCategoriesSort();
+    await initLocalHistorySync();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

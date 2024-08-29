@@ -43,6 +43,7 @@ import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/ImageFilter.dart';
+import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
 import '../basic/config/WillPopNotice.dart';
@@ -126,6 +127,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 const Divider(),
                 ...webDavSettings(context),
+                if (!Platform.isIOS) const Divider(),
+                if (!Platform.isIOS) ...localHistorySyncTiles,
               ],
             ),
             ExpansionTile(

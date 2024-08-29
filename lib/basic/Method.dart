@@ -642,7 +642,8 @@ class Method {
   }
 
   /// 导出下载的漫画到cbzs.zip
-  Future<dynamic> exportComicDownloadToCbzsZip(String comicId, String dir, String name) {
+  Future<dynamic> exportComicDownloadToCbzsZip(
+      String comicId, String dir, String name) {
     return _flatInvoke("exportComicDownloadToCbzsZip", {
       "comicId": comicId,
       "dir": dir,
@@ -975,6 +976,10 @@ class Method {
       "password": password,
       "file": file,
     });
+  }
+
+  Future mergeHistoriesFromLocal(String localPath) {
+    return _flatInvoke("mergeHistoriesFromLocal", localPath);
   }
 
   Future<int> ping(String idx) async {
