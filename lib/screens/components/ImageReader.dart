@@ -1846,7 +1846,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       } else {
         leftIp = ips[index];
         // ImageProvider by color black
-        rightIp = MemoryImage(Uint8List.fromList([0]));
+        rightIp = const AssetImage('lib/assets/0.png');
       }
       options.add(
         PhotoViewGalleryPageOptions.customChild(
