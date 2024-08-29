@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 ...webDavSettings(context),
                 if (!Platform.isIOS) const Divider(),
-                if (!Platform.isIOS) ...localHistorySyncTiles,
+                ...Platform.isIOS ? [] : localHistorySyncTiles(),
               ],
             ),
             ExpansionTile(
