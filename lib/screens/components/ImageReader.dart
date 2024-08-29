@@ -1930,7 +1930,10 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
   Widget _buildViewer() {
     return Stack(
       children: [
-        _view,
+        GestureDetector(
+          onLongPress: _onLongPress,
+          child: _view,
+        ),
         _buildNextEpController(),
       ],
     );
@@ -1959,7 +1962,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         child: Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding:
-          const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
@@ -1983,6 +1986,41 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         ),
       ),
     );
+  }
+
+  Future _onLongPress() async {
+    List<ReaderImageInfo> matchImages = [];
+    if (_current >= 0 && _current < widget.struct.images.length) {
+      var item = widget.struct.images[_current];
+      if (item.pkzFile != null) {
+        return;
+      }
+      matchImages.add(item);
+    }
+    if (_current + 1 >= 0 && _current + 1 < widget.struct.images.length) {
+      var item = widget.struct.images[_current + 1];
+      if (item.pkzFile != null) {
+        return;
+      }
+      matchImages.add(item);
+    }
+    if (matchImages.isEmpty) {
+      return;
+    }
+    String? choose = await chooseListDialog(context, '请选择', ['保存本页的图片']);
+    switch (choose) {
+      case '保存本页的图片':
+        for (var item in matchImages) {
+          if (item.downloadLocalPath != null) {
+            var file = await method.downloadImagePath(item.downloadLocalPath!);
+            saveImage(file, context);
+          } else {
+            var data = await method.remoteImageData(item.fileServer, item.path);
+            saveImage(data.finalPath, context);
+          }
+        }
+        break;
+    }
   }
 }
 
