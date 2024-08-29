@@ -1731,6 +1731,10 @@ class _GalleryReaderState extends _ImageReaderContentState {
   }
 
   void _onGalleryPageChange(int to) {
+    for (var i = to; i < to + 3 && i < ips.length; i++) {
+      final ip = ips[i];
+      precacheImage(ip, context);
+    }
     // 包含一个下一章, 假设5张图片 0,1,2,3,4 length=5, 下一章=5
     if (to >= 0 && to < widget.struct.images.length) {
       super._onCurrentChange(to);
