@@ -1061,8 +1061,8 @@ class Method {
     return ComicSubscribe.fromJson(jsonDecode(data));
   }
 
-  Future addSubscribed(ComicInfo comicInfo) async {
-    return _flatInvoke("addSubscribed", comicInfo);
+  Future addSubscribed(String comicId) async {
+    return _flatInvoke("addSubscribed", comicId);
   }
 
   Future removeAllSubscribed() async {

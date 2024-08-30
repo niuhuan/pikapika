@@ -41,6 +41,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   late Future<ComicInfo> _comicFuture = _loadComic();
   late Key _comicFutureKey = UniqueKey();
   late Future<ViewLog?> _viewFuture = _loadViewLog();
+  late Future<ComicSubscribe?> _subscribedFuture = _loadSubscribed();
   late Future<List<Ep>> _epListFuture = _loadEps();
   StreamSubscription<String?>? _linkSubscription;
 
@@ -61,6 +62,10 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
 
   Future<ViewLog?> _loadViewLog() {
     return method.loadView(widget.comicId);
+  }
+
+  Future<ComicSubscribe?> _loadSubscribed() {
+    return method.loadSubscribed(widget.comicId);
   }
 
   @override
@@ -144,6 +149,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
             appBar: AppBar(
               title: Text(_comicInfo.title),
               actions: [
+                _buildSubscribeAction(_subscribedFuture, _comicInfo),
                 _buildDownloadAction(_epListFuture, _comicInfo),
               ],
             ),
@@ -256,6 +262,48 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                 Container(height: 5),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSubscribeAction(
+    Future<ComicSubscribe?> _subscribedFuture,
+    ComicInfo _comicInfo,
+  ) {
+    return FutureBuilder(
+      future: _subscribedFuture,
+      builder: (BuildContext context, AsyncSnapshot<ComicSubscribe?> snapshot) {
+        if (snapshot.hasError) {
+          return IconButton(
+            onPressed: () {
+              setState(() {
+                this._subscribedFuture = _loadSubscribed();
+              });
+            },
+            icon: const Icon(Icons.sync_problem),
+          );
+        }
+        if (snapshot.connectionState != ConnectionState.done) {
+          return IconButton(onPressed: () {}, icon: const Icon(Icons.sync));
+        }
+        var _subscribed = snapshot.data;
+        return IconButton(
+          onPressed: () async {
+            if (_subscribed == null) {
+              await method.addSubscribed(_comicInfo.id);
+            } else {
+              await method.removeSubscribed(_comicInfo.id);
+            }
+            setState(() {
+              this._subscribedFuture = _loadSubscribed();
+            });
+          },
+          icon: Icon(
+            _subscribed == null
+                ? Icons.notifications_none
+                : Icons.notifications,
           ),
         );
       },
