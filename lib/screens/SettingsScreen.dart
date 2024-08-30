@@ -167,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 const Divider(),
                 qualitySetting(),
-                readerTypeSetting(),
+                readerTypeSettings(),
                 readerDirectionSetting(),
                 readerSliderPositionSetting(),
                 autoFullScreenSetting(),
