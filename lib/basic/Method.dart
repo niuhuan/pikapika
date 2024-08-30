@@ -1051,4 +1051,35 @@ class Method {
   Future<dynamic> setProServerName(String serverName) {
     return _flatInvoke("setProServerName", serverName);
   }
+
+  /// 加载已订阅
+  Future<ComicSubscribe?> loadSubscribed(String comicId) async {
+    String data = await _flatInvoke("loadSubscribed", comicId);
+    if (data == "") {
+      return null;
+    }
+    return ComicSubscribe.fromJson(jsonDecode(data));
+  }
+
+  Future addSubscribed(ComicInfo comicInfo) async {
+    return _flatInvoke("addSubscribed", comicInfo);
+  }
+
+  Future removeAllSubscribed() async {
+    return _flatInvoke("removeAllSubscribed", "");
+  }
+
+  Future removeSubscribed(String comicId) async {
+    return _flatInvoke("removeSubscribed", comicId);
+  }
+
+  Future<List<ComicSubscribe>> allSubscribed() async {
+    var data = await _flatInvoke("allSubscribed", "");
+    List list = json.decode(data);
+    return list.map((e) => ComicSubscribe.fromJson(e)).toList();
+  }
+
+  Future updateSubscribed() async {
+    return _flatInvoke("updateSubscribed", "");
+  }
 }

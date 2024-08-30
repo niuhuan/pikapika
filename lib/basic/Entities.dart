@@ -1144,3 +1144,42 @@ class ResetPasswordResult {
     return _data;
   }
 }
+
+/// 浏览历史记录
+class ComicSubscribe {
+  late String id;
+  late String title;
+  late String author;
+  late int pagesCount;
+  late int epsCount;
+  late bool finished;
+  late String categories;
+  late String thumbOriginalName;
+  late String thumbFileServer;
+  late String thumbPath;
+  late String description;
+  late String chineseTeam;
+  late String tags;
+  late String subscribeTime;
+  late String updateSubscribeTime;
+  late int newEpCount;
+
+  ComicSubscribe.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.title = json["title"];
+    this.author = json["author"];
+    this.pagesCount = json["pagesCount"];
+    this.epsCount = json["epsCount"];
+    this.finished = json["finished"];
+    this.categories = json["categories"];
+    this.thumbOriginalName = json["thumbOriginalName"];
+    this.thumbFileServer = json["thumbFileServer"];
+    this.thumbPath = json["thumbPath"];
+    this.description = json["description"];
+    this.chineseTeam = json["chineseTeam"];
+    this.tags = json["tags"];
+    this.subscribeTime = json["subscribeTime"];
+    this.updateSubscribeTime = json["updateSubscribeTime"];
+    this.newEpCount = json["newEpCount"];
+  }
+}
