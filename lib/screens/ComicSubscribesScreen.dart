@@ -20,16 +20,15 @@ class _IntoComicSubscribesScreenButtonState
   @override
   void initState() {
     super.initState();
+    subscribedEvent.subscribe(_setState());
     _sync();
   }
 
   void _sync() async {
-    await method.updateSubscribed();
-    final _allSubscribed = await method.allSubscribed();
-    allSubscribed.clear();
-    for (var subscribed in _allSubscribed) {
-      allSubscribed[subscribed.id] = subscribed;
-    }
+    await updateSubscribed();
+  }
+
+  _setState() {
     setState(() {});
   }
 
