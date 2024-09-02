@@ -16,3 +16,10 @@ Future updateSubscribed() async {
   }
   subscribedEvent.broadcast();
 }
+
+Future subscribedViewed(String id) async {
+  if (allSubscribed.containsKey(id)) {
+    allSubscribed.remove(id);
+    subscribedEvent.broadcast();
+  }
+}

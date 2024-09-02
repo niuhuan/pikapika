@@ -18,6 +18,7 @@ import 'components/ComicDescriptionCard.dart';
 import 'components/ComicInfoCard.dart';
 import 'components/ComicTagsCard.dart';
 import 'components/CommentList.dart';
+import 'components/CommonData.dart';
 import 'components/ContentError.dart';
 import 'components/ContentLoading.dart';
 import 'components/ContinueReadButton.dart';
@@ -46,7 +47,10 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   StreamSubscription<String?>? _linkSubscription;
 
   Future<ComicInfo> _loadComic() async {
-    return await method.comicInfo(widget.comicId);
+    return await method.comicInfo(widget.comicId).then((value) async {
+      subscribedViewed(widget.comicId);
+      return value;
+    });
   }
 
   Future<List<Ep>> _loadEps() async {

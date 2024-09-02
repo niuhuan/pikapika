@@ -6,6 +6,7 @@ import 'package:pikapika/screens/components/CommonData.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
 import 'components/Badge.dart';
+import 'components/Common.dart';
 
 class IntoComicSubscribesScreenButton extends StatefulWidget {
   const IntoComicSubscribesScreenButton({Key? key}) : super(key: key);
@@ -70,6 +71,9 @@ class _ComicSubscribesScreenState extends State<ComicSubscribesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('订阅'),
+        actions: [
+          commonPopMenu(context),
+        ],
       ),
       body: ContentBuilder(
         future: _future,

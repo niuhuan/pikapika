@@ -300,7 +300,7 @@ class _ComicListState extends State<ComicList> {
           ),
         );
       } else {
-        tmp.add(LinkToComicInfo(
+        Widget c = LinkToComicInfo(
           comicId: e.id,
           child: Container(
             padding: EdgeInsets.all(gap),
@@ -311,7 +311,38 @@ class _ComicListState extends State<ComicList> {
               height: height,
             ),
           ),
-        ));
+        );
+        if (allSubscribed.containsKey(e.id)) {
+          final subscribed = allSubscribed[e.id]!;
+          if (subscribed.newEpCount > 0) {
+            c = Stack(
+              children: [
+                c,
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      subscribed.newEpCount.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        }
+        tmp.add(c);
       }
       if (tmp.length == rowCap) {
         wraps.add(Row(
@@ -414,7 +445,7 @@ class _ComicListState extends State<ComicList> {
           ),
         );
       } else {
-        tmp.add(LinkToComicInfo(
+        Widget c = LinkToComicInfo(
           comicId: e.id,
           child: Container(
             margin: EdgeInsets.all(gap),
@@ -454,7 +485,38 @@ class _ComicListState extends State<ComicList> {
               ],
             ),
           ),
-        ));
+        );
+        if (allSubscribed.containsKey(e.id)) {
+          final subscribed = allSubscribed[e.id]!;
+          if (subscribed.newEpCount > 0) {
+            c = Stack(
+              children: [
+                c,
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      subscribed.newEpCount.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        }
+        tmp.add(c);
       }
       if (tmp.length == rowCap) {
         wraps.add(Row(
