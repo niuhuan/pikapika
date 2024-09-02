@@ -209,13 +209,13 @@ class _ComicListState extends State<ComicList> {
                   card,
                   Positioned(
                     top: 0,
-                    right: 0,
+                    left: 0,
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: const BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5),
                         ),
                       ),
                       child: Text(

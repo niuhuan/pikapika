@@ -5,6 +5,8 @@ import 'package:pikapika/screens/components/ComicList.dart';
 import 'package:pikapika/screens/components/CommonData.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
+import 'components/Badge.dart';
+
 class IntoComicSubscribesScreenButton extends StatefulWidget {
   const IntoComicSubscribesScreenButton({Key? key}) : super(key: key);
 
@@ -33,16 +35,22 @@ class _IntoComicSubscribesScreenButtonState
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ComicSubscribesScreen(),
-          ),
-        );
-      },
-      icon: const Icon(Icons.alarm),
+    final count = allSubscribed.values
+        .map((e) => e.newEpCount)
+        .reduce((value, element) => value + element);
+    return Badged(
+      badge: count == 0 ? null : count.toString(),
+      child: IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ComicSubscribesScreen(),
+            ),
+          );
+        },
+        icon: const Icon(Icons.alarm),
+      ),
     );
   }
 }
