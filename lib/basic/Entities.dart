@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /// 图片
 class RemoteImageInfo {
   late String originalName;
@@ -8,6 +10,14 @@ class RemoteImageInfo {
     this.originalName = json["originalName"];
     this.path = json["path"];
     this.fileServer = json["fileServer"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['originalName'] = originalName;
+    _data['path'] = path;
+    _data['fileServer'] = fileServer;
+    return _data;
   }
 }
 
@@ -1019,10 +1029,11 @@ class ProInfoAll {
     required this.proInfoAf,
     required this.proInfoPat,
   });
+
   late final ProInfoAf proInfoAf;
   late final ProInfoPat proInfoPat;
 
-  ProInfoAll.fromJson(Map<String, dynamic> json){
+  ProInfoAll.fromJson(Map<String, dynamic> json) {
     proInfoAf = ProInfoAf.fromJson(json['pro_info_af']);
     proInfoPat = ProInfoPat.fromJson(json['pro_info_pat']);
   }
@@ -1040,10 +1051,11 @@ class ProInfoAf {
     required this.isPro,
     required this.expire,
   });
+
   late final bool isPro;
   late final int expire;
 
-  ProInfoAf.fromJson(Map<String, dynamic> json){
+  ProInfoAf.fromJson(Map<String, dynamic> json) {
     isPro = json['is_pro'];
     expire = json['expire'];
   }
@@ -1067,6 +1079,7 @@ class ProInfoPat {
     required this.errorMsg,
     required this.accessKey,
   });
+
   late final bool isPro;
   late final String patId;
   late final String bindUid;
@@ -1076,7 +1089,7 @@ class ProInfoPat {
   late final String errorMsg;
   late final String accessKey;
 
-  ProInfoPat.fromJson(Map<String, dynamic> json){
+  ProInfoPat.fromJson(Map<String, dynamic> json) {
     isPro = json['is_pro'];
     patId = json['pat_id'];
     bindUid = json['bind_uid'];
@@ -1145,7 +1158,7 @@ class ResetPasswordResult {
   }
 }
 
-/// 浏览历史记录
+/// 订阅
 class ComicSubscribe {
   late String id;
   late String title;
@@ -1160,11 +1173,13 @@ class ComicSubscribe {
   late String description;
   late String chineseTeam;
   late String tags;
+  late int likesCount;
   late String subscribeTime;
   late String updateSubscribeTime;
   late int newEpCount;
 
   ComicSubscribe.fromJson(Map<String, dynamic> json) {
+    print(json);
     this.id = json["id"];
     this.title = json["title"];
     this.author = json["author"];
@@ -1178,8 +1193,37 @@ class ComicSubscribe {
     this.description = json["description"];
     this.chineseTeam = json["chineseTeam"];
     this.tags = json["tags"];
+    this.likesCount = json["likesCount"];
     this.subscribeTime = json["subscribeTime"];
     this.updateSubscribeTime = json["updateSubscribeTime"];
     this.newEpCount = json["newEpCount"];
+  }
+
+  Map<String, dynamic> toSimpleJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['_id'] = id;
+    _data['title'] = title;
+    _data['author'] = author;
+    _data['pagesCount'] = pagesCount;
+    _data['epsCount'] = epsCount;
+    _data['finished'] = finished;
+    _data['categories'] = jsonDecode(categories);
+    _data['thumbOriginalName'] = thumbOriginalName;
+    _data['thumbFileServer'] = thumbFileServer;
+    _data['thumbPath'] = thumbPath;
+    _data['description'] = description;
+    _data['chineseTeam'] = chineseTeam;
+    _data['tags'] = tags;
+    _data['likesCount'] = likesCount;
+    _data['thumb'] = jsonDecode(jsonEncode(RemoteImageInfo.fromJson({
+      "originalName": thumbOriginalName,
+      "fileServer": thumbFileServer,
+      "path": thumbPath
+    })));
+    _data['subscribeTime'] = subscribeTime;
+    _data['updateSubscribeTime'] = updateSubscribeTime;
+    _data['newEpCount'] = newEpCount;
+    return _data;
   }
 }

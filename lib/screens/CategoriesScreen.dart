@@ -15,6 +15,7 @@ import '../basic/config/Address.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/CategoriesSort.dart';
 import '../basic/config/IconLoading.dart';
+import 'ComicSubscribesScreen.dart';
 import 'ComicsScreen.dart';
 import 'GamesScreen.dart';
 import 'RandomComicsScreen.dart';
@@ -50,6 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       return AppBar(
         title: const Text('分类'),
         actions: [
+          const IntoComicSubscribesScreenButton(),
           commonPopMenu(context),
           addressPopMenu(context),
           _searchBar.getSearchAction(context),
