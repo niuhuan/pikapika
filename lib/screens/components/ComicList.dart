@@ -299,6 +299,42 @@ class _ComicListState extends State<ComicList> {
             ),
           ),
         );
+      } else if (_selecting) {
+        Widget c = Container(
+          padding: EdgeInsets.all(gap),
+          child: RemoteImage(
+            fileServer: e.thumb.fileServer,
+            path: e.thumb.path,
+            width: width,
+            height: height,
+          ),
+        );
+        c = GestureDetector(
+          onTap: () {
+            setState(() {
+              if (_selected.contains(e.id)) {
+                _selected.remove(e.id);
+              } else {
+                _selected.add(e.id);
+              }
+            });
+          },
+          child: Stack(children: [
+            AbsorbPointer(
+              child: c,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                _selected.contains(e.id)
+                    ? Icons.check_circle_sharp
+                    : Icons.circle_outlined,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+          ]),
+        );
+        tmp.add(c);
       } else {
         Widget c = LinkToComicInfo(
           comicId: e.id,
@@ -444,6 +480,71 @@ class _ComicListState extends State<ComicList> {
             ),
           ),
         );
+      } else if (_selecting) {
+        Widget c = Container(
+          margin: EdgeInsets.all(gap),
+          width: width,
+          height: height,
+          child: Stack(
+            children: [
+              RemoteImage(
+                fileServer: e.thumb.fileServer,
+                path: e.thumb.path,
+                width: width,
+                height: height,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  color: Colors.black.withOpacity(.3),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          e.title + '\n',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: titleFontSize,
+                            height: 1.2,
+                          ),
+                          strutStyle: const StrutStyle(height: 1.2),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+        c = GestureDetector(
+          onTap: () {
+            setState(() {
+              if (_selected.contains(e.id)) {
+                _selected.remove(e.id);
+              } else {
+                _selected.add(e.id);
+              }
+            });
+          },
+          child: Stack(children: [
+            AbsorbPointer(
+              child: c,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                _selected.contains(e.id)
+                    ? Icons.check_circle_sharp
+                    : Icons.circle_outlined,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+          ]),
+        );
+        tmp.add(c);
       } else {
         Widget c = LinkToComicInfo(
           comicId: e.id,
