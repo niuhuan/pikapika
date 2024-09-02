@@ -8,6 +8,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
+import 'package:pikapika/screens/components/CommonData.dart';
 
 import 'ComicInfoCard.dart';
 import 'Images.dart';
@@ -176,12 +177,9 @@ class _ComicListState extends State<ComicList> {
               },
               child: Stack(children: [
                 AbsorbPointer(
-                  child: LinkToComicInfo(
-                    comicId: e.id,
-                    child: ComicInfoCard(
-                      e,
-                      viewed: viewedList.contains(e.id),
-                    ),
+                  child: ComicInfoCard(
+                    e,
+                    viewed: viewedList.contains(e.id),
                   ),
                 ),
                 Row(children: [
@@ -199,13 +197,41 @@ class _ComicListState extends State<ComicList> {
               ]),
             );
           }
-          return LinkToComicInfo(
-            comicId: e.id,
-            child: ComicInfoCard(
-              e,
-              viewed: viewedList.contains(e.id),
-            ),
+          Widget card = ComicInfoCard(
+            e,
+            viewed: viewedList.contains(e.id),
           );
+          if (allSubscribed.containsKey(e.id)) {
+            final subscribed = allSubscribed[e.id]!;
+            if (subscribed.newEpCount > 0) {
+              card = Stack(
+                children: [
+                  card,
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        subscribed.newEpCount.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          }
+          return LinkToComicInfo(comicId: e.id, child: card);
         }).toList(),
         ...widget.appendWidget != null
             ? [

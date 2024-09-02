@@ -1670,11 +1670,18 @@ class _GalleryReaderState extends _ImageReaderContentState {
     _preloadJump(index);
   }
 
-  _preloadJump(int index) {
-    for (var i = index - 1; i < index + 3; i++) {
-      if (i < 0 || i >= ips.length) continue;
-      final ip = ips[i];
-      precacheImage(ip, context);
+  _preloadJump(int index, {bool init = false}) {
+    fn() {
+      for (var i = index - 1; i < index + 3; i++) {
+        if (i < 0 || i >= ips.length) continue;
+        final ip = ips[i];
+        precacheImage(ip, context);
+      }
+    }
+    if (init) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => fn());
+    } else {
+      fn();
     }
   }
 
@@ -1919,7 +1926,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       onPageChanged: _onGalleryPageChange,
       backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
     );
-    _preloadJump(super._startIndex);
+    _preloadJump(super._startIndex, init: true);
   }
 
   @override
@@ -1944,11 +1951,18 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
     _preloadJump(index);
   }
 
-  _preloadJump(int index) {
-    for (var i = index - 2; i < index + 5; i++) {
-      if (i < 0 || i >= ips.length) continue;
-      final ip = ips[i];
-      precacheImage(ip, context);
+  _preloadJump(int index, {bool init = false}) {
+    fn() {
+      for (var i = index - 2; i < index + 5; i++) {
+        if (i < 0 || i >= ips.length) continue;
+        final ip = ips[i];
+        precacheImage(ip, context);
+      }
+    }
+    if (init) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => fn());
+    } else {
+      fn();
     }
   }
 
