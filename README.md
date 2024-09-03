@@ -38,6 +38,7 @@ You can download games without ads.
     - [x] Comic details / Chapters / View images / Save images to the album
     - [x] Favorites / Likes
     - [x] Get comments / Comment / Comment reply (comments in the community cannot be deleted, please use with caution)
+    - [x] Update notification
 - [x] Games
     - [x] List / Details / Ad-free download
 - [x] Downloads
