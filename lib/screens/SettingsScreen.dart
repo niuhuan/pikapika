@@ -122,37 +122,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.backup),
-              title: Text('同步'),
-              children: [
-                const Divider(),
-                ...webDavSettings(context),
-                if (!Platform.isIOS) const Divider(),
-                ...Platform.isIOS ? [] : localHistorySyncTiles(),
-              ],
-            ),
-            ExpansionTile(
-              leading: Icon(Icons.manage_accounts),
-              title: Text('账户'),
-              children: [
-                const Divider(),
-                widget.hiddenAccountInfo
-                    ? Container()
-                    : ListTile(
-                        onTap: () async {
-                          Navigator.push(
-                            context,
-                            mixRoute(
-                              builder: (context) =>
-                                  const ModifyPasswordScreen(),
-                            ),
-                          );
-                        },
-                        title: const Text('修改密码'),
-                      ),
-              ],
-            ),
-            ExpansionTile(
               leading: Icon(Icons.dangerous),
               title: Text('封印'),
               children: [
@@ -204,6 +173,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 downloadAndExportPathSetting(),
                 showCommentAtDownloadSetting(),
                 exportRenameSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.backup),
+              title: Text('同步'),
+              children: [
+                const Divider(),
+                ...webDavSettings(context),
+                if (!Platform.isIOS) const Divider(),
+                ...Platform.isIOS ? [] : localHistorySyncTiles(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.manage_accounts),
+              title: Text('账户'),
+              children: [
+                const Divider(),
+                widget.hiddenAccountInfo
+                    ? Container()
+                    : ListTile(
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      mixRoute(
+                        builder: (context) =>
+                        const ModifyPasswordScreen(),
+                      ),
+                    );
+                  },
+                  title: const Text('修改密码'),
+                ),
               ],
             ),
             ExpansionTile(
