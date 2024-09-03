@@ -5,6 +5,7 @@ import 'package:pikapika/screens/components/ComicList.dart';
 import 'package:pikapika/screens/components/CommonData.dart';
 import 'package:pikapika/screens/components/ContentBuilder.dart';
 
+import '../basic/config/Address.dart';
 import 'components/Badge.dart';
 import 'components/Common.dart';
 
@@ -71,36 +72,75 @@ class ComicSubscribesScreen extends StatefulWidget {
 }
 
 class _ComicSubscribesScreenState extends State<ComicSubscribesScreen> {
-  Future<List<ComicSubscribe>> _future = method.allSubscribed();
-  Key _key = UniqueKey();
+  @override
+  void initState() {
+    super.initState();
+    subscribedEvent.subscribe(_setState);
+  }
+
+  @override
+  void dispose() {
+    subscribedEvent.unsubscribe(_setState);
+    super.dispose();
+  }
+
+  void _setState(_) {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('订阅'),
+        title: const Text('更新提醒'),
         actions: [
           commonPopMenu(context),
+          addressPopMenu(context),
+          _popMenu(context),
         ],
       ),
-      body: ContentBuilder(
-        future: _future,
-        key: _key,
-        onRefresh: () async {
-          setState(() {
-            _future = method.allSubscribed();
-            _key = UniqueKey();
-          });
-        },
-        successBuilder: (BuildContext context,
-            AsyncSnapshot<List<ComicSubscribe>> snapshot) {
-          List<ComicSimple> comicList = [];
-          for (var comicSubscribe in snapshot.requireData) {
-            comicList.add(ComicSimple.fromJson(comicSubscribe.toSimpleJson()));
-          }
-          return ComicList(comicList);
-        },
-      ),
+      body: _body(context),
     );
   }
+
+  Widget _body(BuildContext context) {
+    final subs = allSubscribed.values.toList();
+    List<ComicSimple> comicList = [];
+    for (var comicSubscribe in subs) {
+      comicList.add(ComicSimple.fromJson(comicSubscribe.toSimpleJson()));
+    }
+    return ComicList(comicList);
+  }
+}
+
+Widget _popMenu(BuildContext context) {
+  return PopupMenuButton<int>(
+    icon: const Icon(Icons.more_vert),
+    itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+      const PopupMenuItem<int>(
+        value: 0,
+        child: ListTile(
+          leading: Icon(Icons.share),
+          title: Text("检查更新"),
+        ),
+      ),
+      const PopupMenuItem<int>(
+        value: 1,
+        child: ListTile(
+          leading: Icon(Icons.image_search),
+          title: Text("取消所有更新提醒"),
+        ),
+      ),
+    ],
+    onSelected: (int value) {
+      switch (value) {
+        case 0:
+          updateSubscribedForce();
+          break;
+        case 1:
+          removeAllSubscribed();
+          break;
+      }
+    },
+  );
 }

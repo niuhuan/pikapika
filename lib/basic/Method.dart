@@ -1082,4 +1082,8 @@ class Method {
   Future updateSubscribed() async {
     return _flatInvoke("updateSubscribed", "");
   }
+
+  Future updateSubscribedForce() async {
+    return _flatInvoke("updateSubscribedForce", "");
+  }
 }

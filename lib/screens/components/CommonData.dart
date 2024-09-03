@@ -9,11 +9,26 @@ final Map<String, ComicSubscribe> allSubscribed = {};
 
 Future updateSubscribed() async {
   await method.updateSubscribed();
+  await _update();
+}
+
+Future updateSubscribedForce() async {
+  await method.updateSubscribedForce();
+  await _update();
+}
+
+Future _update() async {
   final _allSubscribed = await method.allSubscribed();
   allSubscribed.clear();
   for (var subscribed in _allSubscribed) {
     allSubscribed[subscribed.id] = subscribed;
   }
+  subscribedEvent.broadcast();
+}
+
+Future removeAllSubscribed() async {
+  await method.removeAllSubscribed();
+  allSubscribed.clear();
   subscribedEvent.broadcast();
 }
 
