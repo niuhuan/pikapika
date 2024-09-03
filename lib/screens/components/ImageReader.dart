@@ -1679,7 +1679,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
       }
     }
     if (init) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => fn());
+      WidgetsBinding.instance?.addPostFrameCallback((_) => fn());
     } else {
       fn();
     }
@@ -1960,7 +1960,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       }
     }
     if (init) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => fn());
+      WidgetsBinding.instance?.addPostFrameCallback((_) => fn());
     } else {
       fn();
     }

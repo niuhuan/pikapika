@@ -59,8 +59,9 @@ Widget authenticationSetting() {
       return ListTile(
         title: const Text("设置应用程序密码"),
         onTap: () async {
-          Navigator.of(context).push(
+          await Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const SetPassword()));
+          await initAuthentication();
         },
       );
     });

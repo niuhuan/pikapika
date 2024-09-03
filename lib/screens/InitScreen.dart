@@ -38,6 +38,7 @@ import 'package:pikapika/basic/config/Themes.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/TimeOffsetHour.dart';
+import 'package:pikapika/basic/config/TimeoutLock.dart';
 import 'package:pikapika/basic/config/UseApiLoadImage.dart';
 import 'package:pikapika/basic/config/UsingRightClickPop.dart';
 import 'package:pikapika/basic/config/Version.dart';
@@ -135,6 +136,7 @@ class _InitScreenState extends State<InitScreen> {
     await initCategoriesSort();
     await initLocalHistorySync();
     await initHiddenSubIcon();
+    await initLockTimeOut();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

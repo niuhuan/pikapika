@@ -45,6 +45,7 @@ import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
+import '../basic/config/TimeoutLock.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
 import '../basic/config/WillPopNotice.dart';
@@ -102,10 +103,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 usingRightClickPopSetting(),
                 hiddenFdIconSetting(),
                 hiddenSubIconSetting(),
-                const Divider(),
-                androidDisplayModeSetting(),
-                androidSecureFlagSetting(),
-                authenticationSetting(),
                 const Divider(),
                 copySkipConfirmSetting(),
                 iconLoadingSetting(),
@@ -212,6 +209,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leading: Icon(Icons.ad_units),
               title: Text('系统'),
               children: [
+                const Divider(),
+                androidDisplayModeSetting(),
+                androidSecureFlagSetting(),
+                authenticationSetting(),
+                lockTimeOutSecSetting(),
+                lockTimeOutSecNotice(),
                 const Divider(),
                 autoCleanSecSetting(),
                 ListTile(

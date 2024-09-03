@@ -4,6 +4,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/basic/config/WillPopNotice.dart';
 import 'package:pikapika/screens/components/Badge.dart';
+import 'package:pikapika/screens/components/TimeoutLock.dart';
 import '../basic/Common.dart';
 import 'CategoriesScreen.dart';
 import 'SpaceScreen.dart';
@@ -87,7 +88,7 @@ class _AppScreenState extends State<AppScreen> {
         onTap: _onItemTapped,
       ),
     );
-    return willPop(body);
+    return TimeoutLock(child: willPop(body));
   }
 
   int _noticeTime = 0;
