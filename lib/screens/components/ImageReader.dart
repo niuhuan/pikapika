@@ -232,10 +232,38 @@ class _ImageReaderContent extends StatefulWidget {
 }
 
 abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
+  bool _sliderDragging = false;
+
   // 阅读器
   Widget _buildViewer();
 
-  Widget _buildViewerProcess() => processImageFilter(_buildViewer());
+  Widget _buildViewerProcess() {
+    return Stack(
+      children: [
+        processImageFilter(_buildViewer()),
+        if (_sliderDragging) _sliderDraggingText(),
+      ],
+    );
+  }
+
+  Widget _sliderDraggingText() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0x88000000),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          "${_slider + 1} / ${widget.struct.images.length}",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+          ),
+        ),
+      ),
+    );
+  }
 
   // 键盘, 音量键 等事件
   void _needJumpTo(int index, bool animation);
@@ -557,10 +585,20 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       values: [_slider.toDouble()],
       min: 0,
       max: (widget.struct.images.length - 1).toDouble(),
+      onDragStarted: (handlerIndex, lowerValue, upperValue) {
+        setState(() {
+          _sliderDragging = true;
+        });
+      },
       onDragging: (handlerIndex, lowerValue, upperValue) {
-        _slider = (lowerValue.toInt());
+        setState(() {
+          _slider = (lowerValue.toInt());
+        });
       },
       onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+        setState(() {
+          _sliderDragging = false;
+        });
         _slider = (lowerValue.toInt());
         if (_slider != _current) {
           _needJumpTo(_slider, false);
@@ -580,24 +618,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
         step: 1,
         isPercentRange: false,
       ),
-      tooltip: FlutterSliderTooltip(custom: (value) {
-        double a = value + 1;
-        return Container(
-          padding: const EdgeInsets.all(8),
-          decoration: ShapeDecoration(
-            color: Colors.black.withAlpha(0xCC),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusDirectional.circular(3)),
-          ),
-          child: Text(
-            '${a.toInt()}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-        );
-      }),
+      tooltip: FlutterSliderTooltip(disabled: true),
     );
   }
 
@@ -1678,6 +1699,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
         precacheImage(ip, context);
       }
     }
+
     if (init) {
       WidgetsBinding.instance?.addPostFrameCallback((_) => fn());
     } else {
@@ -1959,6 +1981,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         precacheImage(ip, context);
       }
     }
+
     if (init) {
       WidgetsBinding.instance?.addPostFrameCallback((_) => fn());
     } else {
