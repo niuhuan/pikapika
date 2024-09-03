@@ -41,9 +41,11 @@ class _IntoComicSubscribesScreenButtonState
 
   @override
   Widget build(BuildContext context) {
-    final count = allSubscribed.values
-        .map((e) => e.newEpCount)
-        .reduce((value, element) => value + element);
+    final count = allSubscribed.values.isEmpty
+        ? 0
+        : allSubscribed.values
+            .map((e) => e.newEpCount)
+            .reduce((value, element) => value + element);
     return Badged(
       badge: count == 0 ? null : count.toString(),
       child: IconButton(
