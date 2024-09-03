@@ -2,6 +2,7 @@ import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Entities.dart';
+import 'package:pikapika/basic/config/HiddenSubIcon.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesEvent.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
 import 'package:pikapika/basic/store/Categories.dart';
@@ -51,7 +52,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       return AppBar(
         title: const Text('分类'),
         actions: [
-          const IntoComicSubscribesScreenButton(),
+          if (!hiddenSubIcon) const IntoComicSubscribesScreenButton(),
           commonPopMenu(context),
           addressPopMenu(context),
           _searchBar.getSearchAction(context),
@@ -84,6 +85,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     shadowCategoriesEvent.subscribe(_onShadowChange);
     categoriesColumnCountEvent.subscribe(_setState);
     categoriesSortEvent.subscribe(_onShadowChange);
+    hiddenSubIconEvent.subscribe(_setState);
     super.initState();
   }
 
@@ -92,6 +94,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     shadowCategoriesEvent.unsubscribe(_onShadowChange);
     categoriesColumnCountEvent.unsubscribe(_setState);
     categoriesSortEvent.unsubscribe(_onShadowChange);
+    hiddenSubIconEvent.unsubscribe(_setState);
     super.dispose();
   }
 
@@ -166,7 +169,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               } else if (bIndex == -1) {
                 return -1;
               } else {
-                return aIndex - bIndex ;
+                return aIndex - bIndex;
               }
             });
             List<Widget> wrapItems = _wrapItems(items, blockSize, imageRs);

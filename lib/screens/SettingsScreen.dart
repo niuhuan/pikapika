@@ -42,6 +42,7 @@ import '../basic/config/CategoriesSort.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
+import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/UsingRightClickPop.dart';
@@ -100,6 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 fullScreenUISetting(),
                 usingRightClickPopSetting(),
                 hiddenFdIconSetting(),
+                hiddenSubIconSetting(),
                 const Divider(),
                 androidDisplayModeSetting(),
                 androidSecureFlagSetting(),

@@ -19,6 +19,7 @@ import 'package:pikapika/basic/config/EBookScrollingRange.dart';
 import 'package:pikapika/basic/config/EBookScrollingTrigger.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/HiddenSubIcon.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/ImageFilter.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
@@ -133,6 +134,7 @@ class _InitScreenState extends State<InitScreen> {
     await initCopySkipConfirm();
     await initCategoriesSort();
     await initLocalHistorySync();
+    await initHiddenSubIcon();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

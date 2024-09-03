@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -11,6 +12,7 @@ import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 import 'package:pikapika/screens/components/Recommendation.dart';
 
+import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/IconLoading.dart';
 import 'ComicReaderScreen.dart';
 import 'DownloadConfirmScreen.dart';
@@ -90,6 +92,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
     if (widget.holdPkz) {
       _linkSubscription = linkSubscript(context);
     }
+    hiddenSubIconEvent.subscribe(_setState);
     super.initState();
   }
 
@@ -97,7 +100,12 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   void dispose() {
     _linkSubscription?.cancel();
     routeObserver.unsubscribe(this);
+    hiddenSubIconEvent.unsubscribe(_setState);
     super.dispose();
+  }
+
+  void _setState(dynamic args) {
+    setState(() {});
   }
 
   @override
@@ -276,6 +284,9 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
     Future<ComicSubscribe?> _subscribedFuture,
     ComicInfo _comicInfo,
   ) {
+    if (hiddenSubIcon) {
+      return Container();
+    }
     return FutureBuilder(
       future: _subscribedFuture,
       builder: (BuildContext context, AsyncSnapshot<ComicSubscribe?> snapshot) {
