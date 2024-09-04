@@ -33,12 +33,7 @@ class _TimeoutLockState extends State<TimeoutLock> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
-      print("currentAuthentication: ${currentAuthentication()}");
-      if (!currentAuthentication()) {
-        return;
-      }
-    }
+    if (!currentAuthentication() || timeoutLock == 0) return;
     print("_locked: $_locked");
     if (_locked) {
       return;
