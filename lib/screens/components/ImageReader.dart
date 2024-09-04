@@ -303,8 +303,12 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           }
           break;
         case "DOWN":
-          if (_current < widget.struct.images.length - 1) {
-            _needJumpTo(_current + 1, true);
+          int point = 1;
+          if (ReaderType.TWO_PAGE_GALLERY == currentReaderType()) {
+            point = 2;
+          }
+          if (_current < widget.struct.images.length - 2) {
+            _needJumpTo(_current + 2, true);
           } else {
             if (volumeNextChapter()) {
               final now = DateTime.now().millisecondsSinceEpoch;
@@ -1965,7 +1969,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       );
     } else {
       _pageController.animateToPage(
-        index,
+        index ~/ 2,
         duration: const Duration(milliseconds: 400),
         curve: Curves.ease,
       );
