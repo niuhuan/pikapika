@@ -1949,6 +1949,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       scrollDirection: widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
           ? Axis.vertical
           : Axis.horizontal,
+      reverse: widget.pagerDirection == ReaderDirection.RIGHT_TO_LEFT,
       onPageChanged: _onGalleryPageChange,
       backgroundDecoration: BoxDecoration(color: readerBackgroundColorObj),
     );
