@@ -307,8 +307,8 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
           if (ReaderType.TWO_PAGE_GALLERY == currentReaderType()) {
             point = 2;
           }
-          if (_current < widget.struct.images.length - 2) {
-            _needJumpTo(_current + 2, true);
+          if (_current < widget.struct.images.length - point) {
+            _needJumpTo(_current + point, true);
           } else {
             if (volumeNextChapter()) {
               final now = DateTime.now().millisecondsSinceEpoch;
