@@ -310,6 +310,7 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '3.22.3')
         run: |
           brew install gnu-sed
+          gsed -i "s/flutter_datetime_picker: ^1.5.1/flutter_datetime_picker_plus: ^2.2.0/g" pubspec.yaml
           gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
           gsed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: ^4.1.0/g" pubspec.yaml
           gsed -i "s/flutter_styled_toast: ^2.0.0/flutter_styled_toast: ^2.2.1/g" pubspec.yaml
