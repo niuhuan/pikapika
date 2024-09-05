@@ -216,10 +216,17 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Setup java (Android)
-        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' )
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.22.3') == false
         uses: actions/setup-java@v3
         with:
           java-version: '11'
+          distribution: 'temurin'
+
+      - name: Setup java (Android)
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.22.3')
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Setup android tools (Android)
