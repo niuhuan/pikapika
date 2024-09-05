@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart' as fsb;
+import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';

@@ -72,6 +72,9 @@ func main() {
 		panic(err)
 	}
 	contentLength = info.Size()
+	if contentLength == 166 {
+		panic("NOT FOUND RELEASE FILE")
+	}
 	// get version
 	getReleaseRequest, err := http.NewRequest(
 		"GET",

@@ -298,6 +298,7 @@ jobs:
           sed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
           sed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           sed -i "s/file_picker: ^5.2.1/file_picker: ^8.1.2/g" pubspec.yaml
+          find lib -type f -name "*.dart" -exec sed -i "s/.headline4/.headlineMedium/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
@@ -317,6 +318,7 @@ jobs:
           gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
           gsed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           gsed -i "s/file_picker: ^5.2.1/file_picker: ^8.1.2/g" pubspec.yaml
+          find lib -type f -name "*.dart" -exec gsed -i "s/.headline4/.headlineMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
