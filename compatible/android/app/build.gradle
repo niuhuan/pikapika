@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "opensource.pikapika"
-    compileSdk = 31 // flutter.compileSdkVersion
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
