@@ -320,7 +320,7 @@ jobs:
           find lib -type f -name "*.dart" -exec sed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/as ui show Codec/as ui/g" {} \;
-          find lib -type f -name "*.dart" -exec sed -i "s/uni_links\/uni_links.dart/uni_links3\/uni_links3.dart/g" {} \;
+          find lib -type f -name "*.dart" -exec sed -i "s/uni_links\/uni_links.dart/uni_links3\/uni_links.dart/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/File? croppedFile/CroppedFile? croppedFile/g" {} \;
           flutter pub upgrade
           flutter pub get
