@@ -306,6 +306,8 @@ jobs:
           sed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           sed -i "s/file_picker: ^5.2.1/file_picker: ^8.1.2/g" pubspec.yaml
           sed -i "s/photo_view: ^0.13.0/photo_view: ^0.15.0/g" pubspec.yaml
+          sed -i "s/dividerColor: Colors.grey.shade200/DividerThemeData(color: Colors.grey.shade200)/g" lib/basic/config/Themes.dart
+          sed -i "s/AppBarTheme(/AppBarTheme(titleTextStyle: const TextStyle(color: Colors.white),/g" lib/basic/config/Themes.dart
           find lib -type f -name "*.dart" -exec sed -i "s/.headline4/.headlineMedium/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec sed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
@@ -314,6 +316,7 @@ jobs:
           find lib -type f -name "*.dart" -exec sed -i "s/as ui show Codec/as ui/g" {} \;
           flutter pub upgrade
           flutter pub get
+          cp -rf compatible/* ./
 
       - name: Upgrade deps version (flutter3 mac)
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '3.22.3')
@@ -327,6 +330,8 @@ jobs:
           gsed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           gsed -i "s/file_picker: ^5.2.1/file_picker: ^8.1.2/g" pubspec.yaml
           gsed -i "s/photo_view: ^0.13.0/photo_view: ^0.15.0/g" pubspec.yaml
+          gsed -i "s/dividerColor: Colors.grey.shade200/DividerThemeData(color: Colors.grey.shade200)/g" lib/basic/config/Themes.dart
+          gsed -i "s/AppBarTheme(/AppBarTheme(titleTextStyle: const TextStyle(color: Colors.white),/g" lib/basic/config/Themes.dart
           find lib -type f -name "*.dart" -exec gsed -i "s/.headline4/.headlineMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
