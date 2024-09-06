@@ -105,7 +105,7 @@ jobs:
             go_version: '1.19'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.22.3'
+            flutter_version: '3.24.2'
             go_version: '1.19'
 
     runs-on: ${{ matrix.config.host }}
@@ -216,14 +216,14 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Setup java (Android)
-        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.22.3') == false
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.24.2') == false
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
 
       - name: Setup java (Android)
-        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.22.3')
+        if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.24.2')
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -297,7 +297,7 @@ jobs:
           flutter pub get
 
       - name: Upgrade deps version (flutter3 non-mac)
-        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '3.22.3')
+        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '3.24.2')
         run: |
           sed -i "s/uri_to_file: ^0.2.0/uri_to_file:\n    git:\n      url: 'https:\/\/github.com\/niuhuan\/uri-to-file-fix.git'\n      ref: 'fix'\n/g" pubspec.yaml
           sed -i "s/uni_links: ^0.5.1/uni_links3: ^0.5.3/g" pubspec.yaml
@@ -330,11 +330,6 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') && startsWith(matrix.config.flutter_version, '3.22.3')
         run: |
           brew install gnu-sed
-          gsed -i "s/uri_to_file: ^0.2.0/uri_to_file:\n    git:\n      url: 'https:\/\/github.com\/niuhuan\/uri-to-file-fix.git'\n      ref: 'fix'\n/g" pubspec.yaml
-          gsed -i "s/uni_links: ^0.5.1/uni_links3: ^0.5.3/g" pubspec.yaml
-          gsed -i "s/permission_handler: ^10.1.0/permission_handler: ^11.3.1/g" pubspec.yaml
-          gsed -i "s/image_picker: ^0.8.6/image_picker: ^1.1.2/g" pubspec.yaml
-          gsed -i "s/image_cropper: ^1.5.0/image_cropper: ^8.0.2/g" pubspec.yaml
           gsed -i "s/flutter_datetime_picker: ^1.5.1/flutter_datetime_picker_plus: ^2.2.0/g" pubspec.yaml
           gsed -i "s/intl: ^0.17.0/intl: ^0.19.0/g" pubspec.yaml
           gsed -i "s/filesystem_picker: ^3.0.0-beta.1/filesystem_picker: ^4.1.0/g" pubspec.yaml
@@ -343,19 +338,16 @@ jobs:
           gsed -i "s/flutter_datetime_picker/flutter_datetime_picker_plus/g" lib/screens/RegisterScreen.dart
           gsed -i "s/file_picker: ^5.2.1/file_picker: ^8.1.2/g" pubspec.yaml
           gsed -i "s/photo_view: ^0.13.0/photo_view: ^0.15.0/g" pubspec.yaml
-          gsed -i "s/url_launcher: ^6.0.9/url_launcher: ^6.3.0/g" pubspec.yaml
-          gsed -i "s/dividerColor: Colors.grey.shade200/dividerTheme: DividerThemeData(color: Colors.grey.shade200)/g" lib/basic/config/Themes.dart
-          gsed -i "s/AppBarTheme(/AppBarTheme(titleTextStyle: const TextStyle(color: Colors.white),/g" lib/basic/config/Themes.dart
           find lib -type f -name "*.dart" -exec gsed -i "s/.headline4/.headlineMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/.bodyText1/.bodyMedium/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/ImageStreamCompleter load(/ImageStreamCompleter loadImage(/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/DecoderCallback decode/ImageDecoderCallback decode/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/PaintingBinding.instance\!.instantiateImageCodec/ui.instantiateImageCodec/g" {} \;
           find lib -type f -name "*.dart" -exec gsed -i "s/as ui show Codec/as ui/g" {} \;
-          find lib -type f -name "*.dart" -exec gsed -i "s/uni_links\/uni_links.dart/uni_links3\/uni_links.dart/g" {} \;
-          find lib -type f -name "*.dart" -exec gsed -i "s/File? croppedFile/CroppedFile? croppedFile/g" {} \;
           flutter pub upgrade
           flutter pub get
+          gsed -i "s/dividerColor: Colors.grey.shade200/dividerTheme: DividerThemeData(color: Colors.grey.shade200)/g" lib/basic/config/Themes.dart
+          gsed -i "s/AppBarTheme(/AppBarTheme(titleTextStyle: const TextStyle(color: Colors.white),/g" lib/basic/config/Themes.dart
 
       - name: Build (windows)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'windows'
