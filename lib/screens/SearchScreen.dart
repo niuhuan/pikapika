@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../basic/config/PagerAction.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
@@ -94,6 +95,12 @@ class _SearchScreenState extends State<SearchScreen> {
       );
 
   Future<ComicsPage> _fetch(String _currentSort, int _currentPage) {
+    if (currentPagerAction() == PagerAction.CONTROLLER &&
+        _comicListController.selecting) {
+      setState(() {
+        _comicListController.selecting = false;
+      });
+    }
     if (widget.category == null) {
       return method.searchComics(widget.keyword, _currentSort, _currentPage);
     } else {
@@ -122,6 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
           : _searchBar.build(context),
       body: ComicPager(
         fetchPage: _fetch,
+        comicListController: _comicListController,
       ),
     );
   }

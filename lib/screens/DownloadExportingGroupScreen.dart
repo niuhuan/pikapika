@@ -92,6 +92,13 @@ class _DownloadExportingGroupScreenState
         ),
         Container(height: 20),
         MaterialButton(
+          onPressed: _exportToPdf,
+          child: _buildButtonInner(
+            "每部漫画都导出成PDF" + (!isPro ? "\n(发电后使用)" : ""),
+          ),
+        ),
+        Container(height: 20),
+        MaterialButton(
           onPressed: _exportComicDownloadToCbzsZip,
           child: _buildButtonInner(
             "每部漫画都导出成cbz.zip" + (!isPro ? "\n(发电后使用)" : ""),
@@ -241,6 +248,38 @@ class _DownloadExportingGroupScreenState
       final path = await attachExportPath();
       for (var id in widget.idList) {
         await method.exportComicDownloadToJPG(
+          id,
+          path,
+          "",
+        );
+      }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
+    }
+  }
+
+  _exportToPdf() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出PDF${showExportPath()}")) {
+      return;
+    }
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var id in widget.idList) {
+        await method.exportComicDownloadToPDF(
           id,
           path,
           "",
