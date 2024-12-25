@@ -99,14 +99,6 @@ jobs:
             flutter_version: '3.7.3'
             go_version: '1.19'
 
-          - target: ios
-            host: macos-latest
-            flutter_version: '3.22.3'
-            go_version: '1.19'
-          - target: android-arm64
-            host: ubuntu-latest
-            flutter_version: '3.24.2'
-            go_version: '1.19'
 
     runs-on: ${{ matrix.config.host }}
 
