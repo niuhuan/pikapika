@@ -263,7 +263,7 @@ jobs:
       - name: Install go mobile (mobile)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'ios' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-arm32' || matrix.config.target == 'android-x86_64' )
         run: |
-          go install golang.org/x/mobile/cmd/gomobile@latest
+          go install golang.org/x/mobile/cmd/gomobile@v0.0.0-20240404231514-09dbf07665ed
 
       - name: Set-Version (All)
         if: steps.check_asset.outputs.skip_build != 'true'
