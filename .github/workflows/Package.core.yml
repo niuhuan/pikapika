@@ -5,6 +5,7 @@ on:
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GO_VERSION: "1.19"
+  NDK_VERSION: "23.1.7779620"
 
 jobs:
   ci-pass:
@@ -89,11 +90,12 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 8512546
-          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
+          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;${{ env.NDK_VERSION}}'
 
       - name: Build (android)
         if: matrix.config.target == 'android'
         run: |
+          export NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
           sh scripts/bind-android-debug.sh
 
       - name: Upload Asset (All)

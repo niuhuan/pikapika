@@ -3,6 +3,7 @@ import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Entities.dart' as e;
 import 'package:pikapika/screens/CommentScreen.dart';
+import 'package:pikapika/screens/components/BottomSheetInput.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../../basic/config/IconLoading.dart';
@@ -96,9 +97,9 @@ class _CommentListState extends State<CommentList> {
   Widget _buildPostComment() {
     return InkWell(
       onTap: () async {
-        String? text = await inputString(context, '请输入评论内容');
-        if (text != null && text.isNotEmpty) {
-          try {
+        showInputModalBottomSheet(
+          context: context,
+          onSubmitted: (text) async {
             switch (widget.mainType) {
               case CommentMainType.COMIC:
                 await method.postComment(widget.mainId, text);
@@ -110,10 +111,10 @@ class _CommentListState extends State<CommentList> {
             setState(() {
               _future = _loadPage();
             });
-          } catch (e) {
-            defaultToast(context, "评论失败");
-          }
-        }
+            defaultToast(context, "评论成功");
+          },
+          hintText: '请输入评论内容',
+        );
       },
       child: Container(
         decoration: BoxDecoration(
