@@ -4,7 +4,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  GO_VERSION: "1.19"
+  GO_VERSION: "1.23"
   NDK_VERSION: "23.1.7779620"
 
 jobs:
@@ -72,7 +72,7 @@ jobs:
       - name: Install go mobile (mobile)
         if: matrix.config.target == 'ios' || matrix.config.target == 'android'
         run: |
-          go install golang.org/x/mobile/cmd/gomobile@v0.0.0-20241213221354-a87c1cf6cf46
+          go install golang.org/x/mobile/cmd/gomobile@latest
 
       - name: Build (ios)
         if: matrix.config.target == 'ios'
