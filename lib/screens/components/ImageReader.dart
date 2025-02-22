@@ -22,6 +22,7 @@ import 'package:pikapika/basic/config/NoAnimation.dart';
 import 'package:pikapika/basic/config/Quality.dart';
 import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
+import 'package:pikapika/basic/config/ReaderTwoPageDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/PkzImages.dart';
@@ -1896,6 +1897,22 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         leftIp = rightIp;
         rightIp = temp;
       }
+      late Alignment leftAlignment, rightAlignment;
+      switch(gReaderTwoPageDirection) {
+        case ReaderTwoPageDirection.CLOSE_TO:
+          leftAlignment = Alignment.centerRight;
+          rightAlignment = Alignment.centerLeft;
+          break;
+        case ReaderTwoPageDirection.PULL_AWAY:
+          leftAlignment = Alignment.centerLeft;
+          rightAlignment = Alignment.centerRight;
+          break;
+        case ReaderTwoPageDirection.EACH_CENTERED:
+          leftAlignment = Alignment.center;
+          rightAlignment = Alignment.center;
+        break;
+      }
+      
       options.add(
         PhotoViewGalleryPageOptions.customChild(
           child: LayoutBuilder(
@@ -1904,7 +1921,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
                 children: [
                   Expanded(
                     child: Align(
-                      alignment: Alignment.centerRight,
+                      alignment: leftAlignment,
                       child: Image(
                         image: leftIp,
                         fit: BoxFit.contain,
@@ -1921,7 +1938,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
                   ),
                   Expanded(
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: rightAlignment,
                       child: Image(
                         image: rightIp,
                         fit: BoxFit.contain,

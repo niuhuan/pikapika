@@ -58,6 +58,7 @@ import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/ReaderBackgroundColor.dart';
+import '../basic/config/ReaderTwoPageDirection.dart';
 import '../basic/config/VolumeNextChapter.dart';
 import '../basic/config/WebDav.dart';
 import 'AccountScreen.dart';
@@ -137,6 +138,7 @@ class _InitScreenState extends State<InitScreen> {
     await initLocalHistorySync();
     await initHiddenSubIcon();
     await initLockTimeOut();
+    await initReaderTwoPageDirection();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

@@ -45,6 +45,7 @@ import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
+import '../basic/config/ReaderTwoPageDirection.dart';
 import '../basic/config/TimeoutLock.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
@@ -147,6 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 noAnimationSetting(),
                 imageFilterSetting(),
                 readerBackgroundColorSetting(),
+                readerTwoPageDirectionSetting(),
               ],
             ),
             ExpansionTile(
