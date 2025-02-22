@@ -473,10 +473,10 @@ packages:
     dependency: "direct main"
     description:
       name: photo_view
-      sha256: "26cb153080a2673bebccaf72d3283e82f8f41a47fe5f9bc5ba8634d2e8a9fc8e"
+      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.14.0"
   plugin_platform_interface:
     dependency: transitive
     description:
