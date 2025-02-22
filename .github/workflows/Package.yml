@@ -21,6 +21,9 @@ on:
         default: false
         description: 'MacOS version'
 
+env:
+  NDK_VERSION: "23.1.7779620"
+        
 jobs:
   package:
     strategy:
@@ -29,11 +32,11 @@ jobs:
         config:
           - target: ios
             host: macos-latest
-            go_version: '1.19'
+            go_version: '1.23'
             flutter_version: '3.7.3'
           - target: android
             host: ubuntu-latest
-            go_version: '1.19'
+            go_version: '1.23'
             flutter_version: '3.7.3'
           - target: linux
             host: ubuntu-latest
@@ -120,15 +123,16 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 8512546
-          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;23.1.7779620'
+          packages: 'platform-tools platforms;android-32 build-tools;30.0.2 ndk;${{ env.NDK_VERSION}}'
       - if: steps.need_build.outputs.need_build == 'true' && matrix.config.target == 'android'
         name: Build (android-arm64)
         env:
           KEY_FILE_BASE64: ${{ secrets.KEY_FILE_BASE64 }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          sh scripts/build-apk-arm64.sh
-          sh scripts/sign-apk-github-actions.sh
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
+          bash scripts/build-apk-arm64.sh
+          bash scripts/sign-apk-github-actions.sh
       - name: Upgrade deps version (flutter2 non-mac)
         if: steps.need_build.outputs.need_build == 'true' && matrix.config.host != 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
         run: |
