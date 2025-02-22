@@ -96,8 +96,8 @@ jobs:
       - name: Build (android)
         if: matrix.config.target == 'android'
         run: |
-          export NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
-          sh scripts/bind-android-debug.sh
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
+          bash scripts/bind-android-debug.sh
 
       - name: Upload Asset (All)
         uses: actions/upload-artifact@v4
