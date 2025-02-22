@@ -5,7 +5,8 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  ANDROID_NDK_VERSION: '27.0.12077973'
+  ANDROID_NDK_VERSION: "23.1.7779620"
+  GO_MOBILE_VERSION: v0.0.0-20241213221354-a87c1cf6cf46
 
 jobs:
 
@@ -255,7 +256,7 @@ jobs:
       - name: Install go mobile (mobile)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'ios' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-arm32' || matrix.config.target == 'android-x86_64' )
         run: |
-          go install golang.org/x/mobile/cmd/gomobile@latest
+          go install golang.org/x/mobile/cmd/gomobile@${{ env.GO_MOBILE_VERSION }}
 
       - name: Set-Version (All)
         if: steps.check_asset.outputs.skip_build != 'true'
@@ -383,16 +384,19 @@ jobs:
       - name: Build (android-arm32)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android-arm32'
         run: |
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.ANDROID_NDK_VERSION }}
           sh scripts/build-apk-arm.sh
 
       - name: Build (android-arm64)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android-arm64'
         run: |
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.ANDROID_NDK_VERSION }}
           sh scripts/build-apk-arm64.sh
 
       - name: Build (android-x86_64)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'android-x86_64'
         run: |
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.ANDROID_NDK_VERSION }}
           sh scripts/build-apk-x64.sh
 
       - name: Sign APK (Android)
