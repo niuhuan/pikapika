@@ -44,7 +44,7 @@ String _currentReaderTwoPageDirectionName() {
 var gReaderTwoPageDirectionName  = _currentReaderTwoPageDirectionName;
 
 /// ?? to ActionButton And Event ??
-Future<void> choosePagerDirection(BuildContext buildContext) async {
+Future<void> chooseTwoPagerDirection(BuildContext buildContext) async {
   ReaderTwoPageDirection? choose = await showDialog<ReaderTwoPageDirection>(
     context: buildContext,
     builder: (BuildContext context) {
@@ -74,7 +74,7 @@ Widget readerTwoPageDirectionSetting() {
         title: const Text("双页阅读器内容排列"),
         subtitle: Text(_currentReaderTwoPageDirectionName()),
         onTap: () async {
-          await choosePagerDirection(context);
+          await chooseTwoPagerDirection(context);
           setState(() {});
         },
       );
