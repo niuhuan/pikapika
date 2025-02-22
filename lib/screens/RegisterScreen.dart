@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
@@ -235,15 +235,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ListTile(
             title: const Text("生日"),
             subtitle: Text(_birthday),
-            onTap: () async {
-              DatePicker.showDatePicker(context,
-                  locale: LocaleType.zh,
-                  currentTime: DateTime.parse(_birthday), onConfirm: (date) {
-                setState(() {
-                  _birthday = formatTimeToDate(date.toString());
-                });
-              });
-            },
           ),
           const Divider(),
           ListTile(
