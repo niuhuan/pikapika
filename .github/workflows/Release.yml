@@ -73,7 +73,7 @@ jobs:
             go_version: '1.23'
           - target: ios
             host: macos-latest
-            flutter_version: '3.7.3'
+            flutter_version: '3.10.5'
             go_version: '1.23'
           - target: android-arm32
             host: ubuntu-latest
@@ -89,15 +89,15 @@ jobs:
             go_version: '1.23'
           - target: android-arm32
             host: ubuntu-latest
-            flutter_version: '3.7.3'
+            flutter_version: '3.10.5'
             go_version: '1.23'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.7.3'
+            flutter_version: '3.10.5'
             go_version: '1.23'
           - target: android-x86_64
             host: ubuntu-latest
-            flutter_version: '3.7.3'
+            flutter_version: '3.10.5'
             go_version: '1.23'
 
 
