@@ -132,7 +132,7 @@ jobs:
         run: |
           export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
           bash scripts/build-apk-arm64.sh
-          bash   scripts/sign-apk-github-actions.sh
+          bash scripts/sign-apk-github-actions.sh
       - name: Upgrade deps version (flutter2 non-mac)
         if: steps.need_build.outputs.need_build == 'true' && matrix.config.host != 'macos-latest' && startsWith(matrix.config.flutter_version, '2')
         run: |
