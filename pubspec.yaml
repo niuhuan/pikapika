@@ -31,7 +31,7 @@ dependencies:
   isolate: ^2.1.1
   event: ^2.0.5
   flutter_svg: ^1.0.3
-  flutter_styled_toast: ^2.0.0
+  flutter_styled_toast: 2.0.0
   another_xlider: ^1.0.1+2
   scrollable_positioned_list: ^0.2.0-nullsafety.0
   permission_handler: ^10.1.0
