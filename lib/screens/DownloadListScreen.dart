@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'components/flutter_search_bar.dart' as fsb;
@@ -28,6 +29,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   String _search = "";
   bool _selecting = false;
   List<String> _selectingList = [];
+  String _filterCustomFolder = "";
+  List<String> _folderList = [];
 
   late final fsb.SearchBar _searchBar = fsb.SearchBar(
     hintText: '搜索下载',
@@ -42,9 +45,23 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     buildDefaultAppBar: (BuildContext context) {
       if (_selecting) {
         return AppBar(
-          title: const Text("删除下载"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              if (_selecting) {
+                setState(() {
+                  _selecting = false;
+                  _selectingList = [];
+                });
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
+          title: const Text("多选操作"),
           actions: [
             _selectingCancelButton(),
+            _selectingMoveButton(),
             _selectingDeleteButton(),
           ],
         );
@@ -52,6 +69,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
       return AppBar(
         title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
         actions: [
+          _customFolderButton(),
           _searchBar.getSearchAction(context),
           _toSelectingButton(),
           exportButton(),
@@ -65,8 +83,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
 
   DownloadComic? _downloading;
   late bool _downloadRunning = false;
-  late Future<List<DownloadComic>> _f =
-      method.allDownloads(_search).then((value) {
+  late Future<List<DownloadComic>> _f = method
+      .allDownloads(_search, customFolder: _filterCustomFolder)
+      .then((value) {
     setState(() {
       _selecting = false;
       _selectingList = [];
@@ -93,6 +112,11 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     method
         .downloadRunning()
         .then((val) => setState(() => _downloadRunning = val));
+    method.allCustomFolders().then((value) {
+      setState(() {
+        _folderList = value.where((e) => e.isNotEmpty).toList();
+      });
+    });
     super.initState();
   }
 
@@ -163,6 +187,48 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     );
   }
 
+  Widget _customFolderButton() {
+    return IconButton(
+        onPressed: () async {
+          String? choose = await chooseListDialog(context, "选择文件夹", [
+            "全部",
+            ..._folderList,
+          ]);
+          if (choose != null) {
+            if (choose == "全部") {
+              choose = "";
+            }
+            _filterCustomFolder = choose;
+            _reloadList();
+            setState(() {});
+          }
+        },
+        icon: Column(
+          children: [
+            Expanded(child: Container()),
+            const Icon(
+              Icons.folder,
+              size: 18,
+              color: Colors.white,
+            ),
+            Text(
+              _customFolderName(),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Expanded(child: Container()),
+          ],
+        ));
+  }
+
+  String _customFolderName() {
+    if (_filterCustomFolder == "") {
+      return "全部";
+    }
+    return _filterCustomFolder;
+  }
+
   Widget downloadWidget(DownloadComic e) {
     return InkWell(
       onTap: () {
@@ -179,13 +245,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           ),
         );
       },
-      onLongPress: () async {
-        String? action = await chooseListDialog(context, e.title, ['删除']);
-        if (action == '删除') {
-          await method.deleteDownloadComic(e.id);
-          setState(() => e.deleting = true);
-        }
-      },
+      // onLongPress: () async {
+      //   String? action = await chooseListDialog(context, e.title, ['删除']);
+      //   if (action == '删除') {
+      //     await method.deleteDownloadComic(e.id);
+      //     setState(() => e.deleting = true);
+      //   }
+      // },
       child: DownloadInfoCard(
         task: e,
         downloading: _downloading != null && _downloading!.id == e.id,
@@ -364,12 +430,19 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   }
 
   void _reloadList() {
-    _f = method.allDownloads(_search).then((value) {
+    _f = method
+        .allDownloads(_search, customFolder: _filterCustomFolder)
+        .then((value) {
       setState(() {
         _selecting = false;
         _selectingList = [];
       });
       return value;
+    });
+    method.allCustomFolders().then((value) {
+      setState(() {
+        _folderList = value.where((e) => e.isNotEmpty).toList();
+      });
     });
   }
 
@@ -385,6 +458,50 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     );
   }
 
+  Widget _selectingMoveButton() {
+    return IconButton(
+      onPressed: () async {
+        var tmp = _selectingList;
+        _selecting = false;
+        _selectingList = [];
+        setState(() {});
+        if (tmp.isEmpty) {
+          defaultToast(context, "请选择要移动下载");
+        } else {
+          var moveToChoose = await chooseListDialog(
+            context,
+            "移动下载",
+            ["全部", ..._folderList, "==> 输入名称 <=="],
+            tips: "（空文件夹将会自动删除，下次需要手动输入）",
+          );
+          if (moveToChoose == null) {
+            return;
+          }
+          if (moveToChoose == "==> 输入名称 <==") {
+            String? name = await displayTextInputDialog(context,
+                title: "文件夹名称", hint: "请输入文件夹名称");
+            if (name != null) {
+              if ("全部" != name && "==> 输入名称 <==" != name) {
+                await method.moveDownloadComic(tmp, name);
+                _reloadList();
+                setState(() {});
+              }
+            }
+          } else if (moveToChoose == "全部") {
+            await method.moveDownloadComic(tmp, "");
+            _reloadList();
+            setState(() {});
+          } else {
+            await method.moveDownloadComic(tmp, moveToChoose);
+            _reloadList();
+            setState(() {});
+          }
+        }
+      },
+      icon: const Icon(Icons.move_down),
+    );
+  }
+
   Widget _selectingDeleteButton() {
     return IconButton(
       onPressed: () async {
@@ -395,11 +512,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         if (tmp.isEmpty) {
           defaultToast(context, "请选择要删除的下载");
         } else {
-          for (var id in tmp) {
-            await method.deleteDownloadComic(id);
+          if (await confirmDialog(context, "删除下载", "删除选中的下载吗?")) {
+            for (var id in tmp) {
+              await method.deleteDownloadComic(id);
+            }
+            _reloadList();
+            setState(() {});
           }
-          _reloadList();
-          setState(() {});
         }
       },
       icon: const Icon(Icons.delete),
@@ -414,7 +533,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           _selectingList = [];
         });
       },
-      icon: const Icon(Icons.delete),
+      icon: const Icon(Icons.rule),
     );
   }
 }

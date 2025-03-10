@@ -514,9 +514,11 @@ class Method {
   }
 
   /// 所有下载
-  Future<List<DownloadComic>> allDownloads(String search) async {
+  Future<List<DownloadComic>> allDownloads(String search,
+      {String customFolder = ""}) async {
     var data = await _flatInvoke("allDownloads", {
       "search": search,
+      "customFolder": customFolder,
     });
     data = jsonDecode(data);
     if (data == null) {
@@ -526,9 +528,21 @@ class Method {
     return list.map((e) => DownloadComic.fromJson(e)).toList();
   }
 
+  Future<List<String>> allCustomFolders() async {
+    var data = await _flatInvoke("allCustomFolders", "");
+    return List.of(jsonDecode(data)).map((e) => e.toString()).toList();
+  }
+
   /// 删除一个下载
   Future<dynamic> deleteDownloadComic(String comicId) async {
     return _flatInvoke("deleteDownloadComic", comicId);
+  }
+
+  Future<dynamic> moveDownloadComic(List<String> comicIdList, String customFolder) {
+    return _flatInvoke("moveDownloadComic", {
+      "comicIdList": comicIdList,
+      "customFolder": customFolder,
+    });
   }
 
   /// 所有下载的EP
@@ -584,10 +598,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToJPG(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadToJPG", {
       "comicId": comicId,
       "dir": dir,
@@ -597,10 +611,10 @@ class Method {
 
   /// 导出下载的图片到HTML+JPG
   Future<dynamic> exportComicDownloadToPDF(
-      String comicId,
-      String dir,
-      String name,
-      ) {
+    String comicId,
+    String dir,
+    String name,
+  ) {
     return _flatInvoke("exportComicDownloadToPDF", {
       "comicId": comicId,
       "dir": dir,
