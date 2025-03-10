@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pikapika/basic/Common.dart';
 
 Future showInputModalBottomSheet({
@@ -10,13 +9,16 @@ Future showInputModalBottomSheet({
   required String? hintText,
   String? initialValue,
 }) async {
-  await showMaterialModalBottomSheet(
-    backgroundColor: Colors.transparent,
-    context: context,
-    builder: (context) => BottomSheetInput(
-      onSubmitted: onSubmitted,
-      hintText: hintText,
-      initialValue: initialValue,
+  Navigator.of(context).push(
+    PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (context, _, __) {
+        return BottomSheetInput(
+          onSubmitted: onSubmitted,
+          hintText: hintText,
+          initialValue: initialValue,
+        );
+      },
     ),
   );
 }
@@ -55,21 +57,27 @@ class _BottomSheetInputState extends State<BottomSheetInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              if (!submitting) Navigator.of(context).pop();
-            },
-            child: Container(),
-          ),
-        ),
-        Material(
-          child: Column(
-            children: [
-              Container(
+    var mq = MediaQuery.of(context);
+    var size = mq.size;
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: Material(
+        color: Colors.black.withAlpha(50),
+        child: Column(
+          children: [
+            SafeArea(
+              bottom: false,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  if (!submitting) Navigator.of(context).pop();
+                },
+                child: Container(),
+              ),
+            ),
+            Material(
+              child: Padding(
                 padding: const EdgeInsets.only(
                   left: 20,
                   right: 20,
@@ -86,16 +94,65 @@ class _BottomSheetInputState extends State<BottomSheetInput> {
                   ],
                 ),
               ),
-              SafeArea(
+            ),
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  if (!submitting) Navigator.of(context).pop();
+                },
                 child: Container(),
-                top: false,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
+
+/*
+Column(
+        children: [
+          SafeArea(
+            child: Container(),
+            bottom: false,
+          ),
+          Material(
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 30,
+                    bottom: 30,
+                  ),
+                  child: Column(
+                    children: [
+                      if (submitting)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      if (!submitting) _buildTextField(),
+                    ],
+                  ),
+                ),
+                Expanded(child: Container()),
+              ],
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                if (!submitting) Navigator.of(context).pop();
+              },
+              child: Container(),
+            ),
+          ),
+        ],
+      ),
+      */
 
   Widget _buildTextField() {
     return TextField(

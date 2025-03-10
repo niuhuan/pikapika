@@ -94,6 +94,12 @@ class _CommentScreenState extends State<CommentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('评论'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_comment),
+            onPressed: _onReply,
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -114,30 +120,32 @@ class _CommentScreenState extends State<CommentScreen> {
     return ComicCommentItem(widget.mainType, widget.mainId, e);
   }
 
+  Future _onReply() async {
+    showInputModalBottomSheet(
+      context: context,
+      onSubmitted: (text) async {
+        switch (widget.mainType) {
+          case CommentMainType.COMIC:
+            await method.postChildComment(widget.comment.id, text);
+            break;
+          case CommentMainType.GAME:
+            await method.postGameChildComment(widget.comment.id, text);
+            break;
+        }
+        setState(() {
+          _future = _loadPage();
+          _key = UniqueKey();
+          widget.comment.commentsCount++;
+        });
+        defaultToast(context, "评论成功");
+      },
+      hintText: '请输入评论内容',
+    );
+  }
+
   Widget _buildPostComment() {
     return InkWell(
-      onTap: () async {
-        showInputModalBottomSheet(
-          context: context,
-          onSubmitted: (text) async {
-            switch (widget.mainType) {
-              case CommentMainType.COMIC:
-                await method.postChildComment(widget.comment.id, text);
-                break;
-              case CommentMainType.GAME:
-                await method.postGameChildComment(widget.comment.id, text);
-                break;
-            }
-            setState(() {
-              _future = _loadPage();
-              _key = UniqueKey();
-              widget.comment.commentsCount++;
-            });
-            defaultToast(context, "评论成功");
-          },
-          hintText: '请输入评论内容',
-        );
-      },
+      onTap: _onReply,
       child: Container(
         decoration: BoxDecoration(
           border: Border(
