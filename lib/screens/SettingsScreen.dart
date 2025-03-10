@@ -39,6 +39,7 @@ import 'package:pikapika/screens/components/RightClickPop.dart';
 import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/CategoriesSort.dart';
+import '../basic/config/CopyFullName.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
@@ -106,6 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 hiddenSubIconSetting(),
                 const Divider(),
                 copySkipConfirmSetting(),
+                copyFullNameSetting(),
                 iconLoadingSetting(),
                 eBookScrollingSetting(),
                 eBookScrollingRangeSetting(),

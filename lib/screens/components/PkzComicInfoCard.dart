@@ -6,6 +6,7 @@ import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/basic/Navigator.dart';
 
+import '../../basic/config/CopyFullName.dart';
 import 'ComicInfoCard.dart';
 import 'PkzImages.dart';
 
@@ -63,7 +64,12 @@ class _ComicInfoCard extends State<PkzComicInfoCard> {
                       widget.linkItem
                           ? GestureDetector(
                               onLongPress: () {
-                                confirmCopy(context, info.title);
+                                if (copyFullName()) {
+                                  confirmCopy(
+                                      context, "${info.title} ${info.author}");
+                                } else {
+                                  confirmCopy(context, info.title);
+                                }
                               },
                               child: Text(info.title, style: titleStyle),
                             )

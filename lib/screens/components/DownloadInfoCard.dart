@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/screens/components/Images.dart';
 
+import '../../basic/config/CopyFullName.dart';
 import 'ComicInfoCard.dart';
 
 // 下载项
@@ -81,7 +82,12 @@ class DownloadInfoCard extends StatelessWidget {
                       linkItem
                           ? GestureDetector(
                               onLongPress: () {
-                                confirmCopy(context, task.title);
+                                if (copyFullName()) {
+                                  confirmCopy(
+                                      context, "${task.title} ${task.author}");
+                                } else {
+                                  confirmCopy(context, task.title);
+                                }
                               },
                               child: Text(task.title, style: titleStyle),
                             )

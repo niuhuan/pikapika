@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/CopyFullName.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/basic/Navigator.dart';
 import '../ComicsScreen.dart';
@@ -66,7 +67,12 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                       widget.linkItem
                           ? GestureDetector(
                               onLongPress: () {
-                                confirmCopy(context, info.title);
+                                if (copyFullName()) {
+                                  confirmCopy(
+                                      context, "${info.title} ${info.author}");
+                                } else {
+                                  confirmCopy(context, info.title);
+                                }
                               },
                               child: Text(info.title, style: titleStyle),
                             )
