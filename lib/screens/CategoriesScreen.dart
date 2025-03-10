@@ -1,5 +1,6 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
+import 'SearchAuthorScreen.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/config/HiddenSubIcon.dart';
@@ -55,6 +56,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           if (!hiddenSubIcon) const IntoComicSubscribesScreenButton(),
           commonPopMenu(context),
           addressPopMenu(context),
+          if (!hiddenSubIcon) const ComicSearchAuthorScreenButton(),
           _searchBar.getSearchAction(context),
         ],
       );

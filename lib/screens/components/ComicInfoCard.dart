@@ -4,6 +4,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/CopyFullName.dart';
+import 'package:pikapika/screens/SearchAuthorScreen.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/basic/Navigator.dart';
 import '../ComicsScreen.dart';
@@ -84,7 +85,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                 navPushOrReplace(
                                     context,
                                     (context) =>
-                                        SearchScreen(keyword: info.author));
+                                        SearchAuthorScreen(author: info.author));
                               },
                               onLongPress: () {
                                 confirmCopy(context, info.author);

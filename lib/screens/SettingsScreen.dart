@@ -16,6 +16,7 @@ import 'package:pikapika/basic/config/EBookScrollingTrigger.dart';
 import 'package:pikapika/basic/config/ExportRename.dart';
 import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
+import 'package:pikapika/basic/config/HiddenSearchPersion.dart';
 import 'package:pikapika/basic/config/IconLoading.dart';
 import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
@@ -105,6 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 usingRightClickPopSetting(),
                 hiddenFdIconSetting(),
                 hiddenSubIconSetting(),
+                hiddenSearchPersionSetting(),
                 const Divider(),
                 copySkipConfirmSetting(),
                 copyFullNameSetting(),
