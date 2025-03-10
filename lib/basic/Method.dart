@@ -197,12 +197,14 @@ class Method {
     int page, {
     String category = "",
     String tag = "",
+    String author = "",
     String creatorId = "",
     String chineseTeam = "",
   }) async {
     String rsp = await _flatInvoke("comics", {
       "category": category,
       "tag": tag,
+      "author": author,
       "creatorId": creatorId,
       "chineseTeam": chineseTeam,
       "sort": sort,

@@ -25,7 +25,7 @@ class _Sort {
 }
 
 final sortList = [
-  _Sort.of(code: SORT_DEFAULT, label: LABEL_DEFAULT),
+  //_Sort.of(code: SORT_DEFAULT, label: LABEL_DEFAULT),
   _Sort.of(code: SORT_TIME_NEWEST, label: LABEL_TIME_NEWEST),
   _Sort.of(code: SORT_TIME_OLDEST, label: LABEL_TIME_OLDEST),
   _Sort.of(code: SORT_LIKE_MOST, label: LABEL_LIKE_MOST),
@@ -33,6 +33,19 @@ final sortList = [
 ];
 
 List<DropdownMenuItem<String>> items = sortList
+    .map((e) => DropdownMenuItem(
+          value: e.code,
+          child: Text(e.label),
+        ))
+    .toList();
+
+
+final collSortList = [
+  _Sort.of(code: SORT_TIME_NEWEST, label: LABEL_TIME_NEWEST),
+  _Sort.of(code: SORT_TIME_OLDEST, label: LABEL_TIME_OLDEST),
+];
+
+List<DropdownMenuItem<String>> collItems = collSortList
     .map((e) => DropdownMenuItem(
           value: e.code,
           child: Text(e.label),

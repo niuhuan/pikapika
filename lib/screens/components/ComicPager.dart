@@ -14,11 +14,13 @@ import 'ContentLoading.dart';
 
 // 漫画列页
 class ComicPager extends StatefulWidget {
+  final bool coll;
   final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
   const ComicPager({
     required this.fetchPage,
+    this.coll = false,
     Key? key,
     // required
     this.comicListController,
@@ -52,11 +54,13 @@ class _ComicPagerState extends State<ComicPager> {
         return ControllerComicPager(
           fetchPage: widget.fetchPage,
           comicListController: widget.comicListController,
+          coll: widget.coll,
         );
       case PagerAction.STREAM:
         return StreamComicPager(
           fetchPage: widget.fetchPage,
           comicListController: widget.comicListController,
+          coll: widget.coll,
         );
       default:
         return Container();
@@ -65,6 +69,7 @@ class _ComicPagerState extends State<ComicPager> {
 }
 
 class ControllerComicPager extends StatefulWidget {
+  final bool coll;
   final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
@@ -72,6 +77,7 @@ class ControllerComicPager extends StatefulWidget {
     Key? key,
     required this.fetchPage,
     required this.comicListController,
+    required this.coll,
   }) : super(key: key);
 
   @override
@@ -81,7 +87,7 @@ class ControllerComicPager extends StatefulWidget {
 class _ControllerComicPagerState extends State<ControllerComicPager> {
   final TextEditingController _textEditController =
       TextEditingController(text: '');
-  late String _currentSort = SORT_DEFAULT;
+  late String _currentSort = SORT_TIME_NEWEST;
   late int _currentPage = 1;
   late Future<ComicsPage> _pageFuture;
 
@@ -148,7 +154,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
               children: [
                 Container(width: 10),
                 DropdownButton(
-                  items: items,
+                  items: widget.coll ? collItems : items,
                   value: _currentSort,
                   onChanged: (String? value) {
                     if (value != null) {
@@ -270,6 +276,7 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
 }
 
 class StreamComicPager extends StatefulWidget {
+  final bool coll;
   final ComicListController? comicListController;
   final Future<ComicsPage> Function(String sort, int page) fetchPage;
 
@@ -277,6 +284,7 @@ class StreamComicPager extends StatefulWidget {
     Key? key,
     required this.fetchPage,
     required this.comicListController,
+    required this.coll,
   }) : super(key: key);
 
   @override
@@ -395,7 +403,7 @@ class _StreamComicPagerState extends State<StreamComicPager> {
               children: [
                 Container(width: 10),
                 DropdownButton(
-                  items: items,
+                  items: widget.coll ? collItems : items,
                   value: _currentSort,
                   onChanged: (String? value) {
                     if (value != null) {
