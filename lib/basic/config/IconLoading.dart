@@ -16,25 +16,15 @@ bool currentIconLoading() {
   return _iconLoading;
 }
 
-Future<void> _chooseIconLoading(BuildContext context) async {
-  String? result =
-      await chooseListDialog<String>(context, "尽量减少UI动画", ["是", "否"]);
-  if (result != null) {
-    var target = result == "是";
-    await method.saveProperty(_propertyName, "$target");
-    _iconLoading = target;
-  }
-}
-
 Widget iconLoadingSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
+      return SwitchListTile(
         title: const Text("尽量减少UI动画"),
-        subtitle: Text(_iconLoading ? "是" : "否"),
-        onTap: () async {
-          await _chooseIconLoading(context);
-          setState(() {});
+        value: _iconLoading,
+        onChanged: (value) async {
+          await method.saveProperty(_propertyName, "$value");
+          _iconLoading = value;
         },
       );
     },
