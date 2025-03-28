@@ -264,12 +264,6 @@ jobs:
           cd ci
           cp version.code.txt ../lib/assets/version.txt
 
-      - name: Upgrade android script (flutter3)
-        if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.flutter_version, '2')
-        run: |
-          cat compatible/build.gradle > android/app/build.gradle
-          cat compatible/app_build.gradle > android/app/build.gradle
-
       - name: Upgrade deps version (flutter2 non-mac)
         if: steps.check_asset.outputs.skip_build != 'true' && startsWith(matrix.config.host, 'macos-') == false && startsWith(matrix.config.flutter_version, '2')
         run: |
