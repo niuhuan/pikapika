@@ -1576,6 +1576,11 @@ class _ListViewReaderState extends _ImageReaderContentState
           maxScale: 2,
           child: list,
         );
+        if (FullScreenAction.TOUCH_DOUBLE == currentFullScreenAction() ||
+            FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT ==
+                currentFullScreenAction()) {
+          return viewer;
+        }
         return GestureDetector(
           onDoubleTap: _handleDoubleTap,
           onDoubleTapDown: _handleDoubleTapDown,
@@ -1659,6 +1664,10 @@ class _GalleryReaderState extends _ImageReaderContentState {
     }
     for (var ip in ips) {
       options.add(PhotoViewGalleryPageOptions(
+        disableGestures:
+            FullScreenAction.TOUCH_DOUBLE == currentFullScreenAction() ||
+                FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT ==
+                    currentFullScreenAction(),
         imageProvider: ip,
         errorBuilder: (b, e, s) {
           print("$e,$s");
@@ -1671,7 +1680,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
         filterQuality: FilterQuality.high,
       ));
     }
-    _preloadJump(super._startIndex);
+    _preloadJump(super._startIndex, init: true);
   }
 
   @override
@@ -1898,7 +1907,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         rightIp = temp;
       }
       late Alignment leftAlignment, rightAlignment;
-      switch(gReaderTwoPageDirection) {
+      switch (gReaderTwoPageDirection) {
         case ReaderTwoPageDirection.CLOSE_TO:
           leftAlignment = Alignment.centerRight;
           rightAlignment = Alignment.centerLeft;
@@ -1910,11 +1919,15 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
         case ReaderTwoPageDirection.EACH_CENTERED:
           leftAlignment = Alignment.center;
           rightAlignment = Alignment.center;
-        break;
+          break;
       }
-      
+
       options.add(
         PhotoViewGalleryPageOptions.customChild(
+          disableGestures:
+              FullScreenAction.TOUCH_DOUBLE == currentFullScreenAction() ||
+                  FullScreenAction.TOUCH_DOUBLE_ONCE_NEXT ==
+                      currentFullScreenAction(),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               return Row(

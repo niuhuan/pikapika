@@ -27,6 +27,12 @@ class ComicListController {
   selectAll() {
     _state?._selectAll();
   }
+
+  loadViewed() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _state?._loadViewed();
+    });
+  }
 }
 
 // 漫画列表页
@@ -73,8 +79,10 @@ class _ComicListState extends State<ComicList> {
 
   Future _loadViewed() async {
     if (widget.comicList.isNotEmpty) {
-      viewedList.addAll(await method
-          .loadViewedList(widget.comicList.map((e) => e.id).toList()));
+      var list = await method
+          .loadViewedList(widget.comicList.map((e) => e.id).toList());
+      viewedList.clear();
+      viewedList.addAll(list);
       setState(() {});
     }
   }

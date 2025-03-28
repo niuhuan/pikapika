@@ -280,6 +280,8 @@ jobs:
           sed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           sed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
           sed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
+          sed -i "s/gradle-7.5-bin.zip/gradle-6.7-all.zip/g" android/gradle/wrapper/gradle-wrapper.properties
+          sed -i "s'com.android.tools.build:gradle:7.2.0'com.android.tools.build:gradle:4.1.0'g" android/build.gradle
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)

@@ -337,13 +337,14 @@ class _StreamComicPagerState extends State<StreamComicPager> {
     });
     try {
       var page = await widget.fetchPage(_currentSort, _currentPage);
-      setState(() {
-        _currentPage++;
-        _maxPage = page.pages;
-        _list.addAll(page.docs);
-        _over = page.page >= page.pages;
-        _noPro = _currentPage > 10 && !isPro;
-      });
+      // setState(() {
+      _currentPage++;
+      _maxPage = page.pages;
+      _list.addAll(page.docs);
+      _over = page.page >= page.pages;
+      _noPro = _currentPage > 10 && !isPro;
+      // });
+      widget.comicListController?.loadViewed();
     } catch (e, s) {
       _error = true;
       print("$e\n$s");
