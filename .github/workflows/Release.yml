@@ -79,26 +79,32 @@ jobs:
             host: ubuntu-latest
             flutter_version: '2.10.5'
             go_version: '1.23'
+            java: '17'
           - target: android-arm64
             host: ubuntu-latest
             flutter_version: '2.10.5'
             go_version: '1.23'
+            java: '17'
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '2.10.5'
             go_version: '1.23'
+            java: '17'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '3.13.9'
             go_version: '1.23'
+            java: '11'
           - target: android-arm64
             host: ubuntu-latest
             flutter_version: '3.13.9'
             go_version: '1.23'
+            java: '11'
           - target: android-x86_64
             host: ubuntu-latest
             flutter_version: '3.13.9'
             go_version: '1.23'
+            java: '11'
 
 
     runs-on: ${{ matrix.config.host }}
@@ -212,7 +218,7 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32' || matrix.config.target == 'android-arm64' || matrix.config.target == 'android-x86_64' ) && startsWith(matrix.config.flutter_version, '3.24.2') == false
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: ${{ matrix.config.java }}
           distribution: 'temurin'
 
       - name: Setup java (Android)
