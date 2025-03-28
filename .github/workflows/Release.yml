@@ -68,7 +68,7 @@ jobs:
             flutter_version: '2.10.3'
             go_version: '1.17'
           - target: ios
-            host: macos-12
+            host: macos-13
             flutter_version: '2.10.5'
             go_version: '1.23'
           - target: ios
