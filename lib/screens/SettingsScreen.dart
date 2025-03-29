@@ -37,6 +37,7 @@ import 'package:pikapika/basic/config/VolumeNextChapter.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 import 'package:pikapika/screens/components/RightClickPop.dart';
 
+import '../basic/config/AppOrientation.dart';
 import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/CategoriesSort.dart';
@@ -93,6 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 const Divider(),
                 ...themeWidgets(context, setState),
+                appOrientationWidget(),
                 const Divider(),
                 pagerActionSetting(),
                 contentFailedReloadActionSetting(),

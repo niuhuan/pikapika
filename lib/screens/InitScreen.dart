@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
 import 'package:pikapika/basic/config/AndroidSecureFlag.dart';
+import 'package:pikapika/basic/config/AppOrientation.dart';
 import 'package:pikapika/basic/config/Authentication.dart';
 import 'package:pikapika/basic/config/AutoClean.dart';
 import 'package:pikapika/basic/config/AutoFullScreen.dart';
@@ -88,6 +89,7 @@ class _InitScreenState extends State<InitScreen> {
     // 初始化配置文件
     await initPlatform(); // 必须第一个初始化, 加载设备信息
     await initAutoClean();
+    await initAppOrientation();
     await initAddress();
     await initImageAddress();
     await initProxy();

@@ -68,28 +68,9 @@ jobs:
             flutter_version: '2.10.3'
             go_version: '1.17'
           - target: ios
-            host: macos-13
-            flutter_version: '2.10.5'
-            go_version: '1.23'
-          - target: ios
             host: macos-latest
             flutter_version: '3.13.9'
             go_version: '1.23'
-          - target: android-arm32
-            host: ubuntu-latest
-            flutter_version: '2.10.5'
-            go_version: '1.23'
-            java: '17'
-          - target: android-arm64
-            host: ubuntu-latest
-            flutter_version: '2.10.5'
-            go_version: '1.23'
-            java: '17'
-          - target: android-x86_64
-            host: ubuntu-latest
-            flutter_version: '2.10.5'
-            go_version: '1.23'
-            java: '17'
           - target: android-arm32
             host: ubuntu-latest
             flutter_version: '3.13.9'
