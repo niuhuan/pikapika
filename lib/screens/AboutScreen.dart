@@ -57,12 +57,13 @@ class _AboutScreenState extends State<AboutScreen> {
       ),
       body: PikaListView(
         children: [
+          Container(height: 20),
           SizedBox(
             width: min / 2,
             height: min / 2,
             child: Center(
               child: SvgPicture.asset(
-                'lib/assets/github.svg',
+                'lib/assets/icon.png',
                 width: min / 3,
                 height: min / 3,
                 color: Colors.grey.shade500,

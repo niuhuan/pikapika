@@ -77,13 +77,30 @@ class _ProScreenState extends State<ProScreen> {
             ),
           ),
           const Divider(),
-          ListTile(
-            title: const Text("签到/游戏/兑换"),
-            subtitle: Text(
-              proInfoAf.isPro
-                  ? "发电中 (${DateTime.fromMillisecondsSinceEpoch(1000 * proInfoAf.expire).toString()})"
-                  : "未发电",
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: ListTile(
+                  title: const Text("签到/兑换"),
+                  subtitle: Text(
+                    proInfoAf.isPro
+                        ? "发电中 (${DateTime.fromMillisecondsSinceEpoch(1000 * proInfoAf.expire).toString()})"
+                        : "未发电",
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: const Text("PAT入会"),
+                  subtitle: Text(
+                    proInfoPat.isPro ? "发电中" : "未发电",
+                  ),
+                  onTap: () {
+                    defaultToast(context, "点击下面的PAT会籍进行变更");
+                  },
+                ),
+              ),
+            ],
           ),
           const Divider(),
           ListTile(
@@ -319,9 +336,9 @@ class _ProServerNameWidgetState extends State<ProServerNameWidget> {
         return "风力发电";
       case "US":
         return "水力发电";
-    case "SIG":
+      case "SIG":
         return "光伏发电";
-    case "JPOS":
+      case "JPOS":
         return "核能发电";
       default:
         return "";

@@ -248,13 +248,21 @@ class _InitScreenState extends State<InitScreen> {
       );
     }
     return Scaffold(
-      backgroundColor: const Color(0xfffffced),
-      body: ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: Image.asset(
-          "lib/assets/init.jpg",
-          fit: BoxFit.contain,
-        ),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: constraints.maxWidth * 5 / 4,
+                maxHeight: constraints.maxHeight * 5 / 4,
+              ),
+              child: Image.asset(
+                "lib/assets/init.png",
+                fit: BoxFit.contain,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
