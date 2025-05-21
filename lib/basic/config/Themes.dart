@@ -1,5 +1,7 @@
 /// 主题
 
+import 'dart:io';
+
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -385,7 +387,7 @@ void _reloadTheme() {
 }
 
 Future<dynamic> initTheme() async {
-  androidNightModeDisplay = androidVersion >= 29;
+  androidNightModeDisplay = androidVersion >= 29 || Platform.isIOS;
   androidNightMode =
       await method.loadProperty(_nightModePropertyName, "true") == "true";
   _lightThemeCode = await method.loadProperty(
