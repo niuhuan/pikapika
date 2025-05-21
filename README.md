@@ -1,6 +1,13 @@
-PIKAPIKA - Comic Reader
-=======================
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases)
+<div align="center">
+  <h1 align="center">
+    <img src="lib/assets/icon.png" width="200">
+    <br/>
+    Pikapika 
+
+[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/wild/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/wild/releases)
+  </h1>
+</div>
 
 - A visually appealing, easy-to-use, ad-free manga client that runs on Windows/MacOS/Linux/Android/iOS.
 - This app contains restricted content (such as explicit, gory, violent, drug-related scenes). Users under 18 should use it under parental supervision, and please comply with local laws and regulations.
