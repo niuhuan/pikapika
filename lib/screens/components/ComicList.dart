@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
+import 'package:pikapika/basic/config/HiddenWords.dart';
 import 'package:pikapika/basic/config/ShadowCategories.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
 import 'package:pikapika/basic/config/ShadowCategoriesMode.dart';
@@ -146,6 +147,14 @@ class _ComicListState extends State<ComicList> {
               shadow = true;
               break;
           }
+          if (!shadow) {
+            for (var value in hiddenWords) {
+              if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+                shadow = true;
+                break;
+              }
+            }
+          }
           if (shadow) {
             return InkWell(
               onTap: () {},
@@ -281,6 +290,14 @@ class _ComicListState extends State<ComicList> {
           }
           shadow = true;
           break;
+      }
+      if (!shadow) {
+        for (var value in hiddenWords) {
+          if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+            shadow = true;
+            break;
+          }
+        }
       }
       if (shadow) {
         tmp.add(
@@ -462,6 +479,14 @@ class _ComicListState extends State<ComicList> {
           }
           shadow = true;
           break;
+      }
+      if (!shadow) {
+        for (var value in hiddenWords) {
+          if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+            shadow = true;
+            break;
+          }
+        }
       }
       if (shadow) {
         tmp.add(

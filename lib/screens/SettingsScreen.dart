@@ -46,6 +46,7 @@ import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/HiddenSubIcon.dart';
+import '../basic/config/HiddenWords.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
@@ -58,6 +59,7 @@ import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
 import 'ThemeScreen.dart';
 import 'WebServerScreen.dart';
+import 'HiddenWordsScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   final bool hiddenAccountInfo;
@@ -134,6 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 shadowCategoriesModeSetting(),
                 shadowCategoriesSetting(),
+                hiddenWordsSetting(),
               ],
             ),
             ExpansionTile(

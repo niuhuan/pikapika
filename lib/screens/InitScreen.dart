@@ -58,6 +58,7 @@ import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
 import '../basic/config/HiddenFdIcon.dart';
+import '../basic/config/HiddenWords.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/ReaderBackgroundColor.dart';
@@ -145,6 +146,7 @@ class _InitScreenState extends State<InitScreen> {
     await initHiddenSearchPersion();
     await initLockTimeOut();
     await initReaderTwoPageDirection();
+    await initHiddenWords();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {
