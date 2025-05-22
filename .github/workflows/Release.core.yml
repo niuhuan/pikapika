@@ -5,6 +5,7 @@ on:
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   GO_VERSION: "1.19"
+  GO_MOBILE_VERSION: v0.0.0-20241213221354-a87c1cf6cf46
 
 jobs:
   ci-pass:
@@ -78,7 +79,7 @@ jobs:
       - if: steps.check_asset.outputs.skip_build != 'true'
         name: Install go mobile (mobile)
         run: |
-          go install golang.org/x/mobile/cmd/gomobile@latest
+          go install golang.org/x/mobile/cmd/gomobile@${{ env.GO_MOBILE_VERSION }}
 
       - name: Build (ios)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'ios'
