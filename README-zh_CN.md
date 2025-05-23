@@ -1,6 +1,13 @@
-PIKAPIKA - 漫画客户端
-===================
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/pikapika/releases)
+<div align="center">
+  <h1 align="center">
+    <img src="lib/assets/icon.png" width="200">
+    <br/>
+    Pikapika 
+
+[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/wild/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/wild/releases)
+  </h1>
+</div>
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 此APP内容存在限制级别内容(例如 露骨/血腥/暴力/吸毒)，18岁以下的用户需在监护人陪同下使用，并请您在遵守当地法律法规。
