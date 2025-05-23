@@ -14,9 +14,10 @@ Future<void> initAuthentication() async {
   if (Platform.isIOS || androidVersion >= 29) {
     _authentication =
         (await method.loadProperty(_propertyName, "false")) == "true";
-  }
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     _authentication = await needDesktopAuthentication();
+  } else {
+    _authentication = false;
   }
 }
 
