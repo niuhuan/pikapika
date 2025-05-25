@@ -69,7 +69,6 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
       return AppBar(
         title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
         actions: [
-          _customFolderButton(),
           //_searchBar.getSearchAction(context),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -92,9 +91,10 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
               ],
             ),
           ),
+          _customFolderButton(),
           _toSelectingButton(),
           _fileButton(),
-          resetFailedButton(),
+          Container(width: 10),
           pauseButton(),
         ],
       );
@@ -369,40 +369,66 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     );
   }
 
+  Future<void> _onPauseChangeClick() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('下载任务'),
+          content: Text(
+            _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
+          ),
+          actions: [
+            MaterialButton(
+              onPressed: () async {
+                Navigator.pop(context);
+              },
+              child: const Text('取消'),
+            ),
+            MaterialButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                var to = !_downloadRunning;
+                await method.setDownloadRunning(to);
+                setState(() {
+                  _downloadRunning = to;
+                });
+              },
+              child: const Text('确认'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget pauseButton() {
-    return MaterialButton(
-        minWidth: 0,
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('下载任务'),
-                content: Text(
-                  _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
+    return PopupMenuButton<int>(
+        itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+              PopupMenuItem<int>(
+                value: 0,
+                child: ListTile(
+                  leading: const Icon(Icons.compare_arrows_sharp),
+                  title: Text(_downloadRunning ? "暂停下载" : "继续下载"),
                 ),
-                actions: [
-                  MaterialButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('取消'),
-                  ),
-                  MaterialButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      var to = !_downloadRunning;
-                      await method.setDownloadRunning(to);
-                      setState(() {
-                        _downloadRunning = to;
-                      });
-                    },
-                    child: const Text('确认'),
-                  ),
-                ],
-              );
-            },
-          );
+              ),
+              const PopupMenuItem<int>(
+                value: 1,
+                child: ListTile(
+                  leading: Icon(Icons.sync_problem),
+                  title: Text("恢复失败"),
+                ),
+              ),
+            ],
+        onSelected: (a) async {
+          if (a == 0) {
+            await _onPauseChangeClick();
+          } else if (a == 1) {
+            await method.resetFailed();
+            _reloadList();
+            setState(() {});
+            defaultToast(context, "所有失败的下载已经恢复");
+          }
         },
         child: Column(
           children: [
@@ -417,31 +443,6 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             Text(
               _downloadRunning ? '下载中' : '暂停中',
               style: const TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Expanded(child: Container()),
-          ],
-        ));
-  }
-
-  Widget resetFailedButton() {
-    return IconButton(
-        onPressed: () async {
-          await method.resetFailed();
-          _reloadList();
-          setState(() {});
-          defaultToast(context, "所有失败的下载已经恢复");
-        },
-        icon: Column(
-          children: [
-            Expanded(child: Container()),
-            const Icon(
-              Icons.sync_problem,
-              size: 18,
-              color: Colors.white,
-            ),
-            const Text(
-              '恢复',
-              style: TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
           ],
