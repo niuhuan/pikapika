@@ -200,10 +200,23 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         },
       ),
     );
-    return rightClickPop(
+    var w = rightClickPop(
       child: screen,
       context: context,
       canPop: true,
+    );
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selecting) {
+          setState(() {
+            _selecting = false;
+            _selectingList = [];
+          });
+          return false;
+        }
+        return true;
+      },
+      child: w,
     );
   }
 
