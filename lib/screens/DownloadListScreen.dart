@@ -70,10 +70,30 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
         actions: [
           _customFolderButton(),
-          _searchBar.getSearchAction(context),
+          //_searchBar.getSearchAction(context),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              _searchBar.beginSearch(context);
+            },
+            child: Column(
+              children: [
+                Expanded(child: Container()),
+                const Icon(
+                  Icons.search,
+                  size: 18,
+                  color: Colors.white,
+                ),
+                const Text(
+                  '搜索',
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
+                Expanded(child: Container()),
+              ],
+            ),
+          ),
           _toSelectingButton(),
-          exportButton(),
-          importButton(),
+          _fileButton(),
           resetFailedButton(),
           pauseButton(),
         ],
@@ -294,36 +314,26 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     );
   }
 
-  Widget exportButton() {
-    return IconButton(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            mixRoute(
-              builder: (context) => const DownloadExportGroupScreen(),
-            ),
-          );
-        },
-        icon: Column(
-          children: [
-            Expanded(child: Container()),
-            const Icon(
-              Icons.send_to_mobile,
-              size: 18,
-              color: Colors.white,
-            ),
-            const Text(
-              '导出',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Expanded(child: Container()),
-          ],
-        ));
-  }
-
-  Widget importButton() {
-    return IconButton(
-        onPressed: () async {
+  Widget _fileButton() {
+    return PopupMenuButton<int>(
+      itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+        const PopupMenuItem<int>(
+          value: 0,
+          child: ListTile(
+            leading: Icon(Icons.read_more),
+            title: Text("导入"),
+          ),
+        ),
+        const PopupMenuItem<int>(
+          value: 1,
+          child: ListTile(
+            leading: Icon(Icons.save_alt),
+            title: Text("导出"),
+          ),
+        ),
+      ],
+      onSelected: (a) async {
+        if (a == 0) {
           await Navigator.push(
             context,
             mixRoute(
@@ -332,22 +342,31 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           );
           _reloadList();
           setState(() {});
-        },
-        icon: Column(
-          children: [
-            Expanded(child: Container()),
-            const Icon(
-              Icons.label_important,
-              size: 18,
-              color: Colors.white,
+        } else if (a == 1) {
+          await Navigator.push(
+            context,
+            mixRoute(
+              builder: (context) => const DownloadExportGroupScreen(),
             ),
-            const Text(
-              '导入',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Expanded(child: Container()),
-          ],
-        ));
+          );
+        }
+      },
+      child: Column(
+        children: [
+          Expanded(child: Container()),
+          const Icon(
+            Icons.drive_file_move,
+            size: 18,
+            color: Colors.white,
+          ),
+          const Text(
+            '文件',
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+          Expanded(child: Container()),
+        ],
+      ),
+    );
   }
 
   Widget pauseButton() {
@@ -533,7 +552,21 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           _selectingList = [];
         });
       },
-      icon: const Icon(Icons.rule),
+      icon: Column(
+        children: [
+          Expanded(child: Container()),
+          const Icon(
+            Icons.rule,
+            size: 18,
+            color: Colors.white,
+          ),
+          const Text(
+            '多选',
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+          Expanded(child: Container()),
+        ],
+      ),
     );
   }
 }
