@@ -114,6 +114,8 @@ class _DownloadExportToFileScreenState
               Container(height: 10),
               _exportToHtmlPdfButton(),
               Container(height: 10),
+              _exportToHtmlPdfFolderButton(),
+              Container(height: 10),
               _exportToJPEGSZIPButton(),
               Container(height: 10),
               _exportToHtmlJPEGNotDownOverButton(),
@@ -392,6 +394,57 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner('导出到PDF\n(可直接在相册中打开观看)'),
+    );
+  }
+
+  Widget _exportToHtmlPdfFolderButton() {
+    return MaterialButton(
+      onPressed: () async {
+        if (!isPro) {
+          defaultToast(context, "请先发电鸭");
+          return;
+        }
+        var name = "";
+        if (currentExportRename()) {
+          var rename = await inputString(
+            context,
+            "请输入保存后的名称",
+            defaultValue: _task.title,
+          );
+          if (rename != null && rename.isNotEmpty) {
+            name = rename;
+          } else {
+            return;
+          }
+        } else {
+          if (!await confirmDialog(
+              context, "导出确认", "将您所选的漫画导出到文件夹, 每个章节一个PDF${showExportPath()}")) {
+            return;
+          }
+        }
+        try {
+          setState(() {
+            exporting = true;
+          });
+          await method.exportComicDownloadToPDFFolder(
+            widget.comicId,
+            await attachExportPath(),
+            name,
+          );
+          setState(() {
+            exportResult = "导出成功";
+          });
+        } catch (e) {
+          setState(() {
+            exportResult = "导出失败 $e";
+          });
+        } finally {
+          setState(() {
+            exporting = false;
+          });
+        }
+      },
+      child: _buildButtonInner('导出到文件夹, 每个章节一个PDF\n(可直接在相册中打开观看)'),
     );
   }
 
