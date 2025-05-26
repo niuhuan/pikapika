@@ -27,22 +27,36 @@ func LoadVersion() Version {
 }
 
 func AssetName(version Version, flutterVersion, target, branch string) string {
-	releaseFileName := fmt.Sprintf("pikapika-%v_flutter-%v", version.Code, flutterVersion)
+	releaseFileName := fmt.Sprintf("pikapika-%v", version.Code)
 	switch target {
 	case "macos":
-		releaseFileName += "-macos-intel.dmg"
+		releaseFileName += "-macos-intel"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".dmg"
 	case "ios":
-		releaseFileName += "-ios-nosign.ipa"
+		releaseFileName += "-ios_nosign"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".ipa"
 	case "windows":
-		releaseFileName += "-windows-x86_64.zip"
+		releaseFileName += "-windows-x86_64"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".zip"
 	case "linux":
-		releaseFileName += "-linux-x86_64.AppImage"
+		releaseFileName += "-linux-x86_64"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".AppImage"
 	case "android-arm32":
-		releaseFileName += "-android-arm32.apk"
+		releaseFileName += "-android-arm32"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".apk"
 	case "android-arm64":
-		releaseFileName += "-android-arm64.apk"
+		releaseFileName += "-android-arm64"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".apk"
 	case "android-x86_64":
-		releaseFileName += "-android-x86_64.apk"
+		releaseFileName += "-android-x86_64"
+		releaseFileName += "-flutter_" + flutterVersion
+		releaseFileName += ".apk"
 	}
 	if branch != "master" && branch != "main" {
 		releaseFileName = branch + "-" + releaseFileName
