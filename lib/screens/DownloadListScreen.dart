@@ -319,13 +319,33 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             task: e,
             downloading: _downloading != null && _downloading!.id == e.id,
           ),
-          Icon(
-            _selectingList.contains(e.id)
-                ? Icons.check_circle
-                : Icons.radio_button_unchecked,
-            color: Colors.green,
-          ),
-        ],
+                   SizedBox(
+                  height: imageHeight,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(right: 10, left: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade500.withOpacity(.1),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Icon(
+                          _selectingList.contains(e.id)
+                              ? Icons.check_circle_sharp
+                              : Icons.circle_outlined,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+     ],
       ),
     );
   }
