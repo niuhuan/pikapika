@@ -201,10 +201,6 @@ class _DarkTheme extends _ThemePackage {
         ),
         dividerColor: Colors.grey.shade500.withAlpha(70),
         primaryColor: Colors.pink.shade200,
-        expansionTileTheme: ExpansionTileThemeData(
-          textColor: Colors.pink.shade200,
-          iconColor: Colors.pink.shade200,
-        ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.pink.shade200,
           selectionColor: Colors.pink.shade300.withAlpha(150),
@@ -277,10 +273,6 @@ class _DustyBlueTheme extends _ThemePackage {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.blue.shade500),
           ),
-        ),
-        expansionTileTheme: ExpansionTileThemeData(
-          textColor: Colors.blue.shade200,
-          iconColor: Colors.blue.shade200,
         ),
         sliderTheme: SliderThemeData(
           activeTrackColor: Colors.blue.shade200,
