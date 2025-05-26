@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:path/path.dart';
 
 import '../Method.dart';
 import '../store/Categories.dart';
@@ -28,6 +29,7 @@ Future<void> initShadowCategories() async {
 }
 
 Future<void> _chooseShadowCategories(BuildContext context) async {
+  var theme1 =  Theme.of(context);
   await showDialog(
     context: context,
     builder: (ctx) {
@@ -38,8 +40,11 @@ Future<void> _chooseShadowCategories(BuildContext context) async {
         }
       }
       return MultiSelectDialog<String>(
+        backgroundColor: theme1.scaffoldBackgroundColor,
+        checkColor: theme1.colorScheme.onSurface,
         title: const Text('封印'),
         searchHint: '搜索',
+        searchable: true,
         cancelText: const Text('取消'),
         confirmText: const Text('确定'),
         items: storedCategories.map((e) => MultiSelectItem(e, e)).toList(),
@@ -51,6 +56,10 @@ Future<void> _chooseShadowCategories(BuildContext context) async {
             shadowCategoriesEvent.broadcast();
           }
         },
+        selectedColor: theme1.primaryColor,
+        unselectedColor: theme1.textTheme.bodyMedium?.color,
+        itemsTextStyle: theme1.textTheme.bodyMedium,
+        selectedItemsTextStyle: theme1.textTheme.bodyMedium,
       );
     },
   );
@@ -69,7 +78,7 @@ Widget shadowCategoriesSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("封印"),
+        title: const Text("封印"), 
         subtitle: Text(jsonEncode(shadowCategories)),
         onTap: () async {
           await _chooseShadowCategories(context);

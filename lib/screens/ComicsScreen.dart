@@ -175,12 +175,24 @@ class _ComicsScreenState extends State<ComicsScreen> {
       appBar = downAppBar(context, _comicListController, setState);
     }
 
-    return Scaffold(
+    var a = Scaffold(
       appBar: appBar,
       body: ComicPager(
         fetchPage: _load,
         comicListController: _comicListController,
       ),
+    );
+    return WillPopScope(
+      onWillPop: () async {
+        if (_comicListController.selecting) {
+          setState(() {
+            _comicListController.selecting = false;
+          });
+          return false;
+        }
+        return true;
+      },
+      child: a,
     );
   }
 }

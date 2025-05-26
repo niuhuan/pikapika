@@ -96,6 +96,7 @@ class _PinkTheme extends _ThemePackage {
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
+          primary: Colors.pink.shade200,
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: AppBarTheme(
@@ -138,6 +139,7 @@ class _BlackTheme extends _ThemePackage {
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
         brightness: Brightness.light,
         colorScheme: ColorScheme.light(
+          primary: Colors.pink.shade200,
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: AppBarTheme(
@@ -181,6 +183,7 @@ class _DarkTheme extends _ThemePackage {
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
         brightness: Brightness.dark,
         colorScheme: ColorScheme.light(
+          primary: Colors.pink.shade200,
           secondary: Colors.pink.shade200,
         ),
         appBarTheme: const AppBarTheme(
@@ -196,7 +199,12 @@ class _DarkTheme extends _ThemePackage {
           unselectedItemColor: Colors.grey.shade300,
           backgroundColor: Colors.grey.shade900,
         ),
+        dividerColor: Colors.grey.shade500.withAlpha(70),
         primaryColor: Colors.pink.shade200,
+        expansionTileTheme: ExpansionTileThemeData(
+          textColor: Colors.pink.shade200,
+          iconColor: Colors.pink.shade200,
+        ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.pink.shade200,
           selectionColor: Colors.pink.shade300.withAlpha(150),
@@ -206,6 +214,13 @@ class _DarkTheme extends _ThemePackage {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.pink.shade200),
           ),
+        ),
+        sliderTheme: SliderThemeData(
+          activeTrackColor: Colors.pink.shade200,
+          inactiveTrackColor: Colors.pink.shade300.withAlpha(150),
+          thumbColor: Colors.pink.shade200,
+          overlayColor: Colors.pink.shade300.withAlpha(150),
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
         ),
       );
 
@@ -232,6 +247,7 @@ class _DustyBlueTheme extends _ThemePackage {
           const Color(0xff20253b),
         ),
         colorScheme: ColorScheme.light(
+          primary: Colors.blue.shade200,
           secondary: Colors.blue.shade200,
         ),
         appBarTheme: const AppBarTheme(
@@ -262,6 +278,17 @@ class _DustyBlueTheme extends _ThemePackage {
             borderSide: BorderSide(color: Colors.blue.shade500),
           ),
         ),
+        expansionTileTheme: ExpansionTileThemeData(
+          textColor: Colors.blue.shade200,
+          iconColor: Colors.blue.shade200,
+        ),
+        sliderTheme: SliderThemeData(
+          activeTrackColor: Colors.blue.shade200,
+          inactiveTrackColor: Colors.blue.shade300.withAlpha(150),
+          thumbColor: Colors.blue.shade200,
+          overlayColor: Colors.blue.shade300.withAlpha(150),
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+        ),
       );
 
   @override
@@ -279,6 +306,7 @@ class _DarkBlackTheme extends _ThemePackage {
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
         brightness: Brightness.dark,
         colorScheme: ColorScheme.light(
+          primary: Colors.pink.shade200,
           secondary: Colors.pink.shade200,
         ),
         scaffoldBackgroundColor: Colors.black,

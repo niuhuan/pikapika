@@ -121,12 +121,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
               ],
             ),
-            ExpansionTile(
+            const ExpansionTile(
               leading: Icon(Icons.lan),
               title: Text('网络'),
               children: [
-                const Divider(),
-                const NetworkSetting(),
+                Divider(),
+                NetworkSetting(),
               ],
             ),
             ExpansionTile(
@@ -203,17 +203,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 widget.hiddenAccountInfo
                     ? Container()
                     : ListTile(
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      mixRoute(
-                        builder: (context) =>
-                        const ModifyPasswordScreen(),
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            mixRoute(
+                              builder: (context) =>
+                                  const ModifyPasswordScreen(),
+                            ),
+                          );
+                        },
+                        title: const Text('修改密码'),
                       ),
-                    );
-                  },
-                  title: const Text('修改密码'),
-                ),
               ],
             ),
             ExpansionTile(

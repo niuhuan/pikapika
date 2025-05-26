@@ -255,8 +255,8 @@ class _InitScreenState extends State<InitScreen> {
           return Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: constraints.maxWidth * 5 / 4,
-                maxHeight: constraints.maxHeight * 5 / 4,
+                maxWidth: constraints.maxWidth * 4 / 5,
+                maxHeight: constraints.maxHeight * 4 / 5,
               ),
               child: Image.asset(
                 "lib/assets/init.png",

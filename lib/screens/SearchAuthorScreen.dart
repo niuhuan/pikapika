@@ -147,7 +147,7 @@ class _SearchAuthorScreenState extends State<SearchAuthorScreen> {
   }
 
   Widget buildScreen(BuildContext context) {
-    return Scaffold(
+    var a = Scaffold(
       appBar: _comicListController.selecting
           ? downAppBar(context, _comicListController, setState)
           : _searchBar.build(context),
@@ -155,6 +155,18 @@ class _SearchAuthorScreenState extends State<SearchAuthorScreen> {
         fetchPage: _fetch,
         comicListController: _comicListController,
       ),
+    );
+    return WillPopScope(
+      onWillPop: () async {
+        if (_comicListController.selecting) {
+          setState(() {
+            _comicListController.selecting = false;
+          });
+          return false;
+        }
+        return true;
+      },
+      child: a,
     );
   }
 }
