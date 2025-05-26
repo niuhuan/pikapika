@@ -149,7 +149,8 @@ class _ComicListState extends State<ComicList> {
           }
           if (!shadow) {
             for (var value in hiddenWords) {
-              if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+              if (e.title.toLowerCase().contains(value.toLowerCase()) ||
+                  e.author.toLowerCase().contains(value.toLowerCase())) {
                 shadow = true;
                 break;
               }
@@ -199,18 +200,32 @@ class _ComicListState extends State<ComicList> {
                     viewed: viewedList.contains(e.id),
                   ),
                 ),
-                Row(children: [
-                  Expanded(child: Container()),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Icon(
-                      _selected.contains(e.id)
-                          ? Icons.check_circle_sharp
-                          : Icons.circle_outlined,
-                      color: Theme.of(context).colorScheme.secondary,
+                SizedBox(
+                  height: imageHeight,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(right: 10, left: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade500.withOpacity(.1),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Icon(
+                          _selected.contains(e.id)
+                              ? Icons.check_circle_sharp
+                              : Icons.circle_outlined,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
                     ),
                   ),
-                ]),
+                ),
               ]),
             );
           }
@@ -293,7 +308,8 @@ class _ComicListState extends State<ComicList> {
       }
       if (!shadow) {
         for (var value in hiddenWords) {
-          if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+          if (e.title.toLowerCase().contains(value.toLowerCase()) ||
+              e.author.toLowerCase().contains(value.toLowerCase())) {
             shadow = true;
             break;
           }
@@ -482,7 +498,8 @@ class _ComicListState extends State<ComicList> {
       }
       if (!shadow) {
         for (var value in hiddenWords) {
-          if (e.title.toLowerCase().contains(value.toLowerCase()) || e.author.toLowerCase().contains(value.toLowerCase())) {
+          if (e.title.toLowerCase().contains(value.toLowerCase()) ||
+              e.author.toLowerCase().contains(value.toLowerCase())) {
             shadow = true;
             break;
           }
