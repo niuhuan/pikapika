@@ -101,7 +101,7 @@ class _DownloadExportingGroupScreenState
         MaterialButton(
           onPressed: _exportComicDownloadToCbzsZip,
           child: _buildButtonInner(
-            "每部漫画都导出成cbz.zip" + (!isPro ? "\n(发电后使用)" : ""),
+            "每部漫画都导出成cbz" + (!isPro ? "\n(发电后使用)" : ""),
           ),
         ),
         Container(height: 20),
