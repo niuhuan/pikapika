@@ -112,6 +112,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     });
     return value;
   });
+  
+  List<DownloadComic> _data = [];
 
   void _onMessageChange(String event) {
     print("EVENT");
@@ -165,6 +167,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           }
 
           var data = snapshot.data!;
+          _data = data;
           if (_downloading != null) {
             try {
               for (var i = 0; i < data.length; i++) {
@@ -278,13 +281,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
           ),
         );
       },
-      // onLongPress: () async {
-      //   String? action = await chooseListDialog(context, e.title, ['删除']);
-      //   if (action == '删除') {
-      //     await method.deleteDownloadComic(e.id);
-      //     setState(() => e.deleting = true);
-      //   }
-      // },
+      onLongPress: () async {
+        String? action = await chooseListDialog(context, e.title, ['删除']);
+        if (action == '删除') {
+          await method.deleteDownloadComic(e.id);
+          setState(() => e.deleting = true);
+        }
+      },
       child: DownloadInfoCard(
         task: e,
         downloading: _downloading != null && _downloading!.id == e.id,
@@ -549,7 +552,14 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             for (var id in tmp) {
               await method.deleteDownloadComic(id);
             }
-            _reloadList();
+            for (var i = 0; i < _data.length; i++) {
+              if (tmp.contains(_data[i].id)) {
+                _data[i].deleting = true;
+              }
+            }
+            _selecting = false;
+            _selectingList = [];
+            //_reloadList();
             setState(() {});
           }
         }
