@@ -364,13 +364,29 @@ class _ComicListState extends State<ComicList> {
             AbsorbPointer(
               child: c,
             ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Icon(
-                _selected.contains(e.id)
-                    ? Icons.check_circle_sharp
-                    : Icons.circle_outlined,
-                color: Theme.of(context).colorScheme.secondary,
+            SizedBox(
+              width: width,
+              height: height,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade800.withOpacity(.75),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      _selected.contains(e.id)
+                          ? Icons.check_circle_sharp
+                          : Icons.circle_outlined,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ),
               ),
             ),
           ]),
@@ -583,13 +599,30 @@ class _ComicListState extends State<ComicList> {
             AbsorbPointer(
               child: c,
             ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Icon(
-                _selected.contains(e.id)
-                    ? Icons.check_circle_sharp
-                    : Icons.circle_outlined,
-                color: Theme.of(context).colorScheme.secondary,
+            SizedBox(
+              width: width,
+              height: height,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade800.withOpacity(.75),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      _selected.contains(e.id)
+                          ? Icons.check_circle_sharp
+                          : Icons.circle_outlined,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ),
               ),
             ),
           ]),
