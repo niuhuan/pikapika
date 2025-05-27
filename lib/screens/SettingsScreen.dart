@@ -50,6 +50,7 @@ import '../basic/config/HiddenWords.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
+import '../basic/config/StartupPic.dart';
 import '../basic/config/TimeoutLock.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
@@ -104,9 +105,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 categoriesColumnCountSetting(),
                 categoriesSortSetting(),
                 const Divider(),
+                setStartupPicTile(context),
+                clearStartupPicTile(context),
+                const Divider(),
                 timeZoneSetting(),
                 fontSetting(),
-                fullScreenUISetting(),
+                if (Platform.isAndroid) fullScreenUISetting(),
                 usingRightClickPopSetting(),
                 hiddenFdIconSetting(),
                 hiddenSubIconSetting(),

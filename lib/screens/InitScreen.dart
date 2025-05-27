@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 import 'package:pikapika/basic/config/Address.dart';
 import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
 import 'package:pikapika/basic/config/AndroidSecureFlag.dart';
@@ -50,6 +51,7 @@ import 'package:pikapika/basic/config/WillPopNotice.dart';
 import 'package:pikapika/screens/AccessKeyReplaceScreen.dart';
 import 'package:pikapika/screens/ComicInfoScreen.dart';
 import 'package:pikapika/screens/PkzArchiveScreen.dart';
+import 'package:pikapika/screens/components/ContentLoading.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/CategoriesSort.dart';
@@ -79,6 +81,11 @@ class InitScreen extends StatefulWidget {
 
 class _InitScreenState extends State<InitScreen> {
   var _authenticating = false;
+  Widget? _loadPic;
+
+  Widget _defaultLoadingPic() {
+    return const ContentLoading(label: "加载中");
+  }
 
   @override
   initState() {
@@ -87,6 +94,17 @@ class _InitScreenState extends State<InitScreen> {
   }
 
   Future<dynamic> _init() async {
+    var dataLocal = await method.dataLocal();
+    print("dataLocal: $dataLocal");
+    if (await File(p.join(dataLocal, "startup_pic")).exists()) {
+      _loadPic = Image.file(
+        File(p.join(dataLocal, "startup_pic")),
+        fit: BoxFit.contain,
+      );
+    } else {
+      _loadPic = _defaultLoadingPic();
+    }
+    setState(() {});
     // 初始化配置文件
     await initPlatform(); // 必须第一个初始化, 加载设备信息
     await initAutoClean();
@@ -258,10 +276,7 @@ class _InitScreenState extends State<InitScreen> {
                 maxWidth: constraints.maxWidth * 4 / 5,
                 maxHeight: constraints.maxHeight * 4 / 5,
               ),
-              child: Image.asset(
-                "lib/assets/init.png",
-                fit: BoxFit.contain,
-              ),
+              child: _loadPic ?? Container(),
             ),
           );
         },

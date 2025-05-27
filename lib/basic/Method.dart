@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
@@ -538,7 +539,8 @@ class Method {
     return _flatInvoke("deleteDownloadComic", comicId);
   }
 
-  Future<dynamic> moveDownloadComic(List<String> comicIdList, String customFolder) {
+  Future<dynamic> moveDownloadComic(
+      List<String> comicIdList, String customFolder) {
     return _flatInvoke("moveDownloadComic", {
       "comicIdList": comicIdList,
       "customFolder": customFolder,

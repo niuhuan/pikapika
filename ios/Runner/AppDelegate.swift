@@ -75,7 +75,11 @@ import LocalAuthentication
                 }
                 else if call.method == "iosGetDocumentDir" {
                     result(documentsPath)
-                } else {
+                }
+                else if call.method == "dataLocal" {
+                    result(applicationSupportsPath)
+                }
+                else {
                     result(FlutterMethodNotImplemented)
                 }
             }.start()

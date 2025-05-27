@@ -63,7 +63,7 @@ class _AboutScreenState extends State<AboutScreen> {
             height: min / 2,
             child: Center(
               child: SvgPicture.asset(
-                'lib/assets/icon.png',
+                'lib/assets/github.svg',
                 width: min / 3,
                 height: min / 3,
                 color: Colors.grey.shade500,
