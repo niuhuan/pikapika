@@ -88,7 +88,7 @@ Different frameworks are used to bridge to desktop and mobile platforms
 (Desktop/Mobile)
 
 - [golang](https://golang.org/) (1.17/1.18)
-- [flutter](https://flutter.dev/) (2.10.3/3.0.4)
+- [flutter](https://flutter.dev/) (2.10.3/3.7.3)
 
 ## Please follow the usage rules.
 

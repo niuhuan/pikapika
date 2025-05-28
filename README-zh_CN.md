@@ -93,7 +93,7 @@ VPN->代理->分流, 这三个功能如果同时设置, 您会在您手机的VPN
 (桌面端/移动端)
 
 - [golang](https://golang.org/) (1.17/1.18)
-- [flutter](https://flutter.dev/) (2.10.3/3.0.4)
+- [flutter](https://flutter.dev/) (2.10.3/3.7.3)
 
 ## 请您遵守使用规则
 

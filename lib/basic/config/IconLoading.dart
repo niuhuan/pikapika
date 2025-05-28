@@ -25,6 +25,7 @@ Widget iconLoadingSetting() {
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");
           _iconLoading = value;
+          setState(() {});
         },
       );
     },

@@ -110,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 timeZoneSetting(),
                 fontSetting(),
-                if (Platform.isAndroid) fullScreenUISetting(),
+                fullScreenUISetting(),
                 usingRightClickPopSetting(),
                 hiddenFdIconSetting(),
                 hiddenSubIconSetting(),
