@@ -341,7 +341,7 @@ class _DownloadExportingGroupScreenState
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出cbz.zip${showExportPath()}")) {
+        context, "导出确认", "将您所选的漫画分别导出*.cbz${showExportPath()}")) {
       return;
     }
     try {

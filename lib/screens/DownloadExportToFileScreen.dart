@@ -393,7 +393,7 @@ class _DownloadExportToFileScreenState
           });
         }
       },
-      child: _buildButtonInner('导出到PDF\n(可直接在相册中打开观看)'),
+      child: _buildButtonInner('导出到PDF\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)\n(可直接在相册中打开观看)'),
     );
   }
 
@@ -444,7 +444,7 @@ class _DownloadExportToFileScreenState
           });
         }
       },
-      child: _buildButtonInner('导出到文件夹, 每个章节一个PDF\n(可直接在相册中打开观看)'),
+      child: _buildButtonInner('导出到文件夹, 每个章节一个PDF\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)\n(可直接在相册中打开观看)'),
     );
   }
 
@@ -549,7 +549,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出到HTML+JPG\n(即使没有下载成功)' + (!isPro ? "\n(发电后使用)" : ""),
+        '导出到HTML+JPG\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)' + (!isPro ? "\n(发电后使用)" : ""),
       ),
     );
   }

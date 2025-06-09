@@ -18,7 +18,7 @@ class _FavouritePaperScreen extends State<FavouritePaperScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
