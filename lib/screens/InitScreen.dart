@@ -64,6 +64,7 @@ import '../basic/config/HiddenWords.dart';
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/ReaderBackgroundColor.dart';
+import '../basic/config/ReaderScrollByScreenPercentage.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
 import '../basic/config/VolumeNextChapter.dart';
 import '../basic/config/WebDav.dart';
@@ -165,6 +166,7 @@ class _InitScreenState extends State<InitScreen> {
     await initLockTimeOut();
     await initReaderTwoPageDirection();
     await initHiddenWords();
+    await initReaderScrollByScreenPercentage();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

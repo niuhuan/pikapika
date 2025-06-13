@@ -49,6 +49,7 @@ import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/HiddenWords.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
+import '../basic/config/ReaderScrollByScreenPercentage.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
 import '../basic/config/StartupPic.dart';
 import '../basic/config/TimeoutLock.dart';
@@ -154,6 +155,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 readerSliderPositionSetting(),
                 autoFullScreenSetting(),
                 fullScreenActionSetting(),
+                readerScrollByScreenPercentageSetting(),
+                const Divider(),
                 volumeControllerSetting(),
                 volumeNextChapterSetting(),
                 keyboardControllerSetting(),

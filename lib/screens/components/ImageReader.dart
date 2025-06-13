@@ -29,6 +29,7 @@ import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../basic/config/IconLoading.dart';
 import '../../basic/config/ReaderBackgroundColor.dart';
+import '../../basic/config/ReaderScrollByScreenPercentage.dart';
 import '../../basic/config/UseApiLoadImage.dart';
 import '../../basic/config/VolumeNextChapter.dart';
 import '../FilePhotoViewScreen.dart';
@@ -269,6 +270,10 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
   // 键盘, 音量键 等事件
   void _needJumpTo(int index, bool animation);
 
+  void _needScrollForward();
+
+  void _needScrollBackward();
+
   // 记录了是否切换了音量
   late bool _listVolume;
 
@@ -299,11 +304,19 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
       var event = args.key;
       switch (event) {
         case "UP":
+          if (ReaderType.WEB_TOON_FREE_ZOOM == currentReaderType()) {
+            _needScrollBackward();
+            break;
+          }
           if (_current > 0) {
             _needJumpTo(_current - 1, true);
           }
           break;
         case "DOWN":
+          if (ReaderType.WEB_TOON_FREE_ZOOM == currentReaderType()) {
+            _needScrollForward();
+            break;
+          }
           int point = 1;
           if (ReaderType.TWO_PAGE_GALLERY == currentReaderType()) {
             point = 2;
@@ -1118,6 +1131,12 @@ class _WebToonReaderState extends _ImageReaderContentState {
   }
 
   @override
+  void _needScrollForward() {}
+
+  @override
+  void _needScrollBackward() {}
+
+  @override
   Widget _buildViewer() {
     return Container(
       decoration: BoxDecoration(
@@ -1432,6 +1451,7 @@ class _ListViewReaderState extends _ImageReaderContentState
     vsync: this,
     duration: const Duration(milliseconds: 100),
   );
+  late final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -1455,11 +1475,48 @@ class _ListViewReaderState extends _ImageReaderContentState
   void dispose() {
     _transformationController.dispose();
     _animationController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   void _needJumpTo(int index, bool animation) {}
+
+  int _controllerTime = 0;
+
+  @override
+  void _needScrollForward() {
+    var first = _scrollController.offset;
+
+    double s;
+    if (gReaderDirection == ReaderDirection.TOP_TO_BOTTOM) {
+      s = MediaQuery.of(context).size.height;
+    } else {
+      s = MediaQuery.of(context).size.width;
+    }
+    var scrollSize = s * readerScrollByScreenPercentage;
+    var pos = first + scrollSize;
+    if (pos > _scrollController.position.maxScrollExtent) {
+      pos = _scrollController.position.maxScrollExtent;
+    }
+
+    if (noAnimation()) {
+      _scrollController.jumpTo(pos);
+    } else {
+      if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
+        return;
+      }
+      _controllerTime = DateTime.now().millisecondsSinceEpoch + 400;
+      _scrollController.animateTo(
+        pos,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.ease,
+      );
+    }
+  }
+
+  @override
+  void _needScrollBackward() {}
 
   @override
   Widget _buildViewer() {
@@ -1547,6 +1604,7 @@ class _ListViewReaderState extends _ImageReaderContentState
           }
         }
         var list = ListView.builder(
+          controller: _scrollController,
           scrollDirection:
               widget.pagerDirection == ReaderDirection.TOP_TO_BOTTOM
                   ? Axis.vertical
@@ -1704,6 +1762,12 @@ class _GalleryReaderState extends _ImageReaderContentState {
     }
     _preloadJump(index);
   }
+
+  @override
+  void _needScrollForward() {}
+
+  @override
+  void _needScrollBackward() {}
 
   _preloadJump(int index, {bool init = false}) {
     fn() {
@@ -2006,6 +2070,16 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       );
     }
     _preloadJump(index);
+  }
+
+  @override
+  void _needScrollBackward() {
+    // TODO: implement _needScrollBackward
+  }
+
+  @override
+  void _needScrollForward() {
+    // TODO: implement _needScrollForward
   }
 
   _preloadJump(int index, {bool init = false}) {
