@@ -41,11 +41,12 @@ Widget authenticationSetting() {
   if (Platform.isIOS || androidVersion >= 29) {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
-        return ListTile(
+        return SwitchListTile(
+          value: _authentication,
           title: const Text("进入APP时验证身份(如果系统已经录入密码或指纹)"),
-          subtitle: Text(_authentication ? "是" : "否"),
-          onTap: () async {
-            await _chooseAuthentication(context);
+          onChanged: (target) async {
+            await method.saveProperty(_propertyName, "$target");
+            _authentication = target;
             setState(() {});
           },
         );
@@ -68,16 +69,4 @@ Widget authenticationSetting() {
     });
   }
   return Container();
-}
-
-Future<void> _chooseAuthentication(BuildContext context) async {
-  if (await method.verifyAuthentication()) {
-    String? result =
-        await chooseListDialog<String>(context, "进入APP时验证身份", ["是", "否"]);
-    if (result != null) {
-      var target = result == "是";
-      await method.saveProperty(_propertyName, "$target");
-      _authentication = target;
-    }
-  }
 }

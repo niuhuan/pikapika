@@ -18,6 +18,7 @@ import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/HiddenSearchPersion.dart';
 import 'package:pikapika/basic/config/IconLoading.dart';
+import 'package:pikapika/basic/config/IgnoreUpgradeConfirm.dart';
 import 'package:pikapika/basic/config/IsPro.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
 import 'package:pikapika/basic/config/NoAnimation.dart';
@@ -47,6 +48,7 @@ import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/HiddenSubIcon.dart';
 import '../basic/config/HiddenWords.dart';
+import '../basic/config/IgnoreInfoHistory.dart';
 import '../basic/config/ImageFilter.dart';
 import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/ReaderScrollByScreenPercentage.dart';
@@ -165,6 +167,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 imageFilterSetting(),
                 readerBackgroundColorSetting(),
                 readerTwoPageDirectionSetting(),
+                const Divider(),
+                ignoreInfoHistorySetting(),
               ],
             ),
             ExpansionTile(
@@ -249,7 +253,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
                 downloadCachePathSetting(),
                 importViewLogFromOff(),
+                const Divider(),
+                ignoreUpgradeConfirmSetting(),
               ],
+            ),
+            SafeArea(
+              top: false,
+              child: Container(),
             ),
           ],
         ),

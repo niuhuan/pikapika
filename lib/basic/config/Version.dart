@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:pikapika/basic/Common.dart';
 
 import '../Method.dart';
+import 'IgnoreUpgradeConfirm.dart';
 
 const _versionUrl =
     "https://api.github.com/repos/niuhuan/pikapika/releases/latest";
@@ -75,7 +76,7 @@ Future _versionCheck() async {
 var _display = true;
 
 void versionPop(BuildContext context) {
-  if (latestVersion() != null && _display) {
+  if (latestVersion() != null && _display && !ignoreUpgradeConfirm) {
     _display = false;
     TopConfirm.topConfirm(
       context,

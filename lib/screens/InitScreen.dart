@@ -23,6 +23,7 @@ import 'package:pikapika/basic/config/FullScreenAction.dart';
 import 'package:pikapika/basic/config/FullScreenUI.dart';
 import 'package:pikapika/basic/config/HiddenSearchPersion.dart';
 import 'package:pikapika/basic/config/HiddenSubIcon.dart';
+import 'package:pikapika/basic/config/IgnoreInfoHistory.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
 import 'package:pikapika/basic/config/ImageFilter.dart';
 import 'package:pikapika/basic/config/KeyboardController.dart';
@@ -62,6 +63,7 @@ import '../basic/config/ExportRename.dart';
 import '../basic/config/HiddenFdIcon.dart';
 import '../basic/config/HiddenWords.dart';
 import '../basic/config/IconLoading.dart';
+import '../basic/config/IgnoreUpgradeConfirm.dart';
 import '../basic/config/IsPro.dart';
 import '../basic/config/ReaderBackgroundColor.dart';
 import '../basic/config/ReaderScrollByScreenPercentage.dart';
@@ -144,6 +146,7 @@ class _InitScreenState extends State<InitScreen> {
     await initUsingRightClickPop();
     await initAuthentication();
     await reloadIsPro();
+    await initIgnoreUpgradeConfirm();
     autoCheckNewVersion();
     await initWillPopNotice();
     await initHiddenFdIcon();
@@ -167,6 +170,7 @@ class _InitScreenState extends State<InitScreen> {
     await initReaderTwoPageDirection();
     await initHiddenWords();
     await initReaderScrollByScreenPercentage();
+    await initIgnoreInfoHistory();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {

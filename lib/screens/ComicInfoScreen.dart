@@ -7,6 +7,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/Navigator.dart';
+import 'package:pikapika/basic/config/IgnoreInfoHistory.dart';
 import 'package:pikapika/screens/ComicsScreen.dart';
 import 'package:pikapika/screens/components/CommentMainType.dart';
 import 'package:pikapika/screens/components/ItemBuilder.dart';
@@ -49,7 +50,9 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
   StreamSubscription<String?>? _linkSubscription;
 
   Future<ComicInfo> _loadComic() async {
-    return await method.comicInfo(widget.comicId).then((value) async {
+    return await method
+        .comicInfo(widget.comicId, currentIgnoreInfoHistory())
+        .then((value) async {
       subscribedViewed(widget.comicId);
       return value;
     });

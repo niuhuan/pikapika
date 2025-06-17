@@ -251,8 +251,9 @@ class Method {
   }
 
   /// 获取漫画详情
-  Future<ComicInfo> comicInfo(String comicId) async {
-    String rsp = await _flatInvoke("comicInfo", comicId);
+  Future<ComicInfo> comicInfo(String comicId, bool ignoreHistory) async {
+    String rsp =
+        await _flatInvoke(ignoreHistory ? "comicInfoA" : "comicInfo", comicId);
     return ComicInfo.fromJson(json.decode(rsp));
   }
 

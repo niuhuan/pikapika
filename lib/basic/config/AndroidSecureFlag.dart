@@ -22,37 +22,26 @@ Future<void> initAndroidSecureFlag() async {
   }
 }
 
-Future<void> _chooseAndroidSecureFlag(BuildContext context) async {
-  String? result =
-      await chooseListDialog<String>(context, "禁止截图/禁止显示在任务视图", ["是", "否"]);
-  if (result != null) {
-    var target = result == "是";
-    await method.saveProperty(_propertyName, "$target");
-    _androidSecureFlag = target;
-    await method.androidSecureFlag(_androidSecureFlag);
-  }
-}
-
 Widget androidSecureFlagSetting() {
   if (Platform.isAndroid) {
     return StatefulBuilder(builder:
         (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
+      return SwitchListTile(
+          value: _androidSecureFlag,
           title: Text(
             "禁止截图/禁止显示在任务视图" + (!isPro ? "(发电)" : ""),
             style: TextStyle(
               color: !isPro ? Colors.grey : null,
             ),
           ),
-          subtitle: Text(
-            _androidSecureFlag ? "是" : "否",
-          ),
-          onTap: () async {
+          onChanged: (target) async {
             if (!isPro) {
               defaultToast(context, "请先发电再使用");
               return;
             }
-            await _chooseAndroidSecureFlag(context);
+            await method.saveProperty(_propertyName, "$target");
+            _androidSecureFlag = target;
+            await method.androidSecureFlag(_androidSecureFlag);
             setState(() {});
           });
     });
