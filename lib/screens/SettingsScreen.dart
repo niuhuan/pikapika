@@ -54,6 +54,7 @@ import '../basic/config/LocalHistorySync.dart';
 import '../basic/config/ReaderScrollByScreenPercentage.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
 import '../basic/config/StartupPic.dart';
+import '../basic/config/ThreeKeepRight.dart';
 import '../basic/config/TimeoutLock.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
@@ -168,6 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 readerBackgroundColorSetting(),
                 readerTwoPageDirectionSetting(),
                 const Divider(),
+                threeKeepRightSetting(),
                 ignoreInfoHistorySetting(),
               ],
             ),

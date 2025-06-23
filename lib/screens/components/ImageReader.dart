@@ -24,6 +24,7 @@ import 'package:pikapika/basic/config/ReaderDirection.dart';
 import 'package:pikapika/basic/config/ReaderSliderPosition.dart';
 import 'package:pikapika/basic/config/ReaderTwoPageDirection.dart';
 import 'package:pikapika/basic/config/ReaderType.dart';
+import 'package:pikapika/basic/config/ThreeKeepRight.dart';
 import 'package:pikapika/basic/config/VolumeController.dart';
 import 'package:pikapika/screens/components/PkzImages.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -792,6 +793,14 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
             ]);
             break;
           case ReaderDirection.RIGHT_TO_LEFT:
+            if (threeKeepRight) {
+              child = Row(children: [
+                up,
+                fullScreen,
+                down,
+              ]);
+              break;
+            }
             child = Row(children: [
               down,
               fullScreen,

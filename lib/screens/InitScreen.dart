@@ -68,6 +68,7 @@ import '../basic/config/IsPro.dart';
 import '../basic/config/ReaderBackgroundColor.dart';
 import '../basic/config/ReaderScrollByScreenPercentage.dart';
 import '../basic/config/ReaderTwoPageDirection.dart';
+import '../basic/config/ThreeKeepRight.dart';
 import '../basic/config/VolumeNextChapter.dart';
 import '../basic/config/WebDav.dart';
 import 'AccountScreen.dart';
@@ -171,6 +172,7 @@ class _InitScreenState extends State<InitScreen> {
     await initHiddenWords();
     await initReaderScrollByScreenPercentage();
     await initIgnoreInfoHistory();
+    await initThreeKeepRight();
     String? initUrl;
     if (Platform.isAndroid || Platform.isIOS) {
       try {
