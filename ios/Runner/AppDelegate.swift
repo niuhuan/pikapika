@@ -79,6 +79,9 @@ import LocalAuthentication
                 else if call.method == "dataLocal" {
                     result(applicationSupportsPath)
                 }
+                else if call.method == "fontList" {
+                    result(UIFont.familyNames)
+                }
                 else {
                     result(FlutterMethodNotImplemented)
                 }

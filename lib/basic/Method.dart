@@ -1131,4 +1131,9 @@ class Method {
   Future updateSubscribedForce() async {
     return _flatInvoke("updateSubscribedForce", "");
   }
+
+  Future<List<String>> fontList() async {
+    return await _channel.invokeMethod(
+        "fontList", {}).then((value) => List.of(value).cast<String>());
+  }
 }

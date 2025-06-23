@@ -14,8 +14,17 @@ import 'Platform.dart';
 const _fontFamilyProperty = "fontFamily";
 
 String? _fontFamily;
+List<String> _fontList = [];
 
 Future initFont() async {
+  if (Platform.isIOS) {
+    try {
+      _fontList = await method.fontList();
+    } catch (e, s) {
+      print("获取字体列表失败: $e\n$s");
+      _fontList = [];
+    }
+  }
   var defaultFont = "";
   _fontFamily = await method.loadProperty(_fontFamilyProperty, defaultFont);
 }
@@ -43,6 +52,36 @@ Future<void> inputFont(BuildContext context) async {
   }
 }
 
+Future<void> chooseFont(BuildContext context) async {
+  var font = await showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        title: const Text("选择字体"),
+        children: _fontList.map((e) {
+          return SimpleDialogOption(
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "$e\n 我能吞下玻璃而不伤身体\n The quick brown fox jumps over the lazy dog.",
+                style: TextStyle(fontFamily: e, fontSize: 16),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(e);
+            },
+          );
+        }).toList(),
+      );
+    },
+  );
+  if (font != null) {
+    await method.saveProperty(_fontFamilyProperty, font);
+    _fontFamily = font;
+    _reloadTheme();
+  }
+}
+
 Widget fontSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
@@ -50,7 +89,11 @@ Widget fontSetting() {
         title: const Text("字体"),
         subtitle: Text("$_fontFamily"),
         onTap: () async {
-          await inputFont(context);
+          if (_fontList.isEmpty) {
+            await inputFont(context);
+          } else {
+            await chooseFont(context);
+          }
           setState(() {});
         },
       );
