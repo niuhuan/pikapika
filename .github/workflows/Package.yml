@@ -234,6 +234,7 @@ jobs:
           sed -i "s/gradle-7.5-bin.zip/gradle-6.7.1-all.zip/g" android/gradle/wrapper/gradle-wrapper.properties
           sed -i "s/com.android.tools.build:gradle:7.2.0/com.android.tools.build:gradle:4.1.0/g" android/build.gradle
           sed -i "s/1.7.10/1.3.50/g" android/app/build.gradle
+          sed -i "s/fontFamilyFallback/\/\/fontFamilyFallback/g" lib/basic/config/Themes.dart
           flutter pub get
 
       - name: Upgrade deps version (flutter2 mac)
@@ -247,6 +248,7 @@ jobs:
           gsed -i "s/multi_select_flutter: ^4.0.0/multi_select_flutter: 4.1.2/g" pubspec.yaml
           gsed -i "s/modal_bottom_sheet: ^3.0.0-pre/modal_bottom_sheet: 2.0.1/g" pubspec.yaml
           gsed -i "s/Icons.energy_savings_leaf/Icons.ad_units/g" lib/screens/SettingsScreen.dart
+          gsed -i "s/fontFamilyFallback/\/\/fontFamilyFallback/g" lib/basic/config/Themes.dart
           flutter pub get
 
       - name: Build (windows)

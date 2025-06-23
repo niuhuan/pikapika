@@ -48,7 +48,7 @@ Future<void> inputFont(BuildContext context) async {
     title: "字体",
     hint: "请输入字体",
     desc:
-        "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
+        "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。若您使用的是flutter2引擎的版本，只有第一个字体生效。",
   );
   if (font != null) {
     await method.saveProperty(_fontFamilyProperty, font);
