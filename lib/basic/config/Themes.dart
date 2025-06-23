@@ -13,7 +13,7 @@ import 'Platform.dart';
 
 const _fontFamilyProperty = "fontFamily";
 
-String? _fontFamily;
+List<String> _fontFamily = [];
 List<String> _fontList = [];
 
 Future initFont() async {
@@ -26,13 +26,18 @@ Future initFont() async {
     }
   }
   var defaultFont = "";
-  _fontFamily = await method.loadProperty(_fontFamilyProperty, defaultFont);
+  _fontFamily = (await method.loadProperty(_fontFamilyProperty, defaultFont))
+      .split(",")
+      .map((e) => e.trim())
+      .where((e) => e.isNotEmpty)
+      .toList();
 }
 
 ThemeData _fontThemeData(bool dark) {
   return ThemeData(
     brightness: dark ? Brightness.dark : Brightness.light,
-    fontFamily: _fontFamily == "" ? null : _fontFamily,
+    fontFamily: _fontFamily.isEmpty ? null : _fontFamily.first,
+    fontFamilyFallback: _fontFamily.length > 1 ? _fontFamily.sublist(1) : null,
   );
 }
 
@@ -43,21 +48,25 @@ Future<void> inputFont(BuildContext context) async {
     title: "字体",
     hint: "请输入字体",
     desc:
-        "请输入字体的名称, 例如宋体/黑体, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
+        "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。",
   );
   if (font != null) {
     await method.saveProperty(_fontFamilyProperty, font);
-    _fontFamily = font;
+    _fontFamily = font
+        .split(",")
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
     _reloadTheme();
   }
 }
 
-Future<void> chooseFont(BuildContext context) async {
+Future<String?> chooseFontFromList(BuildContext context) async {
   var font = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text("选择字体"),
+        title: const Text("需要您选择多个字体，直至您点击背景区域"),
         children: _fontList.map((e) {
           return SimpleDialogOption(
             child: Container(
@@ -75,11 +84,24 @@ Future<void> chooseFont(BuildContext context) async {
       );
     },
   );
-  if (font != null) {
-    await method.saveProperty(_fontFamilyProperty, font);
-    _fontFamily = font;
-    _reloadTheme();
+  if (font == null || font.isEmpty) {
+    return null;
   }
+  return font;
+}
+
+Future<void> chooseFont(BuildContext context) async {
+  List<String> fonts = [];
+  while (true) {
+    var font = await chooseFontFromList(context);
+    if (font == null) {
+      break;
+    }
+    fonts.add(font);
+  }
+  await method.saveProperty(_fontFamilyProperty, fonts.join(","));
+  _fontFamily = fonts;
+  _reloadTheme();
 }
 
 Widget fontSetting() {
@@ -87,7 +109,7 @@ Widget fontSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: const Text("字体"),
-        subtitle: Text("$_fontFamily"),
+        subtitle: Text(_fontFamily.join(",")),
         onTap: () async {
           if (_fontList.isEmpty) {
             await inputFont(context);
