@@ -20,7 +20,7 @@ Widget noAnimationSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
         value: _noAnimation,
-        title: const Text("取消键盘或音量翻页动画"),
+        title: const Text("取消翻页动画（点按屏幕、音量键、键盘）"),
         onChanged: (target) async {
           await method.saveProperty(_propertyName, "$target");
           _noAnimation = target;

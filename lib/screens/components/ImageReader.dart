@@ -1892,28 +1892,31 @@ class _GalleryReaderState extends _ImageReaderContentState {
       alignment: Alignment.bottomRight,
       child: Material(
         color: Colors.transparent,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
+        child: SafeArea(
+          top: false,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
+              color: Color(0x88000000),
             ),
-            color: Color(0x88000000),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              if (_hasNextEp()) {
-                _onNextAction();
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-            child: Text(
-              _hasNextEp() ? '下一章' : '结束阅读',
-              style: const TextStyle(color: Colors.white),
+            child: GestureDetector(
+              onTap: () {
+                if (_hasNextEp()) {
+                  _onNextAction();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(
+                _hasNextEp() ? '下一章' : '结束阅读',
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
@@ -2140,28 +2143,31 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
       alignment: Alignment.bottomRight,
       child: Material(
         color: Colors.transparent,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
+        child: SafeArea(
+          top: false,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
+              color: Color(0x88000000),
             ),
-            color: Color(0x88000000),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              if (_hasNextEp()) {
-                _onNextAction();
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-            child: Text(
-              _hasNextEp() ? '下一章' : '结束阅读',
-              style: const TextStyle(color: Colors.white),
+            child: GestureDetector(
+              onTap: () {
+                if (_hasNextEp()) {
+                  _onNextAction();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(
+                _hasNextEp() ? '下一章' : '结束阅读',
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
