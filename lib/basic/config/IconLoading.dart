@@ -6,7 +6,9 @@ import '../Common.dart';
 import '../Method.dart';
 
 const _propertyName = "iconLoading";
-late bool _iconLoading;
+
+// 启动图始终显示
+late bool _iconLoading = false;
 
 Future<void> initIconLoading() async {
   _iconLoading = (await method.loadProperty(_propertyName, "false")) == "true";
