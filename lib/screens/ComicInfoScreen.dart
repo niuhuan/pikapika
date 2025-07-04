@@ -421,7 +421,10 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
     );
   }
 
-  void _push(ComicInfo comicInfo, List<Ep> epList, int order, int? rank) {
+  Future _push(ComicInfo comicInfo, List<Ep> epList, int order, int? rank) async {
+    if (!currentIgnoreInfoHistory()) {
+      await method.comicInfo(widget.comicId, false);
+    }
     Navigator.push(
       context,
       mixRoute(
