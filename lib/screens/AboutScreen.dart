@@ -5,6 +5,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/config/Version.dart';
 import 'package:pikapika/screens/components/Badge.dart';
 
+import '../basic/config/IsPro.dart';
 import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
@@ -62,12 +63,17 @@ class _AboutScreenState extends State<AboutScreen> {
             width: min / 2,
             height: min / 2,
             child: Center(
-              child: SvgPicture.asset(
-                'lib/assets/github.svg',
-                width: min / 3,
-                height: min / 3,
-                color: Colors.grey.shade500,
-              ),
+              child: isPro
+                  ? SvgPicture.asset(
+                      'lib/assets/github.svg',
+                      width: min / 3,
+                      height: min / 3,
+                      color: Colors.grey.shade500,
+                    )
+                  : SizedBox(
+                      width: min / 3,
+                      height: min / 3,
+                    ),
             ),
           ),
           Container(height: 20),
@@ -121,6 +127,11 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   _buildNewVersion(String? latestVersion) {
+    if (!isPro) {
+      return const Text(
+        "请从获取渠道下载新版",
+      );
+    }
     if (latestVersion != null) {
       return Text.rich(
         TextSpan(
@@ -193,6 +204,9 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Widget _buildNewVersionInfo(String? latestVersionInfo) {
+    if (!isPro) {
+      return const Text("");
+    }
     if (latestVersionInfo != null) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,

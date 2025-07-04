@@ -7,6 +7,7 @@ import 'package:pikapika/basic/Common.dart';
 
 import '../Method.dart';
 import 'IgnoreUpgradeConfirm.dart';
+import 'IsPro.dart';
 
 const _versionUrl =
     "https://api.github.com/repos/niuhuan/pikapika/releases/latest";
@@ -40,6 +41,9 @@ String? latestVersionInfo() {
 }
 
 Future autoCheckNewVersion() {
+  if (!isPro) {
+    return Future.value();
+  }
   return _versionCheck();
 }
 
