@@ -1,4 +1,4 @@
-package opensource.pikapika
+package opensource.pic2acg
 
 import android.content.ContentValues
 import android.graphics.Bitmap
@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.sync.Mutex
 import mobile.Mobile
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -418,12 +417,12 @@ class MainActivity : FlutterActivity() {
             ?: throw java.lang.IllegalStateException()
     }
 
-    private fun defaultPikapikaDir(): File {
-        return File(downloadsDir(), "pikapika")
+    private fun defaultAppDir(): File {
+        return File(downloadsDir(), "pic2acg")
     }
 
     private fun androidDefaultExportsDir(): File {
-        return File(defaultPikapikaDir(), "exports")
+        return File(defaultAppDir(), "exports")
     }
 
     private fun androidMkdirs(path: String) {

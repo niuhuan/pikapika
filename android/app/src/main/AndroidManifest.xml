@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="opensource.pikapika">
+    package="opensource.pic2acg">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
@@ -18,10 +18,11 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="pikapika"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="pic2acg"
         android:requestLegacyExternalStorage="true">
         <activity
-            android:name=".MainActivity"
+            android:name="opensource.pic2acg.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
