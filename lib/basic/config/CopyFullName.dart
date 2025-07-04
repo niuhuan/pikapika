@@ -17,7 +17,7 @@ Widget copyFullNameSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("复制漫画名称时包含作者"),
+        title: const Text("复制漫画名称时使用模版"),
         value: _copyFullName,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

@@ -59,6 +59,7 @@ import 'package:uni_links/uni_links.dart';
 import 'package:uri_to_file/uri_to_file.dart';
 import '../basic/config/CategoriesSort.dart';
 import '../basic/config/CopyFullName.dart';
+import '../basic/config/CopyFullNameTemplate.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/ExportPath.dart';
 import '../basic/config/ExportRename.dart';
@@ -174,6 +175,7 @@ class _InitScreenState extends State<InitScreen> {
     await initReaderScrollByScreenPercentage();
     await initIgnoreInfoHistory();
     await initThreeKeepRight();
+    await initCopyFullNameTemplate();
     await initPassed();
     if (!currentPassed()) {
       Navigator.pushReplacement(context, MaterialPageRoute(

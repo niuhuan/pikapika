@@ -43,6 +43,7 @@ import '../basic/config/Authentication.dart';
 import '../basic/config/CategoriesColumnCount.dart';
 import '../basic/config/CategoriesSort.dart';
 import '../basic/config/CopyFullName.dart';
+import '../basic/config/CopyFullNameTemplate.dart';
 import '../basic/config/DownloadCachePath.dart';
 import '../basic/config/EBookScrolling.dart';
 import '../basic/config/HiddenFdIcon.dart';
@@ -120,9 +121,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 hiddenSubIconSetting(),
                 hiddenSearchPersionSetting(),
                 const Divider(),
-                copySkipConfirmSetting(),
-                copyFullNameSetting(),
-                const Divider(),
               ],
             ),
             const ExpansionTile(
@@ -141,6 +139,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 shadowCategoriesModeSetting(),
                 shadowCategoriesSetting(),
                 hiddenWordsSetting(),
+              ],
+            ),
+            ExpansionTile(
+              leading: Icon(Icons.open_in_browser),
+              title: Text('交互'),
+              children: [
+                Divider(),
+                copySkipConfirmSetting(),
+                copyFullNameSetting(),
+                copyFullNameTemplateSetting(),
+                const Divider(),
               ],
             ),
             ExpansionTile(

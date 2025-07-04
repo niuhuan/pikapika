@@ -4,6 +4,7 @@ import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/CopyFullName.dart';
+import 'package:pikapika/basic/config/CopyFullNameTemplate.dart';
 import 'package:pikapika/screens/SearchAuthorScreen.dart';
 import 'package:pikapika/screens/SearchScreen.dart';
 import 'package:pikapika/basic/Navigator.dart';
@@ -69,8 +70,17 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                           ? GestureDetector(
                               onLongPress: () {
                                 if (copyFullName()) {
+                                  var fin =
+                                  copyFullNameTemplate()
+                                      .replaceAll("{title}", info.title)
+                                      .replaceAll("{author}", info.author);
+                                  if (fin.isEmpty) {
+                                    fin = info.title;
+                                  }
                                   confirmCopy(
-                                      context, "${info.title} ${info.author}");
+                                    context,
+                                      fin,
+                                  );
                                 } else {
                                   confirmCopy(context, info.title);
                                 }
@@ -84,8 +94,8 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                               onTap: () {
                                 navPushOrReplace(
                                     context,
-                                    (context) =>
-                                        SearchAuthorScreen(author: info.author));
+                                    (context) => SearchAuthorScreen(
+                                        author: info.author));
                               },
                               onLongPress: () {
                                 confirmCopy(context, info.author);
