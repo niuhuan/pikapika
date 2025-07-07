@@ -24,7 +24,9 @@
     "select_all": "Select all",
     "load_failed": "Load failed",
     "all": "All",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save_image": "Save image",
+    "please_select": "Please select"
   },
   "net": {
     "no_address": "No address",
@@ -540,6 +542,16 @@
       "delete_download": "Delete download",
       "delete_selected_download": "Delete selected download?",
       "multi_select": "Multi select"
+    },
+    "download_only_import": {
+      "importing": "Importing",
+      "import_success": "Import success",
+      "import_failed": "Import failed",
+      "click_import_file": "Click import file",
+      "importing_please_wait": "Importing, please wait"
+    },
+    "favourite_paper": {
+      "favourite": "Favourite"
     }
   }
 }

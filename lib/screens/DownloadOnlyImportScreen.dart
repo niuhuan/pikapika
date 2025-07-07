@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:pikapika/basic/Common.dart';
@@ -27,7 +28,7 @@ class _DownloadOnlyImportScreenState extends State<DownloadOnlyImportScreen> {
   bool imported = false;
   bool importFail = false;
   dynamic e;
-  String importMessage = "正在导入";
+  String importMessage = tr('screen.download_import.importing');
   StreamSubscription<String?>? _linkSubscription;
 
   @override
@@ -57,15 +58,15 @@ class _DownloadOnlyImportScreenState extends State<DownloadOnlyImportScreen> {
       return ContentLoading(label: importMessage);
     }
     if (importFail) {
-      return Center(child: Text("导入失败\n$e"));
+      return Center(child: Text(tr('screen.download_import.import_failed') + "\n$e"));
     }
     if (imported) {
-      return const Center(child: Text("导入成功"));
+      return Center(child: Text(tr('screen.download_import.import_success')));
     }
     return Center(
       child: MaterialButton(
         onPressed: _import,
-        child: Text("点击导入文件\n${p.basename(widget.path)}"),
+        child: Text(tr('screen.download_import.click_import_file') + "\n${p.basename(widget.path)}"),
       ),
     );
   }
@@ -96,13 +97,13 @@ class _DownloadOnlyImportScreenState extends State<DownloadOnlyImportScreen> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("导入"),
+          title: Text(tr('screen.download_import.import')),
         ),
         body: _body(),
       ),
       onWillPop: () async {
         if (importing) {
-          defaultToast(context, "导入中, 请稍后");
+          defaultToast(context, tr('screen.download_import.importing_please_wait'));
           return false;
         }
         return true;

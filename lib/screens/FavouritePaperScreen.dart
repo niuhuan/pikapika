@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';
@@ -29,7 +30,7 @@ class _FavouritePaperScreen extends State<FavouritePaperScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('收藏'),
+        title: Text(tr('screen.favourite_paper.favourite')),
       ),
       body: ComicPager(
         fetchPage: _fetch,

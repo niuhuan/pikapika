@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -13,7 +14,7 @@ class FilePhotoViewScreen extends StatelessWidget {
   const FilePhotoViewScreen(this.filePath, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return rightClickPop(
       child: buildScreen(context),
       context: context,
@@ -26,12 +27,13 @@ class FilePhotoViewScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onLongPress: () async {
-                String? choose =
-                    await chooseListDialog(context, '请选择', ['保存图片']);
-                switch (choose) {
-                  case '保存图片':
-                    saveImage(filePath, context);
-                    break;
+                String? choose = await chooseListDialog(
+                    context, tr('app.please_select'), [tr('app.save_image')]);
+                if (choose == null) {
+                  return;
+                }
+                if (choose == tr('app.save_image')) {
+                  saveImage(filePath, context);
                 }
               },
               child: PhotoView(
@@ -50,7 +52,8 @@ class FilePhotoViewScreen extends StatelessWidget {
                     bottomRight: Radius.circular(8),
                   ),
                 ),
-                child: const Icon(Icons.keyboard_backspace, color: Colors.white),
+                child:
+                    const Icon(Icons.keyboard_backspace, color: Colors.white),
               ),
             ),
           ],

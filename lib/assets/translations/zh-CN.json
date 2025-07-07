@@ -24,7 +24,9 @@
     "select_all": "全选",
     "load_failed": "加载失败",
     "all": "全部",
-    "delete": "删除"
+    "delete": "删除",
+    "save_image": "保存图片",
+    "please_select": "请选择"
   },
   "net": {
     "no_address": "不分流",
@@ -537,6 +539,16 @@
       "delete_download": "删除下载",
       "delete_selected_download": "删除选中的下载吗?",
       "multi_select": "多选"
+    },
+    "download_only_import": {
+      "importing": "正在导入",
+      "import_success": "导入成功",
+      "import_failed": "导入失败",
+      "click_import_file": "点击导入文件",
+      "importing_please_wait": "导入中, 请稍后"
+    },
+    "favourite_paper": {
+      "favourite": "收藏"
     }
   }
 }

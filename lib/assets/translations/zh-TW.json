@@ -24,7 +24,9 @@
     "select_all": "全選",
     "load_failed": "加載失敗",
     "all": "全部",
-    "delete": "刪除"
+    "delete": "刪除",
+    "save_image": "保存圖片",
+    "please_select": "請選擇"
   },
   "net": {
     "no_address": "不分流",
@@ -537,6 +539,16 @@
       "delete_download": "刪除下載",
       "delete_selected_download": "刪除選中的下載嗎?",
       "multi_select": "多選"
+    },
+    "download_only_import": {
+      "importing": "正在導入",
+      "import_success": "導入成功",
+      "import_failed": "導入失敗",
+      "click_import_file": "點擊導入文件",
+      "importing_please_wait": "導入中, 請稍後"
+    },
+    "favourite_paper": {
+      "favourite": "收藏"
     }
   }
 }
