@@ -10,7 +10,8 @@
     "save_success": "Save success",
     "save_failed": "Save failed",
     "pro": "Pro",
-    "pro_required": "Please upgrade to Pro to use this feature"
+    "pro_required": "Please upgrade to Pro to use this feature",
+    "choose_folder": "Choose a folder to save the file"
   },
   "net": {
     "address": "Address",
@@ -21,7 +22,11 @@
     "address_sync_failed": "Address sync failed",
     "address_sync_reset_success": "Address sync reset success",
     "address_sync_reset_failed": "Address sync reset failed",
-    "choose_address": "Choose address"
+    "choose_address": "Choose address",
+    "image_address": "Image address",
+    "use_api_load_image": "Use API to load image",
+    "ping_testing": "Testing",
+    "ping_failed": "Failed"
   },
   "categories": {
     "all": "All"

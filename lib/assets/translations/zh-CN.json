@@ -10,7 +10,8 @@
     "save_success": "保存成功",
     "save_failed": "保存失败",
     "pro": "发电",
-    "pro_required": "请先发电再使用"
+    "pro_required": "请先发电再使用",
+    "choose_folder": "选择一个文件夹, 将文件保存到这里"
   },
   "net": {
     "address": "分流",
@@ -22,7 +23,10 @@
     "address_sync_reset_success": "分流重制成功",
     "address_sync_reset_failed": "分流重制失败",
     "choose_address": "选择分流",
-    "pro": "发电"
+    "image_address": "图片分流",
+    "use_api_load_image": "用API加载图片",
+    "ping_testing": "测速中",
+    "ping_failed": "失败"
   },
   "categories": {
     "all": "全分类"

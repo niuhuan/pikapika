@@ -10,7 +10,8 @@
     "save_success": "保存成功",
     "save_failed": "保存失败",
     "pro": "發電",
-    "pro_required": "請先發電再使用"
+    "pro_required": "請先發電再使用",
+    "choose_folder": "選擇一個文件夾, 將文件保存到這裡"
   },
   "net": {
     "address": "分流",
@@ -21,7 +22,11 @@
     "address_sync_failed": "分流同步失敗",
     "address_sync_reset_success": "分流重制成功",
     "address_sync_reset_failed": "分流重制失敗",
-    "choose_address": "選擇分流"
+    "choose_address": "選擇分流",
+    "image_address": "圖片分流",
+    "use_api_load_image": "用API加載圖片",
+    "ping_testing": "測速中",
+    "ping_failed": "失敗"
   },
   "categories": {
     "all": "全分類"

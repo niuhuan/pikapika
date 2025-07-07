@@ -94,7 +94,7 @@ Future<dynamic> _saveImageAndroid(String path, BuildContext context) async {
 /// 选择一个文件夹用于保存文件
 Future<String?> chooseFolder(BuildContext context) async {
   return FilePicker.platform.getDirectoryPath(
-    dialogTitle: "选择一个文件夹, 将文件保存到这里",
+    dialogTitle: tr('app.choose_folder'),
     initialDirectory:
         Directory.fromUri(Uri.file(await currentChooserRoot())).absolute.path,
   );

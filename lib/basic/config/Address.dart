@@ -139,21 +139,21 @@ Widget addressPopMenu(BuildContext context) {
         value: 0,
         child: ListTile(
           leading: const Icon(Icons.share),
-          title: Text("分流 (${currentAddressName()})"),
+          title: Text("${tr('net.address')} (${currentAddressName()})"),
         ),
       ),
       PopupMenuItem<int>(
         value: 1,
         child: ListTile(
           leading: const Icon(Icons.image_search),
-          title: Text("图片分流 (${currentImageAddressName()})"),
+          title: Text("${tr('net.image_address')} (${currentImageAddressName()})"),
         ),
       ),
       PopupMenuItem<int>(
         value: 2,
         child: ListTile(
           leading: const Icon(Icons.network_ping),
-          title: Text("用API加载图片 (${currentUseApiLoadImageName()})"),
+          title: Text("${tr('net.use_api_load_image')} (${currentUseApiLoadImageName()})"),
         ),
       ),
     ],
@@ -205,14 +205,14 @@ class _ApiOptionRowState extends State<ApiOptionRow> {
             AsyncSnapshot<int> snapshot,
           ) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return const PingStatus(
-                "测速中",
+              return PingStatus(
+                tr('net.ping_testing'),
                 Colors.blue,
               );
             }
             if (snapshot.hasError) {
-              return const PingStatus(
-                "失败",
+              return PingStatus(
+                tr('net.ping_failed'),
                 Colors.red,
               );
             }
