@@ -9,9 +9,42 @@
     "save_cancel": "保存取消",
     "save_success": "保存成功",
     "save_failed": "保存失败",
-    "address": "分流"
+    "pro": "发电",
+    "pro_required": "请先发电再使用"
+  },
+  "net": {
+    "address": "分流",
+    "address_sync": "分流同步",
+    "address_sync_from_server": "从服务器获取最新的分流地址",
+    "address_sync_reset": "重制分流为默认值",
+    "address_sync_success": "分流同步成功",
+    "address_sync_failed": "分流同步失败",
+    "address_sync_reset_success": "分流重制成功",
+    "address_sync_reset_failed": "分流重制失败",
+    "choose_address": "选择分流",
+    "pro": "发电"
   },
   "categories": {
     "all": "全分类"
+  },
+  "settings": {
+    "settings": "设置",
+    "interface": "界面",
+    "network": "网络",
+    "seal": "封印",
+    "interaction": "交互",
+    "reading": "阅读",
+    "download": "下载",
+    "web_server": "启动Web服务器",
+    "web_server_subtitle": "让局域网内的设备通过浏览器看下载的漫画",
+    "sync": "同步",
+    "account": "账户",
+    "modify_password": "修改密码",
+    "ebook": "电纸书",
+    "system": "系统",
+    "clear_cache": "清除缓存",
+    "migrate": "文件迁移",
+    "migrate_subtitle": "更换您的数据文件夹到内存卡",
+    "migrate_confirm": "此功能菜单保存后, 需要重启程序, 您确认吗"
   }
 }

@@ -9,9 +9,41 @@
     "save_cancel": "Save canceled",
     "save_success": "Save success",
     "save_failed": "Save failed",
-    "address": "Address"
+    "pro": "Pro",
+    "pro_required": "Please upgrade to Pro to use this feature"
+  },
+  "net": {
+    "address": "Address",
+    "address_sync": "Address sync",
+    "address_sync_from_server": "Get the latest address from the server",
+    "address_sync_reset": "Reset the address to the default value",
+    "address_sync_success": "Address sync success",
+    "address_sync_failed": "Address sync failed",
+    "address_sync_reset_success": "Address sync reset success",
+    "address_sync_reset_failed": "Address sync reset failed",
+    "choose_address": "Choose address"
   },
   "categories": {
     "all": "All"
+  },
+  "settings": {
+    "settings": "Settings",
+    "interface": "Interface",
+    "network": "Network",
+    "seal": "Seal",
+    "interaction": "Interaction",
+    "reading": "Reading",
+    "download": "Downloads",
+    "web_server": "Web Server",
+    "web_server_subtitle": "Let devices in the local network view the downloaded comics through the browser",
+    "sync": "Sync",
+    "account": "Account",
+    "modify_password": "Modify password",
+    "ebook": "E-book",
+    "system": "System",
+    "clear_cache": "Clear cache",
+    "migrate": "Migrate",
+    "migrate_subtitle": "Change your data folder to the memory card",
+    "migrate_confirm": "This feature will be saved after restarting the program, are you sure"
   }
 }

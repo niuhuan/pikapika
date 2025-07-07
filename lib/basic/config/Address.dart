@@ -55,28 +55,28 @@ Widget reloadSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("分流同步"),
+        title: Text(tr('net.address_sync')),
         onTap: () async {
-          String? choose = await chooseListDialog(context, "分流同步", [
-            "从服务器获取最新的分流地址",
-            "重制分流为默认值",
+          String? choose = await chooseListDialog(context, tr('net.address_sync'), [
+            tr('net.address_sync_from_server'),
+            tr('net.address_sync_reset'),
           ]);
           if (choose != null) {
-            if (choose == "从服务器获取最新的分流地址") {
+            if (choose == tr('net.address_sync_from_server')) {
               try {
                 await method.reloadSwitchAddress();
-                defaultToast(context, "分流2/3已同步");
+                defaultToast(context, tr('net.address_sync_success'));
               } catch (e, s) {
                 print("$e\n$s");
-                defaultToast(context, "分流同步失败");
+                defaultToast(context, tr('net.address_sync_failed'));
               }
-            } else if (choose == "重制分流为默认值") {
+            } else if (choose == tr('net.address_sync_reset')) {
               try {
                 await method.resetSwitchAddress();
-                defaultToast(context, "分流2/3已重制为默认值");
+                defaultToast(context, tr('net.address_sync_reset_success'));
               } catch (e, s) {
                 print("$e\n$s");
-                defaultToast(context, "分流重制失败");
+                defaultToast(context, tr('net.address_sync_reset_failed'));
               }
             }
           }
@@ -91,7 +91,7 @@ Future chooseAddressAndSwitch(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text('选择分流'),
+        title: Text(tr('net.choose_address')),
         children: <Widget>[
           ..._addresses.map(
             (e) => SimpleDialogOption(
@@ -106,9 +106,9 @@ Future chooseAddressAndSwitch(BuildContext context) async {
             ),
           ),
           SimpleDialogOption(
-            child: const Text("分流同步"),
+            child: Text(tr('net.address_sync')),
             onPressed: () {
-              Navigator.of(context).pop("分流同步");
+              Navigator.of(context).pop(tr('net.address_sync'));
             },
           )
         ],
@@ -116,13 +116,13 @@ Future chooseAddressAndSwitch(BuildContext context) async {
     },
   );
   if (choose != null) {
-    if ("分流同步" == choose) {
+    if (tr('net.address_sync') == choose) {
       try {
         await method.reloadSwitchAddress();
-        defaultToast(context, "分流2/3已同步");
+        defaultToast(context, tr('net.address_sync_success'));
       } catch (e, s) {
         print("$e\n$s");
-        defaultToast(context, "分流同步失败");
+        defaultToast(context, tr('net.address_sync_failed'));
       }
       return;
     }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/AndroidDisplayMode.dart';
@@ -90,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('设置'),
+        title: Text(tr('settings.settings')),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -98,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             ExpansionTile(
               leading: const Icon(Icons.ad_units),
-              title: const Text('界面'),
+              title: Text(tr('settings.interface')),
               children: [
                 const Divider(),
                 ...themeWidgets(context, setState),
@@ -123,17 +124,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(),
               ],
             ),
-            const ExpansionTile(
-              leading: Icon(Icons.lan),
-              title: Text('网络'),
-              children: [
+            ExpansionTile(
+              leading: const Icon(Icons.lan),
+              title: Text(tr('settings.network')),
+              children: const [
                 Divider(),
                 NetworkSetting(),
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.dangerous),
-              title: Text('封印'),
+              leading: const Icon(Icons.dangerous),
+              title: Text(tr('settings.seal')),
               children: [
                 const Divider(),
                 shadowCategoriesModeSetting(),
@@ -142,10 +143,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.open_in_browser),
-              title: Text('交互'),
+              leading: const Icon(Icons.open_in_browser),
+              title: Text(tr('settings.interaction')),
               children: [
-                Divider(),
+                const Divider(),
                 copySkipConfirmSetting(),
                 copyFullNameSetting(),
                 copyFullNameTemplateSetting(),
@@ -153,8 +154,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.menu_book_outlined),
-              title: Text('阅读'),
+              leading: const Icon(Icons.menu_book_outlined),
+              title: Text(tr('settings.reading')),
               children: [
                 const Divider(),
                 qualitySetting(),
@@ -178,13 +179,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.download),
-              title: Text('下载'),
+              leading: const Icon(Icons.download),
+              title: Text(tr('settings.download')),
               children: [
                 const Divider(),
                 ListTile(
-                  title: const Text("启动Web服务器"),
-                  subtitle: const Text("让局域网内的设备通过浏览器看下载的漫画"),
+                  title: Text(tr('settings.web_server')),
+                  subtitle: Text(tr('settings.web_server_subtitle')),
                   onTap: () {
                     Navigator.of(context).push(
                       mixRoute(
@@ -203,8 +204,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.backup),
-              title: Text('同步'),
+              leading: const Icon(Icons.backup),
+              title: Text(tr('settings.sync')),
               children: [
                 const Divider(),
                 ...webDavSettings(context),
@@ -213,8 +214,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.manage_accounts),
-              title: Text('账户'),
+              leading: const Icon(Icons.manage_accounts),
+              title: Text(tr('settings.account')),
               children: [
                 const Divider(),
                 widget.hiddenAccountInfo
@@ -229,13 +230,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           );
                         },
-                        title: const Text('修改密码'),
+                        title: Text(tr('settings.modify_password')),
                       ),
               ],
             ),
             ExpansionTile(
               leading: const Icon(Icons.chrome_reader_mode),
-              title: const Text('电纸书'),
+              title: Text(tr('settings.ebook')),
               children: [
                 const Divider(),
                 iconLoadingSetting(),
@@ -247,8 +248,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             ExpansionTile(
-              leading: Icon(Icons.ad_units),
-              title: Text('系统'),
+              leading: const Icon(Icons.ad_units),
+              title: Text(tr('settings.system')),
               children: [
                 const Divider(),
                 androidDisplayModeSetting(),
@@ -265,7 +266,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mixRoute(builder: (context) => const CleanScreen()),
                     );
                   },
-                  title: const Text('清除缓存'),
+                  title: Text(tr('settings.clear_cache')),
                 ),
                 const Divider(),
                 migrate(context),
@@ -290,19 +291,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (Platform.isAndroid) {
       return ListTile(
         title: Text(
-          "文件迁移" + (!isPro ? "(发电)" : ""),
+          tr('settings.migrate') + (!isPro ? "(${tr('settings.app.pro')})" : ""),
           style: TextStyle(
             color: !isPro ? Colors.grey : null,
           ),
         ),
-        subtitle: const Text("更换您的数据文件夹到内存卡"),
+        subtitle: Text(tr('settings.migrate_subtitle')),
         onTap: () async {
           if (!isPro) {
-            defaultToast(context, "请先发电再使用");
+            defaultToast(context, tr('app.pro_required'));
             return;
           }
           var f =
-              await confirmDialog(context, "文件迁移", "此功能菜单保存后, 需要重启程序, 您确认吗");
+              await confirmDialog(context, tr('settings.migrate'), tr('settings.migrate_confirm'));
           if (f) {
             Navigator.of(context).pushAndRemoveUntil(
               mixRoute(builder: (BuildContext context) {
