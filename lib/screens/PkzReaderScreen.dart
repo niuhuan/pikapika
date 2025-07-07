@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -121,7 +122,7 @@ class _PkzReaderScreenState extends State<PkzReaderScreen> {
   }
 
   FutureOr<dynamic> _onDownload() async {
-    defaultToast(context, "您阅读的是下载漫画");
+    defaultToast(context, tr("screen.pkz_reader.reading_downloaded_comic"));
   }
 
   FutureOr<dynamic> _onChangeEp(int epOrder) {
@@ -197,7 +198,7 @@ class _PkzReaderScreenState extends State<PkzReaderScreen> {
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
-            body: const ContentLoading(label: '加载中'),
+            body: ContentLoading(label: tr('app.loading')),
           );
         }
         var epNameMap = <int, String>{};

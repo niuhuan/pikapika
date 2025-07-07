@@ -21,6 +21,8 @@
     },
     "previous_page": "Previous page",
     "next_page": "Next page",
+    "page": "Page",
+    "please_enter_page_number": "Please enter page number:",
     "select_all": "Select all",
     "load_failed": "Load failed",
     "all": "All",
@@ -552,6 +554,67 @@
     },
     "favourite_paper": {
       "favourite": "Favourite"
+    },
+    "forgot_password": {
+      "title": "Password Recovery",
+      "username": "Username",
+      "not_set": "Not set",
+      "confirm": "Confirm",
+      "please_enter_username": "Please enter username",
+      "question_1": "Question 1",
+      "question_2": "Question 2", 
+      "question_3": "Question 3",
+      "answer_1": "Answer 1",
+      "answer_2": "Answer 2",
+      "answer_3": "Answer 3",
+      "please_enter_answer_1": "Please enter answer 1",
+      "please_enter_answer_2": "Please enter answer 2",
+      "please_enter_answer_3": "Please enter answer 3",
+      "use_answer_1_recover": "Use answer 1 to recover password",
+      "use_answer_2_recover": "Use answer 2 to recover password",
+      "use_answer_3_recover": "Use answer 3 to recover password",
+      "please_enter_answer": "Please enter answer",
+      "new_password_copied": "New password is being copied to clipboard",
+      "answer_incorrect": "Answer is incorrect",
+      "password": "Password"
+    },
+    "game_download": {
+      "title": "Download",
+      "download_links_obtained": "Download links obtained, you just need to choose one of them"
+    },
+    "game_info": {
+      "download": "Download",
+      "details": "Details",
+      "comments": "Comments"
+    },
+    "games": {
+      "title": "Games"
+    },
+    "import_from_off": {
+      "title": "Import",
+      "import_success": "Import success",
+      "import_failed": "Import failed"
+    },
+    "modify_password": {
+      "title": "Modify password",
+      "please_wait": "Please wait",
+      "old_password": "Old password",
+      "new_password": "New password",
+      "repeat_new_password": "Repeat new password",
+      "not_filled": "Not filled",
+      "please_enter_old_password": "Please enter old password",
+      "please_enter_new_password": "Please enter new password",
+      "please_repeat_new_password": "Please repeat new password",
+      "new_password_mismatch": "New passwords do not match",
+      "modify_success": "Modify success",
+      "failed": "Failed",
+      "confirm": "Confirm"
+    },
+    "network_settings": {
+      "title": "Network Settings"
+    },
+    "pkz_reader": {
+      "reading_downloaded_comic": "You are reading a downloaded comic"
     }
   }
 }

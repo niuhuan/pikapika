@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -34,7 +35,7 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("下载 - ${widget.info.title}"),
+        title: Text("${tr('screen.game_download.title')} - ${widget.info.title}"),
       ),
       body: PikaListView(
         children: [
@@ -53,7 +54,7 @@ class _GameDownloadScreenState extends State<GameDownloadScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(30),
-                    child: const Text('获取到下载链接, 您只需要选择其中一个'),
+                    child: Text(tr('screen.game_download.download_links_obtained')),
                   ),
                   ...snapshot.data!.map((e) => _copyCard(e)),
                 ],

@@ -21,6 +21,8 @@
     },
     "previous_page": "上一頁",
     "next_page": "下一頁",
+    "page": "頁",
+    "please_enter_page_number": "請輸入頁數：",
     "select_all": "全選",
     "load_failed": "加載失敗",
     "all": "全部",
@@ -549,6 +551,67 @@
     },
     "favourite_paper": {
       "favourite": "收藏"
+    },
+    "forgot_password": {
+      "title": "找回密碼",
+      "username": "帳號",
+      "not_set": "未設置",
+      "confirm": "確認",
+      "please_enter_username": "請輸入帳號",
+      "question_1": "問題1",
+      "question_2": "問題2",
+      "question_3": "問題3",
+      "answer_1": "回答1",
+      "answer_2": "回答2",
+      "answer_3": "回答3",
+      "please_enter_answer_1": "請輸入回答1",
+      "please_enter_answer_2": "請輸入回答2",
+      "please_enter_answer_3": "請輸入回答3",
+      "use_answer_1_recover": "使用回答1找回密碼",
+      "use_answer_2_recover": "使用回答2找回密碼",
+      "use_answer_3_recover": "使用回答3找回密碼",
+      "please_enter_answer": "請輸入答案",
+      "new_password_copied": "新密碼正在複製到剪切板",
+      "answer_incorrect": "答案不正確",
+      "password": "密碼"
+    },
+    "game_download": {
+      "title": "下載",
+      "download_links_obtained": "獲取到下載鏈接, 您只需要選擇其中一個"
+    },
+    "game_info": {
+      "download": "下載",
+      "details": "詳情",
+      "comments": "評論"
+    },
+    "games": {
+      "title": "遊戲"
+    },
+    "import_from_off": {
+      "title": "導入",
+      "import_success": "導入成功",
+      "import_failed": "導入失敗"
+    },
+    "modify_password": {
+      "title": "修改密碼",
+      "please_wait": "請稍後",
+      "old_password": "舊密碼",
+      "new_password": "新密碼",
+      "repeat_new_password": "重複輸入新密碼",
+      "not_filled": "未填寫",
+      "please_enter_old_password": "請輸入舊密碼",
+      "please_enter_new_password": "請輸入新密碼",
+      "please_repeat_new_password": "請重複輸入新密碼",
+      "new_password_mismatch": "新密碼不匹配",
+      "modify_success": "修改成功",
+      "failed": "失敗",
+      "confirm": "確認"
+    },
+    "network_settings": {
+      "title": "網路設置"
+    },
+    "pkz_reader": {
+      "reading_downloaded_comic": "您閱讀的是下載漫畫"
     }
   }
 }

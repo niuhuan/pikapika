@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -47,7 +48,7 @@ class _GamesScreenState extends State<GamesScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('游戏'),
+        title: Text(tr('screen.games.title')),
       ),
       body: ContentBuilder(
         key: _key,
@@ -92,20 +93,20 @@ class _GamesScreenState extends State<GamesScreen> {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        _textEditController.clear();
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              content: Card(
-                                child: TextField(
-                                  controller: _textEditController,
-                                  decoration: const InputDecoration(
-                                    labelText: "请输入页数：",
-                                  ),
+                                        children: [
+                        InkWell(
+                          onTap: () {
+                            _textEditController.clear();
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Card(
+                                    child: TextField(
+                                      controller: _textEditController,
+                                      decoration: InputDecoration(
+                                        labelText: tr("app.please_enter_page_number"),
+                                      ),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(
@@ -113,38 +114,38 @@ class _GamesScreenState extends State<GamesScreen> {
                                   ],
                                 ),
                               ),
-                              actions: <Widget>[
-                                MaterialButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('取消'),
-                                ),
-                                MaterialButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    var text = _textEditController.text;
-                                    if (text.isEmpty || text.length > 5) {
-                                      return;
-                                    }
-                                    var num = int.parse(text);
-                                    if (num == 0 || num > page.pages) {
-                                      return;
-                                    }
-                                    _onPageChange(num);
-                                  },
-                                  child: const Text('确定'),
-                                ),
-                              ],
+                                                                actions: <Widget>[
+                                    MaterialButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(tr('app.cancel')),
+                                    ),
+                                    MaterialButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        var text = _textEditController.text;
+                                        if (text.isEmpty || text.length > 5) {
+                                          return;
+                                        }
+                                        var num = int.parse(text);
+                                        if (num == 0 || num > page.pages) {
+                                          return;
+                                        }
+                                        _onPageChange(num);
+                                      },
+                                      child: Text(tr('app.confirm')),
+                                    ),
+                                  ],
                             );
                           },
                         );
                       },
-                      child: Row(
-                        children: [
-                          Text("第 ${page.page} / ${page.pages} 页"),
-                        ],
-                      ),
+                                                child: Row(
+                            children: [
+                              Text("${tr('app.page')} ${page.page} / ${page.pages}"),
+                            ],
+                          ),
                     ),
                     Row(
                       children: [
@@ -155,7 +156,7 @@ class _GamesScreenState extends State<GamesScreen> {
                               _onPageChange(page.page - 1);
                             }
                           },
-                          child: const Text('上一页'),
+                          child: Text(tr('app.previous_page')),
                         ),
                         MaterialButton(
                           minWidth: 0,
@@ -164,7 +165,7 @@ class _GamesScreenState extends State<GamesScreen> {
                               _onPageChange(page.page + 1);
                             }
                           },
-                          child: const Text('下一页'),
+                          child: Text(tr('app.next_page')),
                         )
                       ],
                     ),
@@ -183,7 +184,7 @@ class _GamesScreenState extends State<GamesScreen> {
                           },
                           child: Container(
                             padding: const EdgeInsets.only(top: 30, bottom: 30),
-                            child: const Text('下一页'),
+                            child: Text(tr('screen.games.next_page')),
                           ),
                         ),
                       ]

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
@@ -57,7 +58,7 @@ class _ImportFromOffScreenState extends State<ImportFromOffScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('导入'),
+        title: Text(tr('screen.import_from_off.title')),
       ),
       body: PikaListView(
         children: [
@@ -77,11 +78,11 @@ class _ImportFromOffScreenState extends State<ImportFromOffScreen> {
       });
       await method.importComicViewFormOff(widget.dbPath);
       setState(() {
-        _importMessage = "导入成功";
+        _importMessage = tr("screen.import_from_off.import_success");
       });
     } catch (e) {
       setState(() {
-        _importMessage = "导入失败 $e";
+        _importMessage = "${tr('screen.import_from_off.import_failed')} $e";
       });
     } finally {
       setState(() {

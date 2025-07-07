@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -43,7 +44,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
         if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('加载出错'),
+              title: Text(tr('app.error')),
             ),
             body: ContentError(
                 error: snapshot.error,
@@ -59,9 +60,9 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('加载中'),
+              title: Text(tr('app.loading')),
             ),
-            body: const ContentLoading(label: '加载中'),
+            body: ContentLoading(label: tr('app.loading')),
           );
         }
 
@@ -105,7 +106,7 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                           },
                           child: Container(
                             padding: const EdgeInsets.all(5),
-                            child: const Text('下载'),
+                            child: Text(tr('screen.game_info.download')),
                           ),
                         ),
                       ),
@@ -151,8 +152,8 @@ class _GameInfoScreenState extends State<GameInfoScreen> {
                               .withOpacity(.025),
                           child: TabBar(
                             tabs: <Widget>[
-                              const Tab(text: '详情 '),
-                              Tab(text: '评论 (${info.commentsCount})'),
+                              Tab(text: tr('screen.game_info.details')),
+                              Tab(text: '${tr('screen.game_info.comments')} (${info.commentsCount})'),
                             ],
                             indicatorColor:
                                 Theme.of(context).colorScheme.secondary,

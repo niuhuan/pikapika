@@ -21,6 +21,8 @@
     },
     "previous_page": "上一页",
     "next_page": "下一页",
+    "page": "页",
+    "please_enter_page_number": "请输入页数：",
     "select_all": "全选",
     "load_failed": "加载失败",
     "all": "全部",
@@ -549,6 +551,67 @@
     },
     "favourite_paper": {
       "favourite": "收藏"
+    },
+    "forgot_password": {
+      "title": "找回密码",
+      "username": "账号",
+      "not_set": "未设置",
+      "confirm": "确认",
+      "please_enter_username": "请输入账号",
+      "question_1": "问题1",
+      "question_2": "问题2",
+      "question_3": "问题3",
+      "answer_1": "回答1",
+      "answer_2": "回答2",
+      "answer_3": "回答3",
+      "please_enter_answer_1": "请输入回答1",
+      "please_enter_answer_2": "请输入回答2",
+      "please_enter_answer_3": "请输入回答3",
+      "use_answer_1_recover": "使用回答1找回密码",
+      "use_answer_2_recover": "使用回答2找回密码",
+      "use_answer_3_recover": "使用回答3找回密码",
+      "please_enter_answer": "请输入答案",
+      "new_password_copied": "新密码正在复制到剪切板",
+      "answer_incorrect": "答案不正确",
+      "password": "密码"
+    },
+    "game_download": {
+      "title": "下载",
+      "download_links_obtained": "获取到下载链接, 您只需要选择其中一个"
+    },
+    "game_info": {
+      "download": "下载",
+      "details": "详情",
+      "comments": "评论"
+    },
+    "games": {
+      "title": "游戏"
+    },
+    "import_from_off": {
+      "title": "导入",
+      "import_success": "导入成功",
+      "import_failed": "导入失败"
+    },
+    "modify_password": {
+      "title": "修改密码",
+      "please_wait": "请稍后",
+      "old_password": "旧密码",
+      "new_password": "新密码",
+      "repeat_new_password": "重复输入新密码",
+      "not_filled": "未填写",
+      "please_enter_old_password": "请输入旧密码",
+      "please_enter_new_password": "请输入新密码",
+      "please_repeat_new_password": "请重复输入新密码",
+      "new_password_mismatch": "新密码不匹配",
+      "modify_success": "修改成功",
+      "failed": "失败",
+      "confirm": "确认"
+    },
+    "network_settings": {
+      "title": "网络设置"
+    },
+    "pkz_reader": {
+      "reading_downloaded_comic": "您阅读的是下载漫画"
     }
   }
 }

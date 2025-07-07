@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/screens/components/NetworkSetting.dart';
 
@@ -17,7 +18,7 @@ class NetworkSettingsScreen extends StatelessWidget {
   }
 
   Widget buildScreen(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('网络设置')),
+        appBar: AppBar(title: Text(tr('screen.network_settings.title'))),
         body: PikaListView(
           children: const [
             NetworkSetting(),
