@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,10 +46,10 @@ Future<void> inputFont(BuildContext context) async {
   var font = await displayTextInputDialog(
     context,
     src: "$_fontFamily",
-    title: "字体",
-    hint: "请输入字体",
+    title: tr("settings.font.title"),
+    hint: tr("settings.font.hint"),
     desc:
-        "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。若您使用的是flutter2引擎的版本，只有第一个字体生效。",
+        tr("settings.font.input_hint"),
   );
   if (font != null) {
     await method.saveProperty(_fontFamilyProperty, font);
@@ -66,7 +67,7 @@ Future<String?> chooseFontFromList(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text("需要您选择多个字体，直至您点击背景区域"),
+        title: Text(tr("settings.font.choose_hint")),
         children: _fontList.map((e) {
           return SimpleDialogOption(
             child: Container(
@@ -108,7 +109,7 @@ Widget fontSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("字体"),
+        title: Text(tr("settings.font.title")),
         subtitle: Text(_fontFamily.join(",")),
         onTap: () async {
           if (_fontList.isEmpty) {
@@ -141,7 +142,7 @@ class _OriginTheme extends _ThemePackage {
   String code() => "origin";
 
   @override
-  String name() => "原生";
+  String name() => tr("settings.theme.origin");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData;
@@ -155,7 +156,7 @@ class _PinkTheme extends _ThemePackage {
   String code() => "pink";
 
   @override
-  String name() => "粉色";
+  String name() => tr("settings.theme.pink");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
@@ -198,7 +199,7 @@ class _BlackTheme extends _ThemePackage {
   String code() => "black";
 
   @override
-  String name() => "酷黑";
+  String name() => tr("settings.theme.black");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
@@ -242,7 +243,7 @@ class _DarkTheme extends _ThemePackage {
   String code() => "dark";
 
   @override
-  String name() => "暗黑";
+  String name() => tr("settings.theme.dark");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
@@ -294,7 +295,7 @@ class _DustyBlueTheme extends _ThemePackage {
   String code() => "dustyBlue";
 
   @override
-  String name() => "灰蓝";
+  String name() => tr("settings.theme.dusty_blue");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
@@ -357,7 +358,7 @@ class _DarkBlackTheme extends _ThemePackage {
   String code() => "dark_black";
 
   @override
-  String name() => "纯黑";
+  String name() => tr("settings.theme.dark_black");
 
   @override
   ThemeData themeData(ThemeData rawData) => rawData.copyWith(
@@ -497,7 +498,7 @@ Future<String?> _chooseTheme(BuildContext buildContext) {
               },
             )));
         return SimpleDialog(
-          title: const Text("选择主题"),
+          title: Text(tr("settings.theme.choose")),
           children: list,
         );
       });

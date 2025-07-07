@@ -64,6 +64,7 @@
     "authentication": "Authentication when entering the app (if the system has already entered the password or fingerprint)",
     "set_password": "Set application password",
     "auto_clean": {
+      "title": "Auto clean cache",
       "one_month_ago": "One month ago",
       "one_week_ago": "One week ago",
       "one_day_ago": "One day ago",
@@ -284,6 +285,60 @@
       "clear_subtitle": "Clear the picture displayed when the application starts",
       "clear_success": "Startup picture cleared",
       "update_success": "Startup picture updated"
+    },
+    "show_comment_at_download": {
+      "title": "Show comment at download"
+    },
+    "font": {
+      "title": "Font",
+      "hint": "Please enter the font",
+      "input_hint": "Please enter the font name and use English commas to separate, for example “Songti, Heiti”, if you save it and it doesn't change, it means the font cannot be used or the name is wrong, you can refer to C:\\Windows\\Fonts to find your font. If you are using the flutter2 engine version, only the first font will take effect.",
+      "choose_hint": "You need to select multiple fonts until you click the background area"
+    },
+    "theme": {
+      "origin": "Origin",
+      "pink": "Pink",
+      "black": "Black",
+      "dark": "Dark",
+      "dusty_blue": "Dusty blue",
+      "dark_black": "Dark black",
+      "choose": "Choose theme"
+    },
+    "three_keep_right": {
+      "title": "Three area mode page always to the right"
+    },
+    "time_zone": {
+      "title": "Time zone"
+    },
+    "timeout_lock": {
+      "title": "Auto lock",
+      "notice": "Note: Auto lock only supports timeout after minimizing on desktop, and supports timeout after background and screen lock on mobile. If no password is set, auto lock is invalid. Android and desktop only lock the desktop, not the download, iOS is not tested, you need to manually enable background activity.",
+      "1_hour": "One hour",
+      "10_minutes": "Ten minutes",
+      "3_minutes": "Three minutes",
+      "1_minute": "One minute",
+      "10_seconds": "Ten seconds",
+      "1_second": "One second",
+      "no_lock": "No lock"
+    },
+    "using_right_click_pop": {
+      "title": "Mouse right click to return to the previous page"
+    },
+    "volume_next_chapter": {
+      "title": "Double click volume/keyboard/controller to next chapter"
+    },
+    "webdav": {
+      "title": "WebDav",
+      "path": "WebDav path",
+      "path_hint": "Please enter the WebDav path",
+      "username": "WebDav username",
+      "username_hint": "Please enter the WebDav username",
+      "password": "WebDav password",
+      "password_hint": "Please enter the WebDav password",
+      "auto_sync_history_to_webdav": "Auto sync history to WebDav",
+      "sync_history_to_webdav": "Sync history to WebDAV",
+      "sync_success": "Sync success",
+      "sync_failed": "Sync failed"
     }
-  } 
+  }
 }

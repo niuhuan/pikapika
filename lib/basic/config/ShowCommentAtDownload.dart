@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -21,7 +22,7 @@ Widget showCommentAtDownloadSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
         value: _showCommentAtDownload,
-        title: const Text("在下载显示评论区"),
+        title: Text(tr("settings.show_comment_at_download.title")),
         onChanged: (target) async {
           await method.saveProperty(_propertyName, "$target");
           _showCommentAtDownload = target;

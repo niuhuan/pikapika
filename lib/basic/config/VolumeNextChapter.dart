@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -18,7 +19,7 @@ Widget volumeNextChapterSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("双击音量键下一章节"),
+        title: Text(tr("settings.volume_next_chapter.title")),
         value: _volumeNextChapter,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

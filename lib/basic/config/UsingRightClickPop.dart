@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -26,9 +27,9 @@ Widget usingRightClickPopSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("鼠标右键返回上一页"),
+        title: Text(tr("settings.using_right_click_pop.title")),
         onChanged: (value) async {
-          await method.saveProperty(_propertyName, "${value ? "是" : "否"}");
+          await method.saveProperty(_propertyName, "${value ? tr("app.yes") : tr("app.no")}");
           _usingRightClickPop = value;
           setState(() {});
         },

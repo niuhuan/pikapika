@@ -1,5 +1,6 @@
 /// 时区设置
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -25,7 +26,7 @@ Future<void> _chooseTimeZone(BuildContext context) async {
     }
     timeZones.add(str);
   }
-  String? result = await chooseListDialog<String>(context, "时区选择", timeZones);
+  String? result = await chooseListDialog<String>(context, tr("settings.time_zone.title"), timeZones);
   if (result != null) {
     if (result.startsWith("+")) {
       result = result.substring(1);
@@ -43,7 +44,7 @@ Widget timeZoneSetting() {
         c = "+" + c;
       }
       return ListTile(
-        title: const Text("时区"),
+        title: Text(tr("settings.time_zone.title")),
         subtitle: Text(c),
         onTap: () async {
           await _chooseTimeZone(context);

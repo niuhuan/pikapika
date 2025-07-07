@@ -1,22 +1,35 @@
 /// 自动清理
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
-const _lockTimeOutMap = {
-  "一小时": "${60 * 60}",
-  "十分钟": "${60 * 10}",
-  "三分钟": "${60 * 3}",
-  "一分钟": "${60}",
-  "十秒": "${10}",
-  "一秒": "${1}",
-  "不锁定": "${0}",
-};
+// const _lockTimeOutMap = {
+//   "一小时": "${60 * 60}",
+//   "十分钟": "${60 * 10}",
+//   "三分钟": "${60 * 3}",
+//   "一分钟": "${60}",
+//   "十秒": "${10}",
+//   "一秒": "${1}",
+//   "不锁定": "${0}",
+// };
+
+Map<String, String> _lockTimeOutMap = {};
+
 late String _lockTimeOutSec;
 
 int get timeoutLock => int.tryParse(_lockTimeOutSec) ?? 0;
 
 Future<dynamic> initLockTimeOut() async {
+  _lockTimeOutMap.addAll({
+    tr("settings.timeout_lock.1_hour"): "${60 * 60}",
+    tr("settings.timeout_lock.10_minutes"): "${60 * 10}",
+    tr("settings.timeout_lock.3_minutes"): "${60 * 3}",
+    tr("settings.timeout_lock.1_minute"): "${60}",
+    tr("settings.timeout_lock.10_seconds"): "${10}",
+    tr("settings.timeout_lock.1_second"): "${1}",
+    tr("settings.timeout_lock.no_lock"): "${0}",
+  });
   _lockTimeOutSec = await method.loadProperty("lockTimeOutSec", "${0}");
 }
 
@@ -26,7 +39,7 @@ String _currentLockTimeOutSec() {
       return value.key;
     }
   }
-  return "$_lockTimeOutSec 秒";
+  return "$_lockTimeOutSec seconds";
 }
 
 Future<void> _chooseLockTimeOutSec(BuildContext context) async {
@@ -34,7 +47,7 @@ Future<void> _chooseLockTimeOutSec(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text('多久后自动锁定'),
+        title: Text(tr("settings.timeout_lock.title")),
         children: <Widget>[
           ..._lockTimeOutMap.entries.map(
             (e) => SimpleDialogOption(
@@ -58,7 +71,7 @@ Widget lockTimeOutSecSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("自动锁定"),
+        title: Text(tr("settings.timeout_lock.title")),
         subtitle: Text(_currentLockTimeOutSec()),
         onTap: () async {
           await _chooseLockTimeOutSec(context);
@@ -70,7 +83,7 @@ Widget lockTimeOutSecSetting() {
 }
 
 Widget lockTimeOutSecNotice() {
-  return const ListTile(
-    subtitle: Text("注意：自动锁定在桌面端仅支持最小化后超时，手机端支持后台以及锁屏后超时。如果没有设置密码，自动锁定无效。安卓以及桌面端只会锁定桌面，不会锁定下载，iOS未测试，需要手动开启后台活动。"),
+  return ListTile(
+    subtitle: Text(tr("settings.timeout_lock.notice")),
   );
 }

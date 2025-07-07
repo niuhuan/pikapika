@@ -42,7 +42,7 @@ Future<void> _chooseAutoCleanSec(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text('选择自动清理周期'),
+        title: Text(tr("settings.auto_clean.title")),
         children: <Widget>[
           ..._autoCleanMap.entries.map(
             (e) => SimpleDialogOption(
@@ -66,7 +66,7 @@ Widget autoCleanSecSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("自动清理缓存"),
+        title: Text(tr("settings.auto_clean.title")),
         subtitle: Text(_currentAutoCleanSec()),
         onTap: () async {
           await _chooseAutoCleanSec(context);

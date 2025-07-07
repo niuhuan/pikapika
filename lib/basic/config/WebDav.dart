@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -49,7 +50,7 @@ Future syncWebDavIfAuto(BuildContext context) async {
       );
     } catch (e, s) {
       print("$e\n$s");
-      defaultToast(context, "WebDav没有同步成功\n$e");
+      defaultToast(context, tr("net.webdav_sync_failed"));
     }
   }
 }
@@ -62,10 +63,10 @@ Future syncHistoryToWebdav(BuildContext context) async {
       _webdavPassword,
       "pk.histories",
     );
-    defaultToast(context, "同步成功");
+    defaultToast(context, tr("net.webdav_sync_success"));
   } catch (e, s) {
     print("$e\n$s");
-    defaultToast(context, "没有同步成功\n$e");
+    defaultToast(context, tr("net.webdav_sync_failed"));
   }
 }
 
@@ -75,16 +76,16 @@ List<Widget> webDavSettings(BuildContext context) {
     StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-            title: const Text(
-              "WebDav 路径 （文件夹）",
+            title: Text(
+              tr("net.webdav_path"),
             ),
             subtitle: Text(_webdavRoot),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavRoot,
-                title: 'WebDav 路径',
-                hint: '请输入WebDav 路径',
+                title: tr("net.webdav_path"),
+                hint: tr("net.webdav_path_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavRootPropertyName, input);
@@ -99,16 +100,16 @@ List<Widget> webDavSettings(BuildContext context) {
     StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-            title: const Text(
-              "WebDav 用户名",
+            title: Text(
+              tr("net.webdav_username"),
             ),
             subtitle: Text(_webdavUsername),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavUsername,
-                title: 'WebDav 用户名',
-                hint: '请输入WebDav 用户名',
+                title: tr("net.webdav_username"),
+                hint: tr("net.webdav_username_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavUsernamePropertyName, input);
@@ -123,16 +124,16 @@ List<Widget> webDavSettings(BuildContext context) {
     StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-            title: const Text(
-              "WebDav 密码",
+            title: Text(
+              tr("net.webdav_password"),
             ),
             subtitle: Text(_webdavPassword),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavPassword,
-                title: 'WebDav 密码',
-                hint: '请输入WebDav 密码',
+                title: tr("net.webdav_password"),
+                hint: tr("net.webdav_password_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavPasswordPropertyName, input);
@@ -148,13 +149,13 @@ List<Widget> webDavSettings(BuildContext context) {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
           title: Text(
-            "开启时自动同步浏览记录到WebDav" + (isPro ? "" : "(发电)"),
+            tr("net.webdav_auto_sync_history_to_webdav") + (isPro ? "" : "(${tr("app.pro")})"),
             style: TextStyle(
               color: !isPro ? Colors.grey : null,
             ),
           ),
           subtitle: Text(
-            _autoSyncHistoryToWebdav ? "是" : "否",
+            _autoSyncHistoryToWebdav ? tr("app.yes") : tr("app.no"),
             style: TextStyle(
               color: !isPro ? Colors.grey : null,
             ),
@@ -164,9 +165,9 @@ List<Widget> webDavSettings(BuildContext context) {
               return;
             }
             String? result = await chooseListDialog<String>(
-                context, "开启时自动同步浏览记录到WebDav", ["是", "否"]);
+                context, tr("net.webdav_auto_sync_history_to_webdav"), [tr("app.yes"), tr("app.no")]);
             if (result != null) {
-              var target = result == "是";
+              var target = result == tr("app.yes");
               await method.saveProperty(
                   _autoSyncHistoryToWebdavPropertyName, "$target");
               _autoSyncHistoryToWebdav = target;
@@ -178,7 +179,7 @@ List<Widget> webDavSettings(BuildContext context) {
     ),
     //
     ListTile(
-        title: const Text("立即同步浏览记录到WebDAV"),
+        title: Text(tr("net.webdav_sync_history_to_webdav")),
         onTap: () async {
           await syncHistoryToWebdav(context);
         }),

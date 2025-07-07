@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -15,7 +16,7 @@ Widget threeKeepRightSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("三区域模式翻页始终为右侧下一页"),
+        title: Text(tr("settings.three_keep_right.title")),
         value: _threeKeepRight,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

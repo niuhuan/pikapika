@@ -64,6 +64,7 @@
     "authentication": "進入APP時驗證身份(如果系統已經錄入密碼或指紋)",
     "set_password": "設置應用程序密碼",
     "auto_clean": {
+      "title": "自動清理快取",
       "one_month_ago": "一個月前",
       "one_week_ago": "一周前",
       "one_day_ago": "一天前",
@@ -284,6 +285,59 @@
       "clear_subtitle": "清除應用啟動時顯示的圖片",
       "clear_success": "啟動圖片已清除",
       "update_success": "啟動圖片已更新"
+    },
+    "show_comment_at_download": {
+      "title": "在下載顯示評論區"
+    },
+    "font": {
+      "title": "字體",
+      "hint": "請輸入字體",
+      "input_hint": "請輸入字體的名稱且用英文逗號分隔, 例如 “宋體,黑體”, 如果您保存後沒有發生變化, 說明字體無法使用或名稱錯誤, 可以去參考C:\\Windows\\Fonts尋找您的字體。若您使用的是flutter2引擎的版本，只有第一個字體生效。",
+      "choose_hint": "需要您選擇多個字體，直至您點擊背景區域"
+    },
+    "theme": {
+      "origin": "原生",
+      "pink": "粉色",
+      "black": "酷黑",
+      "dark": "暗黑",
+      "dusty_blue": "灰蓝",
+      "dark_black": "纯黑"
+    },
+    "three_keep_right": {
+      "title": "三區域模式翻頁始終為右側下一頁"
+    },
+    "time_zone": {
+      "title": "時區"
+    },
+    "timeout_lock": {
+      "title": "自動鎖定",
+      "notice": "注意：自動鎖定在桌面端僅支持最小化後超時，手機端支持後台以及鎖屏後超時。如果沒有設置密碼，自動鎖定無效。安卓以及桌面端只會鎖定桌面，不會鎖定下載，iOS未測試，需要手動開啟後台活動。",
+      "1_hour": "一小時",
+      "10_minutes": "十分鐘",
+      "3_minutes": "三分鐘",
+      "1_minute": "一分鐘",
+      "10_seconds": "十秒",
+      "1_second": "一秒",
+      "no_lock": "不鎖定"
+    },
+    "using_right_click_pop": {
+      "title": "鼠標右鍵返回上一頁"
+    },
+    "volume_next_chapter": {
+      "title": "雙擊 音量/鍵盤/控制器 下一章節"
+    },
+    "webdav": {
+      "title": "WebDav",
+      "path": "WebDav 路徑",
+      "path_hint": "請輸入WebDav 路徑",
+      "username": "WebDav 用戶名",
+      "username_hint": "請輸入WebDav 用戶名",
+      "password": "WebDav 密碼",
+      "password_hint": "請輸入WebDav 密碼",
+      "auto_sync_history_to_webdav": "開啟時自動同步瀏覽記錄到WebDav",
+      "sync_history_to_webdav": "立即同步瀏覽記錄到WebDAV",
+      "sync_success": "同步成功",
+      "sync_failed": "同步失敗"
     }
   }
 }

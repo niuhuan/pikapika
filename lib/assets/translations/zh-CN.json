@@ -64,6 +64,7 @@
     "authentication": "进入APP时验证身份(如果系统已经录入密码或指纹)",
     "set_password": "设置应用程序密码",
     "auto_clean": {
+      "title": "自动清理缓存",
       "one_month_ago": "一个月前",
       "one_week_ago": "一周前",
       "one_day_ago": "一天前",
@@ -284,6 +285,59 @@
       "clear_subtitle": "清除应用启动时显示的图片",
       "clear_success": "启动图片已清除",
       "update_success": "启动图片已更新"
+    },
+    "show_comment_at_download": {
+      "title": "在下载显示评论区"
+    },
+    "font": {
+      "title": "字体",
+      "hint": "请输入字体",
+      "input_hint": "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。若您使用的是flutter2引擎的版本，只有第一个字体生效。",
+      "choose_hint": "需要您选择多个字体，直至您点击背景区域"
+    },
+    "theme": {
+      "origin": "原生",
+      "pink": "粉色",
+      "black": "酷黑",
+      "dark": "暗黑",
+      "dusty_blue": "灰蓝",
+      "dark_black": "纯黑"
+    },
+    "three_keep_right": {
+      "title": "三区域模式翻页始终为右侧下一页"
+    },
+    "time_zone": {
+      "title": "时区"
+    },
+    "timeout_lock": {
+      "title": "自动锁定",
+      "notice": "注意：自动锁定在桌面端仅支持最小化后超时，手机端支持后台以及锁屏后超时。如果没有设置密码，自动锁定无效。安卓以及桌面端只会锁定桌面，不会锁定下载，iOS未测试，需要手动开启后台活动。",
+      "1_hour": "一小时",
+      "10_minutes": "十分钟",
+      "3_minutes": "三分钟",
+      "1_minute": "一分钟",
+      "10_seconds": "十秒",
+      "1_second": "一秒",
+      "no_lock": "不锁定"
+    },
+    "using_right_click_pop": {
+      "title": "鼠标右键返回上一页"
+    },
+    "volume_next_chapter": {
+      "title": "双击 音量/键盘/控制器 下一章节"
+    },
+    "webdav": {
+      "title": "WebDav",
+      "path": "WebDav 路径",
+      "path_hint": "请输入WebDav 路径",
+      "username": "WebDav 用户名",
+      "username_hint": "请输入WebDav 用户名",
+      "password": "WebDav 密码",
+      "password_hint": "请输入WebDav 密码",
+      "auto_sync_history_to_webdav": "开启时自动同步浏览记录到WebDav",
+      "sync_history_to_webdav": "立即同步浏览记录到WebDAV",
+      "sync_success": "同步成功",
+      "sync_failed": "同步失败"
     }
   }
 }
