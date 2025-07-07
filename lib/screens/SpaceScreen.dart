@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/HiddenFdIcon.dart';
 import 'package:pikapika/basic/config/Version.dart';
@@ -51,12 +52,12 @@ class _SpaceScreenState extends State<SpaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('我的'),
+        title: Text(tr('screen.space.title')),
         actions: [
           IconButton(
             onPressed: () async {
               bool result =
-                  await confirmDialog(context, '退出登录', '您确认要退出当前账号吗?');
+                  await confirmDialog(context, tr('screen.space.logout'), tr('screen.space.logout_confirm'));
               if (result) {
                 await method.clearToken();
                 await method.setPassword("");
@@ -118,7 +119,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 mixRoute(builder: (context) => const FavouritePaperScreen()),
               );
             },
-            title: const Text('我的收藏'),
+            title: Text(tr('screen.space.my_favourites')),
           ),
           const Divider(),
           ListTile(
@@ -128,7 +129,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 mixRoute(builder: (context) => const ViewLogsScreen()),
               );
             },
-            title: const Text('浏览记录'),
+            title: Text(tr('screen.space.view_history')),
           ),
           const Divider(),
           ListTile(
@@ -138,7 +139,7 @@ class _SpaceScreenState extends State<SpaceScreen> {
                 mixRoute(builder: (context) => const DownloadListScreen()),
               );
             },
-            title: const Text('我的下载'),
+            title: Text(tr('screen.space.my_downloads')),
           ),
           const Divider(),
         ],

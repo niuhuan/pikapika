@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
@@ -31,7 +32,7 @@ class _RandomComicsScreenState extends State<RandomComicsScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('随机本子'),
+        title: Text(tr('screen.random_comics.title')),
         actions: [
           commonPopMenu(context),
           addressPopMenu(context),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../basic/config/PagerAction.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Common.dart';
@@ -34,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
   late final TextEditingController _textEditController =
       TextEditingController(text: widget.keyword);
   late final fsb.SearchBar _searchBar = fsb.SearchBar(
-    hintText: '搜索 ${categoryTitle(widget.category)}',
+    hintText: '${tr('screen.search.search_hint')} ${categoryTitle(widget.category)}',
     controller: _textEditController,
     inBar: false,
     setState: setState,
@@ -70,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _chooseCategoryAction() => IconButton(
         onPressed: () async {
-          String? category = await chooseListDialog(context, '请选择分类', [
+          String? category = await chooseListDialog(context, tr('screen.search.choose_category'), [
             categoryTitle(null),
             ...filteredList(
               storedCategories,

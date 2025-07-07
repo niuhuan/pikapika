@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../basic/config/Themes.dart';
 import 'components/ListView.dart';
@@ -23,7 +24,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
 
   Widget buildScreen(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("主题设置")),
+      appBar: AppBar(title: Text(tr('screen.theme.title'))),
       body: PikaListView(
         children: themeWidgets(context, setState),
       ),
@@ -38,13 +39,13 @@ List<Widget> themeWidgets(BuildContext context, void Function(VoidCallback fn) s
         await chooseLightTheme(context);
         setState(() {});
       },
-      title: const Text('主题'),
+      title: Text(tr('screen.theme.theme')),
       subtitle: Text(currentLightThemeName()),
     ),
     ...androidNightModeDisplay
         ? [
       SwitchListTile(
-          title: const Text("深色模式下使用不同的主题"),
+          title: Text(tr('screen.theme.dark_mode_different_theme')),
           value: androidNightMode,
           onChanged: (value) async {
             await setAndroidNightMode(value);
@@ -59,7 +60,7 @@ List<Widget> themeWidgets(BuildContext context, void Function(VoidCallback fn) s
           await chooseDarkTheme(context);
           setState(() {});
         },
-        title: const Text('主题 (深色模式)'),
+        title: Text(tr('screen.theme.dark_mode_theme')),
         subtitle: Text(currentDarkThemeName()),
       ),
     ]

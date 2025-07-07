@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/basic/config/ListLayout.dart';
@@ -32,7 +33,7 @@ class RankingsScreen extends StatelessWidget {
     var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('排行榜'),
+        title: Text(tr('screen.rankings.title')),
         actions: [
           commonPopMenu(context),
           addressPopMenu(context),
@@ -48,11 +49,11 @@ class RankingsScreen extends StatelessWidget {
               child: TabBar(
                 indicatorColor: theme.colorScheme.secondary,
                 labelColor: theme.colorScheme.secondary,
-                tabs: const [
-                  Tab(text: '天'),
-                  Tab(text: '周'),
-                  Tab(text: '月'),
-                  Tab(text: '骑'),
+                tabs: [
+                  Tab(text: tr('screen.rankings.day')),
+                  Tab(text: tr('screen.rankings.week')),
+                  Tab(text: tr('screen.rankings.month')),
+                  Tab(text: tr('screen.rankings.knight')),
                 ],
               ),
             ),
@@ -126,7 +127,7 @@ class _KnightLeaderBoardState extends State<_KnightLeaderBoard> {
             SizedBox(
               height: 80,
               child: FitButton(
-                text: '刷新',
+                text: tr('screen.rankings.refresh'),
                 onPressed: () async {
                   setState(() {
                     _future = method.leaderboardOfKnight();
@@ -181,7 +182,7 @@ class _KnightLeaderBoardState extends State<_KnightLeaderBoard> {
                     Text(e.name, style: nameStyle),
                     Expanded(child: Container()),
                     Text(
-                      "${e.comicsUploaded} 本",
+                      "${e.comicsUploaded} ${tr('screen.rankings.comics_count')}",
                       style: datetimeStyle,
                     ),
                   ],

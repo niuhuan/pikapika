@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../basic/Method.dart';
 import 'components/ContentError.dart';
@@ -35,7 +36,7 @@ class _WebServerScreenState extends State<WebServerScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("下载 - Web服务器"),
+        title: Text(tr('screen.web_server.title')),
       ),
       body: FutureBuilder(
         future: _future,
@@ -51,7 +52,7 @@ class _WebServerScreenState extends State<WebServerScreen> {
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr('app.loading'));
           }
           return PikaListView(
             children: [
@@ -64,19 +65,19 @@ class _WebServerScreenState extends State<WebServerScreen> {
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.hasError) {
-                          return const Text('获取IP失败');
+                          return Text(tr('screen.web_server.get_ip_failed'));
                         }
                         if (snapshot.connectionState != ConnectionState.done) {
-                          return const Text('正在获取IP');
+                          return Text(tr('screen.web_server.getting_ip'));
                         }
                         return Text('${snapshot.data}');
                       },
                     ),
-                    const Text('端口号:8080'),
+                    Text(tr('screen.web_server.port')),
                     const Text(''),
-                    const Text('在浏览器中输入"http://本设备ip:8080/"访问下载的漫画'),
+                    Text(tr('screen.web_server.usage_instruction')),
                     const Text(''),
-                    const Text('离开页面后服务器将关闭'),
+                    Text(tr('screen.web_server.leave_notice')),
                   ],
                 ),
               ),

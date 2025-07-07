@@ -312,7 +312,7 @@
     "font": {
       "title": "字體",
       "hint": "請輸入字體",
-      "input_hint": "請輸入字體的名稱且用英文逗號分隔, 例如 “宋體,黑體”, 如果您保存後沒有發生變化, 說明字體無法使用或名稱錯誤, 可以去參考C:\\Windows\\Fonts尋找您的字體。若您使用的是flutter2引擎的版本，只有第一個字體生效。",
+      "input_hint": "請輸入字體的名稱且用英文逗號分隔, 例如 \"宋體,黑體\", 如果您保存後沒有發生變化, 說明字體無法使用或名稱錯誤, 可以去參考C:\\Windows\\Fonts尋找您的字體。若您使用的是flutter2引擎的版本，只有第一個字體生效。",
       "choose_hint": "需要您選擇多個字體，直至您點擊背景區域"
     },
     "theme": {
@@ -490,7 +490,7 @@
       "export_to_cbz_title": "將您所選的漫畫導出cbk.zip",
       "export_to_cbz_desc": "導出到xxx.cbz, 閱讀器可以直接使用(不可再導入)"
     },
-    "download_export_to_socket": {  
+    "download_export_to_socket": {
       "title": "網絡導出",
       "loading": "加載中",
       "tips": "傳輸成功之前請不要退出頁面, 一次只能導出到一個設備, 兩台設備需要在同一網段或無限局域網中, 請另外一台設備輸入 IP:端口 , 有一個IP時請選擇無限局域網的IP, 通常是192.168開頭",
@@ -612,6 +612,137 @@
     },
     "pkz_reader": {
       "reading_downloaded_comic": "您閱讀的是下載漫畫"
+    },
+    "pro": {
+      "title": "發電中心",
+      "power_center": "發電中心",
+      "power_status": "發電狀態",
+      "powered": "發電中",
+      "not_powered": "未發電",
+      "pat_membership": "PAT入會",
+      "pat_status": "PAT狀態",
+      "pat_normal": "PAT正常",
+      "pat_bind_hint": "請點擊這裡綁定到當前賬號發電",
+      "pat_rebind_hint": "請點換綁到當前賬號發電",
+      "pat_not_detected": "未檢測到入會, 請到下載頁入會",
+      "i_have_powered": "我曾經發過電",
+      "i_just_powered": "我剛才發了電",
+      "enter_code": "輸入代碼",
+      "power_method": "發電方式",
+      "wind_power": "風力發電",
+      "hydro_power": "水力發電",
+      "solar_power": "光伏發電",
+      "nuclear_power": "核能發電",
+      "choose_power_method": "選擇發電方式",
+      "sign_in_exchange": "簽到/兌換",
+      "click_pat_to_change": "點擊下面的PAT會籍進行變更",
+      "update_pat_status": "更新PAT發電狀態",
+      "bind_to_account": "綁定到此賬號",
+      "change_pat_key": "更換PAT密鑰",
+      "clear_pat_info": "清除PAT信息",
+      "click_to_bind": "點擊綁定",
+      "enter_auth_code": "請輸入授權代碼",
+      "please_wait": "請稍後",
+      "key_recorded": "密鑰 : 已錄入",
+      "pat_account": "PAT賬號",
+      "bind_pika_account": "綁定PIKA賬號",
+      "bind_account_time": "綁定賬號時間",
+      "rebind_time": "可以換綁時間",
+      "power_features": "發電小功能: 多線程下載 / 批量導入導出下載",
+      "power_guide": "去\"關於\"界面找到維護地址可獲得發電指引\n\n  \"我曾經發過電\"可同步相應發電狀態\n  \"我剛才發了電\"兌換神秘代碼\n  \"發電方式\"可以在網絡不通時嘗試更換\n  \"PAT入會\"是獨立的發電方式"
+    },
+    "rankings": {
+      "title": "排行榜",
+      "day": "天",
+      "week": "周",
+      "month": "月",
+      "knight": "騎",
+      "refresh": "刷新",
+      "comics_count": "本"
+    },
+    "random_comics": {
+      "title": "隨機本子"
+    },
+    "register": {
+      "title": "註冊",
+      "registering": "註冊中",
+      "register_success": "註冊成功",
+      "register_failed": "註冊失敗",
+      "account_exists": "賬號已存在",
+      "name_exists": "暱稱已存在",
+      "check_form": "請檢查表單, 不允許留空",
+      "account": "賬號",
+      "password": "密碼",
+      "nickname": "暱稱",
+      "gender": "性別",
+      "birthday": "生日",
+      "question_1": "問題1",
+      "answer_1": "回答1",
+      "question_2": "問題2",
+      "answer_2": "回答2",
+      "question_3": "問題3",
+      "answer_3": "回答3",
+      "not_set": "未設置",
+      "please_enter_account": "請輸入賬號",
+      "please_enter_password": "請輸入密碼",
+      "please_enter_nickname": "請輸入暱稱",
+      "please_enter_question_1": "請輸入問題1",
+      "please_enter_answer_1": "請輸入回答1",
+      "please_enter_question_2": "請輸入問題2",
+      "please_enter_answer_2": "請輸入回答2",
+      "please_enter_question_3": "請輸入問題3",
+      "please_enter_answer_3": "請輸入回答3",
+      "account_desc": "(小寫字母+數字/登錄使用)",
+      "password_desc": "(大小寫字母+數字/8位或以上)",
+      "nickname_desc": "(可使用中文/2-50字)",
+      "choose_gender": "選擇您的性別",
+      "futa": "扶她",
+      "male": "公",
+      "female": "母",
+      "register_success_desc": "您已經註冊成功, 請返回登錄",
+      "account_label": "賬號",
+      "nickname_label": "暱稱"
+    },
+    "search": {
+      "title": "搜索",
+      "search_hint": "搜索",
+      "choose_category": "請選擇分類"
+    },
+    "search_author": {
+      "title": "按作者搜索",
+      "search_hint": "搜索 按作者 + ",
+      "by_author": "按作者: "
+    },
+    "space": {
+      "title": "我的",
+      "logout": "退出登錄",
+      "logout_confirm": "您確認要退出當前賬號嗎?",
+      "my_favourites": "我的收藏",
+      "view_history": "瀏覽記錄",
+      "my_downloads": "我的下載"
+    },
+    "theme": {
+      "title": "主題設置",
+      "theme": "主題",
+      "dark_mode_different_theme": "深色模式下使用不同的主題",
+      "dark_mode_theme": "主題 (深色模式)"
+    },
+    "view_logs": {
+      "title": "瀏覽記錄",
+      "clear_all": "您要清除所有瀏覽記錄嗎? ",
+      "clear_all_desc": "將會同時刪除瀏覽進度!",
+      "clear_one": "您要清除這條瀏覽記錄嗎? ",
+      "clear_one_desc": "將會同時刪除瀏覽進度!",
+      "categories": "分類"
+    },
+    "web_server": {
+      "title": "下載 - Web服務器",
+      "loading": "加載中",
+      "get_ip_failed": "獲取IP失敗",
+      "getting_ip": "正在獲取IP",
+      "port": "端口號:8080",
+      "usage_instruction": "在瀏覽器中輸入\"http://本設備ip:8080/\"訪問下載的漫畫",
+      "leave_notice": "離開頁面後服務器將關閉"
     }
   }
 }

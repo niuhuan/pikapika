@@ -312,7 +312,7 @@
     "font": {
       "title": "字体",
       "hint": "请输入字体",
-      "input_hint": "请输入字体的名称且用英文逗号分隔, 例如 “宋体,黑体”, 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。若您使用的是flutter2引擎的版本，只有第一个字体生效。",
+      "input_hint": "请输入字体的名称且用英文逗号分隔, 例如 \"宋体,黑体\", 如果您保存后没有发生变化, 说明字体无法使用或名称错误, 可以去参考C:\\Windows\\Fonts寻找您的字体。若您使用的是flutter2引擎的版本，只有第一个字体生效。",
       "choose_hint": "需要您选择多个字体，直至您点击背景区域"
     },
     "theme": {
@@ -612,6 +612,137 @@
     },
     "pkz_reader": {
       "reading_downloaded_comic": "您阅读的是下载漫画"
+    },
+    "pro": {
+      "title": "发电中心",
+      "power_center": "发电中心",
+      "power_status": "发电状态",
+      "powered": "发电中",
+      "not_powered": "未发电",
+      "pat_membership": "PAT入会",
+      "pat_status": "PAT状态",
+      "pat_normal": "PAT正常",
+      "pat_bind_hint": "请点击这里绑定到当前账号发电",
+      "pat_rebind_hint": "请点换绑到当前账号发电",
+      "pat_not_detected": "未检测到入会, 请到下载页入会",
+      "i_have_powered": "我曾经发过电",
+      "i_just_powered": "我刚才发了电",
+      "enter_code": "输入代码",
+      "power_method": "发电方式",
+      "wind_power": "风力发电",
+      "hydro_power": "水力发电",
+      "solar_power": "光伏发电",
+      "nuclear_power": "核能发电",
+      "choose_power_method": "选择发电方式",
+      "sign_in_exchange": "签到/兑换",
+      "click_pat_to_change": "点击下面的PAT会籍进行变更",
+      "update_pat_status": "更新PAT发电状态",
+      "bind_to_account": "绑定到此账号",
+      "change_pat_key": "更换PAT密钥",
+      "clear_pat_info": "清除PAT信息",
+      "click_to_bind": "点击绑定",
+      "enter_auth_code": "请输入授权代码",
+      "please_wait": "请稍后",
+      "key_recorded": "密钥 : 已录入",
+      "pat_account": "PAT账号",
+      "bind_pika_account": "绑定PIKA账号",
+      "bind_account_time": "绑定账号时间",
+      "rebind_time": "可以换绑时间",
+      "power_features": "发电小功能: 多线程下载 / 批量导入导出下载",
+      "power_guide": "去\"关于\"界面找到维护地址可获得发电指引\\n\\n  \"我曾经发过电\"可同步相应发电状态\\n  \"我刚才发了电\"兑换神秘代码\\n  \"发电方式\"可以在网络不通时尝试更换\\n  \"PAT入会\"是独立的发电方式"
+    },
+    "rankings": {
+      "title": "排行榜",
+      "day": "天",
+      "week": "周",
+      "month": "月",
+      "knight": "骑",
+      "refresh": "刷新",
+      "comics_count": "本"
+    },
+    "random_comics": {
+      "title": "随机本子"
+    },
+    "register": {
+      "title": "注册",
+      "registering": "注册中",
+      "register_success": "注册成功",
+      "register_failed": "注册失败",
+      "account_exists": "账号已存在",
+      "name_exists": "昵称已存在",
+      "check_form": "请检查表单, 不允许留空",
+      "account": "账号",
+      "password": "密码",
+      "nickname": "昵称",
+      "gender": "性别",
+      "birthday": "生日",
+      "question_1": "问题1",
+      "answer_1": "回答1",
+      "question_2": "问题2",
+      "answer_2": "回答2",
+      "question_3": "问题3",
+      "answer_3": "回答3",
+      "not_set": "未设置",
+      "please_enter_account": "请输入账号",
+      "please_enter_password": "请输入密码",
+      "please_enter_nickname": "请输入昵称",
+      "please_enter_question_1": "请输入问题1",
+      "please_enter_answer_1": "请输入回答1",
+      "please_enter_question_2": "请输入问题2",
+      "please_enter_answer_2": "请输入回答2",
+      "please_enter_question_3": "请输入问题3",
+      "please_enter_answer_3": "请输入回答3",
+      "account_desc": "(小写字母+数字/登录使用)",
+      "password_desc": "(大小写字母+数字/8位或以上)",
+      "nickname_desc": "(可使用中文/2-50字)",
+      "choose_gender": "选择您的性别",
+      "futa": "扶她",
+      "male": "公",
+      "female": "母",
+      "register_success_desc": "您已经注册成功, 请返回登录",
+      "account_label": "账号",
+      "nickname_label": "昵称"
+    },
+    "search": {
+      "title": "搜索",
+      "search_hint": "搜索",
+      "choose_category": "请选择分类"
+    },
+    "search_author": {
+      "title": "按作者搜索",
+      "search_hint": "搜索 按作者 + ",
+      "by_author": "按作者: "
+    },
+    "space": {
+      "title": "我的",
+      "logout": "退出登录",
+      "logout_confirm": "您确认要退出当前账号吗?",
+      "my_favourites": "我的收藏",
+      "view_history": "浏览记录",
+      "my_downloads": "我的下载"
+    },
+    "theme": {
+      "title": "主题设置",
+      "theme": "主题",
+      "dark_mode_different_theme": "深色模式下使用不同的主题",
+      "dark_mode_theme": "主题 (深色模式)"
+    },
+    "view_logs": {
+      "title": "浏览记录",
+      "clear_all": "您要清除所有浏览记录吗? ",
+      "clear_all_desc": "将会同时删除浏览进度!",
+      "clear_one": "您要清除这条浏览记录吗? ",
+      "clear_one_desc": "将会同时删除浏览进度!",
+      "categories": "分类"
+    },
+    "web_server": {
+      "title": "下载 - Web服务器",
+      "loading": "加载中",
+      "get_ip_failed": "获取IP失败",
+      "getting_ip": "正在获取IP",
+      "port": "端口号:8080",
+      "usage_instruction": "在浏览器中输入\"http://本设备ip:8080/\"访问下载的漫画",
+      "leave_notice": "离开页面后服务器将关闭"
     }
   }
 }

@@ -163,7 +163,7 @@
     },
     "yes": "Yes",
     "no": "No",
-    "full_screen_action": { 
+    "full_screen_action": {
       "title": "Control method",
       "choose": "Choose control method",
       "touch_once": "Touch once to fullscreen",
@@ -212,7 +212,7 @@
       "title": "Reader keyboard page (only PC)"
     },
     "list_layout": {
-      "choose": "Choose layout",  
+      "choose": "Choose layout",
       "info_card": "Info",
       "only_image": "Cover",
       "cover_and_title": "Cover + Title"
@@ -312,7 +312,7 @@
     "font": {
       "title": "Font",
       "hint": "Please enter the font",
-      "input_hint": "Please enter the font name and use English commas to separate, for example “Songti, Heiti”, if you save it and it doesn't change, it means the font cannot be used or the name is wrong, you can refer to C:\\Windows\\Fonts to find your font. If you are using the flutter2 engine version, only the first font will take effect.",
+      "input_hint": "Please enter the font name and use English commas to separate, for example \"Songti, Heiti\", if you save it and it doesn't change, it means the font cannot be used or the name is wrong, you can refer to C:\\Windows\\Fonts to find your font. If you are using the flutter2 engine version, only the first font will take effect.",
       "choose_hint": "You need to select multiple fonts until you click the background area"
     },
     "theme": {
@@ -562,7 +562,7 @@
       "confirm": "Confirm",
       "please_enter_username": "Please enter username",
       "question_1": "Question 1",
-      "question_2": "Question 2", 
+      "question_2": "Question 2",
       "question_3": "Question 3",
       "answer_1": "Answer 1",
       "answer_2": "Answer 2",
@@ -615,6 +615,137 @@
     },
     "pkz_reader": {
       "reading_downloaded_comic": "You are reading a downloaded comic"
+    },
+    "pro": {
+      "title": "Power Center",
+      "power_center": "Power Center",
+      "power_status": "Power Status",
+      "powered": "Powered",
+      "not_powered": "Not Powered",
+      "pat_membership": "PAT Membership",
+      "pat_status": "PAT Status",
+      "pat_normal": "PAT Normal",
+      "pat_bind_hint": "Please click here to bind to current account for power",
+      "pat_rebind_hint": "Please click to rebind to current account for power",
+      "pat_not_detected": "No membership detected, please go to download page to join",
+      "i_have_powered": "I have powered before",
+      "i_just_powered": "I just powered",
+      "enter_code": "Enter code",
+      "power_method": "Power Method",
+      "wind_power": "Wind Power",
+      "hydro_power": "Hydro Power",
+      "solar_power": "Solar Power",
+      "nuclear_power": "Nuclear Power",
+      "choose_power_method": "Choose power method",
+      "sign_in_exchange": "Sign in/Exchange",
+      "click_pat_to_change": "Click PAT membership below to change",
+      "update_pat_status": "Update PAT power status",
+      "bind_to_account": "Bind to this account",
+      "change_pat_key": "Change PAT key",
+      "clear_pat_info": "Clear PAT info",
+      "click_to_bind": "Click to bind",
+      "enter_auth_code": "Please enter authorization code",
+      "please_wait": "Please wait",
+      "key_recorded": "Key: Recorded",
+      "pat_account": "PAT Account",
+      "bind_pika_account": "Bind PIKA Account",
+      "bind_account_time": "Bind account time",
+      "rebind_time": "Rebind available time",
+      "power_features": "Power features: Multi-thread download / Batch import/export download",
+      "power_guide": "Go to \"About\" page to find maintenance address for power guide\n\n  \"I have powered before\" can sync corresponding power status\n  \"I just powered\" exchange mysterious code\n  \"Power method\" can be changed when network is not working\n  \"PAT membership\" is independent power method"
+    },
+    "rankings": {
+      "title": "Rankings",
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "knight": "Knight",
+      "refresh": "Refresh",
+      "comics_count": "comics"
+    },
+    "random_comics": {
+      "title": "Random Comics"
+    },
+    "register": {
+      "title": "Register",
+      "registering": "Registering",
+      "register_success": "Register Success",
+      "register_failed": "Register Failed",
+      "account_exists": "Account already exists",
+      "name_exists": "Name already exists",
+      "check_form": "Please check form, no empty fields allowed",
+      "account": "Account",
+      "password": "Password",
+      "nickname": "Nickname",
+      "gender": "Gender",
+      "birthday": "Birthday",
+      "question_1": "Question 1",
+      "answer_1": "Answer 1",
+      "question_2": "Question 2",
+      "answer_2": "Answer 2",
+      "question_3": "Question 3",
+      "answer_3": "Answer 3",
+      "not_set": "Not set",
+      "please_enter_account": "Please enter account",
+      "please_enter_password": "Please enter password",
+      "please_enter_nickname": "Please enter nickname",
+      "please_enter_question_1": "Please enter question 1",
+      "please_enter_answer_1": "Please enter answer 1",
+      "please_enter_question_2": "Please enter question 2",
+      "please_enter_answer_2": "Please enter answer 2",
+      "please_enter_question_3": "Please enter question 3",
+      "please_enter_answer_3": "Please enter answer 3",
+      "account_desc": "(lowercase letters + numbers / for login)",
+      "password_desc": "(uppercase and lowercase letters + numbers / 8 or more characters)",
+      "nickname_desc": "(Chinese allowed / 2-50 characters)",
+      "choose_gender": "Choose your gender",
+      "futa": "Futa",
+      "male": "Male",
+      "female": "Female",
+      "register_success_desc": "You have registered successfully, please return to login",
+      "account_label": "Account",
+      "nickname_label": "Nickname"
+    },
+    "search": {
+      "title": "Search",
+      "search_hint": "Search",
+      "choose_category": "Please choose category"
+    },
+    "search_author": {
+      "title": "Search by Author",
+      "search_hint": "Search by author + ",
+      "by_author": "By author: "
+    },
+    "space": {
+      "title": "My",
+      "logout": "Logout",
+      "logout_confirm": "Are you sure you want to logout from current account?",
+      "my_favourites": "My Favourites",
+      "view_history": "View History",
+      "my_downloads": "My Downloads"
+    },
+    "theme": {
+      "title": "Theme Settings",
+      "theme": "Theme",
+      "dark_mode_different_theme": "Use different theme in dark mode",
+      "dark_mode_theme": "Theme (Dark Mode)"
+    },
+    "view_logs": {
+      "title": "View History",
+      "clear_all": "Do you want to clear all view history?",
+      "clear_all_desc": "Reading progress will also be deleted!",
+      "clear_one": "Do you want to clear this view history?",
+      "clear_one_desc": "Reading progress will also be deleted!",
+      "categories": "Categories"
+    },
+    "web_server": {
+      "title": "Download - Web Server",
+      "loading": "Loading",
+      "get_ip_failed": "Get IP failed",
+      "getting_ip": "Getting IP",
+      "port": "Port: 8080",
+      "usage_instruction": "Enter \"http://device_ip:8080/\" in browser to access downloaded comics",
+      "leave_notice": "Server will close after leaving this page"
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -52,7 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ];
       for (var a in mustList) {
         if (a.isEmpty) {
-          throw '请检查表单, 不允许留空';
+          throw tr('screen.register.check_form');
         }
       }
       await method.register(
@@ -77,11 +78,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } catch (e) {
       String message = "$e";
       if (message.contains("email is already exist")) {
-        message = "账号已存在";
+        message = tr('screen.register.account_exists');
       } else if (message.contains("name is already exist")) {
-        message = "昵称已存在";
+        message = tr('screen.register.name_exists');
       }
-      alertDialog(context, "注册失败", message);
+      alertDialog(context, tr('screen.register.register_failed'), message);
     } finally {
       setState(() {
         _registering = false;
@@ -102,15 +103,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_registerOver) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('注册成功'),
+          title: Text(tr('screen.register.register_success')),
         ),
         body: Center(
           child: Column(
             children: [
               Expanded(child: Container()),
-              const Text('您已经注册成功, 请返回登录'),
-              Text('账号 : $_email'),
-              Text('昵称 : $_name'),
+              Text(tr('screen.register.register_success_desc')),
+              Text('${tr('screen.register.account_label')} : $_email'),
+              Text('${tr('screen.register.nickname_label')} : $_name'),
               Expanded(child: Container()),
               Expanded(child: Container()),
             ],
@@ -121,12 +122,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_registering) {
       return Scaffold(
         appBar: AppBar(),
-        body: const ContentLoading(label: '注册中'),
+        body: ContentLoading(label: tr('screen.register.registering')),
       );
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('注册'),
+        title: Text(tr('screen.register.title')),
         actions: [
           IconButton(
             onPressed: () => _register(),
@@ -138,15 +139,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         children: [
           const Divider(),
           ListTile(
-            title: const Text("账号"),
-            subtitle: Text(_email == "" ? "未设置" : _email),
+            title: Text(tr('screen.register.account')),
+            subtitle: Text(_email == "" ? tr('screen.register.not_set') : _email),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _email,
-                title: '账号',
-                hint: '请输入账号',
-                desc: '(小写字母+数字/登录使用)',
+                title: tr('screen.register.account'),
+                hint: tr('screen.register.please_enter_account'),
+                desc: tr('screen.register.account_desc'),
               );
               if (input != null) {
                 setState(() {
@@ -156,15 +157,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("密码"),
-            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
+            title: Text(tr('screen.register.password')),
+            subtitle: Text(_password == "" ? tr('screen.register.not_set') : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _password,
-                title: '密码',
-                hint: '请输入密码',
-                desc: '(大小写字母+数字/8位或以上)',
+                title: tr('screen.register.password'),
+                hint: tr('screen.register.please_enter_password'),
+                desc: tr('screen.register.password_desc'),
                 isPasswd: true,
               );
               if (input != null) {
@@ -175,15 +176,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("昵称"),
-            subtitle: Text(_name == "" ? "未设置" : _name),
+            title: Text(tr('screen.register.nickname')),
+            subtitle: Text(_name == "" ? tr('screen.register.not_set') : _name),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _name,
-                title: '昵称',
-                hint: '请输入昵称',
-                desc: '(可使用中文/2-50字)',
+                title: tr('screen.register.nickname'),
+                hint: tr('screen.register.please_enter_nickname'),
+                desc: tr('screen.register.nickname_desc'),
               );
               if (input != null) {
                 setState(() {
@@ -194,29 +195,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           const Divider(),
           ListTile(
-            title: const Text("性别"),
+            title: Text(tr('screen.register.gender')),
             subtitle: Text(_genderText(_gender)),
             onTap: () async {
               String? result = await showDialog<String>(
                 context: context,
                 builder: (BuildContext context) {
                   return SimpleDialog(
-                    title: const Text('选择您的性别'),
+                    title: Text(tr('screen.register.choose_gender')),
                     children: [
                       SimpleDialogOption(
-                        child: const Text('扶她'),
+                        child: Text(tr('screen.register.futa')),
                         onPressed: () {
                           Navigator.pop(context, 'bot');
                         },
                       ),
                       SimpleDialogOption(
-                        child: const Text('公'),
+                        child: Text(tr('screen.register.male')),
                         onPressed: () {
                           Navigator.pop(context, 'm');
                         },
                       ),
                       SimpleDialogOption(
-                        child: const Text('母'),
+                        child: Text(tr('screen.register.female')),
                         onPressed: () {
                           Navigator.pop(context, 'f');
                         },
@@ -233,19 +234,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("生日"),
+            title: Text(tr('screen.register.birthday')),
             subtitle: Text(_birthday),
           ),
           const Divider(),
           ListTile(
-            title: const Text("问题1"),
-            subtitle: Text(_question1 == "" ? "未设置" : _question1),
+            title: Text(tr('screen.register.question_1')),
+            subtitle: Text(_question1 == "" ? tr('screen.register.not_set') : _question1),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _question1,
-                title: '问题1',
-                hint: '请输入问题1',
+                title: tr('screen.register.question_1'),
+                hint: tr('screen.register.please_enter_question_1'),
               );
               if (input != null) {
                 setState(() {
@@ -255,14 +256,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("回答1"),
-            subtitle: Text(_answer1 == "" ? "未设置" : _answer1),
+            title: Text(tr('screen.register.answer_1')),
+            subtitle: Text(_answer1 == "" ? tr('screen.register.not_set') : _answer1),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _answer1,
-                title: '回答1',
-                hint: '请输入回答1',
+                title: tr('screen.register.answer_1'),
+                hint: tr('screen.register.please_enter_answer_1'),
               );
               if (input != null) {
                 setState(() {
@@ -272,14 +273,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("问题2"),
-            subtitle: Text(_question2 == "" ? "未设置" : _question2),
+            title: Text(tr('screen.register.question_2')),
+            subtitle: Text(_question2 == "" ? tr('screen.register.not_set') : _question2),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _question2,
-                title: '问题2',
-                hint: '请输入问题2',
+                title: tr('screen.register.question_2'),
+                hint: tr('screen.register.please_enter_question_2'),
               );
               if (input != null) {
                 setState(() {
@@ -289,14 +290,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("回答2"),
-            subtitle: Text(_answer2 == "" ? "未设置" : _answer2),
+            title: Text(tr('screen.register.answer_2')),
+            subtitle: Text(_answer2 == "" ? tr('screen.register.not_set') : _answer2),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _answer2,
-                title: '回答2',
-                hint: '请输入回答2',
+                title: tr('screen.register.answer_2'),
+                hint: tr('screen.register.please_enter_answer_2'),
               );
               if (input != null) {
                 setState(() {
@@ -306,14 +307,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("问题3"),
-            subtitle: Text(_question3 == "" ? "未设置" : _question3),
+            title: Text(tr('screen.register.question_3')),
+            subtitle: Text(_question3 == "" ? tr('screen.register.not_set') : _question3),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _question3,
-                title: '问题3',
-                hint: '请输入问题3',
+                title: tr('screen.register.question_3'),
+                hint: tr('screen.register.please_enter_question_3'),
               );
               if (input != null) {
                 setState(() {
@@ -323,14 +324,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
           ListTile(
-            title: const Text("回答3"),
-            subtitle: Text(_answer3 == "" ? "未设置" : _answer3),
+            title: Text(tr('screen.register.answer_3')),
+            subtitle: Text(_answer3 == "" ? tr('screen.register.not_set') : _answer3),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _answer3,
-                title: '回答3',
-                hint: '请输入回答3',
+                title: tr('screen.register.answer_3'),
+                hint: tr('screen.register.please_enter_answer_3'),
               );
               if (input != null) {
                 setState(() {
@@ -350,11 +351,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _genderText(String gender) {
     switch (gender) {
       case 'bot':
-        return "扶她";
+        return tr('screen.register.futa');
       case "m":
-        return "公";
+        return tr('screen.register.male');
       case "f":
-        return "母";
+        return tr('screen.register.female');
       default:
         return "";
     }

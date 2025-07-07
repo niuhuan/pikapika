@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ComicInfoCard.dart';
@@ -34,8 +35,8 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   Future _clearAll() async {
     if (await confirmDialog(
       context,
-      "您要清除所有浏览记录吗? ",
-      "将会同时删除浏览进度!",
+      tr('screen.view_logs.clear_all'),
+      tr('screen.view_logs.clear_all_desc'),
     )) {
       await method.clearAllViewLog();
       setState(() {
@@ -50,8 +51,8 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   Future _clearOnce(String id) async {
     if (await confirmDialog(
       context,
-      "您要清除这条浏览记录吗? ",
-      "将会同时删除浏览进度!",
+      tr('screen.view_logs.clear_one'),
+      tr('screen.view_logs.clear_one_desc'),
     )) {
       await method.deleteViewLog(id);
       setState(() {
@@ -132,7 +133,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
     final screen = NotificationListener(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('浏览记录'),
+          title: Text(tr('screen.view_logs.title')),
           actions: [
             IconButton(
                 onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
@@ -234,7 +235,7 @@ class ViewInfoCard extends StatelessWidget {
                       Text(author, style: authorStyle),
                       Container(height: 5),
                       Text.rich(
-                        TextSpan(text: "分类 : ${categories.join(' ')}"),
+                        TextSpan(text: "${tr('screen.view_logs.categories')} : ${categories.join(' ')}"),
                         style: TextStyle(
                           fontSize: 13,
                           color: Theme.of(context)
