@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -27,14 +28,14 @@ Widget downloadAndExportPathSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: const Text("下载的同时导出到文件系统"),
+          title: Text(tr("settings.download_and_export_path.title")),
           subtitle: Text(_downloadAndExportPath),
           onTap: () async {
             if (_downloadAndExportPath == "") {
               bool b = await confirmDialog(
                 context,
-                "下载的同时导出到文件系统",
-                "您即将选择一个目录, 如果文件系统可写, 下载的同时会为您自动导出一份",
+                tr("settings.download_and_export_path.confirm"),
+                tr("settings.download_and_export_path.desc"),
               );
               if (b) {
                 late String? folder;
@@ -53,8 +54,8 @@ Widget downloadAndExportPathSetting() {
             } else {
               bool b = await confirmDialog(
                 context,
-                "下载的同时导出到文件系统",
-                "您确定取消下载并导出的功能吗? 取消之后您可以再次点击设置",
+                tr("settings.download_and_export_path.confirm"),
+                tr("settings.download_and_export_path.desc"),
               );
               if (b) {
                 var folder = "";

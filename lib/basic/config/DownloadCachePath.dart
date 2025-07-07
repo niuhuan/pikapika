@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +34,14 @@ Widget downloadCachePathSetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: const Text("使用其他程序的缓存下载加速"),
+          title: Text(tr("settings.download_cache_path.title")),
           subtitle: Text(_downloadCachePath),
           onTap: () async {
             if (_downloadCachePath == "") {
               bool b = await confirmDialog(
                 context,
-                "使用其他程序的缓存下载加速",
-                "您即将选择一个目录, 这个目录拷贝自以下目录才能使用。下载时将会作为缓存文件夹优先读取。 \n\n${String.fromCharCodes(base64Decode("L0FuZHJvaWQvZGF0YS9jb20ucGljYWNvbWljLmZyZWdhdGEvZmlsZXMv"))}",
+                tr("settings.download_cache_path.confirm"),
+                tr("settings.download_cache_path.desc") + "\n\n${String.fromCharCodes(base64Decode("L0FuZHJvaWQvZGF0YS9jb20ucGljYWNvbWljLmZyZWdhdGEvZmlsZXMv"))}",
               );
               if (b) {
                 late String? folder;
@@ -59,8 +60,8 @@ Widget downloadCachePathSetting() {
             } else {
               bool b = await confirmDialog(
                 context,
-                "使用其他软件的下载内容加速",
-                "您确定取消使用其他软件的下载内容加速的功能吗? 取消之后您可以再次点击设置",
+                tr("settings.download_cache_path.confirm"),
+                tr("settings.download_cache_path.cancel_desc"),
               );
               if (b) {
                 var folder = "";
@@ -85,13 +86,13 @@ Widget importViewLogFromOff() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: const Text("导入其他程序的历史记录"),
+          title: Text(tr("settings.download_cache_path.import_view_log_from_off.title")),
           subtitle: Text(_downloadCachePath),
           onTap: () async {
             bool b = await confirmDialog(
               context,
-              "导入其他程序的历史记录",
-              "您即将选择一个文件, 这个文件拷贝自以下路径才能使用。 \n\n${String.fromCharCodes(base64Decode("L2RhdGEvZGF0YS9jb20ucGljYWNvbWljLmdyZWdhdGEvZGF0YWJhc2VzL2NvbV9waWNhY29taWNfZnJlZ2F0YS5kYg=="))}",
+              tr("settings.download_cache_path.import_view_log_from_off.title"),
+              tr('settings.download_cache_path.import_view_log_from_off.desc')+ "\n\n${String.fromCharCodes(base64Decode("L2RhdGEvZGF0YS9jb20ucGljYWNvbWljLmdyZWdhdGEvZGF0YWJhc2VzL2NvbV9waWNhY29taWNfZnJlZ2F0YS5kYg=="))}",
             );
             if (b) {
               late String chooseRoot;
@@ -114,7 +115,7 @@ Widget importViewLogFromOff() {
                 );
               } else {
                 var ls = await FilePicker.platform.pickFiles(
-                  dialogTitle: '选择要导入的文件',
+                  dialogTitle: tr("settings.download_cache_path.import_view_log_from_off.choose_file_dialog_title"),
                   allowMultiple: false,
                   initialDirectory: chooseRoot,
                   type: FileType.custom,

@@ -11,7 +11,8 @@
     "save_failed": "保存失败",
     "pro": "发电",
     "pro_required": "请先发电再使用",
-    "choose_folder": "选择一个文件夹, 将文件保存到这里"
+    "choose_folder": "选择一个文件夹, 将文件保存到这里",
+    "permission_denied": "申请权限被拒绝"
   },
   "net": {
     "address": "分流",
@@ -66,6 +67,68 @@
       "one_week_ago": "一周前",
       "one_day_ago": "一天前",
       "no_auto_clean": "不自动清理"
+    },
+    "categories_column_count": {
+      "title": "首页分类展示列数",
+      "choose": "选择首页分类展示列数",
+      "auto": "自动"
+    },
+    "categories_sort": {
+      "title": "首页分类排序"
+    },
+    "chooser_root": {
+      "title": "文件夹选择器根路径",
+      "hint": "请输入文件夹选择器根路径",
+      "desc": "导出时选择目录的默认路径, 同时也是根路径, 不能正常导出时也可以尝试设置此选项。"
+    },
+    "content_failed_reload_action": {
+      "title": "页面加载失败刷新方式",
+      "choose": "选择页面加载失败刷新方式",
+      "pull_down": "下拉刷新",
+      "touch_loader": "点击屏幕刷新"
+    },
+    "copy_full_name": {
+      "title": "复制漫画名称时使用模版"
+    },
+    "copy_full_name_template": {
+      "title": "复制漫画名称模版",
+      "hint": "模版内容"
+    },
+    "copy_skip_confirm": {
+      "title": "长按复制不需要确认"
+    },
+    "download_and_export_path": {
+      "title": "下载的同时导出到文件系统",
+      "confirm": "下载的同时导出到文件系统",
+      "desc": "您即将选择一个目录, 如果文件系统可写, 下载的同时会为您自动导出一份"
+    },
+    "download_cache_path": {
+      "title": "使用其他程序的缓存下载加速",
+      "confirm": "使用其他程序的缓存下载加速",
+      "desc": "您即将选择一个目录, 这个目录拷贝自以下目录才能使用。下载时将会作为缓存文件夹优先读取。 ",
+      "cancel_desc": "您确定取消使用其他软件的下载内容加速的功能吗? 取消之后您可以再次点击设置",
+      "import_view_log_from_off": {
+        "title": "导入其他程序的历史记录",
+        "desc": "您即将选择一个文件, 这个文件拷贝自以下路径才能使用。",
+        "choose_file_dialog_title": "选择要导入的文件"
+      }
+    },
+    "download_thread_count": {
+      "title": "下载线程数",
+      "choose": "选择下载线程数"
+    },
+    "ebook_scrolling": {
+      "title": "电子书模式滚动UI"
+    },
+    "ebook_scrolling_range": {
+      "title": "电子书模式滚动UI",
+      "desc": "滚动幅度",
+      "screen_height": "屏幕高度"
+    },
+    "ebook_scrolling_trigger": {
+      "title": "电子书模式滚动UI",
+      "desc": "触发距离",
+      "cm": "厘米"
     }
   }
 }

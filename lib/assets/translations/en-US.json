@@ -11,7 +11,8 @@
     "save_failed": "Save failed",
     "pro": "Pro",
     "pro_required": "Please upgrade to Pro to use this feature",
-    "choose_folder": "Choose a folder to save the file"
+    "choose_folder": "Choose a folder to save the file",
+    "permission_denied": "Permission denied"
   },
   "net": {
     "address": "Address",
@@ -66,6 +67,68 @@
       "one_week_ago": "One week ago",
       "one_day_ago": "One day ago",
       "no_auto_clean": "No auto clean"
+    },
+    "categories_column_count": {
+      "title": "Categories column count",
+      "choose": "Choose categories column count",
+      "auto": "Auto"
+    },
+    "categories_sort": {
+      "title": "Categories sort"
+    },
+    "chooser_root": {
+      "title": "Chooser root",
+      "hint": "Enter the folder selector root path",
+      "desc": "The default path for selecting the directory when exporting, also the root path, you can try to set this option if the export is not normal"
+    },
+    "content_failed_reload_action": {
+      "title": "Content failed reload action",
+      "choose": "Choose content failed reload action",
+      "pull_down": "Pull down",
+      "touch_loader": "Touch loader"
+    },
+    "copy_full_name": {
+      "title": "Copy full name"
+    },
+    "copy_full_name_template": {
+      "title": "Copy full name template",
+      "hint": "Enter the copy full name template"
+    },
+    "copy_skip_confirm": {
+      "title": "Copy skip confirm"
+    },
+    "download_and_export_path": {
+      "title": "Download and export path",
+      "confirm": "Download and export",
+      "desc": "You will select a directory, if the file system is writable, the download will be automatically exported"
+    },
+    "download_cache_path": {
+      "title": "Download cache path",
+      "confirm": "Download cache",
+      "desc": "You will select a directory, this directory is copied from the following directory to use. The download will be read as a cache folder first.",
+      "cancel_desc": "Are you sure you want to cancel the function of downloading content acceleration with other software? You can set it again after canceling",
+      "import_view_log_from_off": {
+        "title": "Import other program's history record",
+        "desc": "You will select a file, this file is copied from the following path to use.",
+        "choose_file_dialog_title": "Choose the file to import"
+      }
+    },
+    "download_thread_count": {
+      "title": "Download thread count",
+      "choose": "Choose download thread count"
+    },
+    "ebook_scrolling": {
+      "title": "E-book scrolling UI"
+    },
+    "ebook_scrolling_range": {
+      "title": "E-book scrolling UI",
+      "desc": "Scrolling range",
+      "screen_height": "Screen height"
+    },
+    "ebook_scrolling_trigger": {
+      "title": "E-book scrolling UI",
+      "desc": "Trigger distance",
+      "cm": "cm"
     }
   }
 }

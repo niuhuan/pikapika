@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Method.dart';
@@ -17,7 +18,7 @@ Widget eBookScrollingTriggerSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("电子书模式滚动UI - 触发距离 : $_eBookScrollingTrigger 厘米"),
+        title: Text(tr("settings.ebook_scrolling_trigger.title") + " - " + tr("settings.ebook_scrolling_trigger.desc") + " : $_eBookScrollingTrigger ${tr("settings.ebook_scrolling_trigger.cm")}"),
         subtitle: Slider(
           min: 0.1.toDouble(),
           max: 2.0.toDouble(),

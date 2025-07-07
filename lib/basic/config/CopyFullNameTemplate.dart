@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Common.dart';
 import '../Method.dart';
@@ -19,13 +20,13 @@ Widget copyFullNameTemplateSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("复制漫画名称时使用模版"),
+        title: Text(tr("settings.copy_full_name_template.title")),
         subtitle: Text(_copyFullNameTemplate),
         onTap: () async {
           var result = await displayTextInputDialog(
             context,
-            title: "复制漫画名称模版",
-            hint: "模版内容",
+            title: tr("settings.copy_full_name_template.title"),
+            hint: tr("settings.copy_full_name_template.hint"),
             src: _copyFullNameTemplate,
           );
           if (result == null) {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -17,7 +18,7 @@ Widget copySkipConfirmSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("长按复制不需要确认"),
+        title:  Text(tr("settings.copy_skip_confirm.title")),
         value: _copySkipConfirm,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

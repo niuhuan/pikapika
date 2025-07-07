@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -38,7 +39,7 @@ Future<String> currentChooserRoot() async {
       g = await Permission.manageExternalStorage.request().isGranted;
     }
     if (!g) {
-      throw Exception("申请权限被拒绝");
+      throw Exception(tr('app.permission_denied'));
     }
   }
   return _chooserRoot;
@@ -48,9 +49,9 @@ Future<dynamic> _inputChooserRoot(BuildContext context) async {
   String? input = await displayTextInputDialog(
     context,
     src: _chooserRoot,
-    title: '文件夹选择器根路径',
-    hint: '请输入文件夹选择器根路径',
-    desc: "导出时选择目录的默认路径, 同时也是根路径, 不能正常导出时也可以尝试设置此选项。",
+    title: tr('settings.chooser_root.title'),
+    hint: tr('settings.chooser_root.hint'),
+    desc: tr('settings.chooser_root.desc'),
   );
   if (input != null) {
     await method.saveProperty(_propertyName, input);

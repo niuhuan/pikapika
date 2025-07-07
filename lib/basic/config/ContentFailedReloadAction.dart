@@ -1,5 +1,6 @@
 /// 全屏操作
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -12,8 +13,14 @@ enum ContentFailedReloadAction {
 
 const _propertyName = "contentFailedReloadAction";
 late ContentFailedReloadAction contentFailedReloadAction;
-
+Map<String, ContentFailedReloadAction> _contentFailedReloadActionMap = {};
 Future<void> initContentFailedReloadAction() async {
+  _contentFailedReloadActionMap = {
+    tr("settings.content_failed_reload_action.pull_down"):
+        ContentFailedReloadAction.PULL_DOWN,
+    tr("settings.content_failed_reload_action.touch_loader"):
+        ContentFailedReloadAction.TOUCH_LOADER,
+  };
   contentFailedReloadAction =
       _contentFailedReloadActionFromString(await method.loadProperty(
     _propertyName,
@@ -30,11 +37,6 @@ ContentFailedReloadAction _contentFailedReloadActionFromString(String string) {
   return ContentFailedReloadAction.PULL_DOWN;
 }
 
-Map<String, ContentFailedReloadAction> _contentFailedReloadActionMap = {
-  "下拉刷新": ContentFailedReloadAction.PULL_DOWN,
-  "点击屏幕刷新": ContentFailedReloadAction.TOUCH_LOADER,
-};
-
 String _currentContentFailedReloadActionName() {
   for (var e in _contentFailedReloadActionMap.entries) {
     if (e.value == contentFailedReloadAction) {
@@ -47,7 +49,7 @@ String _currentContentFailedReloadActionName() {
 Future<void> _chooseContentFailedReloadAction(BuildContext context) async {
   ContentFailedReloadAction? result =
       await chooseMapDialog<ContentFailedReloadAction>(
-          context, _contentFailedReloadActionMap, "选择页面加载失败刷新的方式");
+          context, _contentFailedReloadActionMap, tr("settings.content_failed_reload_action.choose"));
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     contentFailedReloadAction = result;
@@ -58,7 +60,7 @@ Widget contentFailedReloadActionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("加载失败时"),
+        title: Text(tr("settings.content_failed_reload_action.title")),
         subtitle: Text(_currentContentFailedReloadActionName()),
         onTap: () async {
           await _chooseContentFailedReloadAction(context);

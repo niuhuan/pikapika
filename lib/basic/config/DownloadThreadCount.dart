@@ -1,5 +1,6 @@
 /// 多线程下载并发数
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -18,7 +19,7 @@ Widget downloadThreadCountSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text(
-          "下载线程数" + (!isPro ? "(发电)" : ""),
+          tr("settings.download_thread_count.title") + (!isPro ? "(${tr("app.pro")})" : ""),
           style: TextStyle(
             color: !isPro ? Colors.grey : null,
           ),
@@ -26,10 +27,10 @@ Widget downloadThreadCountSetting() {
         subtitle: Text("$_downloadThreadCount"),
         onTap: () async {
           if (!isPro) {
-            defaultToast(context, "请先发电再使用");
+            defaultToast(context, tr("app.pro_required"));
             return;
           }
-          int? value = await chooseListDialog(context, "选择下载线程数", _values);
+          int? value = await chooseListDialog(context, tr("settings.download_thread_count.choose"), _values);
           if (value != null) {
             await method.saveDownloadThreadCount(value);
             _downloadThreadCount = value;

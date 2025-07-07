@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -17,7 +18,7 @@ Widget copyFullNameSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("复制漫画名称时使用模版"),
+        title: Text(tr("settings.copy_full_name.title")),
         value: _copyFullName,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

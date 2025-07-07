@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Method.dart';
@@ -17,7 +18,7 @@ Widget eBookScrollingRangeSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("电子书模式滚动UI - 滚动幅度 : $_eBookScrollingRange%屏幕高度"),
+        title: Text(tr("settings.ebook_scrolling_range.title") + " - " + tr("settings.ebook_scrolling_range.desc") + " : $_eBookScrollingRange%${tr("settings.ebook_scrolling_range.screen_height")}"),
         subtitle: Slider(
           min: 30.toDouble(),
           max: 80.toDouble(),

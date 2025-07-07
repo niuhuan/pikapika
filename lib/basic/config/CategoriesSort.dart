@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,8 @@ Widget categoriesSortSetting() {
             },
           ));
         },
-        title: const Text(
-          "首页分类排序",
+        title: Text(
+          tr('settings.categories_sort.title'),
         ),
       );
     },

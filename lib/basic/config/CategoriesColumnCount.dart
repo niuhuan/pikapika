@@ -1,5 +1,6 @@
 /// 多线程下载并发数
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -19,22 +20,22 @@ Widget categoriesColumnCountSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text(
-          "首页分类展示列数",
+        title: Text(
+          tr('settings.categories_column_count.title'),
         ),
         subtitle:
-            Text(categoriesColumnCount == 0 ? "自动" : "$categoriesColumnCount"),
+            Text(categoriesColumnCount == 0 ? tr('settings.categories_column_count.auto') : "$categoriesColumnCount"),
         onTap: () async {
           int? value = await chooseMapDialog(
               context,
               {
-                "自动": 0,
+                tr('settings.categories_column_count.auto'): 0,
                 "2": 2,
                 "3": 3,
                 "4": 4,
                 "5": 5,
               },
-              "选择首页分类展示列数");
+              tr('settings.categories_column_count.choose'));
           if (value != null) {
             await method.saveProperty(_propertyName, "$value");
             categoriesColumnCount = value;
