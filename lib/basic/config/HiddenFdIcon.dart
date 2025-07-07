@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
@@ -18,7 +19,7 @@ Widget hiddenFdIconSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("隐藏个人空间的发电图标"),
+        title:  Text(tr("settings.hidden_fd_icon.title")),
         value: _hiddenFdIcon,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

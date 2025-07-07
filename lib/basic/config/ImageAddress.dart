@@ -1,18 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import '../Method.dart';
 import 'Address.dart';
 
-var _imageAddresses = {
-  "0": "不分流",
-  "1": "分流1",
-  "2": "分流2",
-  "3": "分流3",
-  "4": "分流4",
-  "5": "分流5",
-  "6": "分流6",
-};
+var _imageAddresses = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+];
 
 late String _currentImageAddress;
 
@@ -24,24 +24,24 @@ int currentImageAddress() {
   return int.parse(_currentImageAddress);
 }
 
-String currentImageAddressName() => _imageAddresses[_currentImageAddress] ?? "";
+String currentImageAddressName() => _currentImageAddress == "0" ? tr('app.no_address') : tr('network.address$_currentImageAddress');
 
 Future<void> chooseImageAddress(BuildContext context) async {
   String? choose = await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text('选择图片分流'),
+        title: Text(tr('settings.image_address.title')),
         children: <Widget>[
-          ..._imageAddresses.entries.map(
+          ..._imageAddresses.map(
             (e) => SimpleDialogOption(
               child: ApiOptionRowImg(
-                e.value,
-                e.key,
-                key: Key("API:${e.key}"),
+                tr('network.address$e'),
+                e,
+                key: Key("API:${e}"),
               ),
               onPressed: () {
-                Navigator.of(context).pop(e.key);
+                Navigator.of(context).pop(e);
               },
             ),
           ),
@@ -59,7 +59,7 @@ Widget imageSwitchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("图片分流"),
+        title: Text(tr('settings.image_address.title')),
         subtitle: Text(currentImageAddressName()),
         onTap: () async {
           await chooseImageAddress(context);
@@ -106,14 +106,14 @@ class _ApiOptionRowImgState extends State<ApiOptionRowImg> {
             AsyncSnapshot<int> snapshot,
           ) {
             if (snapshot.connectionState != ConnectionState.done) {
-              return const PingStatus(
-                "测速中",
+              return PingStatus(
+                tr('settings.image_address.pinging'),
                 Colors.blue,
               );
             }
             if (snapshot.hasError) {
-              return const PingStatus(
-                "失败",
+              return PingStatus(
+                tr('settings.image_address.failed'),
                 Colors.red,
               );
             }

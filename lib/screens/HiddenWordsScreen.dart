@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../basic/config/HiddenWords.dart';
 import 'components/RightClickPop.dart';
@@ -60,7 +61,7 @@ class _HiddenWordsScreenState extends State<HiddenWordsScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('隐藏词管理'),
+        title: Text(tr("settings.hidden_words.title")),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_sweep),
@@ -68,16 +69,16 @@ class _HiddenWordsScreenState extends State<HiddenWordsScreen> {
               bool? confirm = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('确认清空'),
-                  content: const Text('确定要清空所有隐藏词吗？'),
+                  title: Text(tr("settings.hidden_words.clear_all")),
+                  content: Text(tr("settings.hidden_words.clear_all_desc")),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('取消'),
+                      child: Text(tr("settings.hidden_words.cancel")),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('确定'),
+                      child: Text(tr("settings.hidden_words.confirm")),
                     ),
                   ],
                 ),
@@ -98,9 +99,9 @@ class _HiddenWordsScreenState extends State<HiddenWordsScreen> {
                 Expanded(
                   child: TextField(
                     controller: _textController,
-                    decoration: const InputDecoration(
-                      hintText: '输入要隐藏的词',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      hintText: tr("settings.hidden_words.input_hint"),
+                      border: const OutlineInputBorder(),
                     ),
                     onSubmitted: (_) => _addWord(),
                   ),
@@ -125,8 +126,8 @@ class _HiddenWordsScreenState extends State<HiddenWordsScreen> {
               },
               successBuilder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (hiddenWords.isEmpty) {
-                  return const Center(
-                    child: Text('暂无隐藏词'),
+                  return Center(
+                    child: Text(tr("settings.hidden_words.no_words")),
                   );
                 }
                 return PikaListView(

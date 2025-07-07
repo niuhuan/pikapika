@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 Widget importNotice(BuildContext context) {
@@ -13,8 +14,8 @@ Widget importNotice(BuildContext context) {
           .bodyText1
           ?.color ?? Colors.black)
           .withOpacity(.01),
-      child: const Text(
-        "您正在使用安卓设备:\n如果不能导入导出并且提示权限不足, 可以尝试在Download或Document下建立子目录进行导入",
+      child: Text(
+        tr("settings.import_notice"),
       ),
     );
   }

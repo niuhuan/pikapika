@@ -1,6 +1,7 @@
 /// 文件夹选择器的根路径
 
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../Cross.dart';
@@ -58,7 +59,7 @@ Future<String> attachExportPath() async {
 
 String showExportPath() {
   if (Platform.isIOS) {
-    return "\n\n随后可在文件管理中找到导出的内容";
+    return "\n\n"+tr("settings.export_path.ios_desc") ;
   }
   return "\n\n$_exportPath";
 }
@@ -77,7 +78,7 @@ Widget displayExportPathInfo() {
           padding: const EdgeInsets.all(15),
           color: (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
               .withOpacity(.01),
-          child: const Text("您正在使用iOS设备:\n导出到文件的内容请打开系统自带文件管理进行浏览"),
+          child: Text(tr("settings.export_path.ios_desc2")),
         );
       }
       return Column(children: [
@@ -98,7 +99,7 @@ Widget displayExportPathInfo() {
                         Colors.black)
                     .withOpacity(.05),
                 child: Text(
-                  "导出路径 (点击可修改):\n"
+                  tr("settings.export_path.export_path_desc") + ":\n"
                   "$_exportPath",
                   textAlign: TextAlign.center,
                 ),
@@ -115,8 +116,8 @@ Widget displayExportPathInfo() {
                   color: (Theme.of(context).textTheme.bodyText1?.color ??
                           Colors.black)
                       .withOpacity(.01),
-                  child: const Text(
-                    "您正在使用安卓设备:\n如果不能成功导出并且提示权限不足, 可以尝试在Download或Document下建立子目录进行导出",
+                  child: Text(
+                    tr("settings.export_path.android_desc"),
                   ),
                 ),
               ]

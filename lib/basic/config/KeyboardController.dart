@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -22,7 +23,7 @@ Widget keyboardControllerSetting() {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return SwitchListTile(
           value: keyboardController,
-          title: const Text("阅读器键盘翻页(仅PC)"),
+          title: Text(tr("settings.keyboard_controller.title")),
           onChanged: (target) async {
             await method.saveProperty(_propertyName, "$target");
             keyboardController = target;

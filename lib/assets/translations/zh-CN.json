@@ -15,6 +15,7 @@
     "permission_denied": "申请权限被拒绝"
   },
   "net": {
+    "no_address": "不分流",
     "address": "分流",
     "address_sync": "分流同步",
     "address_sync_from_server": "从服务器获取最新的分流地址",
@@ -129,6 +130,65 @@
       "title": "电子书模式滚动UI",
       "desc": "触发距离",
       "cm": "厘米"
+    },
+    "export_path": {
+      "ios_desc": "随后可在文件管理中找到导出的内容",
+      "ios_desc2": "您正在使用iOS设备:\n导出到文件的内容请打开系统自带文件管理进行浏览",
+      "export_path_desc": "导出路径 (点击可修改)",
+      "android_desc": "您正在使用安卓设备:\n如果不能成功导出并且提示权限不足, 可以尝试在Download或Document下建立子目录进行导出"
+    },
+    "export_rename": {
+      "title": "导出时进行重命名"
+    },
+    "yes": "是",
+    "no": "否",
+    "full_screen_action": {
+      "title": "操控方式",
+      "choose": "选择操控方式",
+      "touch_once": "点击屏幕一次全屏",
+      "controller": "使用控制器全屏",
+      "touch_double": "双击屏幕全屏",
+      "touch_double_once_next": "双击屏幕全屏 + 单击屏幕下一页",
+      "three_area": "将屏幕划分成三个区域 (上一页, 下一页, 全屏)"
+    },
+    "full_screen_ui": {
+      "no": "不使用",
+      "hidden_bottom": "去除虚拟控制器",
+      "all": "全屏"
+    },
+    "hidden_fd_icon": {
+      "title": "隐藏个人空间的发电图标"
+    },
+    "hidden_search_persion": {
+      "title": "隐藏按作者搜索功能"
+    },
+    "hidden_sub_icon": {
+      "title": "隐藏订阅功能"
+    },
+    "hidden_words": {
+      "title": "根据关键词隐藏",
+      "clear_all": "确认清空",
+      "clear_all_desc": "确定要清空所有关键词吗？",
+      "input_hint": "输入要隐藏的关键词",
+      "no_words": "暂无关键词"
+    },
+    "image_address": {
+      "title": "图片分流",
+      "pinging": "测速中",
+      "failed": "失败"
+    },
+    "image_filter": {
+      "title": "阅读器图片滤镜",
+      "normal": "正常",
+      "gray": "灰度",
+      "brown": "棕褐色",
+      "choose": "选择阅读器图片滤镜"
+    },
+    "import_notice": {
+      "android_desc": "您正在使用安卓设备:\n如果不能导入导出并且提示权限不足, 可以尝试在Download或Document下建立子目录进行导入"
+    },
+    "keyboard_controller": {
+      "title": "阅读器键盘翻页(仅PC)"
     }
   }
 }

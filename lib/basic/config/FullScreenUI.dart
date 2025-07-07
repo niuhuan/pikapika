@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,10 +15,23 @@ enum FullScreenUI {
   ALL,
 }
 
+// Map<String, FullScreenUI> fullScreenUIMap = {
+//   "不使用": FullScreenUI.NO,
+//   "去除虚拟控制器": FullScreenUI.HIDDEN_BOTTOM,
+//   "全屏": FullScreenUI.ALL,
+// };
+
+const Map<String, FullScreenUI> fullScreenUIMap = {};
+
 const _propertyName = "fullScreenUI";
 late FullScreenUI fullScreenUI;
 
 Future<void> initFullScreenUI() async {
+  fullScreenUIMap.addAll({
+    tr("settings.full_screen_ui.no"): FullScreenUI.NO,
+    tr("settings.full_screen_ui.hidden_bottom"): FullScreenUI.HIDDEN_BOTTOM,
+    tr("settings.full_screen_ui.all"): FullScreenUI.ALL,
+  });
   fullScreenUI = _fullScreenUIFromString(await method.loadProperty(
     _propertyName,
     FullScreenUI.NO.toString(),
@@ -41,12 +55,6 @@ FullScreenUI _fullScreenUIFromString(String string) {
   }
   return FullScreenUI.NO;
 }
-
-Map<String, FullScreenUI> fullScreenUIMap = {
-  "不使用": FullScreenUI.NO,
-  "去除虚拟控制器": FullScreenUI.HIDDEN_BOTTOM,
-  "全屏": FullScreenUI.ALL,
-};
 
 String currentFullScreenUIName() {
   for (var e in fullScreenUIMap.entries) {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
@@ -19,7 +20,7 @@ Widget hiddenSearchPersionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("隐藏按作者搜索功能"),
+        title: Text(tr("settings.hidden_search_persion.title")),
         value: _hiddenSearchPersion,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");

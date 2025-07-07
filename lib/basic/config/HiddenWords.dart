@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/HiddenWordsScreen.dart';
@@ -45,7 +46,7 @@ Widget hiddenWordsSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("根据关键字封印"),
+        title: Text(tr("settings.hidden_words.title")),
         subtitle: Text(subString(jsonEncode(_hiddenWords))),
         onTap: () async {
           await Navigator.of(context).push(MaterialPageRoute(

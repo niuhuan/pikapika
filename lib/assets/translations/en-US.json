@@ -15,6 +15,7 @@
     "permission_denied": "Permission denied"
   },
   "net": {
+    "no_address": "No address",
     "address": "Address",
     "address_sync": "Address sync",
     "address_sync_from_server": "Get the latest address from the server",
@@ -129,6 +130,65 @@
       "title": "E-book scrolling UI",
       "desc": "Trigger distance",
       "cm": "cm"
+    },
+    "export_path": {
+      "ios_desc": "You can find the exported content in the file manager",
+      "ios_desc2": "You are using an iOS device:\nPlease open the system's built-in file manager to browse the exported content",
+      "export_path_desc": "Export path (click to modify)",
+      "android_desc": "You are using an Android device:\nIf the export fails and prompts insufficient permissions, you can try to create a subdirectory under Download or Document for export"
+    },
+    "export_rename": {
+      "title": "Export with renaming"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "full_screen_action": { 
+      "title": "Control method",
+      "choose": "Choose control method",
+      "touch_once": "Touch once to fullscreen",
+      "controller": "Use controller to fullscreen",
+      "touch_double": "Double click to fullscreen",
+      "touch_double_once_next": "Double click to fullscreen + click once to next page",
+      "three_area": "Divide the screen into three areas (previous page, next page, fullscreen)"
+    },
+    "full_screen_ui": {
+      "no": "Not use",
+      "hidden_bottom": "Remove virtual controller",
+      "all": "Full screen"
+    },
+    "hidden_fd_icon": {
+      "title": "Hide personal space's power icon"
+    },
+    "hidden_search_persion": {
+      "title": "Hide search by author"
+    },
+    "hidden_sub_icon": {
+      "title": "Hide subscription"
+    },
+    "hidden_words": {
+      "title": "Hide by keyword",
+      "clear_all": "Confirm clear",
+      "clear_all_desc": "Are you sure you want to clear all keywords?",
+      "input_hint": "Enter the keyword to hide",
+      "no_words": "No keywords"
+    },
+    "image_address": {
+      "title": "Image address",
+      "pinging": "Pinging",
+      "failed": "Failed"
+    },
+    "image_filter": {
+      "title": "Reader image filter",
+      "normal": "Normal",
+      "gray": "Gray",
+      "brown": "Brown",
+      "choose": "Choose reader image filter"
+    },
+    "import_notice": {
+      "android_desc": "You are using an Android device:\nIf you cannot import and export and prompt insufficient permissions, you can try to create a subdirectory under Download or Document for import"
+    },
+    "keyboard_controller": {
+      "title": "Reader keyboard page (only PC)"
     }
   }
 }

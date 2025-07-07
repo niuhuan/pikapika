@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -33,13 +34,13 @@ class ImageFilter {
 
 final List<ImageFilter> _filters = [
   ImageFilter(
-    "正常",
+    tr("settings.image_filter.normal"),
     (child) {
       return child;
     },
   ),
   ImageFilter(
-    "灰度",
+    tr("settings.image_filter.gray"),
         (child) {
       return ColorFiltered(
         colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.color),
@@ -48,7 +49,7 @@ final List<ImageFilter> _filters = [
     },
   ),
   ImageFilter(
-    "棕褐色",
+    tr("settings.image_filter.brown"),
         (child) {
       return ColorFiltered(
         colorFilter: const ColorFilter.matrix(<double>[ 0.393, 0.769, 0.189, 0, 0, 0.349, 0.686, 0.168, 0, 0, 0.272, 0.534, 0.131, 0, 0, 0, 0, 0, 1, 0, ]),
@@ -84,7 +85,7 @@ Future<void> chooseImageFilter(BuildContext context) async {
   ImageFilter? result = await chooseMapDialog<ImageFilter>(
     context,
     map,
-    "选择阅读器图片滤镜",
+    tr("settings.image_filter.choose"),
   );
   if (result != null) {
     await method.saveProperty(_propertyName, result.name);
@@ -96,7 +97,7 @@ Widget imageFilterSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("阅读器图片滤镜"),
+        title: Text(tr("settings.image_filter.title")),
         subtitle: Text(imageFilter.name),
         onTap: () async {
           await chooseImageFilter(context);

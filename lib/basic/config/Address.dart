@@ -34,7 +34,7 @@ Future<void> initAddress() async {
 
 String currentAddress() => _currentAddress;
 
-String currentAddressName() => tr('net.address') + _currentAddress;
+String currentAddressName() => _currentAddress == "0" ? tr('app.no_address') : tr('net.address') + _currentAddress;
 
 Widget switchAddressSetting() {
   return StatefulBuilder(

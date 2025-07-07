@@ -1,4 +1,5 @@
 /// 自动全屏
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -18,7 +19,7 @@ bool currentExportRename() {
 
 Future<void> _chooseExportRename(BuildContext context) async {
   String? result =
-      await chooseListDialog<String>(context, "导出时进行重命名", ["是", "否"]);
+      await chooseListDialog<String>(context, tr("settings.export_rename.title"), ["是", "否"]);
   if (result != null) {
     var target = result == "是";
     await method.saveProperty(_propertyName, "$target");
@@ -31,15 +32,15 @@ Widget exportRenameSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
         title: Text(
-          "导出时进行重命名" + (!isPro ? "(发电)" : ""),
+          tr("settings.export_rename.title") + (!isPro ? "(${tr("app.pro")})" : ""),
           style: TextStyle(
             color: !isPro ? Colors.grey : null,
           ),
         ),
-        subtitle: Text(_exportRename ? "是" : "否"),
+        subtitle: Text(_exportRename ? tr("settings.yes") : tr("settings.no")),
         onTap: () async {
           if (!isPro) {
-            defaultToast(context, "请先发电再使用");
+            defaultToast(context, tr("app.pro_required"));
             return;
           }
           await _chooseExportRename(context);
