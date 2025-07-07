@@ -49,6 +49,23 @@
     "clear_cache": "清除缓存",
     "migrate": "文件迁移",
     "migrate_subtitle": "更换您的数据文件夹到内存卡",
-    "migrate_confirm": "此功能菜单保存后, 需要重启程序, 您确认吗"
+    "migrate_confirm": "此功能菜单保存后, 需要重启程序, 您确认吗",
+    "app_orientation": {
+      "title": "APP方向",
+      "choose": "请选择APP方向",
+      "normal": "正常",
+      "landscape": "横屏",
+      "portrait": "竖屏"
+    },
+    "will_pop_notice": "在首页连续按两下返回键才能退出APP",
+    "android_secure_flag": "禁止截图/禁止显示在任务视图",
+    "authentication": "进入APP时验证身份(如果系统已经录入密码或指纹)",
+    "set_password": "设置应用程序密码",
+    "auto_clean": {
+      "one_month_ago": "一个月前",
+      "one_week_ago": "一周前",
+      "one_day_ago": "一天前",
+      "no_auto_clean": "不自动清理"
+    }
   }
 }

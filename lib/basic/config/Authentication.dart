@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/Platform.dart';
 import 'package:pikapika/screens/DesktopAuthenticationScreen.dart';
@@ -43,7 +44,7 @@ Widget authenticationSetting() {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return SwitchListTile(
           value: _authentication,
-          title: const Text("进入APP时验证身份(如果系统已经录入密码或指纹)"),
+          title: Text(tr("settings.authentication")),
           onChanged: (target) async {
             await method.saveProperty(_propertyName, "$target");
             _authentication = target;
@@ -59,7 +60,7 @@ Widget authenticationSetting() {
       void Function(void Function()) setState,
     ) {
       return ListTile(
-        title: const Text("设置应用程序密码"),
+        title: Text(tr("settings.set_password")),
         onTap: () async {
           await Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const SetPassword()));

@@ -49,6 +49,23 @@
     "clear_cache": "清除快取",
     "migrate": "文件遷移",
     "migrate_subtitle": "更換您的資料文件夾到記憶卡",
-    "migrate_confirm": "此功能菜單保存後, 需要重啟程序, 您確認嗎"
+    "migrate_confirm": "此功能菜單保存後, 需要重啟程序, 您確認嗎",
+    "app_orientation": {
+      "title": "APP方向",
+      "choose": "請選擇APP方向",
+      "normal": "正常",
+      "landscape": "橫屏",
+      "portrait": "豎屏"
+    },
+    "will_pop_notice": "在首頁連續按兩下返回鍵才能退出APP",
+    "android_secure_flag": "禁止截圖/禁止顯示在任務視圖",
+    "authentication": "進入APP時驗證身份(如果系統已經錄入密碼或指紋)",
+    "set_password": "設置應用程序密碼",
+    "auto_clean": {
+      "one_month_ago": "一個月前",
+      "one_week_ago": "一周前",
+      "one_day_ago": "一天前",
+      "no_auto_clean": "不自動清理"
+    }
   }
 }

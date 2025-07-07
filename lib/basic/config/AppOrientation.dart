@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -19,11 +20,11 @@ enum AppOrientation {
 String appOrientationName(AppOrientation type) {
   switch (type) {
     case AppOrientation.normal:
-      return "正常";
+      return tr('settings.app_orientation.normal');
     case AppOrientation.landscape:
-      return "横屏";
+      return tr('settings.app_orientation.landscape');
     case AppOrientation.portrait:
-      return "竖屏";
+      return tr('settings.app_orientation.portrait');
   }
 }
 
@@ -52,7 +53,7 @@ Future chooseAppOrientation(BuildContext context) async {
   final newAppOrientation = await chooseMapDialog(
     context,
     map,
-    "请选择APP方向",
+    tr('settings.app_orientation.choose'),
   );
   if (newAppOrientation != null) {
     await method.saveProperty(_propertyName, "$newAppOrientation");
@@ -68,7 +69,7 @@ Widget appOrientationWidget() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("APP方向"),
+        title: Text(tr('settings.app_orientation.title')),
         subtitle: Text(appOrientationName(_appOrientation)),
         onTap: () async {
           await chooseAppOrientation(context);

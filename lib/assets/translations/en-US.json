@@ -49,6 +49,23 @@
     "clear_cache": "Clear cache",
     "migrate": "Migrate",
     "migrate_subtitle": "Change your data folder to the memory card",
-    "migrate_confirm": "This feature will be saved after restarting the program, are you sure"
+    "migrate_confirm": "This feature will be saved after restarting the program, are you sure",
+    "app_orientation": {
+      "title": "App orientation",
+      "choose": "Choose app orientation",
+      "normal": "Normal",
+      "landscape": "Landscape",
+      "portrait": "Portrait"
+    },
+    "will_pop_notice": "Press the back key twice in a row to exit the app",
+    "android_secure_flag": "Disable screenshot/disable display in task view",
+    "authentication": "Authentication when entering the app (if the system has already entered the password or fingerprint)",
+    "set_password": "Set application password",
+    "auto_clean": {
+      "one_month_ago": "One month ago",
+      "one_week_ago": "One week ago",
+      "one_day_ago": "One day ago",
+      "no_auto_clean": "No auto clean"
+    }
   }
 }
