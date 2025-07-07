@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'ContentError.dart';
 import 'ContentLoading.dart';
@@ -27,7 +28,7 @@ class ContentBuilder<T> extends StatelessWidget {
           );
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return const ContentLoading(label: '加载中');
+          return ContentLoading(label: tr('app.loading'));
         }
         return successBuilder(context, snapshot);
       },

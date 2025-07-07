@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -170,7 +171,7 @@ class _ComicListState extends State<ComicList> {
                 ),
                 child: Center(
                   child: Text(
-                    '被封印的本子',
+                    tr('components.comic_list.shadow'),
                     style: TextStyle(
                       fontSize: 12,
                       color: (Theme.of(context).textTheme.bodyText1?.color ??
@@ -327,7 +328,7 @@ class _ComicListState extends State<ComicList> {
                       .withOpacity(.05),
               child: Center(
                 child: Text(
-                  '被封印的本子',
+                  tr('components.comic_list.shadow'),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -533,7 +534,7 @@ class _ComicListState extends State<ComicList> {
                       .withOpacity(.05),
               child: Center(
                 child: Text(
-                  '被封印的本子',
+                  tr('components.comic_list.shadow'),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: shadowFontSize,

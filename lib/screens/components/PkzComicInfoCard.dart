@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -99,7 +100,7 @@ class _ComicInfoCard extends State<PkzComicInfoCard> {
                         widget.linkItem
                             ? TextSpan(
                                 children: [
-                                  const TextSpan(text: '分类 :'),
+                                  TextSpan(text: tr('app.categories') + ' :'),
                                   ...info.categories.map(
                                     (e) => TextSpan(
                                       children: [
@@ -116,7 +117,7 @@ class _ComicInfoCard extends State<PkzComicInfoCard> {
                                 ],
                               )
                             : TextSpan(
-                                text: "分类 : ${info.categories.join(' ')}"),
+                                text: "${tr('app.categories')} : ${info.categories.join(' ')}"),
                         style: TextStyle(
                           fontSize: 13,
                           color: Theme.of(context)
@@ -132,7 +133,7 @@ class _ComicInfoCard extends State<PkzComicInfoCard> {
                           ? Container(
                               padding: EdgeInsets.only(bottom: 5),
                               child: Text(
-                                "上次观看到 ${widget.displayViewLog!.lastViewEpName}",
+                                "${tr('app.last_viewed')} ${widget.displayViewLog!.lastViewEpName}",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: authorStyleX,

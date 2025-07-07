@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
@@ -26,9 +27,9 @@ AppBar downAppBar(
               size: 18,
               color: Colors.white,
             ),
-            const Text(
-              '取消',
-              style: TextStyle(fontSize: 14, color: Colors.white),
+            Text(
+              tr('app.cancel'),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
           ],
@@ -47,9 +48,9 @@ AppBar downAppBar(
               size: 18,
               color: Colors.white,
             ),
-            const Text(
-              '全选',
-              style: TextStyle(fontSize: 14, color: Colors.white),
+            Text(
+              tr('app.select_all'),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
           ],
@@ -60,11 +61,11 @@ AppBar downAppBar(
         onPressed: () async {
           var list = _comicListController.selected;
           if (list.isEmpty) {
-            defaultToast(context, "请选择漫画");
+            defaultToast(context, tr("app.please_select_comic"));
             return;
           }
           list = list.toList();
-          setState((){
+          setState(() {
             _comicListController.selecting = false;
           });
           Navigator.of(context).push(MaterialPageRoute(
@@ -81,9 +82,9 @@ AppBar downAppBar(
               size: 18,
               color: Colors.white,
             ),
-            const Text(
-              '确认',
-              style: TextStyle(fontSize: 14, color: Colors.white),
+            Text(
+              tr('app.confirm'),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
           ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -111,9 +112,9 @@ class _CommentListState extends State<CommentList> {
             setState(() {
               _future = _loadPage();
             });
-            defaultToast(context, "评论成功");
+            defaultToast(context, tr("screen.comment.comment_success"));
           },
-          hintText: '请输入评论内容',
+          hintText: tr("screen.comment.please_enter_comment"),
         );
       },
       child: Container(
@@ -132,8 +133,8 @@ class _CommentListState extends State<CommentList> {
           ),
         ),
         padding: const EdgeInsets.all(30),
-        child: const Center(
-          child: Text('我有话要讲'),
+        child: Center(
+          child: Text(tr("screen.comment.i_have_something_to_say")),
         ),
       ),
     );
@@ -150,8 +151,8 @@ class _CommentListState extends State<CommentList> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: const Center(
-            child: Text('上一页'),
+          child: Center(
+            child: Text(tr("app.previous_page")),
           ),
         ),
       );
@@ -170,8 +171,8 @@ class _CommentListState extends State<CommentList> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: const Center(
-            child: Text('下一页'),
+          child: Center(
+            child: Text(tr("app.next_page")),
           ),
         ),
       );

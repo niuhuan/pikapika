@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/screens/components/ComicList.dart';
@@ -14,25 +15,25 @@ Widget commonPopMenu(
 }) {
   return PopupMenuButton<int>(
     itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-      const PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 0,
         child: ListTile(
-          leading: Icon(Icons.view_quilt),
-          title: Text("显示模式"),
+          leading: const Icon(Icons.view_quilt),
+          title: Text(tr("components.common.display_mode")),
         ),
       ),
-      const PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 1,
         child: ListTile(
-          leading: Icon(Icons.do_not_disturb_on_outlined),
-          title: Text("封印模式"),
+          leading: const Icon(Icons.do_not_disturb_on_outlined),
+          title: Text(tr("components.common.shadow_mode")),
         ),
       ),
-      const PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 2,
         child: ListTile(
-          leading: Icon(Icons.hide_source),
-          title: Text("封印列表"),
+          leading: const Icon(Icons.hide_source),
+          title: Text(tr("components.common.shadow_list")),
         ),
       ),
       ...comicListController != null && setState != null
@@ -45,7 +46,8 @@ Widget commonPopMenu(
                     color: isPro ? null : Colors.grey,
                   ),
                   title: Text(
-                    "批量下载" + (isPro ? "" : "(发电)"),
+                    tr("components.common.batch_download") +
+                        (isPro ? "" : "(${tr('app.pro')})"),
                     style: TextStyle(
                       color: isPro ? null : Colors.grey,
                     ),
@@ -68,7 +70,7 @@ Widget commonPopMenu(
           break;
         case 3:
           if (!isPro) {
-            defaultToast(context, "请先发电呀");
+            defaultToast(context, tr("app.pro_required"));
             return;
           }
           if (setState != null) {

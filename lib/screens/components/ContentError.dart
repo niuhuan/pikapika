@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/config/ContentFailedReloadAction.dart';
 
@@ -23,23 +24,23 @@ class ContentError extends StatelessWidget {
     switch (type) {
       case ERROR_TYPE_NETWORK:
         iconData = Icons.wifi_off_rounded;
-        message = "连接不上啦, 请检查网络";
+        message = tr("app.network_error");
         break;
       case ERROR_TYPE_PERMISSION:
         iconData = Icons.highlight_off;
-        message = "没有权限或路径不可用";
+        message = tr("app.no_permission");
         break;
       case ERROR_TYPE_TIME:
         iconData = Icons.timer_off;
-        message = "请检查设备时间";
+        message = tr("app.check_device_time");
         break;
       case ERROR_TYPE_UNDER_REVIEW:
         iconData = Icons.highlight_off;
-        message = "资源未审核或不可用";
+        message = tr("app.resource_not_available");
         break;
       default:
         iconData = Icons.highlight_off;
-        message = "啊哦, 被玩坏了";
+        message = tr("app.something_went_wrong");
         break;
     }
     return LayoutBuilder(
@@ -81,7 +82,7 @@ class ContentError extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Text('(点击刷新)', style: TextStyle(fontSize: tipSize)),
+                      Text('(${tr("app.click_refresh")})', style: TextStyle(fontSize: tipSize)),
                       Container(height: min / 15),
                       Text('$error', style: TextStyle(fontSize: infoSize)),
                       Expanded(child: Container()),
@@ -118,7 +119,7 @@ class ContentError extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Text('(下拉刷新)', style: TextStyle(fontSize: tipSize)),
+                    Text('(${tr("app.pull_down_refresh")})', style: TextStyle(fontSize: tipSize)),
                     Container(height: min / 15),
                     Text('$error', style: TextStyle(fontSize: infoSize)),
                     Expanded(child: Container()),

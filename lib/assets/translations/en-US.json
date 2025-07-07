@@ -28,7 +28,31 @@
     "all": "All",
     "delete": "Delete",
     "save_image": "Save image",
-    "please_select": "Please select"
+    "preview_image": "Preview image",
+    "please_select": "Please select",
+    "refresh": "Refresh",
+    "initializing": "Initializing",
+    "like_failed": "Like failed",
+    "network_error": "Network error, please check your network",
+    "no_permission": "No permission or path is not available",
+    "check_device_time": "Please check your device time",
+    "resource_not_available": "Resource not available",
+    "something_went_wrong": "Something went wrong",
+    "click_refresh": "Click refresh",
+    "pull_down_refresh": "Pull down refresh",
+    "continue_reading": "Continue reading",
+    "start_reading": "Start reading",
+    "image_crop": "Image crop",
+    "download": "Download",
+    "download_failed": "Download failed",
+    "download_finished": "Download finished",
+    "downloading": "Downloading",
+    "queue": "Queue",
+    "deleting": "Deleting",
+    "please_select_comic": "Please select comic",
+    "please_choose": "Please choose",
+    "last_viewed": "Last viewed",
+    "auto_punch": "Auto punch"
   },
   "net": {
     "no_address": "No address",
@@ -746,6 +770,31 @@
       "port": "Port: 8080",
       "usage_instruction": "Enter \"http://device_ip:8080/\" in browser to access downloaded comics",
       "leave_notice": "Server will close after leaving this page"
+    }
+  },
+  "components": {
+    "comic_info_card": {
+      "categories": "Categories",
+      "finished": "Finished",
+      "viewed": "Viewed"
+    },
+    "comic_list": {
+      "shadow": "Shadowed Comics"
+    },
+    "common": {
+      "display_mode": "Display Mode",
+      "shadow_mode": "Shadow Mode",
+      "shadow_list": "Shadow List",
+      "batch_download": "Batch Download"
+    },
+    "image_reader": {
+      "already_at_the_end": "Already at the end",
+      "click_to_next_chapter": "Click to next chapter",
+      "reload_page": "Reload page",
+      "next_chapter": "Next chapter",
+      "end_reading": "End reading",
+      "reload_image": "Reload image",
+      "save_image_in_this_page": "Save image in this page"
     }
   }
 }

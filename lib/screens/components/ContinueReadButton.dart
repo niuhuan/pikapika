@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 
@@ -29,7 +30,7 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
             late String text;
             if (snapshot.connectionState != ConnectionState.done) {
               onPressed = () {};
-              text = '加载中';
+              text = tr('app.loading');
             }
             if (snapshot.data != null && snapshot.data!.lastViewEpOrder > 0) {
               onPressed = () => widget.onChoose(
@@ -37,10 +38,10 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
                     snapshot.data?.lastViewPictureRank,
                   );
               text =
-                  '继续阅读 ${snapshot.data?.lastViewEpTitle} P. ${(snapshot.data?.lastViewPictureRank ?? 0) + 1}';
+                  '${tr('app.continue_reading')} ${snapshot.data?.lastViewEpTitle} P. ${(snapshot.data?.lastViewPictureRank ?? 0) + 1}';
             } else {
               onPressed = () => widget.onChoose(null, null);
-              text = '开始阅读';
+              text = tr('app.start_reading');
             }
             return Container(
               padding: const EdgeInsets.only(left: 10, right: 10),

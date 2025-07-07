@@ -28,7 +28,31 @@
     "all": "全部",
     "delete": "删除",
     "save_image": "保存图片",
-    "please_select": "请选择"
+    "preview_image": "预览图片",
+    "please_select": "请选择",
+    "refresh": "刷新",
+    "initializing": "初始化",
+    "like_failed": "点赞失败",
+    "network_error": "连接不上啦, 请检查网络",
+    "no_permission": "没有权限或路径不可用",
+    "check_device_time": "请检查设备时间",
+    "resource_not_available": "资源未审核或不可用",
+    "something_went_wrong": "啊哦, 被玩坏了",
+    "click_refresh": "点击刷新",
+    "pull_down_refresh": "下拉刷新",
+    "continue_reading": "继续阅读",
+    "start_reading": "开始阅读",
+    "image_crop": "图片裁剪",
+    "download": "下载",
+    "download_failed": "下载失败",
+    "download_finished": "下载完成",
+    "downloading": "下载中",
+    "queue": "队列中",
+    "deleting": "删除中",
+    "please_select_comic": "请选择漫画",
+    "please_choose": "请选择",
+    "last_viewed": "上次观看到",
+    "auto_punch": "自动打卡"
   },
   "net": {
     "no_address": "不分流",
@@ -743,6 +767,31 @@
       "port": "端口号:8080",
       "usage_instruction": "在浏览器中输入\"http://本设备ip:8080/\"访问下载的漫画",
       "leave_notice": "离开页面后服务器将关闭"
+    }
+  },
+  "components": {
+    "comic_info_card": {
+      "categories": "分类",
+      "finished": "完结",
+      "viewed": "看过"
+    },
+    "comic_list": {
+      "shadow": "被封印的本子"
+    },
+    "common": {
+      "display_mode": "显示模式",
+      "shadow_mode": "封印模式",
+      "shadow_list": "封印列表",
+      "batch_download": "批量下载"
+    },
+    "image_reader": {
+      "already_at_the_end": "已经到头了",
+      "click_to_next_chapter": "再次点击跳转到下一章",
+      "reload_page": "重载页面",
+      "next_chapter": "下一章",
+      "end_reading": "结束阅读",
+      "reload_image": "重新加载图片",
+      "save_image_in_this_page": "保存本页的图片"
     }
   }
 }

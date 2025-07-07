@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../basic/config/ContentFailedReloadAction.dart';
@@ -55,7 +56,7 @@ class ContentMessage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        Text('(点击刷新)', style: TextStyle(fontSize: tipSize)),
+                        Text('(${tr("app.click_refresh")})', style: TextStyle(fontSize: tipSize)),
                         Expanded(child: Container()),
                       ],
                     ),
@@ -92,7 +93,7 @@ class ContentMessage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      Text('(下拉刷新)', style: TextStyle(fontSize: tipSize)),
+                      Text('(${tr("app.pull_down_refresh")})', style: TextStyle(fontSize: tipSize)),
                       Container(height: min / 15),
                       Expanded(child: Container()),
                     ],

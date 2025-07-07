@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Cross.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -111,7 +112,7 @@ class DownloadInfoCard extends StatelessWidget {
                           : Text(task.author, style: authorStyle),
                       Container(height: 5),
                       Text(
-                        "分类: $categoriesString",
+                        "${tr('app.categories')}: $categoriesString",
                         style: categoriesStyle,
                       ),
                       Container(height: 5),
@@ -124,36 +125,36 @@ class DownloadInfoCard extends StatelessWidget {
                           ),
                           Container(width: 5),
                           Text(
-                            '下载 ${task.downloadPictureCount} / ${task.selectedPictureCount}',
+                            '${tr('app.download')} ${task.downloadPictureCount} / ${task.selectedPictureCount}',
                             style: iconLabelStyle,
                           ),
                           Container(width: 20),
                           task.deleting
-                              ? Text('删除中',
+                              ? Text(tr('app.deleting'),
                                   style: TextStyle(
                                       color: Color.alphaBlend(
                                           textColor.withAlpha(0x33),
                                           Colors.red.shade500)))
                               : task.downloadFailed
-                                  ? Text('下载失败',
+                                  ? Text(tr('app.download_failed'),
                                       style: TextStyle(
                                           color: Color.alphaBlend(
                                               textColor.withAlpha(0x33),
                                               Colors.red.shade500)))
                                   : task.downloadFinished
-                                      ? Text('下载完成',
+                                      ? Text(tr('app.download_finished'),
                                           style: TextStyle(
                                               color: Color.alphaBlend(
                                                   textColorAlpha,
                                                   Colors.green.shade500)))
                                       : downloading // downloader.downloadingTask() == task.id
-                                          ? Text('下载中',
+                                          ? Text(tr('app.downloading'),
                                               style: TextStyle(
                                                   color: Color.alphaBlend(
                                                       textColorAlpha,
                                                       Colors
                                                           .blue.shade500)))
-                                          : Text('队列中',
+                                          : Text(tr('app.queue'),
                                               style: TextStyle(
                                                   color: Color.alphaBlend(
                                                       textColorAlpha,

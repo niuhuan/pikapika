@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -139,7 +140,7 @@ class _ComicCommentItemState extends State<ComicCommentItem> {
                                     });
                                   } catch (e, s) {
                                     print("$e\n$s");
-                                    defaultToast(context, "点赞失败");
+                                    defaultToast(context, tr("app.like_failed"));
                                   } finally {
                                     setState(() {
                                       likeLoading = false;

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -109,10 +110,10 @@ class _ControllerComicPagerState extends State<ControllerComicPager> {
       future: _pageFuture,
       builder: (BuildContext context, AsyncSnapshot<ComicsPage> snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          return const Text('初始化');
+          return Text(tr('app.initializing'));
         }
         if (snapshot.connectionState != ConnectionState.done) {
-          return const ContentLoading(label: '加载中');
+          return ContentLoading(label: tr('app.loading'));
         }
         if (snapshot.hasError) {
           return ContentError(

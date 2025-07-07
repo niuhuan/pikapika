@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -56,7 +57,7 @@ class _ComicListBuilderState extends State<ComicListBuilder> {
             snapshot.data!,
             appendWidget: FitButton(
               onPressed: _reload,
-              text: '刷新',
+              text: tr('app.refresh'),
             ),
           ),
         );

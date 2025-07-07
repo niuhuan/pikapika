@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Cross.dart';
@@ -70,8 +71,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                           ? GestureDetector(
                               onLongPress: () {
                                 if (copyFullName()) {
-                                  var fin =
-                                  copyFullNameTemplate()
+                                  var fin = copyFullNameTemplate()
                                       .replaceAll("{title}", info.title)
                                       .replaceAll("{author}", info.author);
                                   if (fin.isEmpty) {
@@ -79,7 +79,7 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                   }
                                   confirmCopy(
                                     context,
-                                      fin,
+                                    fin,
                                   );
                                 } else {
                                   confirmCopy(context, info.title);
@@ -108,7 +108,9 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                         widget.linkItem
                             ? TextSpan(
                                 children: [
-                                  const TextSpan(text: '分类 :'),
+                                  TextSpan(
+                                      text:
+                                          '${tr('components.comic_info_card.categories')} :'),
                                   ...info.categories.map(
                                     (e) => TextSpan(
                                       children: [
@@ -129,7 +131,8 @@ class _ComicInfoCard extends State<ComicInfoCard> {
                                 ],
                               )
                             : TextSpan(
-                                text: "分类 : ${info.categories.join(' ')}"),
+                                text:
+                                    "${tr('components.comic_info_card.categories')} : ${info.categories.join(' ')}"),
                         style: TextStyle(
                           fontSize: 13,
                           color: Theme.of(context)
@@ -305,15 +308,15 @@ Widget buildFinished(bool comicFinished) {
         color: Colors.orange.shade800,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: const Text(
-        "完结",
-        style: TextStyle(
+      child: Text(
+        tr('components.comic_info_card.finished'),
+        style: const TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.bold,
           color: Colors.white,
           height: 1.2,
         ),
-        strutStyle: StrutStyle(
+        strutStyle: const StrutStyle(
           height: 1.2,
         ),
       ),
@@ -334,15 +337,15 @@ List<Widget> buildViewed(viewed) {
         color: Colors.yellow.shade800,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: const Text(
-        "看过",
-        style: TextStyle(
+      child: Text(
+        tr('components.comic_info_card.viewed'),
+        style: const TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.bold,
           color: Colors.white,
           height: 1.2,
         ),
-        strutStyle: StrutStyle(
+        strutStyle: const StrutStyle(
           height: 1.2,
         ),
       ),

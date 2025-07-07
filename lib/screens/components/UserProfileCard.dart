@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -34,7 +35,7 @@ class _UserProfileCardState extends State<UserProfileCard> {
     if (!profile.isPunched) {
       await method.punchIn();
       profile.isPunched = true;
-      defaultToast(context, "自动打卡");
+      defaultToast(context, tr('app.auto_punch'));
     }
     return profile;
   }

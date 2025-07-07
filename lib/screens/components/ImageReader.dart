@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:another_xlider/another_xlider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -332,8 +333,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
                   _onNextAction();
                 } else {
                   showToast(
-                    "已经到头了",
-                    context: context,
+                    tr('components.image_reader.already_at_the_end'),
                     position: StyledToastPosition.center,
                     animation: StyledToastAnimation.scale,
                     reverseAnimation: StyledToastAnimation.fade,
@@ -346,8 +346,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
               } else {
                 _noticeTime = now;
                 showToast(
-                  "再次点击跳转到下一章",
-                  context: context,
+                  tr('components.image_reader.click_to_next_chapter'),
                   position: StyledToastPosition.center,
                   animation: StyledToastAnimation.scale,
                   reverseAnimation: StyledToastAnimation.fade,
@@ -882,7 +881,7 @@ abstract class _ImageReaderContentState extends State<_ImageReaderContent> {
     if (widget.struct.epNameMap.containsKey(widget.struct.epOrder + 1)) {
       widget.struct.onChangeEp(widget.struct.epOrder + 1);
     } else {
-      defaultToast(context, "已经到头了");
+      defaultToast(context, tr('components.image_reader.already_at_the_end'));
     }
   }
 
@@ -1021,7 +1020,7 @@ class _SettingPanelState extends State<_SettingPanel> {
             ),
             _bottomIcon(
               icon: Icons.refresh,
-              title: "重载页面",
+              title: tr('components.image_reader.reload_page'),
               onPressed: () {
                 Navigator.of(context).pop();
                 widget.onReloadEp();
@@ -1279,7 +1278,7 @@ class _WebToonReaderState extends _ImageReaderContentState {
         textColor: invertColor(readerBackgroundColorObj),
         child: Container(
           padding: const EdgeInsets.only(top: 40, bottom: 40),
-          child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
+          child: Text(super._hasNextEp() ? tr('components.image_reader.next_chapter') : tr('components.image_reader.end_reading')),
         ),
       ),
     );
@@ -1411,14 +1410,15 @@ class _WebToonReaderImageState extends State<_WebToonReaderImage> {
               return GestureDetector(
                 onLongPress: () async {
                   String? choose =
-                      await chooseListDialog(context, '请选择', ['重新加载图片']);
-                  switch (choose) {
-                    case '重新加载图片':
-                      setState(() {
-                        _future = _load();
-                      });
-                      break;
-                  }
+                      await chooseListDialog(context, tr('components.please_choose'), [tr('components.image_reader.reload_image')]);
+                      if (choose == null) {
+                        return;
+                      }
+                      if (choose == tr('components.image_reader.reload_image')) {
+                        setState(() {
+                          _future = _load();
+                        });
+                      }
                 },
                 child: buildError(widget.size.width, widget.size.height),
               );
@@ -1674,7 +1674,7 @@ class _ListViewReaderState extends _ImageReaderContentState
         textColor: invertColor(readerBackgroundColorObj),
         child: Container(
           padding: const EdgeInsets.only(top: 40, bottom: 40),
-          child: Text(super._hasNextEp() ? '下一章' : '结束阅读'),
+          child: Text(super._hasNextEp() ? tr('components.image_reader.next_chapter') : tr('components.image_reader.end_reading')),
         ),
       ),
     );
@@ -1809,26 +1809,27 @@ class _GalleryReaderState extends _ImageReaderContentState {
         return data.finalPath;
       }
 
-      String? choose = await chooseListDialog(context, '请选择', ['预览图片', '保存图片']);
-      switch (choose) {
-        case '预览图片':
-          try {
-            var file = await load();
-            Navigator.of(context).push(mixRoute(
-              builder: (context) => FilePhotoViewScreen(file),
-            ));
-          } catch (e) {
-            defaultToast(context, "图片加载失败");
-          }
-          break;
-        case '保存图片':
-          try {
-            var file = await load();
-            saveImage(file, context);
-          } catch (e) {
-            defaultToast(context, "图片加载失败");
-          }
-          break;
+      String? choose = await chooseListDialog(context, tr('components.please_choose'), [tr('app.preview_image'), tr('app.save_image')]);
+      if (choose == null) {
+        return;
+      }
+
+      if (choose == tr('app.preview_image')) {
+        try {
+          var file = await load();
+          Navigator.of(context).push(mixRoute(
+            builder: (context) => FilePhotoViewScreen(file),
+          ));
+        } catch (e) {
+          defaultToast(context, "图片加载失败");
+        }
+      } else if (choose == tr('app.save_image')) {
+        try {
+          var file = await load();
+          saveImage(file, context);
+        } catch (e) {
+          defaultToast(context, "图片加载失败");
+        }
       }
     }
   }
@@ -1914,7 +1915,7 @@ class _GalleryReaderState extends _ImageReaderContentState {
                 }
               },
               child: Text(
-                _hasNextEp() ? '下一章' : '结束阅读',
+                _hasNextEp() ? tr('components.image_reader.next_chapter') : tr('components.image_reader.end_reading'),
                 style: const TextStyle(color: Colors.white),
               ),
             ),
@@ -2165,7 +2166,7 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
                 }
               },
               child: Text(
-                _hasNextEp() ? '下一章' : '结束阅读',
+                _hasNextEp() ? tr('components.image_reader.next_chapter') : tr('components.image_reader.end_reading'),
                 style: const TextStyle(color: Colors.white),
               ),
             ),
@@ -2194,9 +2195,11 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
     if (matchImages.isEmpty) {
       return;
     }
-    String? choose = await chooseListDialog(context, '请选择', ['保存本页的图片']);
-    switch (choose) {
-      case '保存本页的图片':
+    String? choose = await chooseListDialog(context, tr('components.please_choose'), [tr('components.image_reader.save_image_in_this_page')]);
+    if (choose == null) {
+      return;
+    }
+    if (choose == tr('components.image_reader.save_image_in_this_page')) {
         for (var item in matchImages) {
           if (item.downloadLocalPath != null) {
             var file = await method.downloadImagePath(item.downloadLocalPath!);
@@ -2206,7 +2209,6 @@ class _TwoPageGalleryReaderState extends _ImageReaderContentState {
             saveImage(data.finalPath, context);
           }
         }
-        break;
     }
   }
 }

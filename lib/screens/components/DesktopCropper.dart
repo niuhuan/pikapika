@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:image/image.dart' as image;
 import 'package:crop_image/crop_image.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _DesktopCropperState extends State<DesktopCropper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title ?? "图片裁剪"),
+        title: Text(widget.title ?? tr("app.image_crop")),
         actions: [
           IconButton(onPressed: _finish, icon: const Icon(Icons.done)),
         ],
