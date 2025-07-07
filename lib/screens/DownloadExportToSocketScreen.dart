@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -68,7 +69,7 @@ class _DownloadExportToSocketScreenState
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("网络导出 - " + widget.comicTitle),
+        title: Text(tr("screen.download_export_to_socket.title") + " - " + widget.comicTitle),
       ),
       body: FutureBuilder(
         future: _future,
@@ -84,7 +85,7 @@ class _DownloadExportToSocketScreenState
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr("screen.download_export_to_socket.loading"));
           }
           return PikaListView(
             children: [
@@ -93,22 +94,22 @@ class _DownloadExportToSocketScreenState
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    const Text(
-                        'TIPS : 传输成功之前请不要退出页面, 一次只能导出到一个设备, 两台设备需要在同一网段或无限局域网中, 请另外一台设备输入 IP:端口 , 有一个IP时请选择无限局域网的IP, 通常是192.168开头'),
+                     Text(
+                        tr("screen.download_export_to_socket.tips")),
                     FutureBuilder(
                       future: _ipFuture,
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.hasError) {
-                          return const Text('获取IP失败');
+                          return Text(tr("screen.download_export_to_socket.get_ip_failed"));
                         }
                         if (snapshot.connectionState != ConnectionState.done) {
-                          return const Text('正在获取IP');
+                          return Text(tr("screen.download_export_to_socket.getting_ip"));
                         }
                         return Text('${snapshot.data}');
                       },
                     ),
-                    Text('端口号:${snapshot.data}'),
+                    Text(tr("screen.download_export_to_socket.port") + ':${snapshot.data}'),
                     Text(exportMessage),
                   ],
                 ),

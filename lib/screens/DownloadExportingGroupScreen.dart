@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import '../basic/Channels.dart';
@@ -24,7 +25,7 @@ class _DownloadExportingGroupScreenState
   bool exported = false;
   bool exportFail = false;
   dynamic e;
-  String exportMessage = "正在导出";
+  String exportMessage = tr("screen.download_exporting_group.exporting");
 
   @override
   void initState() {
@@ -49,10 +50,10 @@ class _DownloadExportingGroupScreenState
       return ContentLoading(label: exportMessage);
     }
     if (exportFail) {
-      return Center(child: Text("导出失败\n$e"));
+      return Center(child: Text(tr("screen.download_exporting_group.export_failed") + "\n$e"));
     }
     if (exported) {
-      return const Center(child: Text("导出成功"));
+      return Center(child: Text(tr("screen.download_exporting_group.export_success")));
     }
     return PikaListView(
       children: [
@@ -61,54 +62,58 @@ class _DownloadExportingGroupScreenState
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkz,
-          child: _buildButtonInner("导出成一个PKZ\n(加密模式,防止网盘检测,能用pikapika打开观看)"),
+          child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pkz")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkis,
-          child: _buildButtonInner("每部漫画都打包一个PKI\n(加密模式,防止网盘检测,能用pikapika导入)"),
+          child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pki")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportZips,
           child: _buildButtonInner(
-              "每部漫画都打包一个ZIP\n(不加密模式,能用pikapika导入或网页浏览器观看)" +
-                  (!isPro ? "\n(发电后使用)" : "")),
+              tr("screen.download_exporting_group.export_to_zip") +
+                  (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : "")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToJPEGSZips,
           child: _buildButtonInner(
-            "每部漫画都打包一个ZIP+JPEG\n(能直接使用其他阅读器看,不可再导入)" +
-                (!isPro ? "\n(发电后使用)" : ""),
+            tr("screen.download_exporting_group.export_to_jpeg_zip") +
+                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToJPEGSFolders,
           child: _buildButtonInner(
-            "每部漫画都导出成文件夹+JPEG" + (!isPro ? "\n(发电后使用)" : ""),
+            tr("screen.download_exporting_group.export_to_jpeg_folder") +
+                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToPdf,
           child: _buildButtonInner(
-            "每部漫画都导出成PDF" + (!isPro ? "\n(发电后使用)" : ""),
+            tr("screen.download_exporting_group.export_to_pdf") +
+                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToPdfFolder,
           child: _buildButtonInner(
-            "每部漫画都导出到文件夹, 每个章节一个PDF" + (!isPro ? "\n(发电后使用)" : ""),
+            tr("screen.download_exporting_group.export_to_pdf_folder") +
+                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportComicDownloadToCbzsZip,
           child: _buildButtonInner(
-            "每部漫画都导出成cbz" + (!isPro ? "\n(发电后使用)" : ""),
+            tr("screen.download_exporting_group.export_to_cbz") +
+                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
@@ -121,7 +126,7 @@ class _DownloadExportingGroupScreenState
     if (currentExportRename()) {
       var rename = await inputString(
         context,
-        "请输入保存后的名称",
+        tr("screen.download_exporting_group.input_save_name"),
         defaultValue: "${DateTime.now().millisecondsSinceEpoch}",
       );
       if (rename != null && rename.isNotEmpty) {
@@ -131,7 +136,9 @@ class _DownloadExportingGroupScreenState
       }
     } else {
       if (!await confirmDialog(
-          context, "导出确认", "将导出您所选的漫画为一个PKZ${showExportPath()}")) {
+          context,
+          tr("screen.download_exporting_group.export_confirm"),
+          tr("screen.download_exporting_group.export_to_pkz_title") + showExportPath())) {
         return;
       }
     }
@@ -157,7 +164,9 @@ class _DownloadExportingGroupScreenState
 
   _exportPkis() async {
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出成单独的PKI${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_pki_title") + showExportPath())) {
       return;
     }
     try {
@@ -181,11 +190,13 @@ class _DownloadExportingGroupScreenState
 
   _exportZips() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将导出您所选的漫画分别导出ZIP${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_zip_title") + showExportPath())) {
       return;
     }
     try {
@@ -209,11 +220,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToJPEGSZips() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出ZIP+JPEG${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_jpeg_zip_title") + showExportPath())) {
       return;
     }
     try {
@@ -241,11 +254,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToJPEGSFolders() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出文件夹+JPEG${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_jpeg_folder_title") + showExportPath())) {
       return;
     }
     try {
@@ -273,11 +288,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToPdf() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出PDF${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_pdf_title") + showExportPath())) {
       return;
     }
     try {
@@ -305,11 +322,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToPdfFolder() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出到文件夹, 每个章节一个PDF${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_pdf_folder_title") + showExportPath())) {
       return;
     }
     try {
@@ -337,11 +356,13 @@ class _DownloadExportingGroupScreenState
 
   _exportComicDownloadToCbzsZip() async {
     if (!isPro) {
-      defaultToast(context, "请先发电鸭");
+      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出*.cbz${showExportPath()}")) {
+        context,
+        tr("screen.download_exporting_group.export_confirm"),
+        tr("screen.download_exporting_group.export_to_cbz_title") + showExportPath())) {
       return;
     }
     try {
@@ -372,13 +393,13 @@ class _DownloadExportingGroupScreenState
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("批量导出"),
+          title: Text(tr("screen.download_export_group.title")),
         ),
         body: _body(),
       ),
       onWillPop: () async {
         if (exporting) {
-          defaultToast(context, "导出中, 请稍后");
+          defaultToast(context, tr("screen.download_exporting_group.exporting_please_wait"));
           return false;
         }
         return true;

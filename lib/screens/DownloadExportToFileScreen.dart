@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -35,7 +36,7 @@ class _DownloadExportToFileScreenState
   late DownloadComic _task;
   late Future _future = _load();
   late bool exporting = false;
-  late String exportMessage = "导出中";
+  late String exportMessage = tr("screen.download_exporting_group.exporting");
   late String exportResult = "";
 
   Future _load() async {
@@ -77,7 +78,7 @@ class _DownloadExportToFileScreenState
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("导出 - " + widget.comicTitle),
+        title: Text(tr("screen.download_export_to_file.title") + " - " + widget.comicTitle),
       ),
       body: FutureBuilder(
         future: _future,
@@ -93,7 +94,7 @@ class _DownloadExportToFileScreenState
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr("app.loading"));
           }
           return PikaListView(
             children: [
@@ -134,7 +135,7 @@ class _DownloadExportToFileScreenState
                     ),
                   );
                 },
-                child: _buildButtonInner('传输到其他设备'),
+                child: _buildButtonInner(tr("screen.download_export_to_file.transfer_to_other_device")),
               ),
               Container(height: 40),
             ],
@@ -151,7 +152,7 @@ class _DownloadExportToFileScreenState
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -161,7 +162,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出PKZ${showExportPath()}")) {
+              context, 
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_pkz_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -175,11 +179,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -188,7 +192,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出到xxx.pkz\n(可直接打开观看的格式,不支持导入)\n(可以躲避网盘或者聊天软件的扫描)',
+        tr("screen.download_exporting_group.export_to_pkz_title") + showExportPath(),
       ),
     );
   }
@@ -200,7 +204,7 @@ class _DownloadExportToFileScreenState
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -210,7 +214,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出PKI${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_pki_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -224,11 +231,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -237,7 +244,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出到xxx.pki\n(只支持导入, 不支持直接阅读)\n(可以躲避网盘或者聊天软件的扫描)\n(后期版本可能支持直接阅读)',
+        tr("screen.download_exporting_group.export_to_pki_title") + showExportPath(),
       ),
     );
   }
@@ -246,14 +253,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -263,7 +270,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出HTML+ZIP${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_zip_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -277,11 +287,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -290,7 +300,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出到HTML.zip\n(可从其他设备导入 / 解压后可阅读)' + (!isPro ? "\n(发电后使用)" : ""),
+        tr("screen.download_exporting_group.export_to_zip_desc") + showExportPath(),
       ),
     );
   }
@@ -299,14 +309,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -316,7 +326,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出HTML+JPEG${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_jpeg_zip_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -330,11 +343,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -342,7 +355,7 @@ class _DownloadExportToFileScreenState
           });
         }
       },
-      child: _buildButtonInner('导出到HTML+JPG\n(可直接在相册中打开观看)'),
+      child: _buildButtonInner(tr("screen.download_exporting_group.export_to_jpeg_zip_title") + showExportPath()),
     );
   }
 
@@ -350,14 +363,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -367,7 +380,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出PDF${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_pdf_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -381,11 +397,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -393,7 +409,7 @@ class _DownloadExportToFileScreenState
           });
         }
       },
-      child: _buildButtonInner('导出到PDF\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)\n(可直接在相册中打开观看)'),
+      child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pdf_title") + showExportPath()),
     );
   }
 
@@ -401,14 +417,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -418,7 +434,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出到文件夹, 每个章节一个PDF${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_export_to_file.export_to_pdf_folder_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -432,11 +451,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -444,7 +463,7 @@ class _DownloadExportToFileScreenState
           });
         }
       },
-      child: _buildButtonInner('导出到文件夹, 每个章节一个PDF\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)\n(可直接在相册中打开观看)'),
+      child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pdf_folder_title") + showExportPath()),
     );
   }
 
@@ -452,14 +471,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -469,7 +488,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出JPEGS.zip${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_exporting_group.export_to_jpeg_zip_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -483,11 +505,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -496,7 +518,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出阅读器用JPGS.zip\n(不可再导入)' + (!isPro ? "\n(发电后使用)" : ""),
+        tr("screen.download_exporting_group.export_to_jpeg_zip_title")+ (!isPro ? "\n(${tr('app.pro')})" : ""),
       ),
     );
   }
@@ -505,14 +527,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -521,8 +543,11 @@ class _DownloadExportToFileScreenState
             return;
           }
         } else {
-          if (!await confirmDialog(context, "导出确认",
-              "将您所选的漫画导出HTML+JPEGS(即使没有下载完成)${showExportPath()}")) {
+          if (!await confirmDialog(
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_exporting_group.export_to_jpeg_zip_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -536,11 +561,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -549,7 +574,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出到HTML+JPG\n(即使没有下载成功也可以使用、未成功下载的图片将会跳过)' + (!isPro ? "\n(发电后使用)" : ""),
+        tr("screen.download_exporting_group.export_to_jpeg_zip_title") + (!isPro ? "\n(${tr('app.pro')})" : ""),
       ),
     );
   }
@@ -558,14 +583,14 @@ class _DownloadExportToFileScreenState
     return MaterialButton(
       onPressed: () async {
         if (!isPro) {
-          defaultToast(context, "请先发电鸭");
+          defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
           return;
         }
         var name = "";
         if (currentExportRename()) {
           var rename = await inputString(
             context,
-            "请输入保存后的名称",
+            tr("screen.download_export_to_file.input_save_name"),
             defaultValue: _task.title,
           );
           if (rename != null && rename.isNotEmpty) {
@@ -575,7 +600,10 @@ class _DownloadExportToFileScreenState
           }
         } else {
           if (!await confirmDialog(
-              context, "导出确认", "将您所选的漫画导出cbk.zip${showExportPath()}")) {
+              context,
+              tr('screen.download_export_to_file.export_confirm'),
+              tr('screen.download_exporting_group.export_to_cbz_title') + showExportPath(),
+          )) {
             return;
           }
         }
@@ -589,11 +617,11 @@ class _DownloadExportToFileScreenState
             name,
           );
           setState(() {
-            exportResult = "导出成功";
+            exportResult = tr("screen.download_exporting_group.export_success");
           });
         } catch (e) {
           setState(() {
-            exportResult = "导出失败 $e";
+            exportResult = tr("screen.download_exporting_group.export_failed") + " $e";
           });
         } finally {
           setState(() {
@@ -602,7 +630,7 @@ class _DownloadExportToFileScreenState
         }
       },
       child: _buildButtonInner(
-        '导出阅读器用cbk.zip\n(暂时不能导入)' + (!isPro ? "\n(发电后使用)" : ""),
+        tr("screen.download_exporting_group.export_to_cbz_desc") + (!isPro ? "\n(${tr('app.pro')})" : ""),
       ),
     );
   }

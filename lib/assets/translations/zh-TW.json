@@ -20,7 +20,9 @@
       "title": "更換PAT賬戶"
     },
     "previous_page": "上一頁",
-    "next_page": "下一頁"
+    "next_page": "下一頁",
+    "select_all": "全選",
+    "load_failed": "加載失敗"
   },
   "net": {
     "no_address": "不分流",
@@ -431,6 +433,64 @@
     "download_confirm": {
       "please_select_ep": "請選擇下載的EP",
       "already_added_to_download_list": "已經加入下載列表"
+    },
+    "download_export_group": {
+      "title": "批量導出",
+      "please_select_content": "請選擇導出的內容",
+      "exporting": "正在導出",
+      "export_failed": "導出失敗",
+      "export_success": "導出成功",
+      "export_to_pkz": "導出成一個PKZ\n(加密模式,防止網盤檢測,能用pikapika打開觀看)",
+      "export_to_pki": "每部漫畫都打包一個PKI\n(加密模式,防止網盤檢測,能用pikapika導入)",
+      "export_to_zip": "每部漫畫都打包一個ZIP\n(不加密模式,能用pikapika導入或網頁瀏覽器觀看)",
+      "export_to_jpeg_zip": "每部漫畫都打包一個ZIP+JPEG\n(能直接使用其他閱讀器看,不可再導入)",
+      "export_to_jpeg_folder": "每部漫畫都導出成文件夾+JPEG",
+      "export_to_pdf": "每部漫畫都導出成PDF",
+      "export_to_pdf_folder": "每部漫畫都導出到文件夾, 每個章節一個PDF",
+      "export_to_cbz": "每部漫畫都導出成cbz",
+      "after_power_use": "發電後使用",
+      "input_save_name": "請輸入保存後的名称",
+      "export_confirm": "導出確認",
+      "export_to_pkz_title": "將導出您所選的漫畫為一個PKZ",
+      "export_to_pki_title": "將您所選的漫畫分別導出成單獨的PKI",
+      "please_power_up": "請先發電鴨",
+      "export_to_zip_title": "將您所選的漫畫分別導出成ZIP",
+      "export_to_jpeg_zip_title": "將您所選的漫畫分別導出成ZIP+JPEG",
+      "export_to_jpeg_folder_title": "將您所選的漫畫分別導出成文件夾+JPEG",
+      "export_to_pdf_title": "將您所選的漫畫分別導出成PDF",
+      "export_to_pdf_folder_title": "將您所選的漫畫分別導出到文件夾, 每個章節一個PDF",
+      "export_to_cbz_title": "將您所選的漫畫分別導出成cbz",
+      "exporting_please_wait": "導出中, 請稍後"
+    },
+    "download_export_to_file": {
+      "title": "導出",
+      "transfer_to_other_device": "傳輸到其他設備",
+      "input_save_name": "請輸入保存後的名称",
+      "export_confirm": "導出確認",
+      "export_to_pkz_title": "將您所選的漫畫導出PKZ",
+      "export_to_pkz_desc": "導出到xxx.pkz\n(可直接打開觀看,不支持導入)\n(可以躲避網盤或者聊天軟件的掃描)",
+      "export_to_pki_title": "將您所選的漫畫導出PKI",
+      "export_to_pki_desc": "導出到xxx.pki\n(只支持導入, 不支持直接閱讀)\n(可以躲避網盤或者聊天軟件的掃描)\n(後期版本可能支持直接閱讀)",
+      "export_to_zip_title": "將您所選的漫畫導出HTML+ZIP",
+      "export_to_zip_desc": "導出到xxx.zip\n(可從其他設備導入 / 解壓後可閱讀)",
+      "export_to_jpeg_zip_title": "將您所選的漫畫導出HTML+JPEG",
+      "export_to_jpeg_zip_desc": "導出到xxx.jpeg\n(可直接在相冊中打開觀看)",
+      "export_to_pdf_title": "將您所選的漫畫導出PDF",
+      "export_to_pdf_desc": "導出到xxx.pdf\n(即使沒有下載成功也可以使用、未成功下載的圖片將會跳過)\n(可直接在相冊中打開觀看)",
+      "export_to_pdf_folder_title": "將您所選的漫畫導出到文件夾, 每個章節一個PDF",
+      "export_to_pdf_folder_desc": "導出到xxx.pdf\n(即使沒有下載成功也可以使用、未成功下載的圖片將會跳過)\n(可直接在相冊中打開觀看)",
+      "export_to_jpeg_folder_title": "將您所選的漫畫導出JPEGS.zip",
+      "export_to_jpeg_folder_desc": "導出閱讀器用JPGS.zip\n(不可再導入)",
+      "export_to_cbz_title": "將您所選的漫畫導出cbk.zip",
+      "export_to_cbz_desc": "導出到xxx.cbz, 閱讀器可以直接使用(不可再導入)"
+    },
+    "download_export_to_socket": {  
+      "title": "網絡導出",
+      "loading": "加載中",
+      "tips": "傳輸成功之前請不要退出頁面, 一次只能導出到一個設備, 兩台設備需要在同一網段或無限局域網中, 請另外一台設備輸入 IP:端口 , 有一個IP時請選擇無限局域網的IP, 通常是192.168開頭",
+      "get_ip_failed": "獲取IP失敗",
+      "getting_ip": "正在獲取IP",
+      "port": "端口號"
     }
   }
 }

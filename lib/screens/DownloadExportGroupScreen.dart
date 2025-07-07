@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 
@@ -28,9 +29,9 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text("批量导出"),
+              title: Text(tr("screen.download_export_group.title")),
             ),
-            body: const ContentLoading(label: '加载中'),
+            body: ContentLoading(label: tr("app.loading")),
           );
         }
 
@@ -39,9 +40,9 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
           print("${snapshot.stackTrace}");
           return Scaffold(
             appBar: AppBar(
-              title: const Text("批量导出"),
+              title: Text(tr("screen.download_export_group.title")),
             ),
-            body: const Center(child: Text('加载失败')),
+            body: Center(child: Text(tr("app.load_failed"))),
           );
         }
 
@@ -60,7 +61,7 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text("批量导出"),
+            title: Text(tr("screen.download_export_group.title")),
             actions: [
               _selectAllButton(exportableIds),
               _goToExport(),
@@ -138,8 +139,8 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
               size: 18,
               color: Colors.white,
             ),
-            const Text(
-              '全选',
+            Text(
+              tr("app.select_all"),
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
@@ -152,7 +153,7 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
         minWidth: 0,
         onPressed: () async {
           if (selected.isEmpty) {
-            defaultToast(context, "请选择导出的内容");
+            defaultToast(context, tr("screen.download_export_group.please_select_content"));
             return;
           }
           final exported = await Navigator.of(context).push(
@@ -172,8 +173,8 @@ class _DownloadExportGroupScreenState extends State<DownloadExportGroupScreen> {
               size: 18,
               color: Colors.white,
             ),
-            const Text(
-              '确认',
+            Text(
+              tr("app.confirm"),
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),

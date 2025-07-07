@@ -20,7 +20,9 @@
       "title": "Replace PAT account"
     },
     "previous_page": "Previous page",
-    "next_page": "Next page"
+    "next_page": "Next page",
+    "select_all": "Select all",
+    "load_failed": "Load failed"
   },
   "net": {
     "no_address": "No address",
@@ -432,6 +434,66 @@
     "download_confirm": {
       "please_select_ep": "Please select the EP to download",
       "already_added_to_download_list": "Already added to download list"
+    },
+    "download_export_group": {
+      "title": "Batch export",
+      "please_select_content": "Please select the content to export"
+    },
+    "download_exporting_group": {
+      "exporting": "Exporting",
+      "export_failed": "Export failed",
+      "export_success": "Export success",
+      "export_to_pkz": "Export to PKZ\n(Encrypted mode, prevent web detection, can be opened with pikapika)",
+      "export_to_pki": "Export to PKI\n(Encrypted mode, prevent web detection, can be imported with pikapika)",
+      "export_to_zip": "Export to ZIP\n(Unencrypted mode, can be imported or viewed with pikapika)",
+      "export_to_jpeg_zip": "Export to ZIP+JPEG\n(Can be used directly with other readers, cannot be imported again)",
+      "export_to_jpeg_folder": "Export to folder+JPEG",
+      "export_to_pdf": "Export to PDF",
+      "export_to_pdf_folder": "Export to folder, each chapter one PDF",
+      "export_to_cbz": "Export to cbz",
+      "after_power_use": "After power use",
+      "input_save_name": "Please enter the saved name",
+      "export_confirm": "Export confirm",
+      "export_to_pkz_title": "Export the selected comics to a PKZ",
+      "export_to_pki_title": "Export the selected comics to separate PKI",
+      "please_power_up": "Please power up first",
+      "export_to_zip_title": "Export the selected comics to ZIP",
+      "export_to_jpeg_zip_title": "Export the selected comics to ZIP+JPEG",
+      "export_to_jpeg_folder_title": "Export the selected comics to folder+JPEG",
+      "export_to_pdf_title": "Export the selected comics to PDF",
+      "export_to_pdf_folder_title": "Export the selected comics to folder, each chapter one PDF",
+      "export_to_cbz_title": "Export the selected comics to cbz",
+      "exporting_please_wait": "Exporting, please wait"
+    },
+    "download_export_to_file": {
+      "title": "Export",
+      "transfer_to_other_device": "Transfer to other device",
+      "input_save_name": "Please enter the saved name",
+      "export_confirm": "Export confirm",
+      "export_to_pkz_title": "Export the selected comics to a PKZ",
+      "export_to_pkz_desc": "Export to xxx.pkz\n(Encrypted mode, prevent web detection, can be opened with pikapika)",
+      "export_to_pki_title": "Export the selected comics to separate PKI",
+      "export_to_pki_desc": "Export to xxx.pki\n(Encrypted mode, prevent web detection, can be imported with pikapika)",
+      "export_to_zip_title": "Export the selected comics to ZIP",
+      "export_to_zip_desc": "Export to xxx.zip\n(Unencrypted mode, can be imported or viewed with pikapika)",
+      "export_to_jpeg_zip_title": "Export the selected comics to ZIP+JPEG",
+      "export_to_jpeg_zip_desc": "Export to xxx.jpeg\n(Can be used directly with other readers, cannot be imported again)",
+      "export_to_pdf_title": "Export the selected comics to PDF",
+      "export_to_pdf_desc": "Export to xxx.pdf\n(Even if the download is not successful, it can be used, and the failed image will be skipped)\n(Can be opened directly in the photo album)",
+      "export_to_pdf_folder_title": "Export the selected comics to folder, each chapter one PDF",
+      "export_to_pdf_folder_desc": "Export to xxx.pdf\n(Even if the download is not successful, it can be used, and the failed image will be skipped)\n(Can be opened directly in the photo album)",
+      "export_to_jpeg_folder_title": "Export the selected comics to JPEGS.zip",
+      "export_to_jpeg_folder_desc": "Export to JPGS.zip\n(Cannot be imported again)",
+      "export_to_cbz_title": "Export the selected comics to cbk.zip",
+      "export_to_cbz_desc": "Export to xxx.cbz, reader can use it directly (cannot be imported again)"
+    },
+    "download_export_to_socket": {
+      "title": "Network export",
+      "loading": "Loading",
+      "tips": "Do not exit the page before the transfer is successful, only one device can be exported at a time, the two devices need to be in the same network segment or infinite LAN, please enter IP:port on the other device, if there is only one IP, please select the IP of the infinite LAN, usually 192.168 starts",
+      "get_ip_failed": "Get IP failed",
+      "getting_ip": "Getting IP",
+      "port": "Port"
     }
   }
 }
