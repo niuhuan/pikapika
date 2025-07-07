@@ -1,0 +1,17 @@
+{
+  "app": {
+    "categories": "分類",
+    "my": "我的",
+    "copied_to_clipboard": "已複製到剪貼簿",
+    "not_supported_platform": "不支援此平台",
+    "cancel": "取消",
+    "confirm": "確定",
+    "save_cancel": "保存取消",
+    "save_success": "保存成功",
+    "save_failed": "保存失败",
+    "address": "分流"
+  },
+  "categories": {
+    "all": "全分類"
+  }
+}

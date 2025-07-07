@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:pikapika/screens/AccessKeyReplaceScreen.dart';
@@ -18,7 +19,7 @@ double coverWidth = 210;
 double coverHeight = 315;
 
 String categoryTitle(String? categoryTitle) {
-  return categoryTitle ?? "全分类";
+  return categoryTitle ?? tr('categories.all');
 }
 
 /// 显示一个toast
@@ -50,13 +51,13 @@ Future<bool> confirmDialog(
                 ),
                 actions: <Widget>[
                   MaterialButton(
-                    child: const Text('取消'),
+                    child: Text(tr('app.cancel')),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
                   MaterialButton(
-                    child: const Text('确定'),
+                    child: Text(tr('app.confirm')),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
@@ -81,7 +82,7 @@ Future alertDialog(BuildContext context, String title, String content) {
       ),
       actions: <Widget>[
         MaterialButton(
-          child: const Text('确定'),
+          child: Text(tr('app.confirm')),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -201,13 +202,13 @@ Future<String?> displayTextInputDialog(BuildContext context,
         ),
         actions: <Widget>[
           MaterialButton(
-            child: const Text('取消'),
+            child: Text(tr('app.cancel')),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           MaterialButton(
-            child: const Text('确认'),
+            child: Text(tr('app.confirm')),
             onPressed: () {
               Navigator.of(context).pop(_controller.text);
             },
@@ -283,13 +284,13 @@ Future<String?> inputString(BuildContext context, String title,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('取消'),
+            child: Text(tr('app.cancel')),
           ),
           MaterialButton(
             onPressed: () {
               Navigator.pop(context, _textEditController.text);
             },
-            child: const Text('确定'),
+            child: Text(tr('app.confirm')),
           ),
         ],
       );

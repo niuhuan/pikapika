@@ -4,6 +4,7 @@
 // addr = "104.20.180.50:443"
 // addr = "172.67.208.169:443"
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';
@@ -11,19 +12,19 @@ import 'package:pikapika/basic/config/UseApiLoadImage.dart';
 
 import '../Method.dart';
 
-var _addresses = {
-  "0": "不分流",
-  "1": "分流1",
-  "2": "分流2",
-  "3": "分流3",
-  "4": "分流4",
-  "5": "分流5",
-  "6": "分流6",
-  "7": "分流7",
-  "8": "分流8",
-  "9": "分流9",
-  "10": "分流A",
-};
+var _addresses = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+];
 
 late String _currentAddress;
 
@@ -33,13 +34,13 @@ Future<void> initAddress() async {
 
 String currentAddress() => _currentAddress;
 
-String currentAddressName() => _addresses[_currentAddress] ?? "";
+String currentAddressName() => tr('net.address') + _currentAddress;
 
 Widget switchAddressSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("分流"),
+        title: Text(tr('net.address')),
         subtitle: Text(currentAddressName()),
         onTap: () async {
           await chooseAddressAndSwitch(context);
@@ -92,15 +93,15 @@ Future chooseAddressAndSwitch(BuildContext context) async {
       return SimpleDialog(
         title: const Text('选择分流'),
         children: <Widget>[
-          ..._addresses.entries.map(
+          ..._addresses.map(
             (e) => SimpleDialogOption(
               child: ApiOptionRow(
-                e.value,
-                e.key,
-                key: Key("API:${e.key}"),
+                "${tr('net.address')}$e",
+                e,
+                key: Key("API:$e"),
               ),
               onPressed: () {
-                Navigator.of(context).pop(e.key);
+                Navigator.of(context).pop(e);
               },
             ),
           ),
@@ -148,7 +149,7 @@ Widget addressPopMenu(BuildContext context) {
           title: Text("图片分流 (${currentImageAddressName()})"),
         ),
       ),
-       PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 2,
         child: ListTile(
           leading: const Icon(Icons.network_ping),

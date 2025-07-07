@@ -1,0 +1,17 @@
+{
+  "app": {
+    "categories": "Categories",
+    "my": "My",
+    "copied_to_clipboard": "Copied to clipboard",
+    "not_supported_platform": "Not supported platform",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save_cancel": "Save canceled",
+    "save_success": "Save success",
+    "save_failed": "Save failed",
+    "address": "Address"
+  },
+  "categories": {
+    "all": "All"
+  }
+}

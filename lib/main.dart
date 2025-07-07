@@ -6,8 +6,21 @@ import 'package:pikapika/screens/components/MouseAndTouchScrollBehavior.dart';
 
 import 'basic/config/Themes.dart';
 
-void main() {
-  runApp(const PikapikaApp());
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+        supportedLocales: const [Locale('en', 'US'), Locale("zh", "CN"), Locale('zh', 'TW')],
+        path: 'lib/assets/translations', // <-- change the path of the translation files
+        fallbackLocale: const Locale('en', 'US'),
+        child: const PikapikaApp()
+    ),
+  );
 }
 
 class PikapikaApp extends StatefulWidget {
@@ -42,6 +55,9 @@ class _PikapikaAppState extends State<PikapikaApp> {
       darkTheme: currentDarkThemeData(),
       navigatorObservers: [navigatorObserver, routeObserver],
       home: const InitScreen(),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:pikapika/basic/config/Version.dart';
@@ -69,16 +70,16 @@ class _AppScreenState extends State<AppScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.public),
-            label: '浏览',
+          BottomNavigationBarItem(
+            icon:  const Icon(Icons.public),
+            label: tr('app.categories'),
           ),
           BottomNavigationBarItem(
             icon: Badged(
               child: const Icon(Icons.face),
               badge: latestVersion() == null ? null : "1",
             ),
-            label: '我的',
+            label: tr('app.my'),
           ),
         ],
         currentIndex: _selectedIndex,
