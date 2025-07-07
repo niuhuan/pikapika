@@ -1,7 +1,5 @@
 import 'package:pikapika/basic/Method.dart';
 
-/// 自动全屏
-
 const _propertyName = "passed";
 late bool _passed;
 

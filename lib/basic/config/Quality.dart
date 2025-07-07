@@ -1,5 +1,6 @@
 /// 图片质量
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -8,23 +9,31 @@ const _ImageQualityLow = "low";
 const _ImageQualityMedium = "medium";
 const _ImageQualityHigh = "high";
 
-const _LabelOriginal = "原图";
-const _LabelLow = "低";
-const _LabelMedium = "中";
-const _LabelHigh = "高";
+// const _LabelOriginal = "原图";
+// const _LabelLow = "低";
+// const _LabelMedium = "中";
+// const _LabelHigh = "高";
 
-var _qualities = {
-  _LabelOriginal: _ImageQualityOriginal,
-  _LabelLow: _ImageQualityLow,
-  _LabelMedium: _ImageQualityMedium,
-  _LabelHigh: _ImageQualityHigh,
-};
+// var _qualities = {
+//   _LabelOriginal: _ImageQualityOriginal,
+//   _LabelLow: _ImageQualityLow,
+//   _LabelMedium: _ImageQualityMedium,
+//   _LabelHigh: _ImageQualityHigh,
+// };
+
+Map<String, String> _qualities = {};
 
 const _propertyName = "quality";
 late String _currentQualityCode;
 const _defaultValue = _ImageQualityOriginal;
 
 Future<void> initQuality() async {
+  _qualities.addAll({
+    tr("settings.quality.original"): _ImageQualityOriginal,
+    tr("settings.quality.low"): _ImageQualityLow,
+    tr("settings.quality.medium"): _ImageQualityMedium,
+    tr("settings.quality.high"): _ImageQualityHigh,
+  });
   _currentQualityCode = await method.loadProperty(_propertyName, _defaultValue);
 }
 
@@ -46,7 +55,7 @@ Future<void> chooseQuality(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text("请选择图片质量"),
+        title: Text(tr("settings.quality.choose")),
         children: <Widget>[
           ..._qualities.entries.map(
             (e) => SimpleDialogOption(
@@ -70,7 +79,7 @@ Widget qualitySetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("浏览时的图片质量"),
+        title: Text(tr("settings.quality.title")),
         subtitle: Text(currentQualityName()),
         onTap: () async {
           await chooseQuality(context);

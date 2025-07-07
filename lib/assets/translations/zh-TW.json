@@ -189,6 +189,43 @@
     },
     "keyboard_controller": {
       "title": "閱讀器鍵盤翻頁(僅PC)"
+    },
+    "list_layout": {
+      "choose": "請選擇布局",
+      "info_card": "詳情",
+      "only_image": "封面",
+      "cover_and_title": "封面+標題"
+    },
+    "local_history_sync": {
+      "sync_to_local": "同步歷史記錄到本地",
+      "not_set": "未設置",
+      "sync_success": "同步成功",
+      "sync_failed": "同步失敗",
+      "auto_sync": "自動同步歷史記錄到本地",
+      "auto_sync_desc": "開啟後每次打開應用會自動備份歷史記錄"
+    },
+    "no_animation": {
+      "title": "取消翻頁動畫（點按屏幕、音量鍵、鍵盤）"
+    },
+    "pager_action": {
+      "title": "列表頁加載方式",
+      "choose": "選擇列表頁加載方式",
+      "controller": "使用按鈕",
+      "stream": "瀑布流"
+    },
+    "proxy": {
+      "title": "代理伺服器",
+      "hint": "請輸入代理伺服器",
+      "desc": " ( 例如 socks5://127.0.0.1:1080/ ) ",
+      "no_proxy": "未設置"
+    },
+    "quality": {
+      "title": "瀏覽時的圖片質量",
+      "choose": "請選擇圖片質量",
+      "original": "原圖",
+      "low": "低",
+      "medium": "中",
+      "high": "高"
     }
   }
 }

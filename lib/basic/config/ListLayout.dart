@@ -1,5 +1,6 @@
 /// 列表页的布局
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import '../Common.dart';
@@ -11,11 +12,13 @@ enum ListLayout {
   COVER_AND_TITLE,
 }
 
-const Map<String, ListLayout> _listLayoutMap = {
-  '详情': ListLayout.INFO_CARD,
-  '封面': ListLayout.ONLY_IMAGE,
-  '封面+标题': ListLayout.COVER_AND_TITLE,
-};
+// const Map<String, ListLayout> _listLayoutMap = {
+//   '详情': ListLayout.INFO_CARD,
+//   '封面': ListLayout.ONLY_IMAGE,
+//   '封面+标题': ListLayout.COVER_AND_TITLE,
+// };
+
+const Map<String, ListLayout> _listLayoutMap = {};
 
 const _propertyName = "listLayout";
 late ListLayout currentLayout;
@@ -23,6 +26,11 @@ late ListLayout currentLayout;
 var listLayoutEvent = Event<EventArgs>();
 
 Future<void> initListLayout() async {
+  _listLayoutMap.addAll({
+    tr('settings.list_layout.info_card'): ListLayout.INFO_CARD,
+    tr('settings.list_layout.only_image'): ListLayout.ONLY_IMAGE,
+    tr('settings.list_layout.cover_and_title'): ListLayout.COVER_AND_TITLE,
+  });
   currentLayout = _listLayoutFromString(await method.loadProperty(
     _propertyName,
     ListLayout.INFO_CARD.toString(),
@@ -39,7 +47,7 @@ ListLayout _listLayoutFromString(String layoutString) {
 }
 
 void _chooseListLayout(BuildContext context) async {
-  ListLayout? layout = await chooseMapDialog(context, _listLayoutMap, '请选择布局');
+  ListLayout? layout = await chooseMapDialog(context, _listLayoutMap, tr('settings.list_layout.choose'));
   if (layout != null) {
     await method.saveProperty(_propertyName, layout.toString());
     currentLayout = layout;

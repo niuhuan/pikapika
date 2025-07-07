@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -54,20 +55,20 @@ Widget localHistorySyncPathTile() {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("清空本地同步路径"),
-                content: const Text("确定要清空本地同步路径吗?"),
+                title: Text(tr("settings.local_history_sync.clear_path")),
+                content: Text(tr("settings.local_history_sync.clear_path_desc")),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
-                    child: const Text("取消"),
+                    child: Text(tr("app.cancel")),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
-                    child: const Text("确定"),
+                    child: Text(tr("app.confirm")),
                   ),
                 ],
               );
@@ -88,7 +89,7 @@ Widget localHistorySyncPathTile() {
             }
           }
           var dir = await FilePicker.platform.getDirectoryPath(
-            dialogTitle: "选择一个文件夹, 将历史记录文件保存到这里",
+            dialogTitle: tr("settings.local_history_sync.choose_dir"),
             initialDirectory:
                 Directory.fromUri(Uri.file(await currentChooserRoot()))
                     .absolute
@@ -101,11 +102,8 @@ Widget localHistorySyncPathTile() {
             });
           }
         },
-        title: const Text(
-          "同步历史记录到本地路径",
-        ),
-        subtitle:
-            Text(_localHistorySyncRoot.isEmpty ? "未设置" : _localHistorySyncRoot),
+        title: Text(tr("settings.local_history_sync.sync_to_local")),
+        subtitle: Text(_localHistorySyncRoot.isEmpty ? tr("settings.local_history_sync.not_set") : _localHistorySyncRoot),
       );
     },
   );
@@ -117,20 +115,18 @@ Widget localHistorySyncManualTile() {
       return ListTile(
         onTap: () async {
           if (_localHistorySyncRoot.isEmpty) {
-            defaultToast(context, "未设置同步路径");
+            defaultToast(context, tr("settings.local_history_sync.not_set"));
             return;
           }
           try {
             await localSync();
-            defaultToast(context, "同步成功");
+            defaultToast(context, tr("settings.local_history_sync.sync_success"));
           } catch (e, s) {
             print("$e\n$s");
-            defaultToast(context, "没有同步成功\n$e");
+            defaultToast(context, tr("settings.local_history_sync.sync_failed"));
           }
         },
-        title: const Text(
-          "立即同步浏览记录到本地",
-        ),
+        title: Text(tr("settings.local_history_sync.sync_to_local")),
       );
     },
   );
@@ -153,12 +149,8 @@ Widget localHistorySyncAutoTile() {
             localSync();
           }
         },
-        title: const Text(
-          "自动同步历史记录到本地",
-        ),
-        subtitle: const Text(
-          "开启后每次打开应用会自动备份历史记录",
-        ),
+        title: Text(tr("settings.local_history_sync.auto_sync")),
+        subtitle: Text(tr("settings.local_history_sync.auto_sync_desc")),
       );
     },
   );

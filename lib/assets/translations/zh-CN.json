@@ -189,6 +189,43 @@
     },
     "keyboard_controller": {
       "title": "阅读器键盘翻页(仅PC)"
+    },
+    "list_layout": {
+      "choose": "请选择布局",
+      "info_card": "详情",
+      "only_image": "封面",
+      "cover_and_title": "封面+标题"
+    },
+    "local_history_sync": {
+      "sync_to_local": "同步历史记录到本地",
+      "not_set": "未设置",
+      "sync_success": "同步成功",
+      "sync_failed": "同步失败",
+      "auto_sync": "自动同步历史记录到本地",
+      "auto_sync_desc": "开启后每次打开应用会自动备份历史记录"
+    },
+    "no_animation": {
+      "title": "取消翻页动画（点按屏幕、音量键、键盘）"
+    },
+    "pager_action": {
+      "title": "列表页加载方式",
+      "choose": "选择列表页加载方式",
+      "controller": "使用按钮",
+      "stream": "瀑布流"
+    },
+    "proxy": {
+      "title": "代理服务器",
+      "hint": "请输入代理服务器",
+      "desc": " ( 例如 socks5://127.0.0.1:1080/ ) ",
+      "no_proxy": "未设置"
+    },
+    "quality": {
+      "title": "浏览时的图片质量",
+      "choose": "请选择图片质量",
+      "original": "原图",
+      "low": "低",
+      "medium": "中",
+      "high": "高"
     }
   }
 }

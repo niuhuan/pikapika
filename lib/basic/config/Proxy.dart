@@ -1,5 +1,6 @@
 /// 代理设置
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -13,16 +14,16 @@ Future<String?> initProxy() async {
 }
 
 String currentProxyName() {
-  return _currentProxy == "" ? "未设置" : _currentProxy;
+  return _currentProxy == "" ? tr("settings.proxy.no_proxy") : _currentProxy;
 }
 
 Future<dynamic> inputProxy(BuildContext context) async {
   String? input = await displayTextInputDialog(
     context,
     src: _currentProxy,
-    title: '代理服务器',
-    hint: '请输入代理服务器',
-    desc: " ( 例如 socks5://127.0.0.1:1080/ ) ",
+    title: tr("settings.proxy.title"),
+    hint: tr("settings.proxy.hint"),
+    desc: tr("settings.proxy.desc"),
   );
   if (input != null) {
     await method.setProxy(input);
@@ -34,7 +35,7 @@ Widget proxySetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("代理服务器"),
+        title: Text(tr("settings.proxy.title")),
         subtitle: Text(currentProxyName()),
         onTap: () async {
           await inputProxy(context);

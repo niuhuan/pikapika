@@ -189,6 +189,43 @@
     },
     "keyboard_controller": {
       "title": "Reader keyboard page (only PC)"
+    },
+    "list_layout": {
+      "choose": "Choose layout",  
+      "info_card": "Info",
+      "only_image": "Cover",
+      "cover_and_title": "Cover + Title"
+    },
+    "local_history_sync": {
+      "sync_to_local": "Sync history to local",
+      "not_set": "Not set",
+      "sync_success": "Sync success",
+      "sync_failed": "Sync failed",
+      "auto_sync": "Auto sync history to local",
+      "auto_sync_desc": "After opening the application, the history will be automatically backed up"
+    },
+    "no_animation": {
+      "title": "Cancel page animation (tap screen, volume key, keyboard)"
+    },
+    "pager_action": {
+      "title": "List page loading method",
+      "choose": "Choose list page loading method",
+      "controller": "Use button",
+      "stream": "Stream"
+    },
+    "proxy": {
+      "title": "Proxy server",
+      "hint": "Enter proxy server",
+      "desc": " ( e.g. socks5://127.0.0.1:1080/ ) ",
+      "no_proxy": "Not set"
+    },
+    "quality": {
+      "title": "Image quality when browsing",
+      "choose": "Choose image quality",
+      "original": "Original",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
     }
   }
 }
