@@ -105,7 +105,7 @@ class _AppScreenState extends State<AppScreen> {
           } else {
             _noticeTime = now;
             showToast(
-              "再次返回将会退出应用程序",
+              tr("screen.app.will_pop_notice"),
               context: context,
               position: StyledToastPosition.center,
               animation: StyledToastAnimation.scale,

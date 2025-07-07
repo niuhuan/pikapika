@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -92,7 +93,7 @@ class _ComicSubscribesScreenState extends State<ComicSubscribesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('更新提醒'),
+        title: Text(tr('screen.comic_subscribes.update_reminder')),
         actions: [
           commonPopMenu(context),
           addressPopMenu(context),
@@ -117,18 +118,18 @@ Widget _popMenu(BuildContext context) {
   return PopupMenuButton<int>(
     icon: const Icon(Icons.more_vert),
     itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-      const PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 0,
         child: ListTile(
-          leading: Icon(Icons.share),
-          title: Text("检查更新"),
+          leading: const Icon(Icons.share),
+          title: Text(tr('screen.comic_subscribes.check_update')),
         ),
       ),
-      const PopupMenuItem<int>(
+      PopupMenuItem<int>(
         value: 1,
         child: ListTile(
-          leading: Icon(Icons.image_search),
-          title: Text("取消所有更新提醒"),
+          leading: const Icon(Icons.image_search),
+          title: Text(tr('screen.comic_subscribes.cancel_all_update_reminder')),
         ),
       ),
     ],

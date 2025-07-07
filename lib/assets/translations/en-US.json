@@ -12,7 +12,15 @@
     "pro": "Pro",
     "pro_required": "Please upgrade to Pro to use this feature",
     "choose_folder": "Choose a folder to save the file",
-    "permission_denied": "Permission denied"
+    "permission_denied": "Permission denied",
+    "loading": "Loading",
+    "error": "Error",
+    "pat": {
+      "success": "Your sponsor login success, please return",
+      "title": "Replace PAT account"
+    },
+    "previous_page": "Previous page",
+    "next_page": "Next page"
   },
   "net": {
     "no_address": "No address",
@@ -31,7 +39,11 @@
     "ping_failed": "Failed"
   },
   "categories": {
-    "all": "All"
+    "all": "All",
+    "recommend": "Recommend",
+    "rankings": "Rankings",
+    "random": "Random",
+    "game": "Game"
   },
   "settings": {
     "settings": "Settings",
@@ -339,6 +351,87 @@
       "sync_history_to_webdav": "Sync history to WebDAV",
       "sync_success": "Sync success",
       "sync_failed": "Sync failed"
+    }
+  },
+  "screen": {
+    "about": {
+      "title": "About",
+      "version": "Software version",
+      "check_update": "Check update",
+      "tips": "Tips : \n1. The author/uploader/category/tag on the detail page can be clicked\n2. The author/uploader/title on the detail page can be copied by long press\n3. Using pagination instead of waterfall flow can quickly flip pages\n4. Download means caching to the local, you need to export to share\n5. Download long press can delete",
+      "download_new_version": "Please download the new version from the channel",
+      "no_new_version": "No new version detected",
+      "download_release_version": "Download RELEASE version",
+      "update_content": "Update content",
+      "go_to_release_repository": "Go to RELEASE repository"
+    },
+    "account": {
+      "title": "Account",
+      "username": "Username",
+      "username_hint": "Please enter the username",
+      "password": "Password",
+      "password_hint": "Please enter the password",
+      "no_account_register": "No account, I want to register",
+      "password_reset": "Password reset",
+      "check_username_password_or_network": "Please check the username and password or network environment",
+      "check_device_time": "Please check the device time",
+      "username_or_password_error": "Username or password error",
+      "login_failed": "Login failed"
+    },
+    "app": {
+      "will_pop_notice": "Press the back key twice in a row to exit the app"
+    },
+    "categories": {
+      "search_hint": "Search"
+    },
+    "clean": {
+      "title": "Clean",
+      "cleaning": "Cleaning",
+      "clean_network_cache": "Clean network cache",
+      "clean_image_cache": "Clean image cache",
+      "clean_all_cache": "Clean all cache",
+      "clean_success": "Clean success",
+      "clean_failed": "Clean failed"
+    },
+    "close_app": {
+      "title": "Tips",
+      "close_app": "Please close the app and reopen"
+    },
+    "comic_collections": {
+      "no_resource": "There is no resource here"
+    },
+    "comic_info": {
+      "chapter": "Chapter",
+      "comment": "Comment",
+      "recommend": "Recommend"
+    },
+    "comics": {
+      "search_hint": "Search category",
+      "choose_category": "Please choose category"
+    },
+    "comic_subscribes": {
+      "update_reminder": "Update reminder",
+      "check_update": "Check update",
+      "cancel_all_update_reminder": "Cancel all update reminder"
+    },
+    "comment": {
+      "title": "Comment",
+      "hint_text": "Please enter the comment content",
+      "success": "Comment success",
+      "i_have_something_to_say": "I have something to say"
+    },
+    "desktop_authentication": {
+      "current_password": "Current password",
+      "password_error": "Password error",
+      "password_initialization": "Password initialization",
+      "password": "Password",
+      "re_enter_password": "Re-enter password",
+      "password_mismatch": "The two passwords entered are different",
+      "set_password": "Set password"
+    },
+    "download_confirm": {
+      "please_select_ep": "Please select the EP to download",
+      "already_added_to_download_list": "Already added to download list"
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -189,7 +190,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
                 : AppBar(
                     title: Text("${_ep.title} - ${widget.comicInfo.title}"),
                   ),
-            body: const ContentLoading(label: '加载中'),
+            body: ContentLoading(label: tr('app.loading')),
           );
         }
         var epNameMap = <int, String>{};

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'SearchAuthorScreen.dart';
@@ -36,7 +37,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   late final fsb.SearchBar _searchBar = fsb.SearchBar(
-    hintText: '搜索',
+    hintText: tr('screen.categories.search_hint'),
     inBar: false,
     setState: setState,
     onSubmitted: (value) {
@@ -51,7 +52,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     },
     buildDefaultAppBar: (BuildContext context) {
       return AppBar(
-        title: const Text('分类'),
+        title: Text(tr('app.categories')),
         actions: [
           if (!hiddenSubIcon) const IntoComicSubscribesScreenButton(),
           commonPopMenu(context),
@@ -136,7 +137,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               );
             }
             if (snapshot.connectionState != ConnectionState.done) {
-              return const ContentLoading(label: '加载中');
+              return ContentLoading(label: tr('app.loading'));
             }
             //
             late double blockSize;
@@ -243,7 +244,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
     items.add(CategoriesItem(
       buildSvg('lib/assets/books.svg', imageSize, imageSize, margin: 20),
-      "全分类",
+      tr('categories.all'),
       () => _navigateToCategory(null),
     ));
 
@@ -253,7 +254,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         size: imageSize,
         color: Colors.grey,
       ),
-      "推荐",
+      tr('categories.recommend'),
       () {
         Navigator.push(
           context,
@@ -296,7 +297,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     items.add(CategoriesItem(
       buildSvg('lib/assets/rankings.svg', imageSize, imageSize,
           margin: 20, color: Colors.red.shade700),
-      "排行榜",
+      tr('categories.rankings'),
       () {
         Navigator.push(
           context,
@@ -308,7 +309,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     items.add(CategoriesItem(
       buildSvg('lib/assets/random.svg', imageSize, imageSize,
           margin: 20, color: Colors.orangeAccent.shade700),
-      "随机本子",
+      tr('categories.random'),
       () {
         Navigator.push(
           context,
@@ -320,7 +321,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     items.add(CategoriesItem(
       buildSvg('lib/assets/gamepad.svg', imageSize, imageSize,
           margin: 20, color: Colors.blue.shade500),
-      "游戏专区",
+      tr('categories.game'),
       () {
         Navigator.push(
           context,

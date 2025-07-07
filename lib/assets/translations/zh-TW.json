@@ -12,7 +12,15 @@
     "pro": "發電",
     "pro_required": "請先發電再使用",
     "choose_folder": "選擇一個文件夾, 將文件保存到這裡",
-    "permission_denied": "申請權限被拒絕"
+    "permission_denied": "申請權限被拒絕",
+    "loading": "加载中",
+    "error": "错误",
+    "pat": {
+      "success": "您的贊助登錄成功, 請返回",
+      "title": "更換PAT賬戶"
+    },
+    "previous_page": "上一頁",
+    "next_page": "下一頁"
   },
   "net": {
     "no_address": "不分流",
@@ -31,7 +39,11 @@
     "ping_failed": "失敗"
   },
   "categories": {
-    "all": "全分類"
+    "all": "全分類",
+    "recommend": "推薦",
+    "rankings": "排行榜",
+    "random": "隨機本子",
+    "game": "遊戲專區"
   },
   "settings": {
     "settings": "設定",
@@ -338,6 +350,87 @@
       "sync_history_to_webdav": "立即同步瀏覽記錄到WebDAV",
       "sync_success": "同步成功",
       "sync_failed": "同步失敗"
+    }
+  },
+  "screen": {
+    "about": {
+      "title": "關於",
+      "version": "軟件版本",
+      "check_update": "檢查更新",
+      "tips": "提示 : \n1. 詳情頁的作者/上傳者/分類/標籤都可以點擊\n2. 詳情頁的作者/上傳者/標題長按可以複製\n3. 使用分頁而不是瀑布流點擊頁碼可以快速翻頁\n4. 下載指的是緩存到本地, 需要導出才可以分享\n5. 下載長按可以刪除",
+      "download_new_version": "請從獲取渠道下載新版",
+      "no_new_version": "未檢測到新版本",
+      "download_release_version": "下載RELEASE版",
+      "update_content": "更新內容",
+      "go_to_release_repository": "去RELEASE倉庫"
+    },
+    "account": {
+      "title": "賬戶",
+      "username": "賬號",
+      "username_hint": "請輸入賬號",
+      "password": "密碼",
+      "password_hint": "請輸入密碼",
+      "no_account_register": "沒有賬號,我要註冊",
+      "password_reset": "密碼找回",
+      "check_username_password_or_network": "請檢查賬號密碼或網絡環境",
+      "check_device_time": "請檢查設備時間",
+      "username_or_password_error": "賬號或密碼錯誤",
+      "login_failed": "登錄失敗"
+    },
+    "app": {
+      "will_pop_notice": "再次返回將會退出應用程序"
+    },
+    "categories": {
+      "search_hint": "搜索"
+    },
+    "clean": {
+      "title": "清理",
+      "cleaning": "清理中",
+      "clean_network_cache": "清理网络缓存",
+      "clean_image_cache": "清理图片缓存",
+      "clean_all_cache": "清理全部缓存",
+      "clean_success": "清理成功",
+      "clean_failed": "清理失败"
+    },
+    "close_app": {
+      "title": "提示",
+      "close_app": "請關閉應用重新打開"
+    },
+    "comic_collections": {
+      "no_resource": "這裡沒有資源呀"
+    },
+    "comic_info": {
+      "chapter": "章节",
+      "comment": "评论",
+      "recommend": "推荐"
+    },
+    "comics": {
+      "search_hint": "搜索分类",
+      "choose_category": "请选择分类"
+    },
+    "comic_subscribes": {
+      "update_reminder": "更新提醒",
+      "check_update": "检查更新",
+      "cancel_all_update_reminder": "取消所有更新提醒"
+    },
+    "comment": {
+      "title": "評論",
+      "hint_text": "請輸入評論內容",
+      "success": "評論成功",
+      "i_have_something_to_say": "我有話要講"
+    },
+    "desktop_authentication": {
+      "current_password": "當前密碼",
+      "password_error": "密碼錯誤",
+      "password_initialization": "密碼初始化",
+      "password": "密碼",
+      "re_enter_password": "再次輸入密碼",
+      "password_mismatch": "兩次輸入的密碼不一致",
+      "set_password": "設置密碼"
+    },
+    "download_confirm": {
+      "please_select_ep": "請選擇下載的EP",
+      "already_added_to_download_list": "已經加入下載列表"
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -54,7 +55,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
   Future<dynamic> _download() async {
     // 必须选中才能下载
     if (_selectedEps.isEmpty) {
-      defaultToast(context, "请选择下载的EP");
+      defaultToast(context, tr('screen.download_confirm.please_select_ep'));
       return;
     }
     // 下载对象
@@ -97,7 +98,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
         await method.createDownload(create, list);
       }
       // 退出
-      defaultToast(context, "已经加入下载列表");
+      defaultToast(context, tr('screen.download_confirm.already_added_to_download_list'));
       Navigator.pop(context);
     } catch (e, s) {
       defaultToast(context, e.toString());
@@ -127,7 +128,7 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
             return const Text('error');
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr('app.loading'));
           }
           return PikaListView(
             children: [
@@ -190,13 +191,13 @@ class _DownloadConfirmScreenState extends State<DownloadConfirmScreen> {
             color: theme.colorScheme.secondary,
             textColor: Colors.white,
             onPressed: _selectAll,
-            child: const Text('全选'),
+            child: Text(tr('app.select_all')),
           ),
           MaterialButton(
             color: theme.colorScheme.secondary,
             textColor: Colors.white,
             onPressed: _download,
-            child: const Text('确定下载'),
+            child: Text(tr('app.confirm_download')),
           ),
         ],
       ),

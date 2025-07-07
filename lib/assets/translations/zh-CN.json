@@ -12,7 +12,15 @@
     "pro": "发电",
     "pro_required": "请先发电再使用",
     "choose_folder": "选择一个文件夹, 将文件保存到这里",
-    "permission_denied": "申请权限被拒绝"
+    "permission_denied": "申请权限被拒绝",
+    "loading": "加载中",
+    "error": "错误",
+    "pat": {
+      "success": "您的赞助登录成功, 请返回",
+      "title": "更换PAT账户"
+    },
+    "previous_page": "上一页",
+    "next_page": "下一页"
   },
   "net": {
     "no_address": "不分流",
@@ -31,7 +39,11 @@
     "ping_failed": "失败"
   },
   "categories": {
-    "all": "全分类"
+    "all": "全分类",
+    "recommend": "推荐",
+    "rankings": "排行榜",
+    "random": "随机本子",
+    "game": "游戏专区"
   },
   "settings": {
     "settings": "设置",
@@ -338,6 +350,87 @@
       "sync_history_to_webdav": "立即同步浏览记录到WebDAV",
       "sync_success": "同步成功",
       "sync_failed": "同步失败"
+    }
+  },
+  "screen": {
+    "about": {
+      "title": "关于",
+      "version": "软件版本",
+      "check_update": "检查更新",
+      "tips": "提示 : \n1. 详情页的作者/上传者/分类/标签都可以点击\n2. 详情页的作者/上传者/标题长按可以复制\n3. 使用分页而不是瀑布流点击页码可以快速翻页\n4. 下载指的是缓存到本地, 需要导出才可以分享\n5. 下载长按可以删除",
+      "download_new_version": "请从获取渠道下载新版",
+      "no_new_version": "未检测到新版本",
+      "download_release_version": "下载RELEASE版",
+      "update_content": "更新内容",
+      "go_to_release_repository": "去RELEASE仓库"
+    },
+    "account": {
+      "title": "账户",
+      "username": "账号",
+      "username_hint": "请输入账号",
+      "password": "密码",
+      "password_hint": "请输入密码",
+      "no_account_register": "没有账号,我要注册",
+      "password_reset": "密码找回",
+      "check_username_password_or_network": "请检查账号密码或网络环境",
+      "check_device_time": "请检查设备时间",
+      "username_or_password_error": "账号或密码错误",
+      "login_failed": "登录失败"
+    },
+    "app": {
+      "will_pop_notice": "再次返回将会退出应用程序"
+    },
+    "categories": {
+      "search_hint": "搜索"
+    },
+    "clean": {
+      "title": "清理",
+      "cleaning": "清理中",
+      "clean_network_cache": "清理网络缓存",
+      "clean_image_cache": "清理图片缓存",
+      "clean_all_cache": "清理全部缓存",
+      "clean_success": "清理成功",
+      "clean_failed": "清理失败"
+    },
+    "close_app": {
+      "title": "提示",
+      "close_app": "请关闭应用重新打开"
+    },
+    "comic_collections": {
+      "no_resource": "这里没有资源呀"
+    },
+    "comic_info": {
+      "chapter": "章节",
+      "comment": "评论",
+      "recommend": "推荐"
+    },
+    "comics": {
+      "search_hint": "搜索分类",
+      "choose_category": "请选择分类"
+    },
+    "comic_subscribes": {
+      "update_reminder": "更新提醒",
+      "check_update": "检查更新",
+      "cancel_all_update_reminder": "取消所有更新提醒"
+    },
+    "comment": {
+      "title": "评论",
+      "hint_text": "请输入评论内容",
+      "success": "评论成功",
+      "i_have_something_to_say": "我有话要讲"
+    },
+    "desktop_authentication": {
+      "current_password": "当前密码",
+      "password_error": "密码错误",
+      "password_initialization": "密码初始化",
+      "password": "密码",
+      "re_enter_password": "再次输入密码",
+      "password_mismatch": "两次输入的密码不一致",
+      "set_password": "设置密码"
+    },
+    "download_confirm": {
+      "please_select_ep": "请选择下载的EP",
+      "already_added_to_download_list": "已经加入下载列表"
     }
   }
 }

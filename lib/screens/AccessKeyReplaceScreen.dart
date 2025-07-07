@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentLoading.dart';
@@ -28,7 +29,7 @@ class _AccessKeyReplaceScreenState extends State<AccessKeyReplaceScreen> {
       await reloadIsPro();
       _success = true;
     } catch (e) {
-      _message = "错误 : $e";
+      _message = tr("app.error") + " : $e";
     } finally {
       setState(() {
         _loading = false;
@@ -38,10 +39,10 @@ class _AccessKeyReplaceScreenState extends State<AccessKeyReplaceScreen> {
 
   Widget _content() {
     if (_loading) {
-      return const ContentLoading(label: "加载中");
+      return ContentLoading(label: tr('app.loading'));
     }
     if (_success) {
-      return const Text("您的赞助登录成功, 请返回");
+      return Text(tr('app.pat.success'));
     }
     return Column(
       children: [
@@ -54,7 +55,7 @@ class _AccessKeyReplaceScreenState extends State<AccessKeyReplaceScreen> {
         MaterialButton(
           color: Colors.grey,
           onPressed: _set,
-          child: const Text("确认"),
+          child: Text(tr("app.confirm")),
         ),
         Expanded(child: Container()),
       ],
@@ -65,7 +66,7 @@ class _AccessKeyReplaceScreenState extends State<AccessKeyReplaceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("更换PAT账户"),
+        title: Text(tr("screen.access_key_replace.title")),
       ),
       body: Center(
         child: _content(),

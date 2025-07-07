@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import 'package:pikapika/screens/components/ContentError.dart';
@@ -36,7 +37,7 @@ class _CategoriesSortScreenState extends State<CategoriesSortScreen> {
         if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('分类排序'),
+              title: Text(tr('screen.categories_sort.title')),
             ),
             body: ContentError(
               error: snapshot.error,
@@ -50,7 +51,7 @@ class _CategoriesSortScreenState extends State<CategoriesSortScreen> {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('分类排序'),
+              title: Text(tr('screen.categories_sort.title')),
             ),
             body: const Center(
               child: CircularProgressIndicator(),
@@ -127,7 +128,7 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
     //
     return Scaffold(
       appBar: AppBar(
-        title: const Text('分类排序'),
+        title: Text(tr('screen.categories_sort.title')),
         actions: [
           _saveIcon(),
         ],
@@ -231,8 +232,8 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
 
     items.add(CategoriesItem(
       buildSvg('lib/assets/books.svg', imageSize, imageSize, margin: 20),
-      "全分类",
-      () => _switch("全分类"),
+      tr('categories.all'),
+      () => _switch(tr('categories.all')),
     ));
 
     items.add(CategoriesItem(
@@ -241,8 +242,8 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
         size: imageSize,
         color: Colors.grey,
       ),
-      "推荐",
-      () => _switch("推荐"),
+      tr('screen.categories.recommend'),
+      () => _switch(tr('screen.categories.recommend')),
     ));
 
     for (var i = 0; i < cList.length; i++) {
@@ -269,22 +270,22 @@ class _CategoriesSortPanelState extends State<CategoriesSortPanel> {
     items.add(CategoriesItem(
       buildSvg('lib/assets/rankings.svg', imageSize, imageSize,
           margin: 20, color: Colors.red.shade700),
-      "排行榜",
-      () => _switch("排行榜"),
+      tr('categories.rankings'),
+      () => _switch(tr('categories.rankings')),
     ));
 
     items.add(CategoriesItem(
       buildSvg('lib/assets/random.svg', imageSize, imageSize,
           margin: 20, color: Colors.orangeAccent.shade700),
-      "随机本子",
-      () => _switch("随机本子"),
+      tr('categories.random'),
+      () => _switch(tr('categories.random')),
     ));
 
     items.add(CategoriesItem(
       buildSvg('lib/assets/gamepad.svg', imageSize, imageSize,
           margin: 20, color: Colors.blue.shade500),
-      "游戏专区",
-      () => _switch("游戏专区"),
+      tr('categories.game'),
+      () => _switch(tr('categories.game')),
     ));
 
     return items;

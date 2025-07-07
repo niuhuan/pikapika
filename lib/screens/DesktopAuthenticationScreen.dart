@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
@@ -27,7 +28,7 @@ class _VerifyPasswordState extends State<VerifyPassword> {
             children: [
               Expanded(child: Container()),
               TextField(
-                decoration: const InputDecoration(labelText: "当前密码"),
+                decoration: InputDecoration(labelText: tr('screen.desktop_authentication.current_password')),
                 onChanged: (value) {
                   _password = value;
                 },
@@ -40,10 +41,10 @@ class _VerifyPasswordState extends State<VerifyPassword> {
                     Navigator.of(context).pop(true);
                   } else {
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text("密码错误")));
+                        .showSnackBar(SnackBar(content: Text(tr('screen.desktop_authentication.password_error'))));
                   }
                 },
-                child: const Text("确定"),
+                child: Text(tr('app.confirm')),
               ),
               Expanded(child: Container()),
             ],
@@ -73,8 +74,8 @@ class _SetPasswordState extends State<SetPassword> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              const Text(
-                "密码初始化",
+              Text(
+                tr('screen.desktop_authentication.password_initialization'),
                 style: TextStyle(
                   height: 18,
                 ),
@@ -83,7 +84,7 @@ class _SetPasswordState extends State<SetPassword> {
                 height: 10,
               ),
               TextField(
-                decoration: const InputDecoration(labelText: "密码"),
+                decoration: InputDecoration(labelText: tr('screen.desktop_authentication.password')),
                 onChanged: (value) {
                   _password = value;
                 },
@@ -92,7 +93,7 @@ class _SetPasswordState extends State<SetPassword> {
                 height: 10,
               ),
               TextField(
-                decoration: const InputDecoration(labelText: "再次输入密码"),
+                decoration: InputDecoration(labelText: tr('screen.desktop_authentication.re_enter_password')),
                 onChanged: (value) {
                   _password2 = value;
                 },
@@ -106,7 +107,7 @@ class _SetPasswordState extends State<SetPassword> {
                     onPressed: () async {
                       Navigator.of(context).pop(false);
                     },
-                    child: const Text("取消"),
+                    child: Text(tr('app.cancel')),
                   ),
                   Container(width: 10),
                   Expanded(
@@ -114,13 +115,13 @@ class _SetPasswordState extends State<SetPassword> {
                       onPressed: () async {
                         if (_password != _password2) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("两次输入的密码不一致")));
+                              SnackBar(content: Text(tr('screen.desktop_authentication.password_mismatch'))));
                           return;
                         }
                         await method.saveProperty(_key, _password);
                         Navigator.of(context).pop(true);
                       },
-                      child: const Text("设置密码"),
+                      child: Text(tr('screen.desktop_authentication.set_password')),
                     ),
                   ),
                 ],

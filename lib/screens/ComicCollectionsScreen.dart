@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -41,7 +42,7 @@ class _ComicCollectionsScreenState extends State<ComicCollectionsScreen> {
 
   Widget buildScreen(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("推荐")),
+      appBar: AppBar(title: Text(tr('categories.recommend'))),
       body: ContentBuilder(
         key: _key,
         future: _future,
@@ -58,7 +59,7 @@ class _ComicCollectionsScreenState extends State<ComicCollectionsScreen> {
           final collection = snapshot.requireData;
           if (collection.isEmpty) {
             return ContentMessage(
-              message: "这里没有资源呀",
+              message: tr('screen.comic_collections.no_resource'),
               icon: Icons.no_sim_outlined,
               onRefresh: () async {
                 setState(() {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CloseAppScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class CloseAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("提示"),
+        title: Text(tr('screen.close_app.title')),
       ),
       body: Center(
         child: ElevatedButton(
@@ -17,7 +18,7 @@ class CloseAppScreen extends StatelessWidget {
             // 关闭应用
             exit(0);
           },
-          child: const Text("请关闭应用重新打开"),
+          child: Text(tr('screen.close_app.close_app')),
         ),
       ),
     );

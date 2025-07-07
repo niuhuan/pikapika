@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Channels.dart';
 import 'package:pikapika/basic/Method.dart';
@@ -17,7 +18,7 @@ class CleanScreen extends StatefulWidget {
 
 class _CleanScreenState extends State<CleanScreen> {
   late bool _cleaning = false;
-  late String _cleaningMessage = "清理中";
+  late String _cleaningMessage = tr('screen.clean.cleaning');
   late String _cleanResult = "";
 
   @override
@@ -55,7 +56,7 @@ class _CleanScreenState extends State<CleanScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('清理'),
+        title: Text(tr('screen.clean.title')),
       ),
       body: ListView(
         children: [
@@ -66,7 +67,7 @@ class _CleanScreenState extends State<CleanScreen> {
           SizedBox(
             height: 50,
             child: FitButton(
-              text: '清理网络缓存',
+              text: tr('screen.clean.clean_network_cache'),
               onPressed: () {
                 processCleanAction(method.cleanNetworkCache);
               },
@@ -75,7 +76,7 @@ class _CleanScreenState extends State<CleanScreen> {
           SizedBox(
             height: 50,
             child: FitButton(
-              text: '清理图片缓存',
+              text: tr('screen.clean.clean_image_cache'),
               onPressed: () {
                 processCleanAction(method.cleanImageCache);
               },
@@ -84,7 +85,7 @@ class _CleanScreenState extends State<CleanScreen> {
           SizedBox(
             height: 50,
             child: FitButton(
-              text: '清理全部缓存',
+              text: tr('screen.clean.clean_all_cache'),
               onPressed: () {
                 processCleanAction(method.clean);
               },
@@ -102,11 +103,11 @@ class _CleanScreenState extends State<CleanScreen> {
       });
       await action();
       setState(() {
-        _cleanResult = "清理成功";
+        _cleanResult = tr('screen.clean.clean_success');
       });
     } catch (e) {
       setState(() {
-        _cleanResult = "清理失败 $e";
+        _cleanResult = tr('screen.clean.clean_failed') + " $e";
       });
     } finally {
       setState(() {

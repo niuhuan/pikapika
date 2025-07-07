@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,7 +55,7 @@ class _AboutScreenState extends State<AboutScreen> {
     var _dirty = dirtyVersion();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('关于'),
+        title: Text(tr("screen.about.title")),
       ),
       body: PikaListView(
         children: [
@@ -84,16 +85,16 @@ class _AboutScreenState extends State<AboutScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '软件版本 : $_currentVersion',
+                  tr("screen.about.version") + " : $_currentVersion",
                   style: const TextStyle(
                     height: 1.3,
                   ),
                 ),
                 Row(
                   children: [
-                    const Text(
-                      "检查更新 : ",
-                      style: TextStyle(
+                    Text(
+                      tr("screen.about.check_update") + " : ",
+                      style: const TextStyle(
                         height: 1.3,
                       ),
                     ),
@@ -108,14 +109,9 @@ class _AboutScreenState extends State<AboutScreen> {
           const Divider(),
           Container(
             padding: const EdgeInsets.all(20),
-            child: const SelectableText(
-              "提示 : \n"
-              "1. 详情页的作者/上传者/分类/标签都可以点击\n"
-              "2. 详情页的作者/上传者/标题长按可以复制\n"
-              "3. 使用分页而不是瀑布流点击页码可以快速翻页\n"
-              "4. 下载指的是缓存到本地, 需要导出才可以分享\n"
-              "5. 下载长按可以删除\n",
-              style: TextStyle(
+            child: SelectableText(
+              tr("screen.about.tips"),
+              style: const TextStyle(
                 height: 1.3,
               ),
             ),
@@ -128,8 +124,8 @@ class _AboutScreenState extends State<AboutScreen> {
 
   _buildNewVersion(String? latestVersion) {
     if (!isPro) {
-      return const Text(
-        "请从获取渠道下载新版",
+      return Text(
+        tr("screen.about.download_new_version"),
       );
     }
     if (latestVersion != null) {
@@ -165,7 +161,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return Text.rich(
       TextSpan(
         children: [
-          const TextSpan(text: "未检测到新版本", style: TextStyle(height: 1.3)),
+          TextSpan(text: tr("screen.about.no_new_version"), style: const TextStyle(height: 1.3)),
           WidgetSpan(
             alignment: PlaceholderAlignment.middle,
             child: Container(
@@ -177,7 +173,7 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
           ),
           TextSpan(
-            text: "检查更新",
+            text: tr("screen.about.check_update"),
             style: TextStyle(
               height: 1.3,
               color: Theme.of(context).colorScheme.primary,
@@ -193,7 +189,7 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget _buildDirty() {
     return Text.rich(
       TextSpan(
-        text: "下载RELEASE版",
+        text: tr("screen.about.download_release_version"),
         style: TextStyle(
           height: 1.3,
           color: Theme.of(context).colorScheme.primary,
@@ -212,7 +208,7 @@ class _AboutScreenState extends State<AboutScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Divider(),
-          const Text("更新内容:"),
+          Text(tr("screen.about.update_content") + ":"),
           Container(
             padding: const EdgeInsets.all(15),
             child: Text(
@@ -231,7 +227,7 @@ class _AboutScreenState extends State<AboutScreen> {
           padding: const EdgeInsets.all(15),
           child: Text.rich(
             TextSpan(
-              text: "去RELEASE仓库",
+              text: tr("screen.about.go_to_release_repository"),
               style: TextStyle(
                 height: 1.3,
                 color: Theme.of(context).colorScheme.primary,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -143,15 +144,15 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
         if (snapshot.connectionState != ConnectionState.done) {
           return Scaffold(
             appBar: AppBar(),
-            body: const ContentLoading(label: '加载中'),
+            body: ContentLoading(label: tr('app.loading')),
           );
         }
         var _comicInfo = snapshot.data!;
         var theme = Theme.of(context);
         var _tabs = <Widget>[
-          Tab(text: '章节 (${_comicInfo.epsCount})'),
-          Tab(text: '评论 (${_comicInfo.commentsCount})'),
-          const Tab(text: '推荐'),
+          Tab(text: tr('screen.comic_info.chapter') + ' (${_comicInfo.epsCount})'),
+          Tab(text: tr('screen.comic_info.comment') + ' (${_comicInfo.commentsCount})'),
+          Tab(text: tr('screen.comic_info.recommend')),
         ];
         var _views = <Widget>[
           _buildEpWrap(_epListFuture, _comicInfo),

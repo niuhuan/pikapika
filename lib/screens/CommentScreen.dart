@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/Entities.dart';
@@ -93,7 +94,7 @@ class _CommentScreenState extends State<CommentScreen> {
   Widget buildScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('评论'),
+        title: Text(tr('screen.comment.title')),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_comment),
@@ -137,9 +138,9 @@ class _CommentScreenState extends State<CommentScreen> {
           _key = UniqueKey();
           widget.comment.commentsCount++;
         });
-        defaultToast(context, "评论成功");
+        defaultToast(context, tr('screen.comment.success'));
       },
-      hintText: '请输入评论内容',
+      hintText: tr('screen.comment.hint_text'),
     );
   }
 
@@ -162,8 +163,8 @@ class _CommentScreenState extends State<CommentScreen> {
           ),
         ),
         padding: const EdgeInsets.all(30),
-        child: const Center(
-          child: Text('我有话要讲'),
+        child: Center(
+          child: Text(tr('screen.comment.i_have_something_to_say')),
         ),
       ),
     );
@@ -181,8 +182,8 @@ class _CommentScreenState extends State<CommentScreen> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: const Center(
-            child: Text('上一页'),
+          child: Center(
+            child: Text(tr('app.previous_page')),
           ),
         ),
       );
@@ -202,8 +203,8 @@ class _CommentScreenState extends State<CommentScreen> {
         },
         child: Container(
           padding: const EdgeInsets.all(30),
-          child: const Center(
-            child: Text('下一页'),
+          child: Center(
+            child: Text(tr('app.next_page')),
           ),
         ),
       );

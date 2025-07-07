@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
@@ -72,15 +73,15 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildLogging() {
-    return const Scaffold(
-      body: ContentLoading(label: '登录中'),
+    return Scaffold(
+      body: ContentLoading(label: tr('app.loading')),
     );
   }
 
   Widget _buildGui() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('配置'),
+        title: Text(tr('screen.account.title')),
         actions: [
           SizedBox(
             width: 80,
@@ -106,14 +107,14 @@ class _AccountScreenState extends State<AccountScreen> {
       body: PikaListView(
         children: [
           ListTile(
-            title: const Text("账号"),
-            subtitle: Text(_username == "" ? "未设置" : _username),
+            title: Text(tr("screen.account.username")),
+            subtitle: Text(_username == "" ? tr("screen.account.not_set") : _username),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _username,
-                title: '账号',
-                hint: '请输入账号',
+                title: tr("screen.account.username"),
+                hint: tr("screen.account.username_hint"),
               );
               if (input != null) {
                 await method.setUsername(input);
@@ -124,14 +125,14 @@ class _AccountScreenState extends State<AccountScreen> {
             },
           ),
           ListTile(
-            title: const Text("密码"),
-            subtitle: Text(_password == "" ? "未设置" : '\u2022' * 10),
+            title: Text(tr("screen.account.password")),
+            subtitle: Text(_password == "" ? tr("screen.account.not_set") : '\u2022' * 10),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _password,
-                title: '密码',
-                hint: '请输入密码',
+                title: tr("screen.account.password"),
+                hint: tr("screen.account.password_hint"),
                 isPasswd: true,
               );
               if (input != null) {
@@ -148,7 +149,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   Container(
                     padding: const EdgeInsets.all(15),
                     child: Text.rich(TextSpan(
-                      text: '没有账号,我要注册',
+                      text: tr("screen.account.no_account_register"),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                         decoration: TextDecoration.underline,
@@ -167,7 +168,7 @@ class _AccountScreenState extends State<AccountScreen> {
           Container(
             padding: const EdgeInsets.all(15),
             child: Text.rich(TextSpan(
-              text: '密码找回',
+              text: tr("screen.account.password_reset"),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
                 decoration: TextDecoration.underline,
@@ -202,21 +203,21 @@ class _AccountScreenState extends State<AccountScreen> {
       setState(() {
         _logging = false;
       });
-      var message = "请检查账号密码或网络环境";
+      var message = tr("screen.account.check_username_password_or_network");
       switch (errorType("$e")) {
         case ERROR_TYPE_NETWORK:
-          message = "网络不通";
+          message = tr("screen.account.network_不通");
           break;
         case ERROR_TYPE_TIME:
-          message = "请检查设备时间";
+          message = tr("screen.account.check_device_time");
           break;
       }
       if ("$e".contains("email") && "$e".contains("password")) {
-        message = "账号或密码错误";
+        message = tr("screen.account.username_or_password_error");
       }
       alertDialog(
         context,
-        '登录失败',
+        tr("screen.account.login_failed"),
         "$message\n$e",
       );
     }

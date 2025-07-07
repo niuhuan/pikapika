@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Common.dart';
@@ -40,7 +41,7 @@ class ComicsScreen extends StatefulWidget {
 class _ComicsScreenState extends State<ComicsScreen> {
   late final _comicListController = ComicListController();
   late final fsb.SearchBar _categorySearchBar = fsb.SearchBar(
-    hintText: '搜索分类 - ${categoryTitle(widget.category)}',
+    hintText: tr('screen.comics.search_hint') + ' - ${categoryTitle(widget.category)}',
     inBar: false,
     setState: setState,
     onSubmitted: (value) {
@@ -73,7 +74,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
 
   Widget _chooseCategoryAction() => IconButton(
         onPressed: () async {
-          String? category = await chooseListDialog(context, '请选择分类', [
+          String? category = await chooseListDialog(context, tr('screen.comics.choose_category'), [
             categoryTitle(null),
             ...filteredList(
               storedCategories,
