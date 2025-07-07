@@ -226,6 +226,64 @@
       "low": "低",
       "medium": "中",
       "high": "高"
+    },
+    "reader_background_color": {
+      "title": "閱讀器背景色",
+      "choose": "選擇閱讀器背景色",
+      "black": "黑色",
+      "gray": "灰度",
+      "white": "白色"
+    },
+    "reader_direction": {
+      "title": "閱讀器方向",
+      "choose": "選擇翻頁方向",
+      "top_to_bottom": "從上到下",
+      "left_to_right": "從左到右",
+      "right_to_left": "從右到左"
+    },
+    "reader_scroll_by_screen_percentage": {
+      "title": "自由放大閱讀器翻頁距離",
+      "screen_size": "屏幕尺寸"
+    },
+    "reader_slider_position": {
+      "title": "滾動條的位置",
+      "choose": "選擇滑動條位置",
+      "bottom": "下方",
+      "right": "右側",
+      "left": "左側"
+    },
+    "reader_two_page_direction": {
+      "title": "雙頁閱讀器內容排列",
+      "choose": "選擇雙頁閱讀器內容排列",
+      "close_to": "靠近",
+      "pull_away": "遠離",
+      "each_centered": "各自居中"
+    },
+    "reader_type": {
+      "title": "閱讀器模式",
+      "choose": "選擇閱讀器模式",
+      "web_toon": "WebToon (默認)",
+      "web_toon_zoom": "WebToon (雙擊放大)",
+      "gallery": "相冊",
+      "web_toon_free_zoom": "WebToon (ListView雙擊放大)\n(此模式進度條無效)",
+      "two_page_gallery": "雙頁模式\n(實驗)"
+    },
+    "shadow_categories": {
+      "title": "封印",
+      "search_hint": "搜索"
+    },
+    "shadow_categories_mode": {
+      "title": "封印模式",
+      "black_list": "黑名單",
+      "white_list": "白名單"
+    },
+    "startup_pic": {
+      "title": "設置啟動圖片",
+      "subtitle": "設置應用啟動時顯示的圖片",
+      "clear_title": "清除啟動圖片",
+      "clear_subtitle": "清除應用啟動時顯示的圖片",
+      "clear_success": "啟動圖片已清除",
+      "update_success": "啟動圖片已更新"
     }
   }
 }

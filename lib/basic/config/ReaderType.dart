@@ -1,5 +1,6 @@
 /// 阅读器的类型
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Method.dart';
 
@@ -11,13 +12,15 @@ enum ReaderType {
   TWO_PAGE_GALLERY,
 }
 
-const _types = {
-  'WebToon (默认)': ReaderType.WEB_TOON,
-  'WebToon (双击放大)': ReaderType.WEB_TOON_ZOOM,
-  '相册': ReaderType.GALLERY,
-  'WebToon (ListView双击放大)\n(此模式进度条无效)': ReaderType.WEB_TOON_FREE_ZOOM,
-  '双页模式\n(实验)': ReaderType.TWO_PAGE_GALLERY,
-};
+// const _types = {
+//   'WebToon (默认)': ReaderType.WEB_TOON,
+//   'WebToon (双击放大)': ReaderType.WEB_TOON_ZOOM,
+//   '相册': ReaderType.GALLERY,
+//   'WebToon (ListView双击放大)\n(此模式进度条无效)': ReaderType.WEB_TOON_FREE_ZOOM,
+//   '双页模式\n(实验)': ReaderType.TWO_PAGE_GALLERY,
+// };
+
+Map<String, ReaderType> _types = {};
 
 enum TwoPageDirection {
   LEFT_TO_RIGHT,
@@ -27,9 +30,9 @@ enum TwoPageDirection {
 String _twoPageDirectionName(TwoPageDirection direction) {
   switch (direction) {
     case TwoPageDirection.LEFT_TO_RIGHT:
-      return "左到右";
+      return tr("settings.reader_type.left_to_right");
     case TwoPageDirection.RIGHT_TO_LEFT:
-      return "右到左";
+      return tr("settings.reader_type.right_to_left");
   }
 }
 
@@ -51,6 +54,13 @@ late TwoPageDirection _twoPageDirection;
 TwoPageDirection get twoPageDirection => _twoPageDirection;
 
 Future<dynamic> initReaderType() async {
+  _types.addAll({
+    tr("settings.reader_type.web_toon"): ReaderType.WEB_TOON,
+    tr("settings.reader_type.web_toon_zoom"): ReaderType.WEB_TOON_ZOOM,
+    tr("settings.reader_type.gallery"): ReaderType.GALLERY,
+    tr("settings.reader_type.web_toon_free_zoom"): ReaderType.WEB_TOON_FREE_ZOOM,
+    tr("settings.reader_type.two_page_gallery"): ReaderType.TWO_PAGE_GALLERY,
+  });
   _readerType = _readerTypeFromString(
       await method.loadProperty(_propertyName, ReaderType.WEB_TOON.toString()));
   _twoPageDirection = _twoPageDirectionFromString(await method.loadProperty(
@@ -85,7 +95,7 @@ Future<void> choosePagerType(BuildContext buildContext) async {
     context: buildContext,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text("选择阅读模式"),
+        title: Text(tr("settings.reader_type.choose")),
         children: _types.entries
             .map((e) => SimpleDialogOption(
                   child: Text(e.key),
@@ -121,7 +131,7 @@ Widget _readerTypeTile(
   void Function(void Function()) setState,
 ) {
   return ListTile(
-    title: const Text("阅读器模式"),
+    title: Text(tr("settings.reader_type.title")),
     subtitle: Text(currentReaderTypeName()),
     onTap: () async {
       await choosePagerType(context);
@@ -135,14 +145,14 @@ Widget _twoPageDirectionTile(
   void Function(void Function()) setState,
 ) {
   return ListTile(
-    title: const Text("双页模式方向"),
+    title: Text(tr("settings.reader_type.two_page_direction")),
     subtitle: Text(_twoPageDirectionName(_twoPageDirection)),
     onTap: () async {
       TwoPageDirection? t = await showDialog<TwoPageDirection>(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: const Text("选择双页模式方向"),
+            title: Text(tr("settings.reader_type.two_page_direction_choose")),
             children: TwoPageDirection.values
                 .map((e) => SimpleDialogOption(
                       child: Text(_twoPageDirectionName(e)),

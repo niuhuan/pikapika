@@ -1,5 +1,6 @@
 /// 阅读器的方向
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
@@ -9,16 +10,23 @@ enum ReaderTwoPageDirection {
   EACH_CENTERED,
 }
 
-const _types = {
-  '靠近': ReaderTwoPageDirection.CLOSE_TO,
-  '远离': ReaderTwoPageDirection.PULL_AWAY,
-  '各自居中': ReaderTwoPageDirection.EACH_CENTERED,
-};
+// const _types = {
+//   '靠近': ReaderTwoPageDirection.CLOSE_TO,
+//   '远离': ReaderTwoPageDirection.PULL_AWAY,
+//   '各自居中': ReaderTwoPageDirection.EACH_CENTERED,
+// };
+
+Map<ReaderTwoPageDirection, String> _types = {};
 
 const _propertyName = "readerTwoPageDirection";
 late ReaderTwoPageDirection gReaderTwoPageDirection;
 
 Future<void> initReaderTwoPageDirection() async {
+  _types.addAll({
+    ReaderTwoPageDirection.CLOSE_TO: tr("settings.reader_two_page_direction.close_to"),
+    ReaderTwoPageDirection.PULL_AWAY: tr("settings.reader_two_page_direction.pull_away"),
+    ReaderTwoPageDirection.EACH_CENTERED: tr("settings.reader_two_page_direction.each_centered"),
+  });
   gReaderTwoPageDirection = _pagerDirectionFromString(await method.loadProperty(
       _propertyName, ReaderTwoPageDirection.CLOSE_TO.toString()));
 }
@@ -34,8 +42,8 @@ ReaderTwoPageDirection _pagerDirectionFromString(String pagerDirectionString) {
 
 String _currentReaderTwoPageDirectionName() {
   for (var e in _types.entries) {
-    if (e.value == gReaderTwoPageDirection) {
-      return e.key;
+    if (e.key == gReaderTwoPageDirection) {
+      return e.value;
     }
   }
   return '';
@@ -49,12 +57,12 @@ Future<void> chooseTwoPagerDirection(BuildContext buildContext) async {
     context: buildContext,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: const Text("选择翻页方向"),
+        title: Text(tr("settings.reader_two_page_direction.choose")),
         children: _types.entries
             .map((e) => SimpleDialogOption(
-                  child: Text(e.key),
+                  child: Text(e.value),
                   onPressed: () {
-                    Navigator.of(context).pop(e.value);
+                    Navigator.of(context).pop(e.key);
                   },
                 ))
             .toList(),
@@ -71,7 +79,7 @@ Widget readerTwoPageDirectionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("双页阅读器内容排列"),
+        title: Text(tr("settings.reader_two_page_direction.title")),
         subtitle: Text(_currentReaderTwoPageDirectionName()),
         onTap: () async {
           await chooseTwoPagerDirection(context);

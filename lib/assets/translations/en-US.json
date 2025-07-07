@@ -226,6 +226,64 @@
       "low": "Low",
       "medium": "Medium",
       "high": "High"
+    },
+    "reader_background_color": {
+      "title": "Reader background color",
+      "choose": "Choose reader background color",
+      "black": "Black",
+      "gray": "Gray",
+      "white": "White"
+    },
+    "reader_direction": {
+      "title": "Reader direction",
+      "choose": "Choose reader direction",
+      "top_to_bottom": "Top to bottom",
+      "left_to_right": "Left to right",
+      "right_to_left": "Right to left"
+    },
+    "reader_scroll_by_screen_percentage": {
+      "title": "Free zoom reader page distance",
+      "screen_size": "Screen size"
+    },
+    "reader_slider_position": {
+      "title": "Slider position",
+      "choose": "Choose slider position",
+      "bottom": "Bottom",
+      "right": "Right",
+      "left": "Left"
+    },
+    "reader_two_page_direction": {
+      "title": "Two page reader content arrangement",
+      "choose": "Choose two page reader content arrangement",
+      "close_to": "Close to",
+      "pull_away": "Pull away",
+      "each_centered": "Each centered"
+    },
+    "reader_type": {
+      "title": "Reader mode",
+      "choose": "Choose reader mode",
+      "web_toon": "WebToon (Default)",
+      "web_toon_zoom": "WebToon (Double click to zoom)",
+      "gallery": "Gallery",
+      "web_toon_free_zoom": "WebToon (ListView double click to zoom)\n(This mode progress bar is invalid)",
+      "two_page_gallery": "Two page mode\n(Experimental)"
+    },
+    "shadow_categories": {
+      "title": "Seal",
+      "search_hint": "Search"
+    },
+    "shadow_categories_mode": {
+      "title": "Seal mode",
+      "black_list": "Black list",
+      "white_list": "White list"
+    },
+    "startup_pic": {
+      "title": "Set startup picture",
+      "subtitle": "Set the picture displayed when the application starts",
+      "clear_title": "Clear startup picture",
+      "clear_subtitle": "Clear the picture displayed when the application starts",
+      "clear_success": "Startup picture cleared",
+      "update_success": "Startup picture updated"
     }
-  }
+  } 
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Method.dart';
@@ -17,7 +18,7 @@ Widget readerScrollByScreenPercentageSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: Text("自由放大阅读器翻页距离 : $_readerScrollByScreenPercentage%屏幕尺寸"),
+        title: Text(tr("settings.reader_scroll_by_screen_percentage.title") + " : $_readerScrollByScreenPercentage%" + tr("settings.reader_scroll_by_screen_percentage.screen_size")),
         subtitle: Slider(
           min: 5.toDouble(),
           max: 110.toDouble(),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,8 +10,8 @@ import 'package:pikapika/basic/Method.dart';
 
 Widget setStartupPicTile(BuildContext context) {
   return ListTile(
-    title: const Text("设置启动图片"),
-    subtitle: const Text("设置应用启动时显示的图片"),
+    title: Text(tr("settings.startup_pic.title")),
+    subtitle: Text(tr("settings.startup_pic.subtitle")),
     onTap: () {
       if (Platform.isAndroid || Platform.isIOS) {
         _updateStartupPicPhone(context);
@@ -23,11 +24,11 @@ Widget setStartupPicTile(BuildContext context) {
 
 Widget clearStartupPicTile(BuildContext context) {
   return ListTile(
-    title: const Text("清除启动图片"),
-    subtitle: const Text("清除应用启动时显示的图片"),
+    title: Text(tr("settings.startup_pic.clear_title")),
+    subtitle: Text(tr("settings.startup_pic.clear_subtitle")),
     onTap: () async {
       await clearStartupPic(context);
-      defaultToast(context, "启动图片已清除");
+      defaultToast(context, tr("settings.startup_pic.clear_success"));
     },
   );
 }
@@ -37,7 +38,7 @@ Future<void> _updateStartupPicPhone(BuildContext context) async {
   final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
   if (image != null) {
     await image.saveTo(p.join(await method.dataLocal(), "startup_pic"));
-    defaultToast(context, "启动图片已更新");
+    defaultToast(context, tr("settings.startup_pic.update_success"));
   }
 }
 
@@ -52,7 +53,7 @@ Future<void> _updateStartupPicDesktop(BuildContext context) async {
     final destination = File(startupPicPath);
     await destination.create(recursive: true);
     await File(file.path!).copy(destination.path);
-    defaultToast(context, "启动图片已更新");
+    defaultToast(context, tr("settings.startup_pic.update_success"));
   }
 }
 
@@ -62,5 +63,5 @@ Future<void> clearStartupPic(BuildContext context) async {
   if (await file.exists()) {
     await file.delete();
   }
-  defaultToast(context, "启动图片已清除");
+  defaultToast(context, tr("settings.startup_pic.clear_success"));
 }

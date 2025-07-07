@@ -1,9 +1,28 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
 import '../Method.dart';
+
+
+final List<ReaderBackgroundColor> _colors = [];
+
+//  [
+//   ReaderBackgroundColor(
+//     "黑色",
+//     Colors.black,
+//   ),
+//   ReaderBackgroundColor(
+//     "灰度",
+//     Colors.grey,
+//   ),
+//   ReaderBackgroundColor(
+//     "白色",
+//     Colors.white,
+//   ),
+// ];
 
 const _propertyName = "readerBackgroundColor";
 late ReaderBackgroundColor readerBackgroundColor;
@@ -11,6 +30,11 @@ late ReaderBackgroundColor readerBackgroundColor;
 Color get readerBackgroundColorObj => readerBackgroundColor.color;
 
 Future<void> initReaderBackgroundColor() async {
+  _colors.addAll([
+    ReaderBackgroundColor(tr("settings.reader_background_color.black"), Colors.black),
+    ReaderBackgroundColor(tr("settings.reader_background_color.gray"), Colors.grey),
+    ReaderBackgroundColor(tr("settings.reader_background_color.white"), Colors.white),
+  ]);
   readerBackgroundColor =
       _readerBackgroundColorFromString(await method.loadProperty(
     _propertyName,
@@ -34,21 +58,6 @@ class ReaderBackgroundColor {
   ReaderBackgroundColor(this.name, this.color);
 }
 
-final List<ReaderBackgroundColor> _colors = [
-  ReaderBackgroundColor(
-    "黑色",
-    Colors.black,
-  ),
-  ReaderBackgroundColor(
-    "灰度",
-    Colors.grey,
-  ),
-  ReaderBackgroundColor(
-    "白色",
-    Colors.white,
-  ),
-];
-
 Future<void> chooseReaderBackgroundColor(BuildContext context) async {
   Map<String, ReaderBackgroundColor> map = {};
   for (var element in _colors) {
@@ -57,7 +66,7 @@ Future<void> chooseReaderBackgroundColor(BuildContext context) async {
   ReaderBackgroundColor? result = await chooseMapDialog<ReaderBackgroundColor>(
     context,
     map,
-    "选择阅读器背景色",
+    tr("settings.reader_background_color.choose"),
   );
   if (result != null) {
     await method.saveProperty(_propertyName, result.name);
@@ -69,7 +78,7 @@ Widget readerBackgroundColorSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("阅读器背景色"),
+        title: Text(tr("settings.reader_background_color.title")),
         subtitle: Text(readerBackgroundColor.name),
         onTap: () async {
           await chooseReaderBackgroundColor(context);

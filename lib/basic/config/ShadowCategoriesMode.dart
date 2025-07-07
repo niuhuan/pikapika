@@ -1,5 +1,6 @@
 /// 屏蔽方式
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../Common.dart';
 import '../Method.dart';
@@ -10,15 +11,21 @@ enum ShadowCategoriesMode {
   WHITE_LIST,
 }
 
-Map<String, ShadowCategoriesMode> _fullScreenActionMap = {
-  "黑名单": ShadowCategoriesMode.BLACK_LIST,
-  "白名单": ShadowCategoriesMode.WHITE_LIST,
-};
+// Map<String, ShadowCategoriesMode> _fullScreenActionMap = {
+//   "黑名单": ShadowCategoriesMode.BLACK_LIST,
+//   "白名单": ShadowCategoriesMode.WHITE_LIST,
+// };
+
+Map<String, ShadowCategoriesMode> _fullScreenActionMap = {};
 
 const _propertyName = "shadowCategoriesMode";
 late ShadowCategoriesMode _shadowCategoriesMode;
 
 Future<void> initShadowCategoriesMode() async {
+  _fullScreenActionMap.addAll({
+    tr("settings.shadow_categories_mode.black_list"): ShadowCategoriesMode.BLACK_LIST,
+    tr("settings.shadow_categories_mode.white_list"): ShadowCategoriesMode.WHITE_LIST,
+  });
   _shadowCategoriesMode = _shadowCategoriesModeFromString(await method.loadProperty(
     _propertyName,
     ShadowCategoriesMode.BLACK_LIST.toString(),
@@ -49,7 +56,7 @@ String _currentShadowCategoriesMode() {
 
 Future<void> _chooseShadowCategoriesMode(BuildContext context) async {
   ShadowCategoriesMode? result = await chooseMapDialog<ShadowCategoriesMode>(
-      context, _fullScreenActionMap, "封印模式");
+      context, _fullScreenActionMap, tr("settings.shadow_categories_mode.title"));
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     _shadowCategoriesMode = result;
@@ -61,7 +68,7 @@ Widget shadowCategoriesModeSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("封印模式"),
+        title: Text(tr("settings.shadow_categories_mode.title")),
         subtitle: Text(_currentShadowCategoriesMode()),
         onTap: () async {
           await _chooseShadowCategoriesMode(context);

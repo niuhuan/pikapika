@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 
@@ -5,16 +6,23 @@ import '../Common.dart';
 
 enum ReaderSliderPosition { BOTTOM, RIGHT, LEFT }
 
-const _positionNames = {
-  ReaderSliderPosition.BOTTOM: '下方',
-  ReaderSliderPosition.RIGHT: '右侧',
-  ReaderSliderPosition.LEFT: '左侧',
-};
+// const _positionNames = {
+//   ReaderSliderPosition.BOTTOM: '下方',
+//   ReaderSliderPosition.RIGHT: '右侧',
+//   ReaderSliderPosition.LEFT: '左侧',
+// };
+
+Map<ReaderSliderPosition, String> _positionNames = {};
 
 const _propertyName = "readerSliderPosition";
 late ReaderSliderPosition _readerSliderPosition;
 
 Future initReaderSliderPosition() async {
+  _positionNames.addAll({
+    ReaderSliderPosition.BOTTOM: tr("settings.reader_slider_position.bottom"),
+    ReaderSliderPosition.RIGHT: tr("settings.reader_slider_position.right"),
+    ReaderSliderPosition.LEFT: tr("settings.reader_slider_position.left"),
+  });
   _readerSliderPosition = _readerSliderPositionFromString(
     await method.loadProperty(_propertyName, ""),
   );
@@ -38,7 +46,7 @@ Future<void> chooseReaderSliderPosition(BuildContext context) async {
     map[value] = key;
   });
   ReaderSliderPosition? result =
-      await chooseMapDialog<ReaderSliderPosition>(context, map, "选择滑动条位置");
+      await chooseMapDialog<ReaderSliderPosition>(context, map, tr("settings.reader_slider_position.choose"));
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     _readerSliderPosition = result;
@@ -49,7 +57,7 @@ Widget readerSliderPositionSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("滚动条的位置"),
+        title: Text(tr("settings.reader_slider_position.title")),
         subtitle: Text(currentReaderSliderPositionName()),
         onTap: () async {
           await chooseReaderSliderPosition(context);

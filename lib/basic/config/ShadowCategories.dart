@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:path/path.dart';
 
 import '../Method.dart';
 import '../store/Categories.dart';
@@ -42,11 +42,11 @@ Future<void> _chooseShadowCategories(BuildContext context) async {
       return MultiSelectDialog<String>(
         backgroundColor: theme1.scaffoldBackgroundColor,
         checkColor: theme1.colorScheme.onSurface,
-        title: const Text('封印'),
-        searchHint: '搜索',
+        title: Text(tr("settings.shadow_categories.title")),
+        searchHint: tr("settings.shadow_categories.search_hint"),
         searchable: true,
-        cancelText: const Text('取消'),
-        confirmText: const Text('确定'),
+        cancelText: Text(tr("app.cancel")),
+        confirmText: Text(tr("app.confirm")),
         items: storedCategories.map((e) => MultiSelectItem(e, e)).toList(),
         initialValue: initialValue,
         onConfirm: (List<String>? value) async {
@@ -78,7 +78,7 @@ Widget shadowCategoriesSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return ListTile(
-        title: const Text("封印"), 
+        title: Text(tr("settings.shadow_categories.title")),
         subtitle: Text(jsonEncode(shadowCategories)),
         onTap: () async {
           await _chooseShadowCategories(context);
