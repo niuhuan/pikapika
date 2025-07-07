@@ -11,7 +11,7 @@ import 'package:pikapika/basic/Method.dart';
 //   "不自动清理": "${0}",
 // };
 
-const _autoCleanMap = {};
+final _autoCleanMap = {};
 
 late String _autoCleanSec;
 

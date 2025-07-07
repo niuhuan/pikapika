@@ -22,7 +22,9 @@
     "previous_page": "上一页",
     "next_page": "下一页",
     "select_all": "全选",
-    "load_failed": "加载失败"
+    "load_failed": "加载失败",
+    "all": "全部",
+    "delete": "删除"
   },
   "net": {
     "no_address": "不分流",
@@ -491,6 +493,50 @@
       "get_ip_failed": "获取IP失败",
       "getting_ip": "正在获取IP",
       "port": "端口号"
+    },
+    "download_import": {
+      "title": "导入",
+      "open_file": "打开文件",
+      "select_file": "选择要导入的文件",
+      "import_success": "导入成功",
+      "import_failed": "导入失败",
+      "select_file_desc": "选择zip文件进行导入\n选择pki文件进行导入\n选择pkz文件进行阅读",
+      "input_address": "请输入导出设备提供的地址\n例如 \"192.168.1.2:50000\"",
+      "import_from_other_device": "从其他设备导入",
+      "select_folder_desc": "选择文件夹\n(导入里面所有的zip/pki)\n(发电后使用)"
+    },
+    "download_info": {
+      "loading": "加载中",
+      "chapter": "章节",
+      "comment": "评论",
+      "recommend": "推荐"
+    },
+    "download_list": {
+      "search_download": "搜索下载",
+      "multi_select_operation": "多选操作",
+      "download_list": "下载列表",
+      "search": "搜索",
+      "select_folder": "选择文件夹",
+      "download_already_in_delete_queue": "该下载已经在删除队列中",
+      "import": "导入",
+      "export": "导出",
+      "file": "文件",
+      "download_task": "下载任务",
+      "pause_download": "暂停下载吗?",
+      "start_download": "启动下载吗?",
+      "resume_failed": "恢复失败任务",
+      "resume_failed_desc": "所有失败的下载已经恢复",
+      "downloading": "下载中",
+      "paused": "暂停中",
+      "move_download": "移动下载",
+      "select_download_to_move": "请选择要移动下载",
+      "input_name": "==> 输入名称 <==",
+      "empty_folder_will_be_deleted": "（空文件夹将会自动删除，下次需要手动输入）",
+      "folder_name": "文件夹名称",
+      "please_input_folder_name": "请输入文件夹名称",
+      "delete_download": "删除下载",
+      "delete_selected_download": "删除选中的下载吗?",
+      "multi_select": "多选"
     }
   }
 }

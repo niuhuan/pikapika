@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Channels.dart';
@@ -33,7 +34,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   List<String> _folderList = [];
 
   late final fsb.SearchBar _searchBar = fsb.SearchBar(
-    hintText: '搜索下载',
+    hintText: tr('screen.download_list.search_download'),
     inBar: false,
     setState: setState,
     onSubmitted: (value) {
@@ -58,7 +59,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
               }
             },
           ),
-          title: const Text("多选操作"),
+          title: Text(tr('screen.download_list.multi_select_operation')),
           actions: [
             _selectingCancelButton(),
             _selectingMoveButton(),
@@ -67,7 +68,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         );
       }
       return AppBar(
-        title: Text(_search == "" ? "下载列表" : ('搜索下载 - $_search')),
+        title: Text(_search == ""
+            ? tr('screen.download_list.download_list')
+            : (tr('screen.download_list.search_download') + ' - $_search')),
         actions: [
           //_searchBar.getSearchAction(context),
           GestureDetector(
@@ -83,9 +86,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                   size: 18,
                   color: Colors.white,
                 ),
-                const Text(
-                  '搜索',
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                Text(
+                  tr('screen.download_list.search'),
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
                 ),
                 Expanded(child: Container()),
               ],
@@ -112,7 +115,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     });
     return value;
   });
-  
+
   List<DownloadComic> _data = [];
 
   void _onMessageChange(String event) {
@@ -157,13 +160,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         builder: (BuildContext context,
             AsyncSnapshot<List<DownloadComic>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr('app.loading'));
           }
 
           if (snapshot.hasError) {
             print("${snapshot.error}");
             print("${snapshot.stackTrace}");
-            return const Center(child: Text('加载失败'));
+            return Center(child: Text(tr('app.loading_failed')));
           }
 
           var data = snapshot.data!;
@@ -226,12 +229,13 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   Widget _customFolderButton() {
     return IconButton(
         onPressed: () async {
-          String? choose = await chooseListDialog(context, "选择文件夹", [
-            "全部",
+          String? choose = await chooseListDialog(
+              context, tr('screen.download_list.select_folder'), [
+            tr('app.all'),
             ..._folderList,
           ]);
           if (choose != null) {
-            if (choose == "全部") {
+            if (choose == tr('app.all')) {
               choose = "";
             }
             _filterCustomFolder = choose;
@@ -260,7 +264,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
 
   String _customFolderName() {
     if (_filterCustomFolder == "") {
-      return "全部";
+      return tr('app.all');
     }
     return _filterCustomFolder;
   }
@@ -282,8 +286,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         );
       },
       onLongPress: () async {
-        String? action = await chooseListDialog(context, e.title, ['删除']);
-        if (action == '删除') {
+        String? action =
+            await chooseListDialog(context, e.title, [tr('app.delete')]);
+        if (action == tr('app.delete')) {
           await method.deleteDownloadComic(e.id);
           setState(() => e.deleting = true);
         }
@@ -299,7 +304,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
     return InkWell(
       onTap: () {
         if (e.deleting) {
-          defaultToast(context, "该下载已经在删除队列中");
+          defaultToast(context,
+              tr('screen.download_list.download_already_in_delete_queue'));
           return;
         } else {
           if (_selectingList.contains(e.id)) {
@@ -319,33 +325,33 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             task: e,
             downloading: _downloading != null && _downloading!.id == e.id,
           ),
-                   SizedBox(
-                  height: imageHeight,
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      padding: const EdgeInsets.only(right: 10, left: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade500.withOpacity(.1),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Icon(
-                          _selectingList.contains(e.id)
-                              ? Icons.check_circle_sharp
-                              : Icons.circle_outlined,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
+          SizedBox(
+            height: imageHeight,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                margin: const EdgeInsets.only(top: 5),
+                padding: const EdgeInsets.only(right: 10, left: 5),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade500.withOpacity(.1),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
                   ),
                 ),
-     ],
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Icon(
+                    _selectingList.contains(e.id)
+                        ? Icons.check_circle_sharp
+                        : Icons.circle_outlined,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -353,18 +359,18 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
   Widget _fileButton() {
     return PopupMenuButton<int>(
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
-        const PopupMenuItem<int>(
+        PopupMenuItem<int>(
           value: 0,
           child: ListTile(
-            leading: Icon(Icons.read_more),
-            title: Text("导入"),
+            leading: const Icon(Icons.read_more),
+            title: Text(tr('screen.download_list.import')),
           ),
         ),
-        const PopupMenuItem<int>(
+        PopupMenuItem<int>(
           value: 1,
           child: ListTile(
-            leading: Icon(Icons.save_alt),
-            title: Text("导出"),
+            leading: const Icon(Icons.save_alt),
+            title: Text(tr('screen.download_list.export')),
           ),
         ),
       ],
@@ -395,8 +401,8 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             size: 18,
             color: Colors.white,
           ),
-          const Text(
-            '文件',
+          Text(
+            tr('screen.download_list.file'),
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           Expanded(child: Container()),
@@ -410,16 +416,16 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('下载任务'),
+          title: Text(tr('screen.download_list.download_task')),
           content: Text(
-            _downloadRunning ? "暂停下载吗?" : "启动下载吗?",
+            _downloadRunning ? tr('screen.download_list.pause_download') : tr('screen.download_list.start_download'),
           ),
           actions: [
             MaterialButton(
               onPressed: () async {
                 Navigator.pop(context);
               },
-              child: const Text('取消'),
+              child: Text(tr('app.cancel')),
             ),
             MaterialButton(
               onPressed: () async {
@@ -430,7 +436,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                   _downloadRunning = to;
                 });
               },
-              child: const Text('确认'),
+              child: Text(tr('app.confirm')),
             ),
           ],
         );
@@ -445,14 +451,14 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
                 value: 0,
                 child: ListTile(
                   leading: const Icon(Icons.compare_arrows_sharp),
-                  title: Text(_downloadRunning ? "暂停下载" : "继续下载"),
+                  title: Text(_downloadRunning ? tr('screen.download_list.pause_download') : tr('screen.download_list.start_download')),
                 ),
               ),
-              const PopupMenuItem<int>(
+               PopupMenuItem<int>(
                 value: 1,
                 child: ListTile(
-                  leading: Icon(Icons.sync_problem),
-                  title: Text("恢复失败"),
+                  leading: const Icon(Icons.sync_problem),
+                  title: Text(tr('screen.download_list.resume_failed')),
                 ),
               ),
             ],
@@ -463,7 +469,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             await method.resetFailed();
             _reloadList();
             setState(() {});
-            defaultToast(context, "所有失败的下载已经恢复");
+            defaultToast(context, tr('screen.download_list.resume_failed_desc'));
           }
         },
         child: Column(
@@ -477,7 +483,7 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
               color: Colors.white,
             ),
             Text(
-              _downloadRunning ? '下载中' : '暂停中',
+              _downloadRunning ? tr('screen.download_list.downloading') : tr('screen.download_list.paused'),
               style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
             Expanded(child: Container()),
@@ -522,28 +528,28 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         _selectingList = [];
         setState(() {});
         if (tmp.isEmpty) {
-          defaultToast(context, "请选择要移动下载");
+          defaultToast(context, tr('screen.download_list.select_download_to_move'));
         } else {
           var moveToChoose = await chooseListDialog(
             context,
-            "移动下载",
-            ["全部", ..._folderList, "==> 输入名称 <=="],
-            tips: "（空文件夹将会自动删除，下次需要手动输入）",
+            tr('screen.download_list.move_download'),
+            [tr('app.all'), ..._folderList, tr('screen.download_list.input_name')],
+            tips: tr('screen.download_list.empty_folder_will_be_deleted'),
           );
           if (moveToChoose == null) {
             return;
           }
-          if (moveToChoose == "==> 输入名称 <==") {
+          if (moveToChoose == tr('screen.download_list.input_name')) {
             String? name = await displayTextInputDialog(context,
-                title: "文件夹名称", hint: "请输入文件夹名称");
+                title: tr('screen.download_list.folder_name'), hint: tr('screen.download_list.please_input_folder_name'));
             if (name != null) {
-              if ("全部" != name && "==> 输入名称 <==" != name) {
+              if (tr('app.all') != name && tr('screen.download_list.input_name') != name) {
                 await method.moveDownloadComic(tmp, name);
                 _reloadList();
                 setState(() {});
               }
             }
-          } else if (moveToChoose == "全部") {
+          } else if (moveToChoose == tr('app.all')) {
             await method.moveDownloadComic(tmp, "");
             _reloadList();
             setState(() {});
@@ -566,9 +572,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
         _selectingList = [];
         setState(() {});
         if (tmp.isEmpty) {
-          defaultToast(context, "请选择要删除的下载");
+          defaultToast(context, tr('screen.download_list.select_download_to_delete'));
         } else {
-          if (await confirmDialog(context, "删除下载", "删除选中的下载吗?")) {
+          if (await confirmDialog(context, tr('screen.download_list.delete_download'), tr('screen.download_list.delete_selected_download'))) {
             for (var id in tmp) {
               await method.deleteDownloadComic(id);
             }
@@ -604,9 +610,9 @@ class _DownloadListScreenState extends State<DownloadListScreen> {
             size: 18,
             color: Colors.white,
           ),
-          const Text(
-            '多选',
-            style: TextStyle(fontSize: 14, color: Colors.white),
+          Text(
+            tr('screen.download_list.multi_select'),
+            style: const TextStyle(fontSize: 14, color: Colors.white),
           ),
           Expanded(child: Container()),
         ],

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('导入'),
+        title: Text(tr("screen.download_import.title")),
       ),
       body: PikaListView(
         children: [
@@ -103,7 +104,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
         String? path;
         if (Platform.isAndroid) {
           path = await FilesystemPicker.open(
-            title: 'Open file',
+            title: tr("screen.download_import.open_file"),
             context: context,
             rootDirectory: Directory(chooseRoot),
             fsType: FilesystemType.file,
@@ -113,7 +114,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
           );
         } else {
           var ls = await FilePicker.platform.pickFiles(
-            dialogTitle: '选择要导入的文件',
+            dialogTitle: tr("screen.download_import.select_file"),
             allowMultiple: false,
             initialDirectory: chooseRoot,
             type: FileType.custom,
@@ -141,11 +142,11 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
                 await method.importComicDownloadPki(path);
               }
               setState(() {
-                _importMessage = "导入成功";
+                _importMessage = tr("screen.download_import.import_success");
               });
             } catch (e) {
               setState(() {
-                _importMessage = "导入失败 $e";
+                _importMessage = tr("screen.download_import.import_failed") + " $e";
               });
             } finally {
               setState(() {
@@ -163,8 +164,8 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             color:
                 (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
                     .withOpacity(.05),
-            child: const Text(
-              '选择zip文件进行导入\n选择pki文件进行导入\n选择pkz文件进行阅读',
+            child: Text(
+              tr("screen.download_import.select_file_desc"),
               textAlign: TextAlign.center,
             ),
           );
@@ -178,7 +179,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
       height: 80,
       onPressed: () async {
         var path =
-            await inputString(context, '请输入导出设备提供的地址\n例如 "192.168.1.2:50000"');
+            await inputString(context, tr("screen.download_import.input_address"));
         if (path != null) {
           try {
             setState(() {
@@ -186,11 +187,11 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             });
             await method.importComicDownloadUsingSocket(path);
             setState(() {
-              _importMessage = "导入成功";
+              _importMessage = tr("screen.download_import.import_success");
             });
           } catch (e) {
             setState(() {
-              _importMessage = "导入失败 $e";
+              _importMessage = tr("screen.download_import.import_failed") + " $e";
             });
           } finally {
             setState(() {
@@ -207,8 +208,8 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             color:
                 (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
                     .withOpacity(.05),
-            child: const Text(
-              '从其他设备导入',
+            child: Text(
+              tr("screen.download_import.import_from_other_device"),
               textAlign: TextAlign.center,
             ),
           );
@@ -235,11 +236,11 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             });
             await method.importComicDownloadDir(path);
             setState(() {
-              _importMessage = "导入成功";
+              _importMessage = tr("screen.download_import.import_success");
             });
           } catch (e) {
             setState(() {
-              _importMessage = "导入失败 $e";
+              _importMessage = tr("screen.download_import.import_failed") + " $e";
             });
           } finally {
             setState(() {
@@ -257,7 +258,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
                 (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
                     .withOpacity(.05),
             child: Text(
-              '选择文件夹\n(导入里面所有的zip/pki)' + (!isPro ? "\n(发电后使用)" : ""),
+              tr("screen.download_import.select_folder_desc") + (!isPro ? "\n(${tr('app.pro')})" : ""),
               textAlign: TextAlign.center,
             ),
           );

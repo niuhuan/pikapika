@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Entities.dart';
 import 'package:pikapika/basic/Navigator.dart';
@@ -119,7 +120,7 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
                 });
           }
           if (snapshot.connectionState != ConnectionState.done) {
-            return const ContentLoading(label: '加载中');
+            return ContentLoading(label: tr("screen.download_info.loading"));
           }
           List<dynamic> tagsDynamic = json.decode(_task.tags);
           List<String> tags = tagsDynamic.map((e) => "$e").toList();
@@ -152,9 +153,9 @@ class _DownloadInfoScreenState extends State<DownloadInfoScreen>
     if (showCommentAtDownload()) {
       final theme = Theme.of(context);
       var _tabs = <Widget>[
-        Tab(text: '章节 (${_epList.length})'),
-        const Tab(text: '评论'),
-        const Tab(text: '推荐'),
+        Tab(text: tr("screen.download_info.chapter") + " (${_epList.length})"),
+        Tab(text: tr("screen.download_info.comment")),
+        Tab(text: tr("screen.download_info.recommend")),
       ];
       var _views = <Widget>[
         _chapters(),

@@ -22,7 +22,9 @@
     "previous_page": "Previous page",
     "next_page": "Next page",
     "select_all": "Select all",
-    "load_failed": "Load failed"
+    "load_failed": "Load failed",
+    "all": "All",
+    "delete": "Delete"
   },
   "net": {
     "no_address": "No address",
@@ -439,7 +441,7 @@
       "title": "Batch export",
       "please_select_content": "Please select the content to export"
     },
-    "download_exporting_group": {
+    "download_export_group": {
       "exporting": "Exporting",
       "export_failed": "Export failed",
       "export_success": "Export success",
@@ -494,6 +496,50 @@
       "get_ip_failed": "Get IP failed",
       "getting_ip": "Getting IP",
       "port": "Port"
+    },
+    "download_import": {
+      "title": "Import",
+      "open_file": "Open file",
+      "select_file": "Select the file to import",
+      "import_success": "Import success",
+      "import_failed": "Import failed",
+      "select_file_desc": "Select zip file to import\nSelect pki file to import\nSelect pkz file to read",
+      "input_address": "Please enter the address provided by the export device\nFor example \"192.168.1.2:50000\"",
+      "import_from_other_device": "Import from other device",
+      "select_folder_desc": "Select folder\n(Import all zip/pki in the folder)\n(After power use)"
+    },
+    "download_info": {
+      "loading": "Loading",
+      "chapter": "Chapter",
+      "comment": "Comment",
+      "recommend": "Recommend"
+    },
+    "download_list": {
+      "search_download": "Search download",
+      "multi_select_operation": "Multi select operation",
+      "download_list": "Download list",
+      "search": "Search",
+      "select_folder": "Select folder",
+      "download_already_in_delete_queue": "The download is already in the delete queue",
+      "import": "Import",
+      "export": "Export",
+      "file": "File",
+      "download_task": "Download task",
+      "pause_download": "Pause download?",
+      "start_download": "Start download?",
+      "resume_failed": "Resume failed task",
+      "resume_failed_desc": "All failed downloads have been resumed",
+      "downloading": "Downloading",
+      "paused": "Paused",
+      "move_download": "Move download",
+      "select_download_to_move": "Please select the download to move",
+      "input_name": "==> Input name <==",
+      "empty_folder_will_be_deleted": "(Empty folder will be automatically deleted, next time you need to manually input)",
+      "folder_name": "Folder name",
+      "please_input_folder_name": "Please input folder name",
+      "delete_download": "Delete download",
+      "delete_selected_download": "Delete selected download?",
+      "multi_select": "Multi select"
     }
   }
 }

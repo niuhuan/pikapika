@@ -25,7 +25,7 @@ class _DownloadExportingGroupScreenState
   bool exported = false;
   bool exportFail = false;
   dynamic e;
-  String exportMessage = tr("screen.download_exporting_group.exporting");
+  String exportMessage = tr("screen.download_export_group.exporting");
 
   @override
   void initState() {
@@ -50,10 +50,10 @@ class _DownloadExportingGroupScreenState
       return ContentLoading(label: exportMessage);
     }
     if (exportFail) {
-      return Center(child: Text(tr("screen.download_exporting_group.export_failed") + "\n$e"));
+      return Center(child: Text(tr("screen.download_export_group.export_failed") + "\n$e"));
     }
     if (exported) {
-      return Center(child: Text(tr("screen.download_exporting_group.export_success")));
+      return Center(child: Text(tr("screen.download_export_group.export_success")));
     }
     return PikaListView(
       children: [
@@ -62,58 +62,58 @@ class _DownloadExportingGroupScreenState
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkz,
-          child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pkz")),
+          child: _buildButtonInner(tr("screen.download_export_group.export_to_pkz")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkis,
-          child: _buildButtonInner(tr("screen.download_exporting_group.export_to_pki")),
+          child: _buildButtonInner(tr("screen.download_export_group.export_to_pki")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportZips,
           child: _buildButtonInner(
-              tr("screen.download_exporting_group.export_to_zip") +
-                  (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : "")),
+              tr("screen.download_export_group.export_to_zip") +
+                  (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : "")),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToJPEGSZips,
           child: _buildButtonInner(
-            tr("screen.download_exporting_group.export_to_jpeg_zip") +
-                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
+            tr("screen.download_export_group.export_to_jpeg_zip") +
+                (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToJPEGSFolders,
           child: _buildButtonInner(
-            tr("screen.download_exporting_group.export_to_jpeg_folder") +
-                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
+            tr("screen.download_export_group.export_to_jpeg_folder") +
+                (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToPdf,
           child: _buildButtonInner(
-            tr("screen.download_exporting_group.export_to_pdf") +
-                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
+            tr("screen.download_export_group.export_to_pdf") +
+                (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportToPdfFolder,
           child: _buildButtonInner(
-            tr("screen.download_exporting_group.export_to_pdf_folder") +
-                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
+            tr("screen.download_export_group.export_to_pdf_folder") +
+                (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportComicDownloadToCbzsZip,
           child: _buildButtonInner(
-            tr("screen.download_exporting_group.export_to_cbz") +
-                (!isPro ? "\n" + tr("screen.download_exporting_group.after_power_use") : ""),
+            tr("screen.download_export_group.export_to_cbz") +
+                (!isPro ? "\n" + tr("screen.download_export_group.after_power_use") : ""),
           ),
         ),
         Container(height: 20),
@@ -126,7 +126,7 @@ class _DownloadExportingGroupScreenState
     if (currentExportRename()) {
       var rename = await inputString(
         context,
-        tr("screen.download_exporting_group.input_save_name"),
+        tr("screen.download_export_group.input_save_name"),
         defaultValue: "${DateTime.now().millisecondsSinceEpoch}",
       );
       if (rename != null && rename.isNotEmpty) {
@@ -137,8 +137,8 @@ class _DownloadExportingGroupScreenState
     } else {
       if (!await confirmDialog(
           context,
-          tr("screen.download_exporting_group.export_confirm"),
-          tr("screen.download_exporting_group.export_to_pkz_title") + showExportPath())) {
+          tr("screen.download_export_group.export_confirm"),
+          tr("screen.download_export_group.export_to_pkz_title") + showExportPath())) {
         return;
       }
     }
@@ -165,8 +165,8 @@ class _DownloadExportingGroupScreenState
   _exportPkis() async {
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_pki_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_pki_title") + showExportPath())) {
       return;
     }
     try {
@@ -190,13 +190,13 @@ class _DownloadExportingGroupScreenState
 
   _exportZips() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_zip_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_zip_title") + showExportPath())) {
       return;
     }
     try {
@@ -220,13 +220,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToJPEGSZips() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_jpeg_zip_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_jpeg_zip_title") + showExportPath())) {
       return;
     }
     try {
@@ -254,13 +254,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToJPEGSFolders() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_jpeg_folder_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_jpeg_folder_title") + showExportPath())) {
       return;
     }
     try {
@@ -288,13 +288,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToPdf() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_pdf_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_pdf_title") + showExportPath())) {
       return;
     }
     try {
@@ -322,13 +322,13 @@ class _DownloadExportingGroupScreenState
 
   _exportToPdfFolder() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_pdf_folder_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_pdf_folder_title") + showExportPath())) {
       return;
     }
     try {
@@ -356,13 +356,13 @@ class _DownloadExportingGroupScreenState
 
   _exportComicDownloadToCbzsZip() async {
     if (!isPro) {
-      defaultToast(context, tr("screen.download_exporting_group.please_power_up"));
+      defaultToast(context, tr("screen.download_export_group.please_power_up"));
       return;
     }
     if (!await confirmDialog(
         context,
-        tr("screen.download_exporting_group.export_confirm"),
-        tr("screen.download_exporting_group.export_to_cbz_title") + showExportPath())) {
+        tr("screen.download_export_group.export_confirm"),
+        tr("screen.download_export_group.export_to_cbz_title") + showExportPath())) {
       return;
     }
     try {
@@ -399,7 +399,7 @@ class _DownloadExportingGroupScreenState
       ),
       onWillPop: () async {
         if (exporting) {
-          defaultToast(context, tr("screen.download_exporting_group.exporting_please_wait"));
+          defaultToast(context, tr("screen.download_export_group.exporting_please_wait"));
           return false;
         }
         return true;

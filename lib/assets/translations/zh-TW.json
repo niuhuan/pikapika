@@ -22,7 +22,9 @@
     "previous_page": "上一頁",
     "next_page": "下一頁",
     "select_all": "全選",
-    "load_failed": "加載失敗"
+    "load_failed": "加載失敗",
+    "all": "全部",
+    "delete": "刪除"
   },
   "net": {
     "no_address": "不分流",
@@ -491,6 +493,50 @@
       "get_ip_failed": "獲取IP失敗",
       "getting_ip": "正在獲取IP",
       "port": "端口號"
+    },
+    "download_import": {
+      "title": "導入",
+      "open_file": "打開文件",
+      "select_file": "選擇要導入的文件",
+      "import_success": "導入成功",
+      "import_failed": "導入失敗",
+      "select_file_desc": "選擇zip文件進行導入\n選擇pki文件進行導入\n選擇pkz文件進行閱讀",
+      "input_address": "請輸入導出設備提供的地址\n例如 \"192.168.1.2:50000\"",
+      "import_from_other_device": "從其他設備導入",
+      "select_folder_desc": "選擇文件夾\n(導入裡面所有的zip/pki)\n(發電後使用)"
+    },
+    "download_info": {
+      "loading": "加載中",
+      "chapter": "章節",
+      "comment": "評論",
+      "recommend": "推薦"
+    },
+    "download_list": {
+      "search_download": "搜索下載",
+      "multi_select_operation": "多選操作",
+      "download_list": "下載列表",
+      "search": "搜索",
+      "select_folder": "選擇文件夾",
+      "download_already_in_delete_queue": "該下載已經在刪除隊列中",
+      "import": "導入",
+      "export": "導出",
+      "file": "文件",
+      "download_task": "下載任務",
+      "pause_download": "暫停下載嗎?",
+      "start_download": "啟動下載嗎?",
+      "resume_failed": "恢復失敗任務",
+      "resume_failed_desc": "所有失敗的下載已經恢復",
+      "downloading": "下載中",
+      "paused": "暫停中",
+      "move_download": "移動下載",
+      "select_download_to_move": "請選擇要移動的下載",
+      "input_name": "==> 輸入名稱 <==",
+      "empty_folder_will_be_deleted": "（空文件夾將會自動刪除，下次需要手動輸入）",
+      "folder_name": "文件夾名稱",
+      "please_input_folder_name": "請輸入文件夾名稱",
+      "delete_download": "刪除下載",
+      "delete_selected_download": "刪除選中的下載嗎?",
+      "multi_select": "多選"
     }
   }
 }

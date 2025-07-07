@@ -18,7 +18,7 @@ enum ListLayout {
 //   '封面+标题': ListLayout.COVER_AND_TITLE,
 // };
 
-const Map<String, ListLayout> _listLayoutMap = {};
+final Map<String, ListLayout> _listLayoutMap = {};
 
 const _propertyName = "listLayout";
 late ListLayout currentLayout;

@@ -21,7 +21,7 @@ enum FullScreenUI {
 //   "全屏": FullScreenUI.ALL,
 // };
 
-const Map<String, FullScreenUI> fullScreenUIMap = {};
+final Map<String, FullScreenUI> fullScreenUIMap = {};
 
 const _propertyName = "fullScreenUI";
 late FullScreenUI fullScreenUI;
