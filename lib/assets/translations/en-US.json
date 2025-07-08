@@ -346,7 +346,7 @@
       "dark": "Dark",
       "dusty_blue": "Dusty blue",
       "dark_black": "Dark black",
-      "choose": "Choose theme"
+      "choose_theme": "Choose theme"
     },
     "three_keep_right": {
       "title": "Three area mode page always to the right"
@@ -467,9 +467,7 @@
     },
     "download_export_group": {
       "title": "Batch export",
-      "please_select_content": "Please select the content to export"
-    },
-    "download_export_group": {
+      "please_select_content": "Please select the content to export",
       "exporting": "Exporting",
       "export_failed": "Export failed",
       "export_success": "Export success",

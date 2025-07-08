@@ -498,7 +498,7 @@ Future<String?> _chooseTheme(BuildContext buildContext) {
               },
             )));
         return SimpleDialog(
-          title: Text(tr("settings.theme.choose")),
+          title: Text(tr("settings.theme.choose_theme")),
           children: list,
         );
       });

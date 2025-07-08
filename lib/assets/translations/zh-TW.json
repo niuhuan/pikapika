@@ -345,7 +345,8 @@
       "black": "酷黑",
       "dark": "暗黑",
       "dusty_blue": "灰蓝",
-      "dark_black": "纯黑"
+      "dark_black": "纯黑",
+      "choose_theme": "選擇主題"
     },
     "three_keep_right": {
       "title": "三區域模式翻頁始終為右側下一頁"
