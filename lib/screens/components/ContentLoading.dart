@@ -22,7 +22,8 @@ class ContentLoading extends StatelessWidget {
                 width: min / 2,
                 height: min / 2,
                 child: currentIconLoading()
-                    ? Icon(Icons.refresh, color: Colors.grey[100])
+                    ? Icon(Icons.refresh,
+                        color: Colors.grey[400], size: min / 2)
                     : CircularProgressIndicator(
                         color: theme.colorScheme.secondary,
                         backgroundColor: Colors.grey[100],
