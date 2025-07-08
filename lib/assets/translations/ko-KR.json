@@ -56,7 +56,9 @@
     "please_select_comic": "만화를 선택하세요",
     "please_choose": "선택하세요",
     "last_viewed": "마지막으로 본",
-    "auto_punch": "자동 체크인"
+    "auto_punch": "자동 체크인",
+    "yes": "예",
+    "no": "아니오"
   },
   "net": {
     "no_address": "주소 없음",

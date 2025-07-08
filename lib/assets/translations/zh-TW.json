@@ -56,7 +56,9 @@
     "please_select_comic": "請選擇漫畫",
     "please_choose": "請選擇",
     "last_viewed": "上次觀看到",
-    "auto_punch": "自動打卡"
+    "auto_punch": "自動打卡",
+    "yes": "是",
+    "no": "否"
   },
   "net": {
     "no_address": "不分流",

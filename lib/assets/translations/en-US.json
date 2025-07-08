@@ -56,7 +56,9 @@
     "please_select_comic": "Please select comic",
     "please_choose": "Please choose",
     "last_viewed": "Last viewed",
-    "auto_punch": "Auto punch"
+    "auto_punch": "Auto punch",
+    "yes": "Yes",
+    "no": "No"
   },
   "net": {
     "no_address": "No address",
