@@ -50,7 +50,7 @@ Future syncWebDavIfAuto(BuildContext context) async {
       );
     } catch (e, s) {
       print("$e\n$s");
-      defaultToast(context, tr("net.webdav_sync_failed"));
+      defaultToast(context, tr("settings.webdav_sync_failed"));
     }
   }
 }
@@ -63,10 +63,10 @@ Future syncHistoryToWebdav(BuildContext context) async {
       _webdavPassword,
       "pk.histories",
     );
-    defaultToast(context, tr("net.webdav_sync_success"));
+    defaultToast(context, tr("settings.webdav_sync_success"));
   } catch (e, s) {
     print("$e\n$s");
-    defaultToast(context, tr("net.webdav_sync_failed"));
+    defaultToast(context, tr("settings.webdav_sync_failed"));
   }
 }
 
@@ -77,15 +77,15 @@ List<Widget> webDavSettings(BuildContext context) {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
             title: Text(
-              tr("net.webdav_path"),
+              tr("settings.webdav_path"),
             ),
             subtitle: Text(_webdavRoot),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavRoot,
-                title: tr("net.webdav_path"),
-                hint: tr("net.webdav_path_hint"),
+                title: tr("settings.webdav_path"),
+                hint: tr("settings.webdav_path_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavRootPropertyName, input);
@@ -101,15 +101,15 @@ List<Widget> webDavSettings(BuildContext context) {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
             title: Text(
-              tr("net.webdav_username"),
+              tr("settings.webdav_username"),
             ),
             subtitle: Text(_webdavUsername),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavUsername,
-                title: tr("net.webdav_username"),
-                hint: tr("net.webdav_username_hint"),
+                title: tr("settings.webdav_username"),
+                hint: tr("settings.webdav_username_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavUsernamePropertyName, input);
@@ -125,15 +125,15 @@ List<Widget> webDavSettings(BuildContext context) {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
             title: Text(
-              tr("net.webdav_password"),
+              tr("settings.webdav_password"),
             ),
             subtitle: Text(_webdavPassword),
             onTap: () async {
               String? input = await displayTextInputDialog(
                 context,
                 src: _webdavPassword,
-                title: tr("net.webdav_password"),
-                hint: tr("net.webdav_password_hint"),
+                title: tr("settings.webdav_password"),
+                hint: tr("settings.webdav_password_hint"),
               );
               if (input != null) {
                 await method.saveProperty(_webdavPasswordPropertyName, input);
@@ -149,7 +149,7 @@ List<Widget> webDavSettings(BuildContext context) {
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
           title: Text(
-            tr("net.webdav_auto_sync_history_to_webdav") + (isPro ? "" : "(${tr("app.pro")})"),
+            tr("settings.webdav_auto_sync_history_to_webdav") + (isPro ? "" : "(${tr("app.pro")})"),
             style: TextStyle(
               color: !isPro ? Colors.grey : null,
             ),
@@ -165,7 +165,7 @@ List<Widget> webDavSettings(BuildContext context) {
               return;
             }
             String? result = await chooseListDialog<String>(
-                context, tr("net.webdav_auto_sync_history_to_webdav"), [tr("app.yes"), tr("app.no")]);
+                context, tr("settings.webdav_auto_sync_history_to_webdav"), [tr("app.yes"), tr("app.no")]);
             if (result != null) {
               var target = result == tr("app.yes");
               await method.saveProperty(
@@ -179,7 +179,7 @@ List<Widget> webDavSettings(BuildContext context) {
     ),
     //
     ListTile(
-        title: Text(tr("net.webdav_sync_history_to_webdav")),
+        title: Text(tr("settings.webdav_sync_history_to_webdav")),
         onTap: () async {
           await syncHistoryToWebdav(context);
         }),
