@@ -9,15 +9,17 @@ import 'basic/config/Themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'basic/define.dart';
+
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
   runApp(
     EasyLocalization(
-        supportedLocales: const [Locale('en', 'US'), Locale("zh", "CN"), Locale('zh', 'TW')],
-        path: 'lib/assets/translations', // <-- change the path of the translation files
-        fallbackLocale: const Locale('en', 'US'),
+        supportedLocales: supportedLocales,
+        path: translationsPath,
+        fallbackLocale: fallbackLocale,
         child: const PikapikaApp()
     ),
   );
