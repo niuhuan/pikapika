@@ -34,7 +34,7 @@ Future<void> initAddress() async {
 
 String currentAddress() => _currentAddress;
 
-String currentAddressName() => _currentAddress == "0" ? tr('app.no_address') : tr('net.address') + _currentAddress;
+String currentAddressName() => _currentAddress == "0" ? tr('net.no_address') : tr('net.address') + _currentAddress;
 
 Widget switchAddressSetting() {
   return StatefulBuilder(
@@ -96,7 +96,7 @@ Future chooseAddressAndSwitch(BuildContext context) async {
           ..._addresses.map(
             (e) => SimpleDialogOption(
               child: ApiOptionRow(
-                "${tr('net.address')}$e",
+                e == "0" ? tr('net.no_address') : tr('net.address') + e,
                 e,
                 key: Key("API:$e"),
               ),

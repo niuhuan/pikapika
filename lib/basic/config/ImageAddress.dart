@@ -25,7 +25,7 @@ int currentImageAddress() {
 }
 
 String currentImageAddressName() => _currentImageAddress == "0"
-    ? tr('app.no_address')
+    ? tr('net.no_address')
     : tr('net.address') + _currentImageAddress;
 
 Future<void> chooseImageAddress(BuildContext context) async {
@@ -38,7 +38,7 @@ Future<void> chooseImageAddress(BuildContext context) async {
           ..._imageAddresses.map(
             (e) => SimpleDialogOption(
               child: ApiOptionRowImg(
-                tr('net.address') + e,
+                e == "0" ? tr('net.no_address') : tr('net.address') + e,
                 e,
                 key: Key("API:${e}"),
               ),
