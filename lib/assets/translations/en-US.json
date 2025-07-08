@@ -1,4 +1,8 @@
 {
+  "language": {
+    "title": "Language",
+    "name": "English - United States"
+  },
   "app": {
     "categories": "Categories",
     "my": "My",
@@ -197,9 +201,23 @@
       "three_area": "Divide the screen into three areas (previous page, next page, fullscreen)"
     },
     "full_screen_ui": {
+      "title": "Full screen UI",
+      "choose": "Choose full screen UI",
       "no": "Not use",
       "hidden_bottom": "Remove virtual controller",
       "all": "Full screen"
+    },
+    "auto_full_screen": {
+      "title": "Enter reader automatically full screen"
+    }, 
+    "ignore_info_history": {
+      "title": "Ignore info history"
+    },
+    "icon_loading": {
+      "title": "Minimize UI animation"
+    },
+    "ignore_upgrade_confirm": {
+      "title": "Close upgrade popup"
     },
     "hidden_fd_icon": {
       "title": "Hide personal space's power icon"

@@ -1,4 +1,8 @@
 {
+  "language": {
+    "title": "語言",
+    "name": "繁體中文 - 中國台灣"
+  },
   "app": {
     "categories": "分類",
     "my": "我的",
@@ -197,9 +201,23 @@
       "three_area": "將屏幕劃分成三個區域 (上一頁, 下一頁, 全屏)"
     },
     "full_screen_ui": {
+      "title": "全屏UI",
+      "choose": "選擇全屏UI",
       "no": "不使用",
       "hidden_bottom": "去除虛擬控制器",
       "all": "全屏"
+    },
+    "auto_full_screen": {
+      "title": "進入閱讀器自動全屏"
+    },
+    "ignore_info_history": {
+      "title": "詳情頁不計入歷史記錄"
+    },
+    "icon_loading": {
+      "title": "盡量減少UI動畫"
+    },
+    "ignore_upgrade_confirm": {
+      "title": "關閉升級彈窗"
     },
     "hidden_fd_icon": {
       "title": "隱藏個人空間的發電圖標"

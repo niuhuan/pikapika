@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -29,14 +30,14 @@ Widget ignoreUpgradeConfirmSetting() {
     return SwitchListTile(
         value: _ignoreUpgradeConfirm,
         title: Text(
-          "关闭升级弹窗" + (!isPro ? "(发电)" : ""),
+          tr("settings.ignore_upgrade_confirm.title") + (!isPro ? "(${tr("app.pro")})" : ""),
           style: TextStyle(
             color: !isPro ? Colors.grey : null,
           ),
         ),
         onChanged: (target) async {
           if (!isPro) {
-            defaultToast(context, "请先发电再使用");
+            defaultToast(context, tr("app.pro_required"));
             return;
           }
           await method.saveProperty(_propertyName, "$target");

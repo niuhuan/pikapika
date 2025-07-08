@@ -32,7 +32,9 @@
 	<array>
 		<string>zh_TW</string>
 		<string>zh_CN</string>
-		<string>en</string>
+		<string>en_US</string>
+		<string>ja_JP</string>
+		<string>ko_KR</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>pikapika</string>

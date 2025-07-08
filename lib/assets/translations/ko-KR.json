@@ -1,0 +1,816 @@
+{
+  "language": {
+    "title": "언어",
+    "name": "한국어 - 대한민국"
+  },
+  "app": {
+    "categories": "카테고리",
+    "my": "내 정보",
+    "copied_to_clipboard": "클립보드에 복사되었습니다",
+    "not_supported_platform": "지원되지 않는 플랫폼",
+    "cancel": "취소",
+    "confirm": "확인",
+    "save_cancel": "저장이 취소되었습니다",
+    "save_success": "저장에 성공했습니다",
+    "save_failed": "저장에 실패했습니다",
+    "pro": "프로",
+    "pro_required": "이 기능을 사용하려면 프로로 업그레이드하세요",
+    "choose_folder": "파일을 저장할 폴더를 선택하세요",
+    "permission_denied": "권한이 거부되었습니다",
+    "loading": "로딩 중",
+    "error": "오류",
+    "pat": {
+      "success": "스폰서 로그인이 성공했습니다. 돌아가세요",
+      "title": "PAT 계정 교체"
+    },
+    "previous_page": "이전 페이지",
+    "next_page": "다음 페이지",
+    "page": "페이지",
+    "please_enter_page_number": "페이지 번호를 입력하세요：",
+    "select_all": "모두 선택",
+    "load_failed": "로딩에 실패했습니다",
+    "all": "모두",
+    "delete": "삭제",
+    "save_image": "이미지 저장",
+    "preview_image": "이미지 미리보기",
+    "please_select": "선택하세요",
+    "refresh": "새로고침",
+    "initializing": "초기화 중",
+    "like_failed": "좋아요에 실패했습니다",
+    "network_error": "네트워크 오류입니다. 네트워크를 확인하세요",
+    "no_permission": "권한이 없거나 경로를 사용할 수 없습니다",
+    "check_device_time": "장치 시간을 확인하세요",
+    "resource_not_available": "리소스를 사용할 수 없습니다",
+    "something_went_wrong": "문제가 발생했습니다",
+    "click_refresh": "클릭하여 새로고침",
+    "pull_down_refresh": "아래로 당겨서 새로고침",
+    "continue_reading": "계속 읽기",
+    "start_reading": "읽기 시작",
+    "image_crop": "이미지 자르기",
+    "download": "다운로드",
+    "download_failed": "다운로드에 실패했습니다",
+    "download_finished": "다운로드 완료",
+    "downloading": "다운로드 중",
+    "queue": "대기열",
+    "deleting": "삭제 중",
+    "please_select_comic": "만화를 선택하세요",
+    "please_choose": "선택하세요",
+    "last_viewed": "마지막으로 본",
+    "auto_punch": "자동 체크인"
+  },
+  "net": {
+    "no_address": "주소 없음",
+    "address": "주소",
+    "address_sync": "주소 동기화",
+    "address_sync_from_server": "서버에서 최신 주소 가져오기",
+    "address_sync_reset": "주소를 기본값으로 재설정",
+    "address_sync_success": "주소 동기화에 성공했습니다",
+    "address_sync_failed": "주소 동기화에 실패했습니다",
+    "address_sync_reset_success": "주소 동기화 재설정에 성공했습니다",
+    "address_sync_reset_failed": "주소 동기화 재설정에 실패했습니다",
+    "choose_address": "주소 선택",
+    "image_address": "이미지 주소",
+    "use_api_load_image": "API를 사용하여 이미지 로드",
+    "ping_testing": "테스트 중",
+    "ping_failed": "실패했습니다"
+  },
+  "categories": {
+    "all": "모두",
+    "recommend": "추천",
+    "rankings": "랭킹",
+    "random": "랜덤",
+    "game": "게임"
+  },
+  "settings": {
+    "settings": "설정",
+    "interface": "인터페이스",
+    "network": "네트워크",
+    "seal": "봉인",
+    "interaction": "상호작용",
+    "reading": "읽기",
+    "download": "다운로드",
+    "web_server": "웹 서버",
+    "web_server_subtitle": "로컬 네트워크의 장치가 브라우저를 통해 다운로드한 만화를 볼 수 있게 합니다",
+    "sync": "동기화",
+    "account": "계정",
+    "modify_password": "Modify password",
+    "ebook": "전자책",
+    "system": "시스템",
+    "clear_cache": "캐시 지우기",
+    "migrate": "이전",
+    "migrate_subtitle": "데이터 폴더를 메모리 카드로 변경",
+    "migrate_confirm": "이 기능은 프로그램을 다시 시작한 후에 저장됩니다. 확실합니까",
+    "app_orientation": {
+      "title": "앱 방향",
+      "choose": "앱 방향 선택",
+      "normal": "일반",
+      "landscape": "가로",
+      "portrait": "세로"
+    },
+    "will_pop_notice": "뒤로 키를 연속으로 두 번 눌러 앱을 종료합니다",
+    "android_secure_flag": "스크린샷 비활성화/작업 보기에서 표시 비활성화",
+    "authentication": "앱에 들어갈 때 인증 (시스템이 이미 비밀번호나 지문을 입력한 경우)",
+    "set_password": "애플리케이션 비밀번호 설정",
+    "auto_clean": {
+      "title": "자동 캐시 정리",
+      "one_month_ago": "한 달 전",
+      "one_week_ago": "일주일 전",
+      "one_day_ago": "하루 전",
+      "no_auto_clean": "자동 정리 안 함"
+    },
+    "categories_column_count": {
+      "title": "카테고리 열 수",
+      "choose": "카테고리 열 수 선택",
+      "auto": "자동"
+    },
+    "categories_sort": {
+      "title": "카테고리 정렬"
+    },
+    "chooser_root": {
+      "title": "폴더 선택기 루트 경로",
+      "hint": "폴더 선택기 루트 경로를 입력하세요",
+      "desc": "내보낼 때 디렉토리 선택의 기본 경로이며, 루트 경로이기도 합니다. 내보내기가 정상적으로 작동하지 않을 때 이 옵션을 설정해 볼 수 있습니다."
+    },
+    "content_failed_reload_action": {
+      "title": "콘텐츠 로드 실패 시 새로고침 방식",
+      "choose": "콘텐츠 로드 실패 시 새로고침 방식 선택",
+      "pull_down": "아래로 당기기",
+      "touch_loader": "화면 터치"
+    },
+    "copy_full_name": {
+      "title": "만화 이름 복사 시 템플릿 사용"
+    },
+    "copy_full_name_template": {
+      "title": "만화 이름 복사 템플릿",
+      "hint": "만화 이름 복사 템플릿을 입력하세요"
+    },
+    "copy_skip_confirm": {
+      "title": "긴 터치 복사 시 확인 안 함"
+    },
+    "download_and_export_path": {
+      "title": "다운로드와 동시에 파일 시스템으로 내보내기",
+      "confirm": "다운로드와 동시에 파일 시스템으로 내보내기",
+      "desc": "디렉토리를 선택하면, 파일 시스템이 쓰기 가능한 경우 다운로드와 동시에 자동으로 내보내집니다"
+    },
+    "download_cache_path": {
+      "title": "다른 프로그램의 캐시를 사용하여 다운로드 가속화",
+      "confirm": "다른 프로그램의 캐시를 사용하여 다운로드 가속화",
+      "desc": "디렉토리를 선택하면, 이 디렉토리는 다음 디렉토리에서 복사된 것이어야 사용할 수 있습니다. 다운로드 시 캐시 폴더로 우선 읽어집니다.",
+      "cancel_desc": "다른 소프트웨어의 다운로드 콘텐츠 가속화 기능을 취소하시겠습니까? 취소 후 다시 설정할 수 있습니다",
+      "import_view_log_from_off": {
+        "title": "다른 프로그램의 기록 가져오기",
+        "desc": "파일을 선택하면, 이 파일은 다음 경로에서 복사된 것이어야 사용할 수 있습니다.",
+        "choose_file_dialog_title": "가져올 파일 선택"
+      }
+    },
+    "download_thread_count": {
+      "title": "다운로드 스레드 수",
+      "choose": "다운로드 스레드 수 선택"
+    },
+    "ebook_scrolling": {
+      "title": "전자책 모드 스크롤 UI"
+    },
+    "ebook_scrolling_range": {
+      "title": "전자책 모드 스크롤 UI",
+      "desc": "스크롤 범위",
+      "screen_height": "화면 높이"
+    },
+    "ebook_scrolling_trigger": {
+      "title": "전자책 모드 스크롤 UI",
+      "desc": "트리거 거리",
+      "cm": "센티미터"
+    },
+    "export_path": {
+      "ios_desc": "파일 관리자에서 내보낸 콘텐츠를 찾을 수 있습니다",
+      "ios_desc2": "iOS 장치를 사용하고 있습니다:\n파일로 내보낸 콘텐츠는 시스템 내장 파일 관리자를 열어서 찾아보세요",
+      "export_path_desc": "내보내기 경로 (클릭하여 수정)",
+      "android_desc": "Android 장치를 사용하고 있습니다:\n내보내기가 실패하고 권한 부족 오류가 발생하면, Download 또는 Document 하위에 서브디렉토리를 만들어 내보내기를 시도해 보세요"
+    },
+    "export_rename": {
+      "title": "내보낼 때 이름 바꾸기"
+    },
+    "yes": "예",
+    "no": "아니오",
+    "full_screen_action": {
+      "title": "조작 방식",
+      "choose": "조작 방식 선택",
+      "touch_once": "화면 한 번 터치로 전체 화면",
+      "controller": "컨트롤러 사용으로 전체 화면",
+      "touch_double": "화면 두 번 터치로 전체 화면",
+      "touch_double_once_next": "화면 두 번 터치로 전체 화면 + 한 번 터치로 다음 페이지",
+      "three_area": "화면을 세 영역으로 나누기 (이전 페이지, 다음 페이지, 전체 화면)"
+    },
+    "full_screen_ui": {
+      "title": "전체 화면 UI",
+      "choose": "전체 화면 UI 선택",
+      "no": "사용 안 함",
+      "hidden_bottom": "가상 컨트롤러 제거",
+      "all": "전체 화면"
+    },
+    "auto_full_screen": {
+      "title": "리더 진입 시 자동 전체 화면"
+    },
+    "ignore_info_history": {
+      "title": "상세 페이지 기록 제외"
+    },
+    "icon_loading": {
+      "title": "UI 애니메이션 최소화"
+    },
+    "ignore_upgrade_confirm": {
+      "title": "업그레이드 팝업 닫기"
+    },
+    "hidden_fd_icon": {
+      "title": "개인 공간의 전원 아이콘 숨기기"
+    },
+    "hidden_search_persion": {
+      "title": "작가별 검색 기능 숨기기"
+    },
+    "hidden_sub_icon": {
+      "title": "구독 기능 숨기기"
+    },
+    "hidden_words": {
+      "title": "키워드로 숨기기",
+      "clear_all": "지우기 확인",
+      "clear_all_desc": "모든 키워드를 지우시겠습니까?",
+      "input_hint": "숨길 키워드를 입력하세요",
+      "no_words": "키워드 없음"
+    },
+    "image_address": {
+      "title": "이미지 주소",
+      "pinging": "핑 테스트 중",
+      "failed": "실패"
+    },
+    "image_filter": {
+      "title": "리더 이미지 필터",
+      "normal": "일반",
+      "gray": "회색",
+      "brown": "갈색",
+      "choose": "리더 이미지 필터 선택"
+    },
+    "import_notice": {
+      "android_desc": "Android 장치를 사용하고 있습니다:\n가져오기/내보내기가 안 되고 권한 부족 오류가 발생하면, Download 또는 Document 하위에 서브디렉토리를 만들어 가져오기를 시도해 보세요"
+    },
+    "keyboard_controller": {
+      "title": "리더 키보드 페이지 (PC만 해당)"
+    },
+    "list_layout": {
+      "choose": "레이아웃 선택",
+      "info_card": "정보",
+      "only_image": "표지",
+      "cover_and_title": "표지 + 제목"
+    },
+    "local_history_sync": {
+      "sync_to_local": "기록을 로컬에 동기화",
+      "not_set": "설정되지 않음",
+      "sync_success": "동기화 성공",
+      "sync_failed": "동기화 실패",
+      "auto_sync": "기록을 로컬에 자동 동기화",
+      "auto_sync_desc": "애플리케이션을 열 때마다 기록이 자동으로 백업됩니다"
+    },
+    "no_animation": {
+      "title": "페이지 애니메이션 취소 (화면 터치, 볼륨 키, 키보드)"
+    },
+    "pager_action": {
+      "title": "목록 페이지 로딩 방법",
+      "choose": "목록 페이지 로딩 방법 선택",
+      "controller": "버튼 사용",
+      "stream": "스트림"
+    },
+    "proxy": {
+      "title": "프록시 서버",
+      "hint": "프록시 서버를 입력하세요",
+      "desc": " ( 예: socks5://127.0.0.1:1080/ ) ",
+      "no_proxy": "설정되지 않음"
+    },
+    "quality": {
+      "title": "탐색 시 이미지 품질",
+      "choose": "이미지 품질 선택",
+      "original": "원본",
+      "low": "낮음",
+      "medium": "보통",
+      "high": "높음"
+    },
+    "reader_background_color": {
+      "title": "리더 배경색",
+      "choose": "리더 배경색 선택",
+      "black": "검은색",
+      "gray": "회색",
+      "white": "흰색"
+    },
+    "reader_direction": {
+      "title": "리더 방향",
+      "choose": "리더 방향 선택",
+      "top_to_bottom": "위에서 아래로",
+      "left_to_right": "왼쪽에서 오른쪽으로",
+      "right_to_left": "오른쪽에서 왼쪽으로"
+    },
+    "reader_scroll_by_screen_percentage": {
+      "title": "자유 확대 리더 페이지 거리",
+      "screen_size": "화면 크기"
+    },
+    "reader_slider_position": {
+      "title": "슬라이더 위치",
+      "choose": "슬라이더 위치 선택",
+      "bottom": "아래",
+      "right": "오른쪽",
+      "left": "왼쪽"
+    },
+    "reader_two_page_direction": {
+      "title": "두 페이지 리더 콘텐츠 배열",
+      "choose": "두 페이지 리더 콘텐츠 배열 선택",
+      "close_to": "가깝게",
+      "pull_away": "멀리",
+      "each_centered": "각각 중앙"
+    },
+    "reader_type": {
+      "title": "리더 모드",
+      "choose": "리더 모드 선택",
+      "web_toon": "웹툰 (기본)",
+      "web_toon_zoom": "웹툰 (더블 클릭으로 확대)",
+      "gallery": "갤러리",
+      "web_toon_free_zoom": "웹툰 (ListView 더블 클릭으로 확대)\n(이 모드는 진행률 표시줄이 무효)",
+      "two_page_gallery": "두 페이지 모드\n(실험적)"
+    },
+    "shadow_categories": {
+      "title": "봉인",
+      "search_hint": "검색"
+    },
+    "shadow_categories_mode": {
+      "title": "봉인 모드",
+      "black_list": "블랙 리스트",
+      "white_list": "화이트 리스트"
+    },
+    "startup_pic": {
+      "title": "시작 화면 설정",
+      "subtitle": "애플리케이션 시작 시 표시되는 이미지 설정",
+      "clear_title": "시작 화면 지우기",
+      "clear_subtitle": "애플리케이션 시작 시 표시되는 이미지 지우기",
+      "clear_success": "시작 화면이 지워졌습니다",
+      "update_success": "시작 화면이 업데이트되었습니다"
+    },
+    "show_comment_at_download": {
+      "title": "다운로드에서 댓글 표시"
+    },
+    "font": {
+      "title": "글꼴",
+      "hint": "글꼴을 입력하세요",
+      "input_hint": "글꼴 이름을 입력하고 영어 쉼표로 구분하세요. 예: \"굴림, 돋움\", 저장 후 변경되지 않으면 글꼴을 사용할 수 없거나 이름이 잘못되었음을 의미합니다. C:\\Windows\\Fonts를 참조하여 글꼴을 찾을 수 있습니다. flutter2 엔진 버전을 사용하는 경우 첫 번째 글꼴만 적용됩니다.",
+      "choose_hint": "배경 영역을 클릭할 때까지 여러 글꼴을 선택해야 합니다"
+    },
+    "theme": {
+      "origin": "원본",
+      "pink": "핑크",
+      "black": "검은색",
+      "dark": "다크",
+      "dusty_blue": "먼지 파란색",
+      "dark_black": "진한 검은색",
+      "choose_theme": "테마 선택"
+    },
+    "three_keep_right": {
+      "title": "세 영역 모드 페이지를 항상 오른쪽으로"
+    },
+    "time_zone": {
+      "title": "시간대"
+    },
+    "timeout_lock": {
+      "title": "자동 잠금",
+      "notice": "참고: 자동 잠금은 데스크톱에서 최소화 후 타임아웃만 지원하며, 모바일에서는 백그라운드 및 화면 잠금 후 타임아웃을 지원합니다. 비밀번호가 설정되지 않은 경우 자동 잠금이 무효입니다. Android와 데스크톱은 데스크톱만 잠그고 다운로드는 잠그지 않으며, iOS는 테스트되지 않았으므로 백그라운드 활동을 수동으로 활성화해야 합니다.",
+      "1_hour": "1시간",
+      "10_minutes": "10분",
+      "3_minutes": "3분",
+      "1_minute": "1분",
+      "10_seconds": "10초",
+      "1_second": "1초",
+      "no_lock": "잠금 안 함"
+    },
+    "using_right_click_pop": {
+      "title": "마우스 오른쪽 클릭으로 이전 페이지로 돌아가기"
+    },
+    "volume_next_chapter": {
+      "title": "볼륨/키보드/컨트롤러 더블 클릭으로 다음 챕터"
+    },
+    "webdav": {
+      "title": "WebDav",
+      "path": "WebDav 경로",
+      "path_hint": "WebDav 경로를 입력하세요",
+      "username": "WebDav 사용자명",
+      "username_hint": "WebDav 사용자명을 입력하세요",
+      "password": "WebDav 비밀번호",
+      "password_hint": "WebDav 비밀번호를 입력하세요",
+      "auto_sync_history_to_webdav": "WebDav에 기록 자동 동기화",
+      "sync_history_to_webdav": "기록을 WebDAV에 동기화",
+      "sync_success": "동기화 성공",
+      "sync_failed": "동기화 실패"
+    }
+  },
+  "screen": {
+    "about": {
+      "title": "정보",
+      "version": "소프트웨어 버전",
+      "check_update": "업데이트 확인",
+      "tips": "팁 : \n1. 상세 페이지의 작가/업로더/카테고리/태그는 클릭 가능합니다\n2. 상세 페이지의 작가/업로더/제목은 길게 눌러 복사할 수 있습니다\n3. 폭포수 흐름 대신 페이지네이션을 사용하면 빠르게 페이지를 넘길 수 있습니다\n4. 다운로드는 로컬에 캐시하는 것을 의미하며, 공유하려면 내보내야 합니다\n5. 다운로드는 길게 눌러 삭제할 수 있습니다",
+      "download_new_version": "채널에서 새 버전을 다운로드하십시오",
+      "no_new_version": "새 버전이 없습니다",
+      "download_release_version": "RELEASE 버전 다운로드",
+      "update_content": "업데이트 내용",
+      "go_to_release_repository": "RELEASE 저장소로 이동"
+    },
+    "account": {
+      "title": "계정",
+      "username": "사용자 이름",
+      "username_hint": "사용자 이름을 입력하세요",
+      "password": "비밀번호",
+      "password_hint": "비밀번호를 입력하세요",
+      "no_account_register": "계정이 없습니다, 등록하고 싶습니다",
+      "password_reset": "비밀번호 재설정",
+      "check_username_password_or_network": "사용자 이름과 비밀번호 또는 네트워크 환경을 확인하세요",
+      "check_device_time": "장치 시간을 확인하세요",
+      "username_or_password_error": "사용자 이름 또는 비밀번호 오류",
+      "login_failed": "로그인 실패"
+    },
+    "app": {
+      "will_pop_notice": "뒤로 키를 연속으로 두 번 눌러 앱을 종료합니다"
+    },
+    "categories": {
+      "search_hint": "검색"
+    },
+    "clean": {
+      "title": "정리",
+      "cleaning": "정리 중",
+      "clean_network_cache": "네트워크 캐시 정리",
+      "clean_image_cache": "이미지 캐시 정리",
+      "clean_all_cache": "모든 캐시 정리",
+      "clean_success": "정리 성공",
+      "clean_failed": "정리 실패"
+    },
+    "close_app": {
+      "title": "팁",
+      "close_app": "앱을 닫고 다시 열어주세요"
+    },
+    "comic_collections": {
+      "no_resource": "여기에 리소스가 없습니다"
+    },
+    "comic_info": {
+      "chapter": "챕터",
+      "comment": "댓글",
+      "recommend": "추천"
+    },
+    "comics": {
+      "search_hint": "카테고리 검색",
+      "choose_category": "카테고리를 선택하세요"
+    },
+    "comic_subscribes": {
+      "update_reminder": "업데이트 알림",
+      "check_update": "업데이트 확인",
+      "cancel_all_update_reminder": "모든 업데이트 알림 취소"
+    },
+    "comment": {
+      "title": "댓글",
+      "hint_text": "댓글 내용을 입력하세요",
+      "success": "댓글 성공",
+      "i_have_something_to_say": "할 말이 있습니다"
+    },
+    "desktop_authentication": {
+      "current_password": "현재 비밀번호",
+      "password_error": "비밀번호 오류",
+      "password_initialization": "비밀번호 초기화",
+      "password": "비밀번호",
+      "re_enter_password": "비밀번호 다시 입력",
+      "password_mismatch": "입력한 두 비밀번호가 다릅니다",
+      "set_password": "비밀번호 설정"
+    },
+    "download_confirm": {
+      "please_select_ep": "다운로드할 EP를 선택하세요",
+      "already_added_to_download_list": "이미 다운로드 목록에 추가되었습니다"
+    },
+    "download_export_group": {
+      "title": "일괄 내보내기",
+      "please_select_content": "내보낼 콘텐츠를 선택하세요",
+      "exporting": "내보내는 중",
+      "export_failed": "내보내기 실패",
+      "export_success": "내보내기 성공",
+      "export_to_pkz": "PKZ로 내보내기\n(암호화 모드, 웹 감지 방지, pikapika로 열 수 있음)",
+      "export_to_pki": "PKI로 내보내기\n(암호화 모드, 웹 감지 방지, pikapika로 가져올 수 있음)",
+      "export_to_zip": "ZIP으로 내보내기\n(암호화되지 않은 모드, pikapika로 가져오거나 볼 수 있음)",
+      "export_to_jpeg_zip": "ZIP+JPEG로 내보내기\n(다른 리더에서 직접 사용할 수 있으며, 다시 가져올 수 없음)",
+      "export_to_jpeg_folder": "폴더+JPEG로 내보내기",
+      "export_to_pdf": "PDF로 내보내기",
+      "export_to_pdf_folder": "폴더로 내보내기, 각 챕터마다 PDF 하나씩",
+      "export_to_cbz": "cbz로 내보내기",
+      "after_power_use": "전원 사용 후",
+      "input_save_name": "저장할 이름을 입력하세요",
+      "export_confirm": "내보내기 확인",
+      "export_to_pkz_title": "선택한 만화를 PKZ로 내보내기",
+      "export_to_pki_title": "선택한 만화를 별도의 PKI로 내보내기",
+      "please_power_up": "먼저 전원을 켜주세요",
+      "export_to_zip_title": "선택한 만화를 ZIP으로 내보내기",
+      "export_to_jpeg_zip_title": "선택한 만화를 ZIP+JPEG로 내보내기",
+      "export_to_jpeg_folder_title": "선택한 만화를 폴더+JPEG로 내보내기",
+      "export_to_pdf_title": "선택한 만화를 PDF로 내보내기",
+      "export_to_pdf_folder_title": "선택한 만화를 폴더로 내보내기, 각 챕터마다 PDF 하나씩",
+      "export_to_cbz_title": "선택한 만화를 cbz로 내보내기",
+      "exporting_please_wait": "내보내는 중, 잠시만 기다려주세요"
+    },
+    "download_export_to_file": {
+      "title": "내보내기",
+      "transfer_to_other_device": "다른 장치로 전송",
+      "input_save_name": "저장할 이름을 입력하세요",
+      "export_confirm": "내보내기 확인",
+      "export_to_pkz_title": "선택한 만화를 PKZ로 내보내기",
+      "export_to_pkz_desc": "xxx.pkz로 내보내기\n(암호화 모드, 웹 감지 방지, pikapika로 열 수 있음)",
+      "export_to_pki_title": "선택한 만화를 별도의 PKI로 내보내기",
+      "export_to_pki_desc": "xxx.pki로 내보내기\n(암호화 모드, 웹 감지 방지, pikapika로 가져올 수 있음)",
+      "export_to_zip_title": "선택한 만화를 ZIP으로 내보내기",
+      "export_to_zip_desc": "xxx.zip으로 내보내기\n(암호화되지 않은 모드, pikapika로 가져오거나 볼 수 있음)",
+      "export_to_jpeg_zip_title": "선택한 만화를 ZIP+JPEG로 내보내기",
+      "export_to_jpeg_zip_desc": "xxx.jpeg로 내보내기\n(다른 리더에서 직접 사용할 수 있으며, 다시 가져올 수 없음)",
+      "export_to_pdf_title": "선택한 만화를 PDF로 내보내기",
+      "export_to_pdf_desc": "xxx.pdf로 내보내기\n(다운로드가 성공하지 않아도 사용할 수 있으며, 실패한 이미지는 건너뜁니다)\n(사진 앨범에서 직접 열 수 있음)",
+      "export_to_pdf_folder_title": "선택한 만화를 폴더로 내보내기, 각 챕터마다 PDF 하나씩",
+      "export_to_pdf_folder_desc": "xxx.pdf로 내보내기\n(다운로드가 성공하지 않아도 사용할 수 있으며, 실패한 이미지는 건너뜁니다)\n(사진 앨범에서 직접 열 수 있음)",
+      "export_to_jpeg_folder_title": "선택한 만화를 JPEGS.zip으로 내보내기",
+      "export_to_jpeg_folder_desc": "JPGS.zip으로 내보내기\n(다시 가져올 수 없음)",
+      "export_to_cbz_title": "선택한 만화를 cbk.zip으로 내보내기",
+      "export_to_cbz_desc": "xxx.cbz로 내보내기, 리더에서 직접 사용할 수 있음 (다시 가져올 수 없음)"
+    },
+    "download_export_to_socket": {
+      "title": "네트워크 내보내기",
+      "loading": "로딩 중",
+      "tips": "전송이 성공하기 전에 페이지를 나가지 마십시오. 한 번에 하나의 장치만 내보낼 수 있으며, 두 장치는 동일한 네트워크 세그먼트 또는 무한 LAN에 있어야 합니다. 다른 장치에서 IP:port를 입력하십시오. IP가 하나만 있는 경우 무한 LAN의 IP를 선택하십시오. 일반적으로 192.168로 시작합니다",
+      "get_ip_failed": "IP 가져오기 실패",
+      "getting_ip": "IP 가져오는 중",
+      "port": "포트"
+    },
+    "download_import": {
+      "title": "가져오기",
+      "open_file": "파일 열기",
+      "select_file": "가져올 파일 선택",
+      "import_success": "가져오기 성공",
+      "import_failed": "가져오기 실패",
+      "select_file_desc": "가져올 zip 파일 선택\n가져올 pki 파일 선택\n읽을 pkz 파일 선택",
+      "input_address": "내보내기 장치에서 제공한 주소를 입력하세요\n예: \"192.168.1.2:50000\"",
+      "import_from_other_device": "다른 장치에서 가져오기",
+      "select_folder_desc": "폴더 선택\n(폴더의 모든 zip/pki 가져오기)\n(전원 사용 후)"
+    },
+    "download_info": {
+      "loading": "로딩 중",
+      "chapter": "챕터",
+      "comment": "댓글",
+      "recommend": "추천"
+    },
+    "download_list": {
+      "search_download": "다운로드 검색",
+      "multi_select_operation": "다중 선택 작업",
+      "download_list": "다운로드 목록",
+      "search": "검색",
+      "select_folder": "폴더 선택",
+      "download_already_in_delete_queue": "다운로드가 이미 삭제 대기열에 있습니다",
+      "import": "가져오기",
+      "export": "내보내기",
+      "file": "파일",
+      "download_task": "다운로드 작업",
+      "pause_download": "다운로드를 일시 중지하시겠습니까?",
+      "start_download": "다운로드를 시작하시겠습니까?",
+      "resume_failed": "실패한 작업 다시 시작",
+      "resume_failed_desc": "모든 실패한 다운로드가 다시 시작되었습니다",
+      "downloading": "다운로드 중",
+      "paused": "일시 중지됨",
+      "move_download": "다운로드 이동",
+      "select_download_to_move": "이동할 다운로드를 선택하세요",
+      "input_name": "==> 이름 입력 <==",
+      "empty_folder_will_be_deleted": "(빈 폴더는 자동으로 삭제되며, 다음에 수동으로 입력해야 합니다)",
+      "folder_name": "폴더 이름",
+      "please_input_folder_name": "폴더 이름을 입력하세요",
+      "delete_download": "다운로드 삭제",
+      "delete_selected_download": "선택한 다운로드를 삭제하시겠습니까?",
+      "multi_select": "다중 선택"
+    },
+    "download_only_import": {
+      "importing": "가져오는 중",
+      "import_success": "가져오기 성공",
+      "import_failed": "가져오기 실패",
+      "click_import_file": "가져올 파일 클릭",
+      "importing_please_wait": "가져오는 중, 잠시만 기다려주세요"
+    },
+    "favourite_paper": {
+      "favourite": "즐겨찾기"
+    },
+    "forgot_password": {
+      "title": "비밀번호 복구",
+      "username": "사용자 이름",
+      "not_set": "설정되지 않음",
+      "confirm": "확인",
+      "please_enter_username": "사용자 이름을 입력하세요",
+      "question_1": "질문 1",
+      "question_2": "질문 2",
+      "question_3": "질문 3",
+      "answer_1": "답변 1",
+      "answer_2": "답변 2",
+      "answer_3": "답변 3",
+      "please_enter_answer_1": "답변 1을 입력하세요",
+      "please_enter_answer_2": "답변 2를 입력하세요",
+      "please_enter_answer_3": "답변 3을 입력하세요",
+      "use_answer_1_recover": "답변 1을 사용하여 비밀번호 복구",
+      "use_answer_2_recover": "답변 2를 사용하여 비밀번호 복구",
+      "use_answer_3_recover": "답변 3을 사용하여 비밀번호 복구",
+      "please_enter_answer": "답변을 입력하세요",
+      "new_password_copied": "새 비밀번호가 클립보드에 복사되었습니다",
+      "answer_incorrect": "답변이 올바르지 않습니다",
+      "password": "비밀번호"
+    },
+    "game_download": {
+      "title": "다운로드",
+      "download_links_obtained": "다운로드 링크를 얻었습니다. 그 중 하나를 선택하면 됩니다"
+    },
+    "game_info": {
+      "download": "다운로드",
+      "details": "상세 정보",
+      "comments": "댓글"
+    },
+    "games": {
+      "title": "게임"
+    },
+    "import_from_off": {
+      "title": "가져오기",
+      "import_success": "가져오기 성공",
+      "import_failed": "가져오기 실패"
+    },
+    "modify_password": {
+      "title": "비밀번호 수정",
+      "please_wait": "잠시만 기다려주세요",
+      "old_password": "이전 비밀번호",
+      "new_password": "새 비밀번호",
+      "repeat_new_password": "새 비밀번호 반복",
+      "not_filled": "채워지지 않음",
+      "please_enter_old_password": "이전 비밀번호를 입력하세요",
+      "please_enter_new_password": "새 비밀번호를 입력하세요",
+      "please_repeat_new_password": "새 비밀번호를 다시 입력하세요",
+      "new_password_mismatch": "새 비밀번호가 일치하지 않습니다",
+      "modify_success": "수정 성공",
+      "failed": "실패",
+      "confirm": "확인"
+    },
+    "network_settings": {
+      "title": "네트워크 설정"
+    },
+    "pkz_reader": {
+      "reading_downloaded_comic": "다운로드한 만화를 읽고 있습니다"
+    },
+    "pro": {
+      "title": "파워 센터",
+      "power_center": "파워 센터",
+      "power_status": "파워 상태",
+      "powered": "전원 켜짐",
+      "not_powered": "전원 꺼짐",
+      "pat_membership": "PAT 멤버십",
+      "pat_status": "PAT 상태",
+      "pat_normal": "PAT 정상",
+      "pat_bind_hint": "전원을 위해 현재 계정에 바인딩하려면 여기를 클릭하세요",
+      "pat_rebind_hint": "전원을 위해 현재 계정에 다시 바인딩하려면 클릭하세요",
+      "pat_not_detected": "멤버십이 감지되지 않았습니다. 다운로드 페이지로 이동하여 가입하세요",
+      "i_have_powered": "이전에 전원을 켰습니다",
+      "i_just_powered": "방금 전원을 켰습니다",
+      "enter_code": "코드 입력",
+      "power_method": "전원 방식",
+      "wind_power": "풍력 발전",
+      "hydro_power": "수력 발전",
+      "solar_power": "태양광 발전",
+      "nuclear_power": "원자력 발전",
+      "choose_power_method": "전원 방식 선택",
+      "sign_in_exchange": "로그인/교환",
+      "click_pat_to_change": "변경하려면 아래의 PAT 멤버십을 클릭하세요",
+      "update_pat_status": "PAT 전원 상태 업데이트",
+      "bind_to_account": "이 계정에 바인딩",
+      "change_pat_key": "PAT 키 변경",
+      "clear_pat_info": "PAT 정보 지우기",
+      "click_to_bind": "바인딩하려면 클릭",
+      "enter_auth_code": "인증 코드를 입력하세요",
+      "please_wait": "잠시만 기다려주세요",
+      "key_recorded": "키: 기록됨",
+      "pat_account": "PAT 계정",
+      "bind_pika_account": "PIKA 계정 바인딩",
+      "bind_account_time": "계정 바인딩 시간",
+      "rebind_time": "재바인딩 가능 시간",
+      "power_features": "파워 기능: 다중 스레드 다운로드 / 일괄 가져오기/내보내기 다운로드",
+      "power_guide": "\"정보\" 페이지로 이동하여 파워 가이드를 위한 유지 관리 주소를 찾으십시오\n\n  \"이전에 전원을 켰습니다\"는 해당 파워 상태를 동기화할 수 있습니다\n  \"방금 전원을 켰습니다\"는 신비한 코드를 교환합니다\n  \"전원 방식\"은 네트워크가 작동하지 않을 때 변경할 수 있습니다\n  \"PAT 멤버십\"은 독립적인 전원 방식입니다"
+    },
+    "rankings": {
+      "title": "순위",
+      "day": "일",
+      "week": "주",
+      "month": "월",
+      "knight": "기사",
+      "refresh": "새로고침",
+      "comics_count": "만화"
+    },
+    "random_comics": {
+      "title": "랜덤 만화"
+    },
+    "register": {
+      "title": "등록",
+      "registering": "등록 중",
+      "register_success": "등록 성공",
+      "register_failed": "등록 실패",
+      "account_exists": "계정이 이미 존재합니다",
+      "name_exists": "이름이 이미 존재합니다",
+      "check_form": "양식을 확인하세요, 빈 필드는 허용되지 않습니다",
+      "account": "계정",
+      "password": "비밀번호",
+      "nickname": "닉네임",
+      "gender": "성별",
+      "birthday": "생일",
+      "question_1": "질문 1",
+      "answer_1": "답변 1",
+      "question_2": "질문 2",
+      "answer_2": "답변 2",
+      "question_3": "질문 3",
+      "answer_3": "답변 3",
+      "not_set": "설정되지 않음",
+      "please_enter_account": "계정을 입력하세요",
+      "please_enter_password": "비밀번호를 입력하세요",
+      "please_enter_nickname": "닉네임을 입력하세요",
+      "please_enter_question_1": "질문 1을 입력하세요",
+      "please_enter_answer_1": "답변 1을 입력하세요",
+      "please_enter_question_2": "질문 2를 입력하세요",
+      "please_enter_answer_2": "답변 2를 입력하세요",
+      "please_enter_question_3": "질문 3을 입력하세요",
+      "please_enter_answer_3": "답변 3을 입력하세요",
+      "account_desc": "(소문자 + 숫자 / 로그인용)",
+      "password_desc": "(대소문자 + 숫자 / 8자 이상)",
+      "nickname_desc": "(한글 허용 / 2-50자)",
+      "choose_gender": "성별을 선택하세요",
+      "futa": "후타",
+      "male": "남성",
+      "female": "여성",
+      "register_success_desc": "성공적으로 등록되었습니다. 로그인으로 돌아가세요",
+      "account_label": "계정",
+      "nickname_label": "닉네임"
+    },
+    "search": {
+      "title": "검색",
+      "search_hint": "검색",
+      "choose_category": "카테고리를 선택하세요"
+    },
+    "search_author": {
+      "title": "작가별 검색",
+      "search_hint": "작가별 검색 + ",
+      "by_author": "작가별: "
+    },
+    "space": {
+      "title": "내 정보",
+      "logout": "로그아웃",
+      "logout_confirm": "현재 계정에서 로그아웃하시겠습니까?",
+      "my_favourites": "내 즐겨찾기",
+      "view_history": "조회 기록",
+      "my_downloads": "내 다운로드"
+    },
+    "theme": {
+      "title": "테마 설정",
+      "theme": "테마",
+      "dark_mode_different_theme": "다크 모드에서 다른 테마 사용",
+      "dark_mode_theme": "테마 (다크 모드)"
+    },
+    "view_logs": {
+      "title": "조회 기록",
+      "clear_all": "모든 조회 기록을 지우시겠습니까?",
+      "clear_all_desc": "읽기 진행 상황도 삭제됩니다!",
+      "clear_one": "이 조회 기록을 지우시겠습니까?",
+      "clear_one_desc": "읽기 진행 상황도 삭제됩니다!",
+      "categories": "카테고리"
+    },
+    "web_server": {
+      "title": "다운로드 - 웹 서버",
+      "loading": "로딩 중",
+      "get_ip_failed": "IP 가져오기 실패",
+      "getting_ip": "IP 가져오는 중",
+      "port": "포트: 8080",
+      "usage_instruction": "브라우저에 \"http://device_ip:8080/\"를 입력하여 다운로드한 만화에 액세스",
+      "leave_notice": "이 페이지를 나가면 서버가 닫힙니다"
+    }
+  },
+  "components": {
+    "comic_info_card": {
+      "categories": "카테고리",
+      "finished": "완결",
+      "viewed": "조회함"
+    },
+    "comic_list": {
+      "shadow": "그림자 만화"
+    },
+    "common": {
+      "display_mode": "표시 모드",
+      "shadow_mode": "그림자 모드",
+      "shadow_list": "그림자 목록",
+      "batch_download": "일괄 다운로드"
+    },
+    "image_reader": {
+      "already_at_the_end": "이미 끝에 도달했습니다",
+      "click_to_next_chapter": "다음 챕터로 이동하려면 클릭",
+      "reload_page": "페이지 새로고침",
+      "next_chapter": "다음 챕터",
+      "end_reading": "읽기 종료",
+      "reload_image": "이미지 새로고침",
+      "save_image_in_this_page": "이 페이지의 이미지 저장"
+    }
+  }
+}

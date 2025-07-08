@@ -8,13 +8,11 @@ import 'package:pikapika/screens/AccountScreen.dart';
 import 'package:pikapika/screens/DownloadListScreen.dart';
 import 'package:pikapika/screens/FavouritePaperScreen.dart';
 import 'package:pikapika/screens/ProScreen.dart';
-import 'package:pikapika/screens/ThemeScreen.dart';
 import 'package:pikapika/screens/ViewLogsScreen.dart';
 import 'package:pikapika/basic/Method.dart';
 
 import '../basic/config/IconLoading.dart';
 import '../basic/config/IsPro.dart';
-import '../basic/config/Themes.dart';
 import 'SettingsScreen.dart';
 import 'components/Badge.dart';
 import 'components/UserProfileCard.dart';

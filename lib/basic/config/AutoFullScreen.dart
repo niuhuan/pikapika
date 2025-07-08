@@ -1,5 +1,6 @@
 /// 自动全屏
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -22,7 +23,7 @@ Widget autoFullScreenSetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
         value: _autoFullScreen,
-        title: const Text("进入阅读器自动全屏"),
+        title: Text(tr("settings.auto_full_screen.title")),
         onChanged: (a) async {
           await method.saveProperty(_propertyName, "$a");
           _autoFullScreen = a;

@@ -67,7 +67,7 @@ String currentFullScreenUIName() {
 
 Future<void> chooseFullScreenUI(BuildContext context) async {
   FullScreenUI? result =
-      await chooseMapDialog<FullScreenUI>(context, fullScreenUIMap, "选择全屏UI");
+      await chooseMapDialog<FullScreenUI>(context, fullScreenUIMap, tr("settings.full_screen_ui.choose"));
   if (result != null) {
     await method.saveProperty(_propertyName, result.toString());
     fullScreenUI = result;
@@ -110,7 +110,7 @@ Widget fullScreenUISetting() {
     return StatefulBuilder(
       builder: (BuildContext context, void Function(void Function()) setState) {
         return ListTile(
-          title: const Text("全屏UI"),
+          title: Text(tr("settings.full_screen_ui.title")),
           subtitle: Text(currentFullScreenUIName()),
           onTap: () async {
             await chooseFullScreenUI(context);

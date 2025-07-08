@@ -6,7 +6,7 @@ import os
 import sys
 import argparse
 from pathlib import Path
-from typing import Dict, List, Set, Any
+from typing import Dict, List, Set, Any, Union
 from datetime import datetime
 
 def flatten_json(data: Dict[str, Any], parent_key: str = '', separator: str = '.') -> Dict[str, Any]:
@@ -159,7 +159,7 @@ def find_reference_value(key: str, all_data: Dict[str, Dict[str, Any]]) -> str:
     # 默认占位符
     return f"TODO: {last_part.replace('_', ' ').title()}"
 
-def generate_missing_keys_report(translations_dir: str, output_file: str = None):
+def generate_missing_keys_report(translations_dir: str, output_file: Union[str, None] = None):
     """
     生成缺失键的报告
     

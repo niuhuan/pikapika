@@ -90,17 +90,15 @@ class _AboutScreenState extends State<AboutScreen> {
                     height: 1.3,
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      tr("screen.about.check_update") + " : ",
-                      style: const TextStyle(
-                        height: 1.3,
-                      ),
-                    ),
-                    _dirty ? _buildDirty() : _buildNewVersion(_latestVersion),
-                    Expanded(child: Container()),
-                  ],
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: tr("screen.about.check_update") + " : "),
+                      ...(_dirty
+                          ? _buildDirty()
+                          : _buildNewVersion(_latestVersion)),
+                    ],
+                  ),
                 ),
                 _buildNewVersionInfo(_latestVersionInfo),
               ],
@@ -122,72 +120,68 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  _buildNewVersion(String? latestVersion) {
+  List<InlineSpan> _buildNewVersion(String? latestVersion) {
     if (!isPro) {
-      return Text(
-        tr("screen.about.download_new_version"),
-      );
+      return [
+        TextSpan(
+          text: tr("screen.about.download_new_version"),
+        )
+      ];
     }
     if (latestVersion != null) {
-      return Text.rich(
-        TextSpan(
-          children: [
-            WidgetSpan(
-              child: Badged(
-                child: Container(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: Text(
-                    latestVersion,
-                    style: const TextStyle(height: 1.3),
-                  ),
-                ),
-                badge: "1",
-              ),
-            ),
-            const TextSpan(text: "  "),
-            TextSpan(
-              text: "去下载",
-              style: TextStyle(
-                height: 1.3,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => openUrl(_releasesUrl),
-            ),
-          ],
-        ),
-      );
-    }
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(text: tr("screen.about.no_new_version"), style: const TextStyle(height: 1.3)),
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
+      return [
+        WidgetSpan(
+          child: Badged(
             child: Container(
-              padding: const EdgeInsets.all(4),
-              margin: const EdgeInsets.only(left: 3, right: 3),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                latestVersion,
+                style: const TextStyle(height: 1.3),
               ),
             ),
+            badge: "1",
           ),
-          TextSpan(
-            text: tr("screen.about.check_update"),
-            style: TextStyle(
-              height: 1.3,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => manualCheckNewVersion(context),
+        ),
+        const TextSpan(text: "  "),
+        TextSpan(
+          text: "去下载",
+          style: TextStyle(
+            height: 1.3,
+            color: Theme.of(context).colorScheme.primary,
           ),
-        ],
+          recognizer: TapGestureRecognizer()
+            ..onTap = () => openUrl(_releasesUrl),
+        ),
+      ];
+    }
+    return [
+      TextSpan(
+          text: tr("screen.about.no_new_version"),
+          style: const TextStyle(height: 1.3)),
+      WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          margin: const EdgeInsets.only(left: 3, right: 3),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+        ),
       ),
-    );
+      TextSpan(
+        text: tr("screen.about.check_update"),
+        style: TextStyle(
+          height: 1.3,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        recognizer: TapGestureRecognizer()
+          ..onTap = () => manualCheckNewVersion(context),
+      ),
+    ];
   }
 
-  Widget _buildDirty() {
-    return Text.rich(
+  List<InlineSpan> _buildDirty() {
+    return [
       TextSpan(
         text: tr("screen.about.download_release_version"),
         style: TextStyle(
@@ -195,8 +189,8 @@ class _AboutScreenState extends State<AboutScreen> {
           color: Theme.of(context).colorScheme.primary,
         ),
         recognizer: TapGestureRecognizer()..onTap = () => openUrl(_releasesUrl),
-      ),
-    );
+      )
+    ];
   }
 
   Widget _buildNewVersionInfo(String? latestVersionInfo) {

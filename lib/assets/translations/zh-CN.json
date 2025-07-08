@@ -1,4 +1,8 @@
 {
+  "language": {
+    "title": "语言",
+    "name": "简体中文 - 中国大陆"
+  },
   "app": {
     "categories": "分类",
     "my": "我的",
@@ -197,9 +201,23 @@
       "three_area": "将屏幕划分成三个区域 (上一页, 下一页, 全屏)"
     },
     "full_screen_ui": {
+      "title": "全屏UI",
+      "choose": "选择全屏UI",
       "no": "不使用",
       "hidden_bottom": "去除虚拟控制器",
       "all": "全屏"
+    },
+    "auto_full_screen": {
+      "title": "进入阅读器自动全屏"
+    },
+    "ignore_info_history": {
+      "title": "详情页不计入历史记录"
+    },
+    "icon_loading": {
+      "title": "尽量减少UI动画"
+    },
+    "ignore_upgrade_confirm": {
+      "title": "关闭升级弹窗"
     },
     "hidden_fd_icon": {
       "title": "隐藏个人空间的发电图标"
@@ -383,7 +401,7 @@
       "sync_history_to_webdav": "立即同步浏览记录到WebDAV",
       "sync_success": "同步成功",
       "sync_failed": "同步失败"
-    }
+    }    
   },
   "screen": {
     "about": {

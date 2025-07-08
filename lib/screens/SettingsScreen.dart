@@ -61,6 +61,7 @@ import '../basic/config/TimeoutLock.dart';
 import '../basic/config/UsingRightClickPop.dart';
 import '../basic/config/WebDav.dart';
 import '../basic/config/WillPopNotice.dart';
+import '../basic/config/i18n.dart';
 import 'CleanScreen.dart';
 import 'MigrateScreen.dart';
 import 'ModifyPasswordScreen.dart';
@@ -114,6 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setStartupPicTile(context),
                 clearStartupPicTile(context),
                 const Divider(),
+                languageListTile(),
                 timeZoneSetting(),
                 fontSetting(),
                 fullScreenUISetting(),

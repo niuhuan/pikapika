@@ -1,0 +1,816 @@
+{
+  "language": {
+    "title": "言語",
+    "name": "日本語 - 日本"
+  },
+  "app": {
+    "categories": "カテゴリ",
+    "my": "マイ",
+    "copied_to_clipboard": "クリップボードにコピーしました",
+    "not_supported_platform": "サポートされていないプラットフォーム",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "save_cancel": "保存がキャンセルされました",
+    "save_success": "保存に成功しました",
+    "save_failed": "保存に失敗しました",
+    "pro": "プロ",
+    "pro_required": "この機能を使用するにはプロにアップグレードしてください",
+    "choose_folder": "ファイルを保存するフォルダを選択してください",
+    "permission_denied": "権限が拒否されました",
+    "loading": "読み込み中",
+    "error": "エラー",
+    "pat": {
+      "success": "スポンサーログインが成功しました。戻ってください",
+      "title": "PATアカウントを置き換え"
+    },
+    "previous_page": "前のページ",
+    "next_page": "次のページ",
+    "page": "ページ",
+    "please_enter_page_number": "ページ番号を入力してください：",
+    "select_all": "すべて選択",
+    "load_failed": "読み込みに失敗しました",
+    "all": "すべて",
+    "delete": "削除",
+    "save_image": "画像を保存",
+    "preview_image": "画像をプレビュー",
+    "please_select": "選択してください",
+    "refresh": "更新",
+    "initializing": "初期化中",
+    "like_failed": "いいねに失敗しました",
+    "network_error": "ネットワークエラーです。ネットワークを確認してください",
+    "no_permission": "権限がないか、パスが利用できません",
+    "check_device_time": "デバイスの時間を確認してください",
+    "resource_not_available": "リソースが利用できません",
+    "something_went_wrong": "何かが間違っています",
+    "click_refresh": "クリックして更新",
+    "pull_down_refresh": "下にプルして更新",
+    "continue_reading": "読み続ける",
+    "start_reading": "読み始める",
+    "image_crop": "画像トリミング",
+    "download": "ダウンロード",
+    "download_failed": "ダウンロードに失敗しました",
+    "download_finished": "ダウンロード完了",
+    "downloading": "ダウンロード中",
+    "queue": "キュー中",
+    "deleting": "削除中",
+    "please_select_comic": "漫画を選択してください",
+    "please_choose": "選択してください",
+    "last_viewed": "最後に見た",
+    "auto_punch": "自動チェックイン"
+  },
+  "net": {
+    "no_address": "アドレスなし",
+    "address": "アドレス",
+    "address_sync": "アドレス同期",
+    "address_sync_from_server": "サーバーから最新のアドレスを取得",
+    "address_sync_reset": "アドレスをデフォルト値にリセット",
+    "address_sync_success": "アドレス同期に成功しました",
+    "address_sync_failed": "アドレス同期に失敗しました",
+    "address_sync_reset_success": "アドレス同期リセットに成功しました",
+    "address_sync_reset_failed": "アドレス同期リセットに失敗しました",
+    "choose_address": "アドレスを選択",
+    "image_address": "画像アドレス",
+    "use_api_load_image": "APIを使用して画像を読み込む",
+    "ping_testing": "テスト中",
+    "ping_failed": "失敗しました"
+  },
+  "categories": {
+    "all": "すべて",
+    "recommend": "おすすめ",
+    "rankings": "ランキング",
+    "random": "ランダム",
+    "game": "ゲーム"
+  },
+  "settings": {
+    "settings": "設定",
+    "interface": "インターフェース",
+    "network": "ネットワーク",
+    "seal": "封印",
+    "interaction": "インタラクション",
+    "reading": "読書",
+    "download": "ダウンロード",
+    "web_server": "ウェブサーバー",
+    "web_server_subtitle": "ローカルネットワーク内のデバイスがブラウザを通じてダウンロードした漫画を閲覧できるようにします",
+    "sync": "同期",
+    "account": "アカウント",
+    "modify_password": "Modify password",
+    "ebook": "電子書籍",
+    "system": "システム",
+    "clear_cache": "キャッシュをクリア",
+    "migrate": "移行",
+    "migrate_subtitle": "データフォルダをメモリカードに変更",
+    "migrate_confirm": "この機能はプログラムを再起動した後に保存されます。よろしいですか",
+    "app_orientation": {
+      "title": "アプリの向き",
+      "choose": "アプリの向きを選択",
+      "normal": "通常",
+      "landscape": "横向き",
+      "portrait": "縦向き"
+    },
+    "will_pop_notice": "戻るキーを2回連続で押すとアプリを終了します",
+    "android_secure_flag": "スクリーンショットを無効化/タスクビューでの表示を無効化",
+    "authentication": "アプリに入る際の認証（システムが既にパスワードまたは指紋を入力している場合）",
+    "set_password": "アプリケーションパスワードを設定",
+    "auto_clean": {
+      "title": "自動キャッシュクリア",
+      "one_month_ago": "1ヶ月前",
+      "one_week_ago": "1週間前",
+      "one_day_ago": "1日前",
+      "no_auto_clean": "自動クリアしない"
+    },
+    "categories_column_count": {
+      "title": "カテゴリの列数",
+      "choose": "カテゴリの列数を選択",
+      "auto": "自動"
+    },
+    "categories_sort": {
+      "title": "カテゴリソート"
+    },
+    "chooser_root": {
+      "title": "フォルダセレクタルートパス",
+      "hint": "フォルダセレクタルートパスを入力してください",
+      "desc": "エクスポート時にディレクトリを選択するデフォルトパス、またルートパスでもあります。エクスポートが正常に動作しない場合は、このオプションを設定してみてください。"
+    },
+    "content_failed_reload_action": {
+      "title": "コンテンツ読み込み失敗時の再読み込み方法",
+      "choose": "コンテンツ読み込み失敗時の再読み込み方法を選択",
+      "pull_down": "プルダウン",
+      "touch_loader": "画面タッチ"
+    },
+    "copy_full_name": {
+      "title": "漫画名コピー時にテンプレートを使用"
+    },
+    "copy_full_name_template": {
+      "title": "漫画名コピーテンプレート",
+      "hint": "漫画名コピーテンプレートを入力してください"
+    },
+    "copy_skip_confirm": {
+      "title": "長押しコピー時に確認しない"
+    },
+    "download_and_export_path": {
+      "title": "ダウンロードと同時にファイルシステムへエクスポート",
+      "confirm": "ダウンロードと同時にファイルシステムへエクスポート",
+      "desc": "ディレクトリを選択すると、ファイルシステムが書き込み可能な場合、ダウンロードと同時に自動的にエクスポートされます"
+    },
+    "download_cache_path": {
+      "title": "他のプログラムのキャッシュを使用してダウンロード加速",
+      "confirm": "他のプログラムのキャッシュを使用してダウンロード加速",
+      "desc": "ディレクトリを選択すると、このディレクトリは次のディレクトリからコピーされたものでなければ使用できません。ダウンロード時にキャッシュフォルダとして優先的に読み込まれます。",
+      "cancel_desc": "他のソフトウェアのダウンロードコンテンツ加速機能をキャンセルしますか？キャンセル後に再度設定することができます",
+      "import_view_log_from_off": {
+        "title": "他のプログラムの履歴記録をインポート",
+        "desc": "ファイルを選択すると、このファイルは次のパスからコピーされたものでなければ使用できません。",
+        "choose_file_dialog_title": "インポートするファイルを選択"
+      }
+    },
+    "download_thread_count": {
+      "title": "ダウンロードスレッド数",
+      "choose": "ダウンロードスレッド数を選択"
+    },
+    "ebook_scrolling": {
+      "title": "電子書籍モードスクロールUI"
+    },
+    "ebook_scrolling_range": {
+      "title": "電子書籍モードスクロールUI",
+      "desc": "スクロール範囲",
+      "screen_height": "画面の高さ"
+    },
+    "ebook_scrolling_trigger": {
+      "title": "電子書籍モードスクロールUI",
+      "desc": "トリガー距離",
+      "cm": "センチメートル"
+    },
+    "export_path": {
+      "ios_desc": "ファイルマネージャーでエクスポートしたコンテンツを見つけることができます",
+      "ios_desc2": "iOS デバイスを使用しています：\nファイルにエクスポートしたコンテンツは、システム内蔵のファイルマネージャーを開いてご覧ください",
+      "export_path_desc": "エクスポートパス（クリックして変更）",
+      "android_desc": "Android デバイスを使用しています：\nエクスポートが失敗して権限不足のエラーが発生した場合、Download または Document の下にサブディレクトリを作成してエクスポートを試してみてください"
+    },
+    "export_rename": {
+      "title": "エクスポート時に名前を変更"
+    },
+    "yes": "はい",
+    "no": "いいえ",
+    "full_screen_action": {
+      "title": "操作方法",
+      "choose": "操作方法を選択",
+      "touch_once": "画面を一度タッチしてフルスクリーン",
+      "controller": "コントローラーを使用してフルスクリーン",
+      "touch_double": "画面をダブルクリックしてフルスクリーン",
+      "touch_double_once_next": "画面をダブルクリックしてフルスクリーン + 一度クリックで次のページ",
+      "three_area": "画面を3つの領域に分割（前のページ、次のページ、フルスクリーン）"
+    },
+    "full_screen_ui": {
+      "title": "全屏UI",
+      "choose": "全屏UIを選択",
+      "no": "使用しない",
+      "hidden_bottom": "仮想コントローラーを削除",
+      "all": "フルスクリーン"
+    },
+    "auto_full_screen": {
+      "title": "リーダーに入ったら自動フルスクリーン"
+    },
+    "ignore_info_history": {
+      "title": "詳細ページの履歴記録を除外"
+    },
+    "icon_loading": {
+      "title": "UI アニメーションを最小化"
+    },
+    "ignore_upgrade_confirm": {
+      "title": "アップグレードポップアップを閉じる"
+    },
+    "hidden_fd_icon": {
+      "title": "個人スペースの電源アイコンを非表示"
+    },
+    "hidden_search_persion": {
+      "title": "作者別検索機能を非表示"
+    },
+    "hidden_sub_icon": {
+      "title": "購読機能を非表示"
+    },
+    "hidden_words": {
+      "title": "キーワードで非表示",
+      "clear_all": "クリア確認",
+      "clear_all_desc": "すべてのキーワードをクリアしますか？",
+      "input_hint": "非表示にするキーワードを入力",
+      "no_words": "キーワードなし"
+    },
+    "image_address": {
+      "title": "画像アドレス",
+      "pinging": "Ping中",
+      "failed": "失敗"
+    },
+    "image_filter": {
+      "title": "リーダー画像フィルタ",
+      "normal": "通常",
+      "gray": "グレー",
+      "brown": "ブラウン",
+      "choose": "リーダー画像フィルタを選択"
+    },
+    "import_notice": {
+      "android_desc": "Android デバイスを使用しています：\nインポート/エクスポートができず、権限不足のエラーが発生した場合、Download または Document の下にサブディレクトリを作成してインポートを試してみてください"
+    },
+    "keyboard_controller": {
+      "title": "リーダーキーボードページ（PC のみ）"
+    },
+    "list_layout": {
+      "choose": "レイアウトを選択",
+      "info_card": "情報",
+      "only_image": "表紙",
+      "cover_and_title": "表紙 + タイトル"
+    },
+    "local_history_sync": {
+      "sync_to_local": "履歴をローカルに同期",
+      "not_set": "設定されていません",
+      "sync_success": "同期成功",
+      "sync_failed": "同期失敗",
+      "auto_sync": "履歴をローカルに自動同期",
+      "auto_sync_desc": "アプリケーションを開いた後、履歴が自動的にバックアップされます"
+    },
+    "no_animation": {
+      "title": "ページアニメーションをキャンセル（画面タップ、音量キー、キーボード）"
+    },
+    "pager_action": {
+      "title": "リストページの読み込み方法",
+      "choose": "リストページの読み込み方法を選択",
+      "controller": "ボタンを使用",
+      "stream": "ストリーム"
+    },
+    "proxy": {
+      "title": "プロキシサーバー",
+      "hint": "プロキシサーバーを入力",
+      "desc": " ( 例：socks5://127.0.0.1:1080/ ) ",
+      "no_proxy": "設定されていません"
+    },
+    "quality": {
+      "title": "閲覧時の画像品質",
+      "choose": "画像品質を選択",
+      "original": "オリジナル",
+      "low": "低",
+      "medium": "中",
+      "high": "高"
+    },
+    "reader_background_color": {
+      "title": "リーダー背景色",
+      "choose": "リーダー背景色を選択",
+      "black": "黒",
+      "gray": "グレー",
+      "white": "白"
+    },
+    "reader_direction": {
+      "title": "リーダー方向",
+      "choose": "リーダー方向を選択",
+      "top_to_bottom": "上から下へ",
+      "left_to_right": "左から右へ",
+      "right_to_left": "右から左へ"
+    },
+    "reader_scroll_by_screen_percentage": {
+      "title": "フリーズームリーダーページ距離",
+      "screen_size": "画面サイズ"
+    },
+    "reader_slider_position": {
+      "title": "スライダー位置",
+      "choose": "スライダー位置を選択",
+      "bottom": "下",
+      "right": "右",
+      "left": "左"
+    },
+    "reader_two_page_direction": {
+      "title": "2ページリーダーコンテンツ配置",
+      "choose": "2ページリーダーコンテンツ配置を選択",
+      "close_to": "近づく",
+      "pull_away": "離れる",
+      "each_centered": "それぞれ中央"
+    },
+    "reader_type": {
+      "title": "リーダーモード",
+      "choose": "リーダーモードを選択",
+      "web_toon": "WebToon（デフォルト）",
+      "web_toon_zoom": "WebToon（ダブルクリックでズーム）",
+      "gallery": "ギャラリー",
+      "web_toon_free_zoom": "WebToon（ListViewダブルクリックでズーム）\n（このモードはプログレスバーが無効）",
+      "two_page_gallery": "2ページモード\n（実験的）"
+    },
+    "shadow_categories": {
+      "title": "封印",
+      "search_hint": "検索"
+    },
+    "shadow_categories_mode": {
+      "title": "封印モード",
+      "black_list": "ブラックリスト",
+      "white_list": "ホワイトリスト"
+    },
+    "startup_pic": {
+      "title": "起動画面設定",
+      "subtitle": "アプリケーション起動時に表示される画像を設定",
+      "clear_title": "起動画面をクリア",
+      "clear_subtitle": "アプリケーション起動時に表示される画像をクリア",
+      "clear_success": "起動画面がクリアされました",
+      "update_success": "起動画面が更新されました"
+    },
+    "show_comment_at_download": {
+      "title": "ダウンロードでコメントを表示"
+    },
+    "font": {
+      "title": "フォント",
+      "hint": "フォントを入力してください",
+      "input_hint": "フォント名を入力し、英語のカンマで区切ってください。例：\"MS ゴシック, メイリオ\"、保存後に変更されない場合は、フォントが使用できないか名前が間違っていることを意味します。C:\\Windows\\Fonts を参照してフォントを見つけることができます。flutter2 エンジンバージョンを使用している場合、最初のフォントのみが有効になります。",
+      "choose_hint": "背景エリアをクリックするまで複数のフォントを選択する必要があります"
+    },
+    "theme": {
+      "origin": "オリジナル",
+      "pink": "ピンク",
+      "black": "ブラック",
+      "dark": "ダーク",
+      "dusty_blue": "ダスティブルー",
+      "dark_black": "ダークブラック",
+      "choose_theme": "テーマを選択"
+    },
+    "three_keep_right": {
+      "title": "3領域モードページを常に右に"
+    },
+    "time_zone": {
+      "title": "タイムゾーン"
+    },
+    "timeout_lock": {
+      "title": "自動ロック",
+      "notice": "注意：自動ロックは、デスクトップでは最小化後のタイムアウトのみをサポートし、モバイルではバックグラウンドおよび画面ロック後のタイムアウトをサポートします。パスワードが設定されていない場合、自動ロックは無効です。Android およびデスクトップはデスクトップのみをロックし、ダウンロードはロックしません。iOS はテストされていないため、バックグラウンドアクティビティを手動で有効にする必要があります。",
+      "1_hour": "1時間",
+      "10_minutes": "10分",
+      "3_minutes": "3分",
+      "1_minute": "1分",
+      "10_seconds": "10秒",
+      "1_second": "1秒",
+      "no_lock": "ロックしない"
+    },
+    "using_right_click_pop": {
+      "title": "マウス右クリックで前のページに戻る"
+    },
+    "volume_next_chapter": {
+      "title": "音量/キーボード/コントローラーのダブルクリックで次のチャプター"
+    },
+    "webdav": {
+      "title": "WebDav",
+      "path": "WebDav パス",
+      "path_hint": "WebDav パスを入力してください",
+      "username": "WebDav ユーザー名",
+      "username_hint": "WebDav ユーザー名を入力してください",
+      "password": "WebDav パスワード",
+      "password_hint": "WebDav パスワードを入力してください",
+      "auto_sync_history_to_webdav": "履歴を WebDav に自動同期",
+      "sync_history_to_webdav": "履歴を WebDAV に同期",
+      "sync_success": "同期成功",
+      "sync_failed": "同期失敗"
+    }
+  },
+  "screen": {
+    "about": {
+      "title": "バージョン情報",
+      "version": "ソフトウェアバージョン",
+      "check_update": "アップデートを確認",
+      "tips": "ヒント : \n1. 詳細ページの作者/アップローダー/カテゴリ/タグはクリックできます\n2. 詳細ページの作者/アップローダー/タイトルは長押しでコピーできます\n3. ウォーターフォールフローの代わりにページネーションを使用すると、すばやくページをめくることができます\n4. ダウンロードはローカルにキャッシュすることを意味し、共有するにはエクスポートする必要があります\n5. ダウンロードは長押しで削除できます",
+      "download_new_version": "チャネルから新しいバージョンをダウンロードしてください",
+      "no_new_version": "新しいバージョンは検出されませんでした",
+      "download_release_version": "RELEASE版をダウンロード",
+      "update_content": "更新内容",
+      "go_to_release_repository": "RELEASEリポジトリへ移動"
+    },
+    "account": {
+      "title": "アカウント",
+      "username": "ユーザー名",
+      "username_hint": "ユーザー名を入力してください",
+      "password": "パスワード",
+      "password_hint": "パスワードを入力してください",
+      "no_account_register": "アカウントがありません、登録したいです",
+      "password_reset": "パスワードをリセット",
+      "check_username_password_or_network": "ユーザー名とパスワードまたはネットワーク環境を確認してください",
+      "check_device_time": "デバイスの時刻を確認してください",
+      "username_or_password_error": "ユーザー名またはパスワードが間違っています",
+      "login_failed": "ログインに失敗しました"
+    },
+    "app": {
+      "will_pop_notice": "戻るキーを2回連続で押すとアプリを終了します"
+    },
+    "categories": {
+      "search_hint": "検索"
+    },
+    "clean": {
+      "title": "クリーン",
+      "cleaning": "クリーニング中",
+      "clean_network_cache": "ネットワークキャッシュをクリーン",
+      "clean_image_cache": "画像キャッシュをクリーン",
+      "clean_all_cache": "すべてのキャッシュをクリーン",
+      "clean_success": "クリーン成功",
+      "clean_failed": "クリーン失敗"
+    },
+    "close_app": {
+      "title": "ヒント",
+      "close_app": "アプリを閉じて再度開いてください"
+    },
+    "comic_collections": {
+      "no_resource": "ここにはリソースがありません"
+    },
+    "comic_info": {
+      "chapter": "チャプター",
+      "comment": "コメント",
+      "recommend": "おすすめ"
+    },
+    "comics": {
+      "search_hint": "カテゴリを検索",
+      "choose_category": "カテゴリを選択してください"
+    },
+    "comic_subscribes": {
+      "update_reminder": "更新リマインダー",
+      "check_update": "更新を確認",
+      "cancel_all_update_reminder": "すべての更新リマインダーをキャンセル"
+    },
+    "comment": {
+      "title": "コメント",
+      "hint_text": "コメント内容を入力してください",
+      "success": "コメント成功",
+      "i_have_something_to_say": "言いたいことがあります"
+    },
+    "desktop_authentication": {
+      "current_password": "現在のパスワード",
+      "password_error": "パスワードが間違っています",
+      "password_initialization": "パスワードの初期化",
+      "password": "パスワード",
+      "re_enter_password": "パスワードを再入力",
+      "password_mismatch": "入力された2つのパスワードが異なります",
+      "set_password": "パスワードを設定"
+    },
+    "download_confirm": {
+      "please_select_ep": "ダウンロードするEPを選択してください",
+      "already_added_to_download_list": "すでにダウンロードリストに追加されています"
+    },
+    "download_export_group": {
+      "title": "一括エクスポート",
+      "please_select_content": "エクスポートするコンテンツを選択してください",
+      "exporting": "エクスポート中",
+      "export_failed": "エクスポート失敗",
+      "export_success": "エクスポート成功",
+      "export_to_pkz": "PKZにエクスポート\n(暗号化モード、ウェブ検出を防止、pikapikaで開くことができます)",
+      "export_to_pki": "PKIにエクスポート\n(暗号化モード、ウェブ検出を防止、pikapikaでインポートできます)",
+      "export_to_zip": "ZIPにエクスポート\n(非暗号化モード、pikapikaでインポートまたは表示できます)",
+      "export_to_jpeg_zip": "ZIP+JPEGにエクスポート\n(他のリーダーで直接使用できますが、再インポートはできません)",
+      "export_to_jpeg_folder": "フォルダ+JPEGにエクスポート",
+      "export_to_pdf": "PDFにエクスポート",
+      "export_to_pdf_folder": "フォルダにエクスポート、各章ごとに1つのPDF",
+      "export_to_cbz": "cbzにエクスポート",
+      "after_power_use": "パワー使用後",
+      "input_save_name": "保存名を入力してください",
+      "export_confirm": "エクスポートの確認",
+      "export_to_pkz_title": "選択した漫画をPKZにエクスポート",
+      "export_to_pki_title": "選択した漫画を個別のPKIにエクスポート",
+      "please_power_up": "最初にパワーアップしてください",
+      "export_to_zip_title": "選択した漫画をZIPにエクスポート",
+      "export_to_jpeg_zip_title": "選択した漫画をZIP+JPEGにエクスポート",
+      "export_to_jpeg_folder_title": "選択した漫画をフォルダ+JPEGにエクスポート",
+      "export_to_pdf_title": "選択した漫画をPDFにエクスポート",
+      "export_to_pdf_folder_title": "選択した漫画をフォルダにエクスポート、各章ごとに1つのPDF",
+      "export_to_cbz_title": "選択した漫画をcbzにエクスポート",
+      "exporting_please_wait": "エクスポート中です、しばらくお待ちください"
+    },
+    "download_export_to_file": {
+      "title": "エクスポート",
+      "transfer_to_other_device": "他のデバイスに転送",
+      "input_save_name": "保存名を入力してください",
+      "export_confirm": "エクスポートの確認",
+      "export_to_pkz_title": "選択した漫画をPKZにエクスポート",
+      "export_to_pkz_desc": "xxx.pkzにエクスポート\n(暗号化モード、ウェブ検出を防止、pikapikaで開くことができます)",
+      "export_to_pki_title": "選択した漫画を個別のPKIにエクスポート",
+      "export_to_pki_desc": "xxx.pkiにエクスポート\n(暗号化モード、ウェブ検出を防止、pikapikaでインポートできます)",
+      "export_to_zip_title": "選択した漫画をZIPにエクスポート",
+      "export_to_zip_desc": "xxx.zipにエクスポート\n(非暗号化モード、pikapikaでインポートまたは表示できます)",
+      "export_to_jpeg_zip_title": "選択した漫画をZIP+JPEGにエクスポート",
+      "export_to_jpeg_zip_desc": "xxx.jpegにエクスポート\n(他のリーダーで直接使用できますが、再インポートはできません)",
+      "export_to_pdf_title": "選択した漫画をPDFにエクスポート",
+      "export_to_pdf_desc": "xxx.pdfにエクスポート\n(ダウンロードが成功しなくても使用でき、失敗した画像はスキップされます)\n(フォトアルバムで直接開くことができます)",
+      "export_to_pdf_folder_title": "選択した漫画をフォルダにエクスポート、各章ごとに1つのPDF",
+      "export_to_pdf_folder_desc": "xxx.pdfにエクスポート\n(ダウンロードが成功しなくても使用でき、失敗した画像はスキップされます)\n(フォトアルバムで直接開くことができます)",
+      "export_to_jpeg_folder_title": "選択した漫画をJPEGS.zipにエクスポート",
+      "export_to_jpeg_folder_desc": "JPGS.zipにエクスポート\n(再インポートはできません)",
+      "export_to_cbz_title": "選択した漫画をcbk.zipにエクスポート",
+      "export_to_cbz_desc": "xxx.cbzにエクスポート、リーダーで直接使用できます（再インポートはできません）"
+    },
+    "download_export_to_socket": {
+      "title": "ネットワークエクスポート",
+      "loading": "読み込み中",
+      "tips": "転送が成功するまでページを終了しないでください。一度に1つのデバイスしかエクスポートできず、2つのデバイスは同じネットワークセグメントまたは無限LANにある必要があります。他のデバイスでIP:portを入力してください。IPが1つしかない場合は、無限LANのIPを選択してください。通常は192.168で始まります",
+      "get_ip_failed": "IP取得失敗",
+      "getting_ip": "IP取得中",
+      "port": "ポート"
+    },
+    "download_import": {
+      "title": "インポート",
+      "open_file": "ファイルを開く",
+      "select_file": "インポートするファイルを選択",
+      "import_success": "インポート成功",
+      "import_failed": "インポート失敗",
+      "select_file_desc": "インポートするzipファイルを選択\nインポートするpkiファイルを選択\n読むpkzファイルを選択",
+      "input_address": "エクスポートデバイスから提供されたアドレスを入力してください\n例：「192.168.1.2:50000」",
+      "import_from_other_device": "他のデバイスからインポート",
+      "select_folder_desc": "フォルダを選択\n(フォルダ内のすべてのzip/pkiをインポート)\n(パワー使用後)"
+    },
+    "download_info": {
+      "loading": "読み込み中",
+      "chapter": "チャプター",
+      "comment": "コメント",
+      "recommend": "おすすめ"
+    },
+    "download_list": {
+      "search_download": "ダウンロードを検索",
+      "multi_select_operation": "複数選択操作",
+      "download_list": "ダウンロードリスト",
+      "search": "検索",
+      "select_folder": "フォルダを選択",
+      "download_already_in_delete_queue": "ダウンロードはすでに削除キューにあります",
+      "import": "インポート",
+      "export": "エクスポート",
+      "file": "ファイル",
+      "download_task": "ダウンロードタスク",
+      "pause_download": "ダウンロードを一時停止しますか？",
+      "start_download": "ダウンロードを開始しますか？",
+      "resume_failed": "失敗したタスクを再開",
+      "resume_failed_desc": "すべての失敗したダウンロードが再開されました",
+      "downloading": "ダウンロード中",
+      "paused": "一時停止",
+      "move_download": "ダウンロードを移動",
+      "select_download_to_move": "移動するダウンロードを選択してください",
+      "input_name": "==> 名前を入力 <==",
+      "empty_folder_will_be_deleted": "(空のフォルダは自動的に削除されます、次回は手動で入力する必要があります)",
+      "folder_name": "フォルダ名",
+      "please_input_folder_name": "フォルダ名を入力してください",
+      "delete_download": "ダウンロードを削除",
+      "delete_selected_download": "選択したダウンロードを削除しますか？",
+      "multi_select": "複数選択"
+    },
+    "download_only_import": {
+      "importing": "インポート中",
+      "import_success": "インポート成功",
+      "import_failed": "インポート失敗",
+      "click_import_file": "インポートファイルをクリック",
+      "importing_please_wait": "インポート中です、しばらくお待ちください"
+    },
+    "favourite_paper": {
+      "favourite": "お気に入り"
+    },
+    "forgot_password": {
+      "title": "パスワードの回復",
+      "username": "ユーザー名",
+      "not_set": "未設定",
+      "confirm": "確認",
+      "please_enter_username": "ユーザー名を入力してください",
+      "question_1": "質問1",
+      "question_2": "質問2",
+      "question_3": "質問3",
+      "answer_1": "回答1",
+      "answer_2": "回答2",
+      "answer_3": "回答3",
+      "please_enter_answer_1": "回答1を入力してください",
+      "please_enter_answer_2": "回答2を入力してください",
+      "please_enter_answer_3": "回答3を入力してください",
+      "use_answer_1_recover": "回答1を使用してパスワードを回復",
+      "use_answer_2_recover": "回答2を使用してパスワードを回復",
+      "use_answer_3_recover": "回答3を使用してパスワードを回復",
+      "please_enter_answer": "回答を入力してください",
+      "new_password_copied": "新しいパスワードがクリップボードにコピーされました",
+      "answer_incorrect": "回答が間違っています",
+      "password": "パスワード"
+    },
+    "game_download": {
+      "title": "ダウンロード",
+      "download_links_obtained": "ダウンロードリンクが取得されました、そのうちの1つを選択するだけです"
+    },
+    "game_info": {
+      "download": "ダウンロード",
+      "details": "詳細",
+      "comments": "コメント"
+    },
+    "games": {
+      "title": "ゲーム"
+    },
+    "import_from_off": {
+      "title": "インポート",
+      "import_success": "インポート成功",
+      "import_failed": "インポート失敗"
+    },
+    "modify_password": {
+      "title": "パスワードを変更",
+      "please_wait": "お待ちください",
+      "old_password": "古いパスワード",
+      "new_password": "新しいパスワード",
+      "repeat_new_password": "新しいパスワードを繰り返す",
+      "not_filled": "未入力",
+      "please_enter_old_password": "古いパスワードを入力してください",
+      "please_enter_new_password": "新しいパスワードを入力してください",
+      "please_repeat_new_password": "新しいパスワードを再度入力してください",
+      "new_password_mismatch": "新しいパスワードが一致しません",
+      "modify_success": "変更成功",
+      "failed": "失敗",
+      "confirm": "確認"
+    },
+    "network_settings": {
+      "title": "ネットワーク設定"
+    },
+    "pkz_reader": {
+      "reading_downloaded_comic": "ダウンロードした漫画を読んでいます"
+    },
+    "pro": {
+      "title": "パワーセンター",
+      "power_center": "パワーセンター",
+      "power_status": "パワーステータス",
+      "powered": "パワーオン",
+      "not_powered": "パワーオフ",
+      "pat_membership": "PATメンバーシップ",
+      "pat_status": "PATステータス",
+      "pat_normal": "PAT正常",
+      "pat_bind_hint": "現在のアカウントにバインドしてパワーを得るにはここをクリックしてください",
+      "pat_rebind_hint": "現在のアカウントに再バインドしてパワーを得るにはクリックしてください",
+      "pat_not_detected": "メンバーシップが検出されません、ダウンロードページに移動して参加してください",
+      "i_have_powered": "以前にパワーオンしました",
+      "i_just_powered": "ちょうどパワーオンしました",
+      "enter_code": "コードを入力",
+      "power_method": "パワー方法",
+      "wind_power": "風力発電",
+      "hydro_power": "水力発電",
+      "solar_power": "太陽光発電",
+      "nuclear_power": "原子力発電",
+      "choose_power_method": "パワー方法を選択",
+      "sign_in_exchange": "サインイン/交換",
+      "click_pat_to_change": "変更するには下のPATメンバーシップをクリックしてください",
+      "update_pat_status": "PATパワーステータスを更新",
+      "bind_to_account": "このアカウントにバインド",
+      "change_pat_key": "PATキーを変更",
+      "clear_pat_info": "PAT情報をクリア",
+      "click_to_bind": "クリックしてバインド",
+      "enter_auth_code": "認証コードを入力してください",
+      "please_wait": "お待ちください",
+      "key_recorded": "キー：記録済み",
+      "pat_account": "PATアカウント",
+      "bind_pika_account": "PIKAアカウントをバインド",
+      "bind_account_time": "アカウントのバインド時間",
+      "rebind_time": "再バインド可能時間",
+      "power_features": "パワー機能：マルチスレッドダウンロード/一括インポート/エクスポートダウンロード",
+      "power_guide": "「バージョン情報」ページに移動して、パワーガイドのメンテナンスアドレスを見つけてください\n\n  「以前にパワーオンしました」は対応するパワーステータスを同期できます\n  「ちょうどパワーオンしました」は神秘的なコードを交換します\n  「パワー方法」はネットワークが機能していないときに変更できます\n  「PATメンバーシップ」は独立したパワー方法です"
+    },
+    "rankings": {
+      "title": "ランキング",
+      "day": "日",
+      "week": "週",
+      "month": "月",
+      "knight": "ナイト",
+      "refresh": "更新",
+      "comics_count": "漫画"
+    },
+    "random_comics": {
+      "title": "ランダム漫画"
+    },
+    "register": {
+      "title": "登録",
+      "registering": "登録中",
+      "register_success": "登録成功",
+      "register_failed": "登録失敗",
+      "account_exists": "アカウントはすでに存在します",
+      "name_exists": "名前はすでに存在します",
+      "check_form": "フォームを確認してください、空のフィールドは許可されていません",
+      "account": "アカウント",
+      "password": "パスワード",
+      "nickname": "ニックネーム",
+      "gender": "性別",
+      "birthday": "誕生日",
+      "question_1": "質問1",
+      "answer_1": "回答1",
+      "question_2": "質問2",
+      "answer_2": "回答2",
+      "question_3": "質問3",
+      "answer_3": "回答3",
+      "not_set": "未設定",
+      "please_enter_account": "アカウントを入力してください",
+      "please_enter_password": "パスワードを入力してください",
+      "please_enter_nickname": "ニックネームを入力してください",
+      "please_enter_question_1": "質問1を入力してください",
+      "please_enter_answer_1": "回答1を入力してください",
+      "please_enter_question_2": "質問2を入力してください",
+      "please_enter_answer_2": "回答2を入力してください",
+      "please_enter_question_3": "質問3を入力してください",
+      "please_enter_answer_3": "回答3を入力してください",
+      "account_desc": "（小文字+数字/ログイン用）",
+      "password_desc": "（大文字と小文字+数字/ 8文字以上）",
+      "nickname_desc": "（日本語可/ 2-50文字）",
+      "choose_gender": "性別を選択してください",
+      "futa": "ふたなり",
+      "male": "男性",
+      "female": "女性",
+      "register_success_desc": "登録に成功しました、ログインに戻ってください",
+      "account_label": "アカウント",
+      "nickname_label": "ニックネーム"
+    },
+    "search": {
+      "title": "検索",
+      "search_hint": "検索",
+      "choose_category": "カテゴリを選択してください"
+    },
+    "search_author": {
+      "title": "作者で検索",
+      "search_hint": "作者で検索+",
+      "by_author": "作者："
+    },
+    "space": {
+      "title": "マイページ",
+      "logout": "ログアウト",
+      "logout_confirm": "現在のアカウントからログアウトしますか？",
+      "my_favourites": "お気に入り",
+      "view_history": "閲覧履歴",
+      "my_downloads": "マイダウンロード"
+    },
+    "theme": {
+      "title": "テーマ設定",
+      "theme": "テーマ",
+      "dark_mode_different_theme": "ダークモードで異なるテーマを使用",
+      "dark_mode_theme": "テーマ（ダークモード）"
+    },
+    "view_logs": {
+      "title": "閲覧履歴",
+      "clear_all": "すべての閲覧履歴をクリアしますか？",
+      "clear_all_desc": "読書の進捗も削除されます！",
+      "clear_one": "この閲覧履歴をクリアしますか？",
+      "clear_one_desc": "読書の進捗も削除されます！",
+      "categories": "カテゴリ"
+    },
+    "web_server": {
+      "title": "ダウンロード - Webサーバー",
+      "loading": "読み込み中",
+      "get_ip_failed": "IP取得失敗",
+      "getting_ip": "IP取得中",
+      "port": "ポート：8080",
+      "usage_instruction": "ブラウザで「http://device_ip:8080/」と入力して、ダウンロードした漫画にアクセスします",
+      "leave_notice": "このページを離れるとサーバーが閉じます"
+    }
+  },
+  "components": {
+    "comic_info_card": {
+      "categories": "カテゴリ",
+      "finished": "完結",
+      "viewed": "閲覧済み"
+    },
+    "comic_list": {
+      "shadow": "シャドウコミック"
+    },
+    "common": {
+      "display_mode": "表示モード",
+      "shadow_mode": "シャドウモード",
+      "shadow_list": "シャドウリスト",
+      "batch_download": "一括ダウンロード"
+    },
+    "image_reader": {
+      "already_at_the_end": "すでに最後に達しています",
+      "click_to_next_chapter": "クリックして次の章へ",
+      "reload_page": "ページを再読み込み",
+      "next_chapter": "次の章",
+      "end_reading": "読書を終了",
+      "reload_image": "画像を再読み込み",
+      "save_image_in_this_page": "このページの画像を保存"
+    }
+  }
+}

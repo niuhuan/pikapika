@@ -1,5 +1,6 @@
 /// 自动全屏
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -22,7 +23,7 @@ Widget ignoreInfoHistorySetting() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
         value: _ignoreInfoHistory,
-        title: const Text("详情页不计入历史记录"),
+        title: Text(tr("settings.ignore_info_history.title")),
         onChanged: (a) async {
           await method.saveProperty(_propertyName, "$a");
           _ignoreInfoHistory = a;

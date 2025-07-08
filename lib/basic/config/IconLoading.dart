@@ -1,5 +1,6 @@
 /// 自动全屏
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../Common.dart';
@@ -22,7 +23,7 @@ Widget iconLoadingSetting() {
   return StatefulBuilder(
     builder: (BuildContext context, void Function(void Function()) setState) {
       return SwitchListTile(
-        title: const Text("尽量减少UI动画"),
+        title: Text(tr("settings.icon_loading.title")),
         value: _iconLoading,
         onChanged: (value) async {
           await method.saveProperty(_propertyName, "$value");
