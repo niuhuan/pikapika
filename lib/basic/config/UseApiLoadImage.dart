@@ -3,28 +3,32 @@ import 'package:flutter/material.dart';
 
 import '../Method.dart';
 
-// var _useApiLoadImages = {
-//   "false": "否",
-//   "true": "是",
-// };
-
-Map<String, String> _useApiLoadImages = {};
-
-late String _currentUseApiLoadImage;
+late bool _currentUseApiLoadImage;
 
 Future<void> initUseApiLoadImage() async {
-  _useApiLoadImages.addAll({
-    tr("app.no"): "false",
-    tr("app.yes"): "true",
-  });
-  _currentUseApiLoadImage = await method.getUseApiClientLoadImage();
+  _currentUseApiLoadImage = await method.getUseApiClientLoadImage() == "true";
 }
 
-int currentUseApiLoadImage() {
-  return int.parse(_currentUseApiLoadImage);
-}
+String currentUseApiLoadImageName() =>
+    _currentUseApiLoadImage ? tr("app.yes") : tr("app.no");
 
-String currentUseApiLoadImageName() => _useApiLoadImages[_currentUseApiLoadImage] ?? "";
+Widget useApiLoadImageSetting() {
+  return StatefulBuilder(
+    builder: (BuildContext context, void Function(void Function()) setState) {
+      return SwitchListTile(
+        title: Text(tr("net.use_api_load_image")),
+        subtitle: Text(currentUseApiLoadImageName()),
+        value: _currentUseApiLoadImage,
+        onChanged: (bool value) async {
+          _currentUseApiLoadImage = !_currentUseApiLoadImage;
+          await method
+              .setUseApiClientLoadImage(_currentUseApiLoadImage.toString());
+          setState(() {});
+        },
+      );
+    },
+  );
+}
 
 Future<void> chooseUseApiLoadImage(BuildContext context) async {
   String? choose = await showDialog<String>(
@@ -33,13 +37,17 @@ Future<void> chooseUseApiLoadImage(BuildContext context) async {
       return SimpleDialog(
         title: Text(tr("net.use_api_load_image")),
         children: <Widget>[
-          ..._useApiLoadImages.entries.map(
-            (e) => SimpleDialogOption(
-              child: Text(e.value),
-              onPressed: () {
-                Navigator.of(context).pop(e.key);
-              },
-            ),
+          SimpleDialogOption(
+            child: Text(tr("app.yes")),
+            onPressed: () {
+              Navigator.of(context).pop("true");
+            },
+          ),
+          SimpleDialogOption(
+            child: Text(tr("app.no")),
+            onPressed: () {
+              Navigator.of(context).pop("false");
+            },
           ),
         ],
       );
@@ -47,21 +55,6 @@ Future<void> chooseUseApiLoadImage(BuildContext context) async {
   );
   if (choose != null) {
     await method.setUseApiClientLoadImage(choose);
-    _currentUseApiLoadImage = choose;
+    _currentUseApiLoadImage = choose == "true";
   }
-}
-
-Widget useApiLoadImageSetting() {
-  return StatefulBuilder(
-    builder: (BuildContext context, void Function(void Function()) setState) {
-      return ListTile(
-        title: Text(tr("net.use_api_load_image")),
-        subtitle: Text(currentUseApiLoadImageName()),
-        onTap: () async {
-          await chooseUseApiLoadImage(context);
-          setState(() {});
-        },
-      );
-    },
-  );
 }

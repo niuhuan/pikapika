@@ -24,7 +24,9 @@ int currentImageAddress() {
   return int.parse(_currentImageAddress);
 }
 
-String currentImageAddressName() => _currentImageAddress == "0" ? tr('app.no_address') : tr('network.address$_currentImageAddress');
+String currentImageAddressName() => _currentImageAddress == "0"
+    ? tr('app.no_address')
+    : tr('net.address') + _currentImageAddress;
 
 Future<void> chooseImageAddress(BuildContext context) async {
   String? choose = await showDialog<String>(
@@ -36,7 +38,7 @@ Future<void> chooseImageAddress(BuildContext context) async {
           ..._imageAddresses.map(
             (e) => SimpleDialogOption(
               child: ApiOptionRowImg(
-                tr('network.address$e'),
+                tr('net.address') + e,
                 e,
                 key: Key("API:${e}"),
               ),
@@ -88,7 +90,7 @@ class _ApiOptionRowImgState extends State<ApiOptionRowImg> {
     super.initState();
     if ("0" != widget.value) {
       _feature = method.pingImg(widget.value);
-    }else{
+    } else {
       _feature = method.ping(currentAddress());
     }
   }
