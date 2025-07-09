@@ -58,7 +58,8 @@
     "last_viewed": "上次觀看到",
     "auto_punch": "自動打卡",
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "not_set": "未設置"
   },
   "net": {
     "no_address": "不分流",

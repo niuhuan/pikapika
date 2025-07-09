@@ -428,7 +428,8 @@
       "check_username_password_or_network": "ユーザー名とパスワードまたはネットワーク環境を確認してください",
       "check_device_time": "デバイスの時刻を確認してください",
       "username_or_password_error": "ユーザー名またはパスワードが間違っています",
-      "login_failed": "ログインに失敗しました"
+      "login_failed": "ログインに失敗しました",
+      "not_set": "未設定"
     },
     "app": {
       "will_pop_notice": "戻るキーを2回連続で押すとアプリを終了します"

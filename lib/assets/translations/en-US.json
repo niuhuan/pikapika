@@ -428,7 +428,8 @@
       "check_username_password_or_network": "Please check the username and password or network environment",
       "check_device_time": "Please check the device time",
       "username_or_password_error": "Username or password error",
-      "login_failed": "Login failed"
+      "login_failed": "Login failed",
+      "not_set": "Not set"
     },
     "app": {
       "will_pop_notice": "Press the back key twice in a row to exit the app"

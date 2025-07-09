@@ -428,7 +428,8 @@
       "check_username_password_or_network": "请检查账号密码或网络环境",
       "check_device_time": "请检查设备时间",
       "username_or_password_error": "账号或密码错误",
-      "login_failed": "登录失败"
+      "login_failed": "登录失败",
+      "not_set": "未设置"
     },
     "app": {
       "will_pop_notice": "再次返回将会退出应用程序"

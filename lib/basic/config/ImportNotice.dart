@@ -15,7 +15,7 @@ Widget importNotice(BuildContext context) {
           ?.color ?? Colors.black)
           .withOpacity(.01),
       child: Text(
-        tr("settings.import_notice"),
+        tr("settings.import_notice.android_desc"),
       ),
     );
   }
