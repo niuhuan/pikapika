@@ -1,7 +1,7 @@
 /// 文件夹选择器的根路径
 
 import 'dart:io';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../Cross.dart';

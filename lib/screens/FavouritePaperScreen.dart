@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Method.dart';
 import '../basic/Entities.dart';

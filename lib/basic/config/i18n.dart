@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
+import 'package:pikapika/i18b.dart';
 import 'package:flutter/material.dart';
 
 Widget languageListTile() {
@@ -56,7 +57,7 @@ Widget languageListTile() {
                 );
               });
           if (choose != null) {
-              context.setLocale(choose);
+              setLocale(context, choose);
           }
         },
       );

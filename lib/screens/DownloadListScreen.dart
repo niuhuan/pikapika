@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:flutter/material.dart';
 import 'components/flutter_search_bar.dart' as fsb;
 import 'package:pikapika/basic/Channels.dart';

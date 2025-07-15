@@ -4,7 +4,7 @@
 // addr = "104.20.180.50:443"
 // addr = "172.67.208.169:443"
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:flutter/material.dart';
 import 'package:pikapika/basic/Common.dart';
 import 'package:pikapika/basic/config/ImageAddress.dart';

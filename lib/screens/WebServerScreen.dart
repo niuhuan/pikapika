@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 
 import '../basic/Method.dart';
 import 'components/ContentError.dart';

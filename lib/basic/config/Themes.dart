@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +38,7 @@ ThemeData _fontThemeData(bool dark) {
   return ThemeData(
     brightness: dark ? Brightness.dark : Brightness.light,
     fontFamily: _fontFamily.isEmpty ? null : _fontFamily.first,
-    fontFamilyFallback: _fontFamily.length > 1 ? _fontFamily.sublist(1) : null,
+    //fontFamilyFallback: _fontFamily.length > 1 ? _fontFamily.sublist(1) : null,
   );
 }
 

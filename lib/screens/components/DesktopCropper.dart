@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
-import 'package:easy_localization/easy_localization.dart';
+import 'package:pikapika/i18.dart';
 import 'package:image/image.dart' as image;
 import 'package:crop_image/crop_image.dart';
 import 'package:flutter/material.dart';
