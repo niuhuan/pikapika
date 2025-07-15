@@ -2,6 +2,12 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      skip_community_notification:
+        description: 'skip_community_notification'
+        type: boolean
+        required: false
+        default: false
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -356,6 +362,7 @@ jobs:
 
 
   send_to_community:
+    if: github.event.inputs.skip_community_notification != 'true'
     needs:
       - check_release
       - build_release_assets
