@@ -118,9 +118,9 @@ Widget readerTypeSettings() {
     builder: (BuildContext context, void Function(void Function()) setState) {
       List<Widget> children = [];
       children.add(_readerTypeTile(context, setState));
-      if (_readerType == ReaderType.TWO_PAGE_GALLERY) {
+      // if (_readerType == ReaderType.TWO_PAGE_GALLERY) {
         children.add(_twoPageDirectionTile(context, setState));
-      }
+      // }
       return Column(children: children);
     },
   );

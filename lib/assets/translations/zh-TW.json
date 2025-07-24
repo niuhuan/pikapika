@@ -59,7 +59,7 @@
     "auto_punch": "自動打卡",
     "yes": "是",
     "no": "否",
-    "not_set": "未設置"
+    "confirm_download": "確認下載"
   },
   "net": {
     "no_address": "不分流",
@@ -332,7 +332,11 @@
       "web_toon_zoom": "WebToon (雙擊放大)",
       "gallery": "相冊",
       "web_toon_free_zoom": "WebToon (ListView雙擊放大)\n(此模式進度條無效)",
-      "two_page_gallery": "雙頁模式\n(實驗)"
+      "two_page_gallery": "雙頁模式\n(實驗)",
+      "left_to_right": "從左到右",
+      "right_to_left": "從右到左",
+      "two_page_direction": "雙頁方向",
+      "two_page_direction_choose": "選擇雙頁方向"
     },
     "shadow_categories": {
       "title": "封印",
@@ -429,7 +433,8 @@
       "check_username_password_or_network": "請檢查賬號密碼或網絡環境",
       "check_device_time": "請檢查設備時間",
       "username_or_password_error": "賬號或密碼錯誤",
-      "login_failed": "登錄失敗"
+      "login_failed": "登錄失敗",
+      "not_set": "未設置"
     },
     "app": {
       "will_pop_notice": "再次返回將會退出應用程序"
@@ -471,7 +476,8 @@
       "title": "評論",
       "hint_text": "請輸入評論內容",
       "success": "評論成功",
-      "i_have_something_to_say": "我有話要講"
+      "i_have_something_to_say": "我有話要講",
+      "please_enter_comment": "請輸入評論內容"
     },
     "desktop_authentication": {
       "current_password": "當前密碼",

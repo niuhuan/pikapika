@@ -58,7 +58,8 @@
     "last_viewed": "Last viewed",
     "auto_punch": "Auto punch",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "confirm_download": "Confirm download"
   },
   "net": {
     "no_address": "No address",
@@ -331,7 +332,11 @@
       "web_toon_zoom": "WebToon (Double click to zoom)",
       "gallery": "Gallery",
       "web_toon_free_zoom": "WebToon (ListView double click to zoom)\n(This mode progress bar is invalid)",
-      "two_page_gallery": "Two page mode\n(Experimental)"
+      "two_page_gallery": "Two page mode\n(Experimental)",
+      "left_to_right": "Left to right",
+      "right_to_left": "Right to left",
+      "two_page_direction": "Two page direction",
+      "two_page_direction_choose": "Choose two page direction"
     },
     "shadow_categories": {
       "title": "Seal",
@@ -471,7 +476,8 @@
       "title": "Comment",
       "hint_text": "Please enter the comment content",
       "success": "Comment success",
-      "i_have_something_to_say": "I have something to say"
+      "i_have_something_to_say": "I have something to say",
+      "please_enter_comment": "Please enter the comment content"
     },
     "desktop_authentication": {
       "current_password": "Current password",

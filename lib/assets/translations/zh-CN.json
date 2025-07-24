@@ -58,7 +58,8 @@
     "last_viewed": "上次观看到",
     "auto_punch": "自动打卡",
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "confirm_download": "确认下载"
   },
   "net": {
     "no_address": "不分流",
@@ -331,7 +332,11 @@
       "web_toon_zoom": "WebToon (双击放大)",
       "gallery": "相册",
       "web_toon_free_zoom": "WebToon (ListView双击放大)\n(此模式进度条无效)",
-      "two_page_gallery": "双页模式\n(实验)"
+      "two_page_gallery": "双页模式\n(实验)",
+      "left_to_right": "从左到右",
+      "right_to_left": "从右到左",
+      "two_page_direction": "双页方向",
+      "two_page_direction_choose": "选择双页方向"
     },
     "shadow_categories": {
       "title": "封印",
@@ -471,7 +476,8 @@
       "title": "评论",
       "hint_text": "请输入评论内容",
       "success": "评论成功",
-      "i_have_something_to_say": "我有话要讲"
+      "i_have_something_to_say": "我有话要讲",
+      "please_enter_comment": "请输入评论内容"
     },
     "desktop_authentication": {
       "current_password": "当前密码",

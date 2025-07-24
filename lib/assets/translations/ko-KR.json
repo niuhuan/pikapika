@@ -58,7 +58,8 @@
     "last_viewed": "마지막으로 본",
     "auto_punch": "자동 체크인",
     "yes": "예",
-    "no": "아니오"
+    "no": "아니오",
+    "confirm_download": "다운로드 확인"
   },
   "net": {
     "no_address": "주소 없음",
@@ -331,7 +332,11 @@
       "web_toon_zoom": "웹툰 (더블 클릭으로 확대)",
       "gallery": "갤러리",
       "web_toon_free_zoom": "웹툰 (ListView 더블 클릭으로 확대)\n(이 모드는 진행률 표시줄이 무효)",
-      "two_page_gallery": "두 페이지 모드\n(실험적)"
+      "two_page_gallery": "두 페이지 모드\n(실험적)",
+      "left_to_right": "왼쪽에서 오른쪽으로",
+      "right_to_left": "오른쪽에서 왼쪽으로",
+      "two_page_direction": "두 페이지 방향",
+      "two_page_direction_choose": "두 페이지 방향 선택"
     },
     "shadow_categories": {
       "title": "봉인",
@@ -471,7 +476,8 @@
       "title": "댓글",
       "hint_text": "댓글 내용을 입력하세요",
       "success": "댓글 성공",
-      "i_have_something_to_say": "할 말이 있습니다"
+      "i_have_something_to_say": "할 말이 있습니다",
+      "please_enter_comment": "댓글 내용을 입력하세요"
     },
     "desktop_authentication": {
       "current_password": "현재 비밀번호",
