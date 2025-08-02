@@ -59,7 +59,8 @@
     "auto_punch": "自动打卡",
     "yes": "是",
     "no": "否",
-    "confirm_download": "确认下载"
+    "confirm_download": "确认下载",
+    "copy": "复制"
   },
   "net": {
     "no_address": "不分流",

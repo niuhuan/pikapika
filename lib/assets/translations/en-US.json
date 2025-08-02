@@ -59,7 +59,8 @@
     "auto_punch": "Auto punch",
     "yes": "Yes",
     "no": "No",
-    "confirm_download": "Confirm download"
+    "confirm_download": "Confirm download",
+    "copy": "Copy"
   },
   "net": {
     "no_address": "No address",

@@ -59,7 +59,8 @@
     "auto_punch": "自動チェックイン",
     "yes": "はい",
     "no": "いいえ",
-    "confirm_download": "ダウンロード確認"
+    "confirm_download": "ダウンロード確認",
+    "copy": "コピー"
   },
   "net": {
     "no_address": "アドレスなし",
