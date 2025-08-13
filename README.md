@@ -1,18 +1,16 @@
 <div align="center">
   <h1 align="center">
-    <img src="lib/assets/icon.png" width="200">
-    <br/>
     Pikapika 
 
-[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/wild/master/LICENSE)
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/wild/releases)
+[![license](https://img.shields.io/github/license/ComicSparks/pikapika)](https://raw.githubusercontent.com/ComicSparks/pikapika/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/ComicSparks/pikapika)](https://github.com/ComicSparks/pikapika/releases)
   </h1>
 </div>
 
 - A visually appealing, easy-to-use, ad-free manga client that runs on Windows/MacOS/Linux/Android/iOS.
 - This app contains restricted content (such as explicit, gory, violent, drug-related scenes). Users under 18 should use it under parental supervision, and please comply with local laws and regulations.
 - Your stars and issues are a great encouragement to the developers. You can download the latest source code/installation package from the source repository to show support/offer suggestions.
-- Source Repository URL is [https://github.com/niuhuan/pikapika](https://github.com/niuhuan/pikapika)
+- Source Repository URL is [https://github.com/ComicSparks/pikapika](https://github.com/ComicSparks/pikapika)
 
 ## Interface / Functions
 

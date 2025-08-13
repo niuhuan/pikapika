@@ -1,18 +1,16 @@
 <div align="center">
   <h1 align="center">
-    <img src="lib/assets/icon.png" width="200">
-    <br/>
     Pikapika 
 
-[![license](https://img.shields.io/github/license/niuhuan/pikapika)](https://raw.githubusercontent.com/niuhuan/wild/master/LICENSE)
-[![releases](https://img.shields.io/github/v/release/niuhuan/pikapika)](https://github.com/niuhuan/wild/releases)
+[![license](https://img.shields.io/github/license/ComicSparks/pikapika)](https://raw.githubusercontent.com/ComicSparks/pikapika/master/LICENSE)
+[![releases](https://img.shields.io/github/v/release/ComicSparks/pikapika)](https://github.com/ComicSparks/pikapika/releases)
   </h1>
 </div>
 
 - 美观易用且无广告的漫画客户端, 能运行在Windows/MacOS/Linux/Android/IOS中。
 - 此APP内容存在限制级别内容(例如 露骨/血腥/暴力/吸毒)，18岁以下的用户需在监护人陪同下使用，并请您在遵守当地法律法规。
 - 您的star和issue是对开发者的莫大鼓励, 可以源仓库下载最新的源码/安装包, 表示支持/提出建议。
-- 源仓库地址 [https://github.com/niuhuan/pikapika](https://github.com/niuhuan/pikapika)
+- 源仓库地址 [https://github.com/ComicSparks/pikapika](https://github.com/ComicSparks/pikapika)
 
 ## 界面 / 功能
 

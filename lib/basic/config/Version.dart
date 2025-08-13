@@ -10,7 +10,7 @@ import 'IgnoreUpgradeConfirm.dart';
 import 'IsPro.dart';
 
 const _versionUrl =
-    "https://api.github.com/repos/niuhuan/pikapika/releases/latest";
+    "https://api.github.com/repos/ComicSparks/pikapika/releases/latest";
 const _versionAssets = 'lib/assets/version.txt';
 
 late String _version;

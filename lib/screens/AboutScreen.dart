@@ -10,7 +10,7 @@ import '../basic/config/IsPro.dart';
 import 'components/ListView.dart';
 import 'components/RightClickPop.dart';
 
-const _releasesUrl = "https://github.com/niuhuan/pikapika/releases";
+const _releasesUrl = "https://github.com/ComicSparks/pikapika/releases";
 
 // 关于
 class AboutScreen extends StatefulWidget {
