@@ -32,6 +32,9 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   var _scrollOvered = false; // 滚动到最后
   var _offset = 0;
 
+  var _inSelection = false; // 是否进入选择模式
+  var _selectedList = <String>[]; // 选择列表
+
   Future _clearAll() async {
     if (await confirmDialog(
       context,
@@ -46,6 +49,21 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
         _offset = 0;
       });
     }
+  }
+
+  Future _deleteSelected() async {
+      if (_selectedList.isNotEmpty) {
+        await method.deleteViewLog(_selectedList.join(','));
+      }
+      setState(() {
+        _inSelection = false;
+        _selectedList.clear();
+        _comicList.clear();
+        _isLoading = false;
+        _scrollOvered = true;
+        _offset = 0;
+      });
+      _loadPage();
   }
 
   Future _clearOnce(String id) async {
@@ -94,7 +112,7 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
         _scrollController.position.maxScrollExtent) {
       return;
     }
-    if (_isLoading || _scrollOvered) return;
+    if (_isLoading || _scrollOvered || _inSelection) return;
     _loadPage();
   }
 
@@ -113,12 +131,30 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
   @override
   Widget build(BuildContext context) {
     var entries = _comicList.map((e) {
-      return InkWell(
+      Widget card = InkWell(
         onTap: () {
-          _chooseComic(e.id);
+          if (_inSelection) {
+            if (_selectedList.contains(e.id)) {
+              _selectedList.remove(e.id);
+            } else {
+              _selectedList.add(e.id);
+            }
+          } else {
+            _chooseComic(e.id);
+          }
+          setState(() {});
         },
         onLongPress: () {
-          _clearOnce(e.id);
+          if (_inSelection) {
+            if (_selectedList.contains(e.id)) {
+              _selectedList.remove(e.id);
+            } else {
+              _selectedList.add(e.id);
+            }
+          } else {
+            _clearOnce(e.id);
+          }
+          setState(() {});
         },
         child: ViewInfoCard(
           fileServer: e.thumbFileServer,
@@ -128,6 +164,26 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
           title: e.title,
         ),
       );
+      if (_inSelection) {
+        card = Stack(
+          children: [
+            card,
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Icon(
+                _selectedList.contains(e.id)
+                    ? Icons.check_box
+                    : Icons.check_box_outline_blank,
+                color: _selectedList.contains(e.id)
+                    ? Theme.of(context).colorScheme.primary
+                    : null,
+              ),
+            ),
+          ],
+        );
+      }
+      return card;
     });
 
     final screen = NotificationListener(
@@ -135,8 +191,27 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
         appBar: AppBar(
           title: Text(tr('screen.view_logs.title')),
           actions: [
-            IconButton(
-                onPressed: _clearAll, icon: const Icon(Icons.auto_delete)),
+            ..._inSelection
+                ? [
+                    IconButton(
+                      onPressed: _deleteSelected,
+                      icon: const Icon(Icons.delete),
+                    )
+                  ]
+                : [
+                    IconButton(
+                      icon: const Icon(Icons.move_down),
+                      onPressed: () {
+                        setState(() {
+                          _inSelection = !_inSelection;
+                          _selectedList.clear();
+                        });
+                      },
+                    ),
+                    IconButton(
+                        onPressed: _clearAll,
+                        icon: const Icon(Icons.auto_delete)),
+                  ],
           ],
         ),
         body: PikaListView(
@@ -153,7 +228,19 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
       },
     );
     return rightClickPop(
-      child: screen,
+      child: WillPopScope(
+        onWillPop: () async {
+          if (_inSelection) {
+            setState(() {
+              _inSelection = false;
+              _selectedList.clear();
+            });
+            return false;
+          }
+          return true;
+        },
+        child: screen,
+      ),
       context: context,
       canPop: true,
     );
@@ -235,7 +322,9 @@ class ViewInfoCard extends StatelessWidget {
                       Text(author, style: authorStyle),
                       Container(height: 5),
                       Text.rich(
-                        TextSpan(text: "${tr('screen.view_logs.categories')} : ${categories.join(' ')}"),
+                        TextSpan(
+                            text:
+                                "${tr('screen.view_logs.categories')} : ${categories.join(' ')}"),
                         style: TextStyle(
                           fontSize: 13,
                           color: Theme.of(context)
