@@ -5,12 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/andersfylling/disgord"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/andersfylling/disgord"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 func main() {
@@ -27,12 +28,17 @@ func main() {
 	}
 	version.Info = strings.TrimSpace(string(infoFile))
 	// message
+	githubRepository := os.Getenv("GITHUB_REPOSITORY")
+	if githubRepository == "" {
+		println("Env ${GITHUB_REPOSITORY} is not set")
+		os.Exit(1)
+	}
 	var message = fmt.Sprintf(
 		"%v 版本 %v 发布! \n\n"+
 			"更新内容:\n"+
 			"%v\n\n"+
 			"https://github.com/%v/%v/releases/tag/%v",
-		commons.Repo, version.Code, version.Info, commons.Owner, commons.Repo, version.Code,
+		githubRepository, version.Code, version.Info, githubRepository, githubRepository, version.Code,
 	)
 	// get accounts
 	tgToken := os.Getenv("TG_BOT_TOKEN")

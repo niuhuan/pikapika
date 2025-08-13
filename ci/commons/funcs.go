@@ -6,9 +6,7 @@ import (
 	"strings"
 )
 
-const Owner = "niuhuan"
-const Repo = "pikapika"
-const Ua = "niuhuan pikapika ci"
+const Ua = "pikapika ci"
 const MainBranch = "master"
 
 func LoadVersion() Version {

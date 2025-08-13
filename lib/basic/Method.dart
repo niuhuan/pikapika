@@ -377,6 +377,11 @@ class Method {
     return _flatInvoke("deleteViewLog", id);
   }
 
+  /// 删除一个漫画的浏览记录
+  Future<dynamic> viewComic(String id) {
+    return _flatInvoke("viewComic", id);
+  }
+
   /// 游戏列表
   Future<GamePage> games(int page) async {
     var data = await _flatInvoke("games", "$page");

@@ -66,6 +66,21 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
       _loadPage();
   }
 
+  Future _viewSelected() async {
+      if (_selectedList.isNotEmpty) {
+        await method.viewComic(_selectedList.join(','));
+      }
+      setState(() {
+        _inSelection = false;
+        _selectedList.clear();
+        _comicList.clear();
+        _isLoading = false;
+        _scrollOvered = true;
+        _offset = 0;
+      });
+      _loadPage();
+  }
+
   Future _clearOnce(String id) async {
     if (await confirmDialog(
       context,
@@ -193,6 +208,10 @@ class _ViewLogsScreenState extends State<ViewLogsScreen> {
           actions: [
             ..._inSelection
                 ? [
+                    IconButton(
+                      onPressed: _viewSelected,
+                      icon: const Icon(Icons.move_up),
+                    ),
                     IconButton(
                       onPressed: _deleteSelected,
                       icon: const Icon(Icons.delete),
